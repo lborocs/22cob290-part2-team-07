@@ -3,9 +3,9 @@
 </script>
 
 <template>
-	<div>
-
-	</div>
+  <div>
+    <p>Hello World</p>
+  </div>
 </template>
 
 <style scoped lang="scss">
