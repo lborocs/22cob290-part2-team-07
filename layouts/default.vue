@@ -5,7 +5,7 @@ const route = useRoute()
 // Updates the page head information on navigation.
 useHead(() => {
 	return {
-		title: route.name,
+		title: route.name?.toString(),
 	}
 })
 </script>
