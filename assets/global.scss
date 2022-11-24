@@ -1,0 +1,6 @@
+@use "theme";
+@use "core";
+
+a {
+	@include core.link;
+}

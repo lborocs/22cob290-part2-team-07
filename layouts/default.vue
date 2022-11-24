@@ -57,6 +57,7 @@ nav {
 	display: flex;
 	flex-direction: column;
 	width: fit-content;
+	background-color: var(--colour-accent);
 }
 
 main {

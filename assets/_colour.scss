@@ -1,0 +1,15 @@
+@use "sass:color";
+
+$accent: #ffb53c;
+
+$text-light: #000;
+$text-dark: #eee;
+
+$background-1-light: #eee;
+$background-1-dark: #080808;
+
+$background-2-light: color.adjust($background-1-light, $lightness: -10%);
+$background-2-dark: color.adjust($background-1-dark, $lightness: 10%);
+
+$background-3-light: color.adjust($background-2-light, $lightness: 5%);
+$background-3-dark: color.adjust($background-2-dark, $lightness: -5%);

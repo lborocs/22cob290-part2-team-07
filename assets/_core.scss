@@ -1,0 +1,11 @@
+@mixin link {
+	transition: {
+		property: text-shadow;
+		duration: 0.2s;
+		timing-function: ease-in-out;
+	}
+	&:hover {
+		$shadow: 0 0 5px #eee;
+		text-shadow: $shadow, $shadow, $shadow, $shadow;
+	}
+}
