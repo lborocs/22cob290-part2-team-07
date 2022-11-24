@@ -1,0 +1,65 @@
+<!-- The default layout is used on every page unless explicity specified -->
+
+<script setup lang="ts">
+const route = useRoute()
+// Updates the page head information on navigation.
+useHead(() => {
+	return {
+		title: route.name,
+	}
+})
+</script>
+
+<template>
+	<div>
+		<header>
+			<h1>{{ $route.name }}</h1>
+			<UserIcon />
+		</header>
+		<nav>
+			<NavButton
+				location="dashboard"
+				name="Dashboard"
+				icon="material-symbols:analytics-outline-rounded"
+			/>
+			<NavButton
+				location="manager"
+				name="Manager"
+				icon="material-symbols:admin-panel-settings-outline-rounded"
+			/>
+			<NavButton
+				location="knowledge"
+				name="Knowledge"
+				icon="material-symbols:book-outline-rounded"
+			/>
+		</nav>
+		<main>
+			<slot />
+		</main>
+	</div>
+</template>
+
+<style scoped lang="scss">
+div {
+	display: grid;
+	grid-template-areas:
+		"nav head"
+		"nav main";
+	grid-template-columns: min-content 1fr;
+}
+
+header {
+	grid-area: head;
+}
+
+nav {
+	grid-area: nav;
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+}
+
+main {
+	grid-area: main;
+}
+</style>

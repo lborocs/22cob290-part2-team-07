@@ -1,11 +1,13 @@
 <script setup lang="ts">
 definePageMeta({
-	name: "Dashboard",
+	name: "Manager Dashboard",
 });
 </script>
 
 <template>
-	<p>The home dashboard</p>
+	<div>
+		<p>The mangers / team leaders dashboard</p>
+	</div>
 </template>
 
 <style scoped lang="scss"></style>

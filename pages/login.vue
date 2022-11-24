@@ -1,11 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
-	name: "Dashboard",
+	layout: false,
+	name: "Login",
 });
 </script>
 
 <template>
-	<p>The home dashboard</p>
+	<form></form>
 </template>
 
 <style scoped lang="scss"></style>
