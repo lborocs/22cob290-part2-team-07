@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
-import { RouteLocationRaw } from "vue-router";
+import { Icon } from "@iconify/vue"
+import { RouteLocationRaw } from "vue-router"
 
 defineProps<{
-	location: RouteLocationRaw;
-	name: string;
-	icon: string;
-}>();
+	location: RouteLocationRaw
+	name: string
+	icon: string
+}>()
 </script>
 
 <template>
@@ -16,4 +16,10 @@ defineProps<{
 	</NuxtLink>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+a {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+</style>
