@@ -32,6 +32,11 @@ useHead(() => {
 				name="Knowledge"
 				icon="material-symbols:book-outline-rounded"
 			/>
+			<NavButton
+				location="project"
+				name="Project"
+				icon="material-symbols:folder-outline-rounded"
+			/>
 		</nav>
 		<main>
 			<slot />
