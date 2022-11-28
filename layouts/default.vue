@@ -11,7 +11,7 @@ useHead(() => {
 </script>
 
 <template>
-	<div>
+	<div class="page-wrapper">
 		<header>
 			<h1>{{ $route.name }}</h1>
 			<UserIcon />
@@ -45,12 +45,14 @@ useHead(() => {
 </template>
 
 <style scoped lang="scss">
-div {
+.page-wrapper {
 	display: grid;
 	grid-template-areas:
 		"nav head"
 		"nav main";
 	grid-template-columns: min-content 1fr;
+	grid-template-rows: min-content 1fr;
+	height: 100%;
 }
 
 header {
