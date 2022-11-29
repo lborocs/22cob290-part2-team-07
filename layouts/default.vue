@@ -17,6 +17,7 @@ useHead(() => {
 			<UserIcon />
 		</header>
 		<nav>
+			<img src="/tools.svg" alt="Make It All Logo" class="nav-logo" />
 			<ul>
 				<li>
 					<NavButton
@@ -71,16 +72,27 @@ header {
 
 nav {
 	grid-area: nav;
-
+	display: flex;
+	flex-direction: column;
 	width: fit-content;
 	background-color: var(--colour-accent);
+
 	ul {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
 		list-style: none;
 		padding: 0 0.5rem;
 		margin: 0;
-		display: flex;
-		flex-direction: column;
+		margin-top: 1rem;
 	}
+}
+
+.nav-logo {
+	aspect-ratio: 1;
+	width: 5rem;
+	margin-inline: auto;
 }
 
 main {
