@@ -17,9 +17,25 @@ defineProps<{
 </template>
 
 <style scoped lang="scss">
+@use "assets/animation";
 a {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+
+	text-decoration: none;
+	color: var(--colour-text);
+	transition: background-color animation.$transition-short;
+
+	padding: 0.2rem;
+	border-radius: 0.4rem;
+
+	.iconify {
+		font-size: 2.25rem;
+	}
+
+	&.router-link-active {
+		background-color: var(--colour-background-1);
+	}
 }
 </style>
