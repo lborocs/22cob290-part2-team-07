@@ -17,7 +17,7 @@ useHead(() => {
 			<UserIcon />
 		</header>
 		<nav>
-			<img src="/tools.svg" alt="Make It All Logo" class="nav-logo" />
+			<img src="~/assets/tools.svg" alt="Make It All Logo" class="nav-logo" />
 			<ul>
 				<li>
 					<NavButton
