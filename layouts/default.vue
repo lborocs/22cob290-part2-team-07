@@ -97,5 +97,6 @@ nav {
 
 main {
 	grid-area: main;
+	padding: 2rem;
 }
 </style>

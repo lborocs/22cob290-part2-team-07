@@ -1,3 +1,4 @@
+@use "theme";
 @mixin link {
 	transition: {
 		property: text-shadow;
@@ -8,4 +9,35 @@
 		$shadow: 0 0 5px #eee;
 		text-shadow: $shadow, $shadow, $shadow, $shadow;
 	}
+}
+
+.card {
+	background: var(--colour-background-2);
+	border-radius: var(--card-radius);
+	padding: 1rem 1.5rem;
+}
+
+.card-small {
+	max-width: 30ch;
+	background: var(--colour-background-3);
+	border-radius: var(--card-radius);
+	padding: 0.5rem 1rem;
+}
+
+/* kanban card top border colour (if not overwritten, defaults to colour-accent) */
+.rag-band {
+	border-top: 0.25rem solid var(--colour-card-highlight, var(--colour-accent));
+}
+
+/* RAG colours */
+[data-rag="red"] {
+	--colour-card-highlight: var(--colour-red);
+}
+
+[data-rag="amber"] {
+	--colour-card-highlight: var(--colour-amber);
+}
+
+[data-rag="green"] {
+	--colour-card-highlight: var(--colour-green);
 }
