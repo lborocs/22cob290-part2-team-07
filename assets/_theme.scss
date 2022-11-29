@@ -9,6 +9,9 @@
 	--colour-background-3: #{colour.$background-3-light};
 	--card-radius: 1.5rem;
 	--card-radius-small: 0.8rem;
+	--colour-red: #e32020bf;
+	--colour-amber: #ff9d30db;
+	--colour-green: #43d34a91;
 
 	@media screen and (prefers-color-scheme: dark) {
 		--colour-text: #{colour.$text-dark};

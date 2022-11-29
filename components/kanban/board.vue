@@ -34,6 +34,7 @@
 </template>
 
 <style scoped lang="scss">
+@use "/assets/core" as *;
 header {
 	display: flex;
 	justify-content: space-between;
@@ -41,7 +42,28 @@ header {
 }
 
 .kanban-wrapper {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.kanban-col {
 	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	.card-small {
+		width: 100%;
+		margin-inline: auto;
+	}
+}
+
+// rag-colours = names in css vars
+$rag-colours: ("red", "amber", "green");
+$index: 1;
+@each $col in $rag-colours {
+	.kanban-col:nth-child(#{$index}) {
+		@extend [data-rag="#{$col}"];
+	}
+	$index: $index + 1;
 }
 </style>
 
