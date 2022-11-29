@@ -17,26 +17,36 @@ useHead(() => {
 			<UserIcon />
 		</header>
 		<nav>
-			<NavButton
-				location="dashboard"
-				name="Dashboard"
-				icon="material-symbols:analytics-outline-rounded"
-			/>
-			<NavButton
-				location="manager"
-				name="Manager"
-				icon="material-symbols:admin-panel-settings-outline-rounded"
-			/>
-			<NavButton
-				location="knowledge"
-				name="Knowledge"
-				icon="material-symbols:book-outline-rounded"
-			/>
-			<NavButton
-				location="project"
-				name="Project"
-				icon="material-symbols:folder-outline-rounded"
-			/>
+			<ul>
+				<li>
+					<NavButton
+						location="dashboard"
+						name="Dashboard"
+						icon="material-symbols:analytics-outline-rounded"
+					/>
+				</li>
+				<li>
+					<NavButton
+						location="manager"
+						name="Manager"
+						icon="material-symbols:admin-panel-settings-outline-rounded"
+					/>
+				</li>
+				<li>
+					<NavButton
+						location="knowledge"
+						name="Knowledge"
+						icon="material-symbols:book-outline-rounded"
+					/>
+				</li>
+				<li>
+					<NavButton
+						location="project"
+						name="Project"
+						icon="material-symbols:folder-outline-rounded"
+					/>
+				</li>
+			</ul>
 		</nav>
 		<main>
 			<slot />
@@ -61,10 +71,16 @@ header {
 
 nav {
 	grid-area: nav;
-	display: flex;
-	flex-direction: column;
+
 	width: fit-content;
 	background-color: var(--colour-accent);
+	ul {
+		list-style: none;
+		padding: 0 0.5rem;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+	}
 }
 
 main {
