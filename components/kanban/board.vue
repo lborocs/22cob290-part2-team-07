@@ -50,9 +50,23 @@ header {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	position: relative;
 	.card-small {
 		width: 100%;
 		margin-inline: auto;
+	}
+
+	// right margin between each column
+	&:not(:last-child)::after {
+		position: absolute;
+		content: "";
+		right: 0;
+		top: 0;
+		bottom: 0;
+		width: 0.2rem;
+		border-radius: 100vmax;
+		translate: 50% 0;
+		background-color: var(--colour-text);
 	}
 }
 
