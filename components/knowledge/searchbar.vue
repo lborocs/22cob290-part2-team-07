@@ -1,10 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const topics = ref<Topic[]>([])
+$fetch("/api/topics").then(values => (topics.value = values))
+</script>
 
 <template>
 	<Form to="/knowledge/search/">
-		<input name="q" type="text" placeholder="Search..." />
-		<select name="topic">
+		<input
+			name="q"
+			type="text"
+			placeholder="Search..."
+			:value="$route.query.q"
+		/>
+		<select name="topic" :value="$route.query.topic">
 			<option value="">Any Topic</option>
+			<option v-for="topic in topics" :key="topic.id" :value="topic.id">
+				{{ topic.name }}
+			</option>
 		</select>
 		<Button type="submit" icon="material-symbols:search-rounded">Search</Button>
 		<ButtonNuxt to="/knowledge/post/" icon="material-symbols:add"
