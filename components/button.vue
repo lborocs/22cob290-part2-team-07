@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
-const { icon, shrink = true } = defineProps<{
+const { fix = false } = defineProps<{
 	icon: string
-	shrink?: boolean
+	fix?: boolean
 }>()
 </script>
 
 <template>
-	<button :class="{ fix: shrink }">
+	<button :class="{ fix: fix }">
 		<span id="slot"><slot /></span> <Icon :icon="icon" />
 	</button>
 </template>
@@ -48,11 +48,13 @@ button {
 	}
 
 	@media (max-width: mobile.$width) {
-		aspect-ratio: 1;
-		border-radius: 50%;
-		font-size: 2em;
-		#slot {
-			display: none;
+		&:not(.fix) {
+			aspect-ratio: 1;
+			border-radius: 50%;
+			font-size: 2em;
+			#slot {
+				display: none;
+			}
 		}
 	}
 }
