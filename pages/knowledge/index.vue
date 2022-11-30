@@ -17,8 +17,7 @@ definePageMeta({
 @use "~/assets/core";
 
 div {
-	@include core.flex($wrap: false);
-	@include core.centre;
+	@extend %flex-col, %flex-centre, %centre;
 	top: 45%;
 	box-sizing: border-box;
 	width: 100%;

@@ -56,6 +56,7 @@ useHead(() => {
 </template>
 
 <style scoped lang="scss">
+@use "~/assets/mobile";
 .page-wrapper {
 	display: grid;
 	grid-template-areas:
@@ -98,5 +99,8 @@ nav {
 main {
 	grid-area: main;
 	padding: 2rem;
+	@media (max-width: mobile.$width) {
+		padding: 0.1rem;
+	}
 }
 </style>

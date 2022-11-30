@@ -11,30 +11,40 @@
 	}
 }
 
-@mixin flex(
-	$dir: column,
-	$wrap: true,
-	$align: center,
-	$justify: center,
-	$items: center
-) {
+%flex {
 	display: flex;
-	flex-direction: $dir;
-	@if $wrap {
-		flex-wrap: wrap;
-	} @else {
-		flex-wrap: nowrap;
+	flex-wrap: wrap;
+	&-col {
+		@extend %flex;
+		flex-direction: column;
 	}
-	align-content: $align;
-	justify-content: $justify;
-	align-items: $items;
+	&-row {
+		@extend %flex;
+		flex-direction: row;
+	}
+	&-centre {
+		align-content: center;
+		align-items: center;
+		justify-content: center;
+	}
 }
 
-@mixin centre {
+%centre {
 	position: relative;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+%input {
+	--input-border-colour: var(--colour-accent);
+	--input-background: var(--colour-accent);
+
+	color: var(--colour-text);
+	border: 2px solid var(--input-border-colour);
+	border-radius: 0.5rem;
+	background-color: var(--input-background);
+	padding: 0.5rem;
 }
 
 * {
