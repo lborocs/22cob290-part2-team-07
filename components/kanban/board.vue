@@ -86,6 +86,7 @@ const tasks = ref([
 		state: "todo",
 		dueDate: "2022-12-25",
 		workerHours: 1,
+		assignees: ["Elon Musk", "Jeff Bezos"],
 	},
 	{
 		id: 1,
@@ -94,6 +95,12 @@ const tasks = ref([
 		state: "todo",
 		dueDate: "2022-12-25",
 		workerHours: 1,
+		assignees: [
+			"Alan turing",
+			"John Conway",
+			"Ada Lovelace",
+			"Charles Babbage",
+		],
 	},
 	{
 		id: 2,
