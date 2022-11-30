@@ -21,28 +21,28 @@ useHead(() => {
 			<ul>
 				<li>
 					<NavButton
-						location="dashboard"
+						location="/dashboard"
 						name="Dashboard"
 						icon="material-symbols:analytics-outline-rounded"
 					/>
 				</li>
 				<li>
 					<NavButton
-						location="manager"
+						location="/manager"
 						name="Manager"
 						icon="material-symbols:admin-panel-settings-outline-rounded"
 					/>
 				</li>
 				<li>
 					<NavButton
-						location="knowledge"
+						location="/knowledge"
 						name="Knowledge"
 						icon="material-symbols:book-outline-rounded"
 					/>
 				</li>
 				<li>
 					<NavButton
-						location="project"
+						location="/project"
 						name="Project"
 						icon="material-symbols:folder-outline-rounded"
 					/>
