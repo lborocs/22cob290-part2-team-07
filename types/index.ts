@@ -1,8 +1,14 @@
 export {}
 
 declare global {
+	interface User {
+		readonly id: number
+		email: string
+		name: string
+	}
+
 	interface Topic {
-		id: number
+		readonly id: number
 		name: string
 	}
 }
