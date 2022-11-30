@@ -9,9 +9,16 @@ defineProps<{
 </script>
 
 <template>
-	<NuxtLink :to="to"
-		><Button :icon="icon"><slot /></Button
-	></NuxtLink>
+	<Button :icon="icon">
+		<NuxtLink :to="to">
+			<slot />
+		</NuxtLink>
+	</Button>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+a {
+	color: var(--colour-background-1);
+	text-decoration: none;
+}
+</style>
