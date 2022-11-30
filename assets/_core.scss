@@ -45,6 +45,17 @@
 	--colour-card-highlight: var(--colour-green);
 }
 
-.test {
-	background-color: red;
+// button that only displays content
+.content-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: none;
+	padding: 0;
+	margin: 0;
+	height: fit-content;
+	&:hover {
+		cursor: pointer;
+	}
 }

@@ -26,10 +26,9 @@
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
 				{{ props.task.dueDate }}
 			</p>
-			<p>
-				<Icon icon="material-symbols:analytics-outline-rounded" />
-				View More
-			</p>
+			<button class="content-button">
+				<Icon icon="material-symbols:more-horiz" />
+			</button>
 		</div>
 	</div>
 </template>
@@ -57,7 +56,7 @@
 			--image-size: 42px;
 			width: var(--image-size);
 			height: var(--image-size);
-			background-color: red;
+			background-color: var(--colour-accent);
 			border-radius: 100vmax;
 			display: grid;
 			place-items: center;
@@ -73,6 +72,7 @@ h3 {
 	color: var(--colour-text-faded);
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
 
 	p {
 		margin: 0.5rem 0;
@@ -82,6 +82,10 @@ h3 {
 			width: 1.5rem;
 			height: 1.5rem;
 		}
+	}
+	button {
+		color: var(--colour-text-faded);
+		font-size: 1rem;
 	}
 }
 </style>
