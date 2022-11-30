@@ -11,6 +11,10 @@
 	}
 }
 
+* {
+	box-sizing: border-box;
+}
+
 .card {
 	background: var(--colour-background-2);
 	border-radius: var(--card-radius);
@@ -18,8 +22,7 @@
 }
 
 .card-small {
-	max-width: 30ch;
-	background: var(--colour-background-3);
+	background: var(--colour-accent-faded);
 	border-radius: var(--card-radius);
 	padding: 0.5rem 1rem;
 }

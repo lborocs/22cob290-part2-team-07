@@ -3,7 +3,9 @@
 :root {
 	// CSS Colour Variables
 	--colour-accent: #{colour.$accent};
+	--colour-accent-faded: #{colour.$accent-faded};
 	--colour-text: #{colour.$text-light};
+	--colour-text-faded: #{colour.$text-light-faded};
 	--colour-background-1: #{colour.$background-1-light};
 	--colour-background-2: #{colour.$background-2-light};
 	--colour-background-3: #{colour.$background-3-light};
@@ -15,6 +17,7 @@
 
 	@media screen and (prefers-color-scheme: dark) {
 		--colour-text: #{colour.$text-dark};
+		--colour-text-faded: #{colour.$text-dark-faded};
 		--colour-background-1: #{colour.$background-1-dark};
 		--colour-background-2: #{colour.$background-2-dark};
 		--colour-background-3: #{colour.$background-3-dark};

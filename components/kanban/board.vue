@@ -51,10 +51,6 @@ header {
 	flex-direction: column;
 	gap: 1rem;
 	position: relative;
-	.card-small {
-		width: 100%;
-		margin-inline: auto;
-	}
 
 	// right margin between each column
 	&:not(:last-child)::after {
@@ -88,66 +84,56 @@ const tasks = ref([
 		title: "Task 1",
 		description: "This is a task",
 		state: "todo",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 	{
 		id: 1,
 		title: "Task 2",
 		description: "This is a task",
 		state: "todo",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 	{
 		id: 2,
 		title: "Task 3",
 		description: "This is a task",
 		state: "current",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 	{
 		id: 3,
 		title: "Task 4",
 		description: "This is a task",
-		state: "todo",
+		state: "done",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 	{
 		id: 4,
 		title: "Task 5",
 		description: "This is a task",
 		state: "current",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 	{
 		id: 5,
 		title: "Task 6",
 		description: "This is a task",
 		state: "todo",
-	},
-	{
-		id: 6,
-		title: "Task 7",
-		description: "This is a task",
-		state: "todo",
-	},
-	{
-		id: 7,
-		title: "Task 8",
-		description: "This is a task",
-		state: "todo",
-	},
-	{
-		id: 8,
-		title: "Task 9",
-		description: "This is a task",
-		state: "done",
-	},
-	{
-		id: 9,
-		title: "Task 10",
-		description: "This is a task",
-		state: "todo",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 	{
 		id: 10,
 		title: "Task 11",
 		description: "This is a task",
-		state: "todo",
+		state: "done",
+		dueDate: "2022-12-25",
+		workerHours: 1,
 	},
 ])
 </script>
