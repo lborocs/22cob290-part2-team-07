@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const topics = ref<Topic[]>([])
-$fetch("/api/topics").then(values => (topics.value = values))
+const { data: topics } = useLazyFetch("/api/topics")
 </script>
 
 <template>
