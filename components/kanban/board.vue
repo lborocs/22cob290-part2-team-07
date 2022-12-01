@@ -10,22 +10,24 @@
 		<section class="kanban-wrapper">
 			<div class="kanban-col">
 				<KanbanCard
-					v-for="task in tasks.filter(task => task.state == 'todo')"
-					:key="task.id"
+					v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
+					:key="task.uid"
 					:task="task"
 				/>
 			</div>
 			<div class="kanban-col">
 				<KanbanCard
-					v-for="task in tasks.filter(task => task.state == 'current')"
-					:key="task.id"
+					v-for="task in tasks.filter(
+						task => task.status == TaskStatus.InProgress,
+					)"
+					:key="task.uid"
 					:task="task"
 				/>
 			</div>
 			<div class="kanban-col">
 				<KanbanCard
-					v-for="task in tasks.filter(task => task.state == 'done')"
-					:key="task.id"
+					v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
+					:key="task.uid"
 					:task="task"
 				/>
 			</div>
@@ -69,78 +71,19 @@ header {
 // rag-colours = names in css vars
 $rag-colours: ("red", "amber", "green");
 $index: 1;
-@each $col in $rag-colours {
-	.kanban-col:nth-child(#{$index}) {
-		@extend [data-rag="#{$col}"];
-	}
-	$index: $index + 1;
-}
+
+// @each $col in $rag-colours {
+// 	.kanban-col:nth-child(#{$index}) {
+// 		@extend [data-rag="#{$col}"];
+// 	}
+// 	$index: $index + 1;
+// }
 </style>
 
-<script setup>
-const tasks = ref([
-	{
-		id: 0,
-		title: "Task 1",
-		description: "This is a task",
-		state: "todo",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-		assignees: ["Elon Musk", "Jeff Bezos"],
-	},
-	{
-		id: 1,
-		title: "Task 2",
-		description: "This is a task",
-		state: "todo",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-		assignees: [
-			"Alan turing",
-			"John Conway",
-			"Ada Lovelace",
-			"Charles Babbage",
-		],
-	},
-	{
-		id: 2,
-		title: "Task 3",
-		description: "This is a task",
-		state: "current",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-	},
-	{
-		id: 3,
-		title: "Task 4",
-		description: "This is a task",
-		state: "done",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-	},
-	{
-		id: 4,
-		title: "Task 5",
-		description: "This is a task",
-		state: "current",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-	},
-	{
-		id: 5,
-		title: "Task 6",
-		description: "This is a task",
-		state: "todo",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-	},
-	{
-		id: 10,
-		title: "Task 11",
-		description: "This is a task",
-		state: "done",
-		dueDate: "2022-12-25",
-		workerHours: 1,
-	},
-])
+<script setup lang="ts">
+import { TaskStatus } from "~~/types"
+
+defineProps<{
+	tasks: Task[]
+}>()
 </script>

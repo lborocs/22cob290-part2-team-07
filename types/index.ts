@@ -20,4 +20,29 @@ declare global {
 		markdown: string
 		created: Date
 	}
+
+	interface Task {
+		readonly uid: number
+		name: string
+		description: string
+		workerHours: number
+		assignees: User[]
+		status: TaskStatus
+		deadline: Date
+		subtasks?: Task[]
+		project?: Project
+	}
+
+	// TODO finish
+	interface Project {
+		readonly uid: number
+		name: string
+	}
+}
+
+// cant declare an enum in a global context, must be imported when needed.
+export enum TaskStatus {
+	Todo,
+	InProgress,
+	Done,
 }
