@@ -3,7 +3,7 @@ definePageMeta({
 	name: "Dashboard",
 })
 const tasks = ref<Task[]>([])
-$fetch("/api/tasks").then(values => (tasks.value = values))
+await $fetch("/api/tasks").then(values => (tasks.value = values))
 </script>
 
 <template>
