@@ -20,4 +20,27 @@ declare global {
 		markdown: string
 		created: Date
 	}
+
+	interface Task {
+		readonly uid: number
+		name: string
+		description: string
+		workerHours: number
+		assignees: User[]
+		status: TaskStatus
+		subtasks?: Task[]
+		project?: Project
+	}
+
+	// TODO finish
+	interface Project {
+		readonly uid: number
+		name: string
+	}
+
+	enum TaskStatus {
+		Todo,
+		InProgress,
+		Done,
+	}
 }
