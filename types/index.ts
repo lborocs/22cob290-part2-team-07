@@ -37,10 +37,11 @@ declare global {
 		readonly uid: number
 		name: string
 	}
+}
 
-	enum TaskStatus {
-		Todo,
-		InProgress,
-		Done,
-	}
+// cant declare an enum in a global context, must be imported when needed.
+export enum TaskStatus {
+	Todo,
+	InProgress,
+	Done,
 }
