@@ -1,5 +1,10 @@
 <template>
-	<div class="card-small rag-band">
+	<div
+		class="card-small rag-band"
+		draggable="true"
+		@drag="onDrag($event, task)"
+		:id="`task-${task.uid}`"
+	>
 		<div class="task-header">
 			<h3>{{ props.task.name }}</h3>
 			<div class="assignees" v-if="task.assignees.length > 0">
@@ -95,4 +100,17 @@ import { Icon } from "@iconify/vue"
 const props = defineProps<{
 	task: Task
 }>()
+
+function onDrag(event: DragEvent, item: Task) {
+	// console.log(event)
+	// console.log(item)
+
+	if (event.dataTransfer) {
+		event.dataTransfer.dropEffect = "move"
+		event.dataTransfer.effectAllowed = "move"
+		event.dataTransfer.setData("task", item.uid.toString())
+	} else {
+		console.log("No data transfer")
+	}
+}
 </script>

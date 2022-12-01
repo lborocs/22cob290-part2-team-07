@@ -8,7 +8,11 @@
 			</div>
 		</header>
 		<section class="kanban-wrapper">
-			<div class="kanban-col">
+			<div
+				class="kanban-col"
+				@dragover="onDragOver($event)"
+				@drop="onDrop($event)"
+			>
 				<KanbanCard
 					v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
 					:key="task.uid"
@@ -72,12 +76,12 @@ header {
 $rag-colours: ("red", "amber", "green");
 $index: 1;
 
-@each $col in $rag-colours {
-	.kanban-col:nth-child(#{$index}) {
-		@extend [data-rag="#{$col}"];
-	}
-	$index: $index + 1;
-}
+// @each $col in $rag-colours {
+// 	.kanban-col:nth-child(#{$index}) {
+// 		@extend [data-rag="#{$col}"];
+// 	}
+// 	$index: $index + 1;
+// }
 </style>
 
 <script setup lang="ts">
@@ -86,4 +90,26 @@ import { TaskStatus } from "~~/types"
 defineProps<{
 	tasks: Task[]
 }>()
+
+function onDragOver(event: DragEvent) {
+	event.preventDefault()
+	// console.log("dragging over")
+}
+
+function onDrop(event: DragEvent) {
+	event.preventDefault()
+	if (event.dataTransfer) {
+		const data = event.dataTransfer.getData("task")
+		const target = event.target as HTMLElement
+		const id = `task-${data}`
+		console.log(id)
+
+		// target.appendChild(document.getElementById(id)!)
+		console.table(event.dataTransfer)
+
+		console.log(data)
+	} else {
+		console.log("no data")
+	}
+}
 </script>
