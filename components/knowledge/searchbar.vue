@@ -13,7 +13,7 @@ $fetch("/api/topics").then(values => (topics.value = values))
 		/>
 		<select name="topic" :value="$route.query.topic">
 			<option value="">Any Topic</option>
-			<option v-for="topic in topics" :key="topic.id" :value="topic.id">
+			<option v-for="topic in topics" :key="topic.uid" :value="topic.uid">
 				{{ topic.name }}
 			</option>
 		</select>
