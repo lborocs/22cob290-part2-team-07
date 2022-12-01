@@ -18,7 +18,7 @@ defineProps<{
 				icon="material-symbols:topic-outline-rounded"
 				>{{ topics[0].name }}</ButtonNuxt
 			>
-			<UserIcon :name="owner.name" />
+			<UserIcon v-bind="owner" />
 			<span>{{ created.toDateString() }}</span>
 		</aside>
 		<main>
