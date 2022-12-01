@@ -11,7 +11,7 @@ useHead(() => {
 })
 
 const user: User = {
-	id: 1,
+	uid: 1,
 	email: `king${emailDomain}`,
 	name: "Neumann",
 }
