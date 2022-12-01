@@ -1,7 +1,7 @@
 <!-- The default layout is used on every page unless explicity specified -->
 
 <script setup lang="ts">
-import { profilePicture, emailDomain } from "@/types/user"
+import { emailDomain } from "@/types/user"
 const route = useRoute()
 // Updates the page head information on navigation.
 useHead(() => {
@@ -21,7 +21,7 @@ const user: User = {
 	<div class="page-wrapper">
 		<header>
 			<h1>{{ $route.name }}</h1>
-			<UserIcon :src="profilePicture(user)" />
+			<UserIcon :name="user.name" />
 		</header>
 		<nav>
 			<img src="~/assets/tools.svg" alt="Make It All Logo" class="nav-logo" />

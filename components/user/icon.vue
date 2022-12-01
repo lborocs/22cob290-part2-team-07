@@ -1,9 +1,13 @@
 <script setup lang="ts">
-const src = "https://placekitten.com/50/50";
+import { profilePicture } from "@/types/user"
+
+defineProps<{
+	name: string
+}>()
 </script>
 
 <template>
-	<img :src="src" />
+	<img :src="profilePicture(name)" />
 </template>
 
 <style scoped lang="scss">

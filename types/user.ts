@@ -1,6 +1,6 @@
-export function profilePicture(user: User): string {
+export function profilePicture(name: string): string {
 	return `https://ui-avatars.com/api/?name=${encodeURIComponent(
-		user.name,
+		name,
 	)}&background=random&size=50&format=svg`
 }
 
