@@ -2,13 +2,12 @@
 definePageMeta({
 	name: "Dashboard",
 })
-const tasks = ref<Task[]>([])
-await $fetch("/api/tasks").then(values => (tasks.value = values))
+const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
 </script>
 
 <template>
 	<p>The home dashboard</p>
-	<KanbanBoard :tasks="tasks" />
+	<KanbanBoard :tasks="tasks!" />
 </template>
 
 <style scoped lang="scss"></style>
