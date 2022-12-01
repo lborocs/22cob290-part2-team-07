@@ -6,7 +6,7 @@ defineProps<{
 
 	owner: User
 	topics: Topic[]
-	created: Date
+	created: DateNumber
 }>()
 </script>
 
@@ -19,7 +19,7 @@ defineProps<{
 				>{{ topics[0].name }}</ButtonNuxt
 			>
 			<UserIcon v-bind="owner" />
-			<span>{{ created.toDateString() }}</span>
+			<span>{{ new Date(created).toDateString() }}</span>
 		</aside>
 		<main>
 			<h2>{{ title }}</h2>

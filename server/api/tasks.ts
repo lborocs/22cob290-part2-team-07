@@ -9,7 +9,7 @@ export default defineEventHandler(event => {
 			workerHours: 1,
 			assignees: [],
 			status: TaskStatus.Todo,
-			deadline: new Date("2022-12-25"),
+			deadline: new Date("2022-12-25").getTime(),
 		},
 		{
 			uid: 2,
@@ -18,7 +18,7 @@ export default defineEventHandler(event => {
 			workerHours: 2,
 			assignees: [],
 			status: TaskStatus.InProgress,
-			deadline: new Date("2022-12-25"),
+			deadline: new Date("2022-12-25").getTime(),
 		},
 		{
 			uid: 3,
@@ -27,7 +27,7 @@ export default defineEventHandler(event => {
 			workerHours: 3,
 			assignees: [],
 			status: TaskStatus.Todo,
-			deadline: new Date("2022-12-25"),
+			deadline: new Date("2022-12-25").getTime(),
 		},
 		{
 			uid: 4,
@@ -36,7 +36,7 @@ export default defineEventHandler(event => {
 			workerHours: 4,
 			assignees: [],
 			status: TaskStatus.Done,
-			deadline: new Date("2022-12-25"),
+			deadline: new Date("2022-12-25").getTime(),
 		},
 		{
 			uid: 5,
@@ -45,7 +45,7 @@ export default defineEventHandler(event => {
 			workerHours: 5,
 			assignees: [],
 			status: TaskStatus.InProgress,
-			deadline: new Date("2022-12-25"),
+			deadline: new Date("2022-12-25").getTime(),
 		},
 	]
 })

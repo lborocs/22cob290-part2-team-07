@@ -1,6 +1,8 @@
 export {}
 
 declare global {
+	type DateNumber = number
+
 	interface User {
 		readonly uid: number
 		email: string
@@ -18,7 +20,7 @@ declare global {
 		owner: User
 		title: string
 		markdown: string
-		created: Date
+		created: DateNumber
 	}
 
 	interface Task {
@@ -28,7 +30,7 @@ declare global {
 		workerHours: number
 		assignees: User[]
 		status: TaskStatus
-		deadline: Date
+		deadline: DateNumber
 		subtasks?: Task[]
 		project?: Project
 	}

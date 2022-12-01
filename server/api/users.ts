@@ -1,6 +1,6 @@
 import { emailDomain } from "@/types/user"
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(event => {
 	return <User[]>[
 		{
 			uid: 1,
