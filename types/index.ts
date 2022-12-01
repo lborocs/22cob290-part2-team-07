@@ -28,6 +28,7 @@ declare global {
 		workerHours: number
 		assignees: User[]
 		status: TaskStatus
+		deadline: Date
 		subtasks?: Task[]
 		project?: Project
 	}

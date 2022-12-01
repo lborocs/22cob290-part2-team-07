@@ -1,11 +1,11 @@
 <template>
 	<div class="card-small rag-band">
 		<div class="task-header">
-			<h3>{{ props.task.title }}</h3>
-			<div class="assignees" v-if="task.assignees">
+			<h3>{{ props.task.name }}</h3>
+			<div class="assignees" v-if="task.assignees.length > 0">
 				<img
 					v-for="person in task.assignees.slice(0, 3)"
-					:src="`https://ui-avatars.com/api/?name=${person.replace(
+					:src="`https://ui-avatars.com/api/?name=${person.name.replace(
 						' ',
 						'+',
 					)}&background=random&color=fff&size=42&rounded=true`"
@@ -24,7 +24,7 @@
 			</p>
 			<p>
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
-				{{ props.task.dueDate }}
+				{{ new Date(props.task.deadline).toLocaleDateString() }}
 			</p>
 			<button class="content-button">
 				<Icon icon="material-symbols:more-horiz" />
@@ -90,12 +90,9 @@ h3 {
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { Icon } from "@iconify/vue"
-const props = defineProps({
-	task: {
-		type: Object,
-		required: true,
-	},
-})
+const props = defineProps<{
+	task: Task
+}>()
 </script>
