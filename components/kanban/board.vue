@@ -72,12 +72,12 @@ header {
 $rag-colours: ("red", "amber", "green");
 $index: 1;
 
-// @each $col in $rag-colours {
-// 	.kanban-col:nth-child(#{$index}) {
-// 		@extend [data-rag="#{$col}"];
-// 	}
-// 	$index: $index + 1;
-// }
+@each $col in $rag-colours {
+	.kanban-col:nth-child(#{$index}) {
+		@extend [data-rag="#{$col}"];
+	}
+	$index: $index + 1;
+}
 </style>
 
 <script setup lang="ts">
