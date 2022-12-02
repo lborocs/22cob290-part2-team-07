@@ -55,12 +55,11 @@
 	background: var(--colour-background-2);
 	border-radius: var(--card-radius);
 	padding: 1rem 1.5rem;
-}
-
-.card-small {
-	background: var(--colour-accent-faded);
-	border-radius: var(--card-radius);
-	padding: 0.5rem 1rem;
+	&-small {
+		@extend .card;
+		background: var(--colour-accent-faded);
+		padding: 0.5rem 1rem;
+	}
 }
 
 /* kanban card top border colour (if not overwritten, defaults to colour-accent) */
@@ -69,16 +68,11 @@
 }
 
 /* RAG colours */
-[data-rag="red"] {
-	--colour-card-highlight: var(--colour-red);
-}
-
-[data-rag="amber"] {
-	--colour-card-highlight: var(--colour-amber);
-}
-
-[data-rag="green"] {
-	--colour-card-highlight: var(--colour-green);
+$rag-colours: ("red", "amber", "green");
+@each $name in $rag-colours {
+	[data-rag="#{$name}"] {
+		--colour-card-highlight: var(--colour-#{$name});
+	}
 }
 
 // button that only displays content
