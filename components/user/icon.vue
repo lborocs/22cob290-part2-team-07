@@ -2,12 +2,13 @@
 import { profilePicture } from "@/types/user"
 
 defineProps<{
+	uid: number
 	name: string
 }>()
 </script>
 
 <template>
-	<img :src="profilePicture(name)" />
+	<NuxtLink :to="`/user/${uid}`"><img :src="profilePicture(name)" /></NuxtLink>
 </template>
 
 <style scoped lang="scss">
