@@ -55,6 +55,7 @@
 	background: var(--colour-background-2);
 	border-radius: var(--card-radius);
 	padding: 1rem 1.5rem;
+	margin: 0 auto;
 	&-small {
 		@extend .card;
 		background: var(--colour-accent-faded);
