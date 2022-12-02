@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue"
 import { RouteLocationRaw } from "vue-router"
 
 const { fix = false } = defineProps<{
