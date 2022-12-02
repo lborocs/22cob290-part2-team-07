@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { emailDomain } from "@/types/user"
-
 definePageMeta({
 	name: "Knowledge Search Results",
 })
@@ -10,7 +8,11 @@ const { data: posts } = useFetch("/api/posts")
 
 <template>
 	<KnowledgeSearchbar id="searchbar" />
-	<KnowledgePostPreview v-for="post in posts" v-bind="post" :preview="post.markdown" />
+	<KnowledgePostPreview
+		v-for="post in posts"
+		v-bind="post"
+		:preview="post.markdown"
+	/>
 </template>
 
 <style scoped lang="scss">
