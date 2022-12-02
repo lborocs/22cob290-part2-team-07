@@ -35,10 +35,23 @@ declare global {
 		project?: Project
 	}
 
-	// TODO finish
 	interface Project {
 		readonly uid: number
 		name: string
+		description: string
+		tasks: Task[]
+		deadline: Date
+		leader: User
+	}
+
+	interface Client {
+		readonly uid: number
+		name: string
+		representative: string
+		email: string
+		phone: string
+		website: string
+		address: string
 	}
 }
 
