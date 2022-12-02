@@ -3,8 +3,6 @@ definePageMeta({
 	name: "Project",
 })
 
-const projectToggle = ref(false)
-
 const projects = [
 	{
 		title: "Project 1",
@@ -32,29 +30,21 @@ const projects = [
 <template>
 	<p>The project page</p>
 
-	<button @click="projectToggle = !projectToggle">Show/hide projects</button>
-
-	<p>Currently hide is {{ projectToggle }}</p>
-
-	<div class="project-container">
-		<ProjectCard
-			v-for="project in projects"
-			:title="project.title"
-			:content="project.content"
-			:class="{ hide: projectToggle }"
-		/>
+	<div class="flex-row flex-centre">
+		<ProjectCard v-for="project in projects">
+			<template #title>
+				<h3>{{ project.title }}</h3>
+			</template>
+			<template #smallText>
+				<p>{{ project.content }}</p>
+			</template>
+			<template #footerText>
+				<p>footer text</p>
+			</template>
+		</ProjectCard>
 	</div>
 </template>
 
 <style scoped lang="scss">
-.project-container {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-}
-
-.hide {
-	display: none;
-}
+@use "~/assets/core";
 </style>
