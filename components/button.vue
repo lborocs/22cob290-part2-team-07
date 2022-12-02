@@ -31,7 +31,7 @@ button {
 	}
 
 	border-radius: 0.5rem;
-	font-size: 1.5em;
+	font-size: 1.2em;
 	#slot {
 		margin: 0 0.2rem;
 		font-weight: bold;
