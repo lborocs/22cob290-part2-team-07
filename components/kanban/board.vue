@@ -40,7 +40,9 @@
 </template>
 
 <style scoped lang="scss">
+@use "sass:list";
 @use "/assets/core" as *;
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -77,15 +79,11 @@ header {
 }
 
 // rag-colours = names in css vars
-$rag-colours: ("red", "amber", "green");
-$index: 1;
-
-// @each $col in $rag-colours {
-// 	.kanban-col:nth-child(#{$index}) {
-// 		@extend [data-rag="#{$col}"];
-// 	}
-// 	$index: $index + 1;
-// }
+@for $i from 1 through 3 {
+	.kanban-col:nth-child(#{$i}) {
+		@extend [data-rag="#{list.nth($rag-colours, $i)}"];
+	}
+}
 </style>
 
 <script setup lang="ts">
