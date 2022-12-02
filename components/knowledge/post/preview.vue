@@ -21,7 +21,7 @@ defineProps<{
 			>{{ topics[0].name }}</ButtonNuxt
 		>
 		<div class="owner aside">
-			<UserIcon v-bind="owner" />
+			<UserIcon v-bind="owner" :size="50" />
 			<span>{{ rankTitle(owner.rank) }}</span>
 		</div>
 		<Date :date="created" class="date aside" />

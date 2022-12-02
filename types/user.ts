@@ -1,9 +1,9 @@
 import { UserRank } from "."
 
-export function profilePicture(name: string): string {
+export function profilePicture(name: string, size: number = 50): string {
 	return `https://ui-avatars.com/api/?name=${encodeURIComponent(
 		name,
-	)}&background=random&size=50&format=svg`
+	)}&background=random&size=${size}&format=svg`
 }
 
 export const emailDomain = "@make-it-all.co.uk"
