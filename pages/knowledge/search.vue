@@ -10,7 +10,7 @@ const { data: posts } = useFetch("/api/posts")
 
 <template>
 	<KnowledgeSearchbar id="searchbar" />
-	<KnowledgePost v-for="post in posts" v-bind="post" :preview="post.markdown" />
+	<KnowledgePostPreview v-for="post in posts" v-bind="post" :preview="post.markdown" />
 </template>
 
 <style scoped lang="scss">

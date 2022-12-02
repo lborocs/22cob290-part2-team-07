@@ -7,6 +7,7 @@ declare global {
 		readonly uid: number
 		email: string
 		name: string
+		rank: UserRank
 	}
 
 	interface Topic {
@@ -60,4 +61,10 @@ export enum TaskStatus {
 	Todo,
 	InProgress,
 	Done,
+}
+
+export enum UserRank {
+	Employee,
+	TeamLeader,
+	Manager,
 }
