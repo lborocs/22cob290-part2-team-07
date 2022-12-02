@@ -29,11 +29,3 @@
 	background-color: var(--colour-background-1);
 	color: var(--colour-text);
 }
-
-// should this move to core?
-body {
-	margin: 0;
-	min-height: 100vh;
-	display: grid;
-	grid-template-rows: 1fr;
-}
