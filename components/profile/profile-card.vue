@@ -16,6 +16,11 @@
 				class="profile-pic"
 			/>
 		</div>
+		<div class="card-button-wrapper">
+			<button id="card-upload-button">
+				<p>Upload photo</p>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -54,5 +59,18 @@
 	aspect-ratio: 1;
 	border-radius: 50%;
 	border: 2px colour.$text-light-faded solid;
+}
+
+#card-upload-button {
+	width: fit-content;
+	height: 2rem;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+	cursor: pointer;
+	background: colour.$accent;
+	border-radius: 7px;
 }
 </style>
