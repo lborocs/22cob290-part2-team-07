@@ -3,11 +3,16 @@
 		<header>
 			<h2>Tasks</h2>
 			<div class="right-buttons">
+				<ButtonSwitch @change="onChange" />
 				<Button icon="material-symbols:filter-alt-outline">Filter</Button>
 				<Button icon="material-symbols:add">New Task</Button>
 			</div>
 		</header>
-		<KanbanBoard :tasks="tasks" />
+		<div v-if="selectedViewMode == 1">
+			Put the list here when it's done
+			<code> //TODO </code>
+		</div>
+		<KanbanBoard v-else :tasks="tasks" />
 	</article>
 </template>
 
@@ -29,4 +34,10 @@ header {
 defineProps<{
 	tasks: Task[]
 }>()
+
+const selectedViewMode = ref(1)
+
+function onChange(option: number) {
+	selectedViewMode.value = option
+}
 </script>
