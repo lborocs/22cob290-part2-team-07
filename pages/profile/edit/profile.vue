@@ -6,7 +6,20 @@ definePageMeta({
 
 <template>
 	<p>The Edit Profile Page</p>
-	<Modal v-show="true" class="align">
+	<profile-card>
+		<template #name>
+			<h2 id="title-card">Name</h2>
+			<!-- Need to make this dynamic -->
+		</template>
+		<template #account>
+			<h2 id="title-card">Account</h2>
+		</template>
+		<template #hierachy>
+			<h2 id="hierarchy-card">Employee</h2>
+			<!-- Need to make this dynamic -->
+		</template>
+	</profile-card>
+	<Modal v-show="false" class="align">
 		<template #popup-title>
 			<h2>Upload Photo</h2>
 		</template>
@@ -34,5 +47,10 @@ definePageMeta({
 	border-radius: 0.5rem;
 	height: 2.5em;
 	background: colour.$accent;
+}
+
+#title-card {
+	text-decoration: underline;
+	text-decoration-color: colour.$accent;
 }
 </style>
