@@ -1,4 +1,6 @@
 import { TaskStatus } from "~~/types"
+import { emailDomain } from "~~/types/user"
+import { UserRank } from "~~/types"
 
 export default defineEventHandler(event => {
 	return <Task[]>[
@@ -7,7 +9,26 @@ export default defineEventHandler(event => {
 			name: "Task 1",
 			description: "Task 1 description",
 			workerHours: 1,
-			assignees: [],
+			assignees: [
+				{
+					uid: 1,
+					email: `king${emailDomain}`,
+					name: "Neumann",
+					rank: UserRank.Manager,
+				},
+				{
+					uid: 2,
+					email: `queen${emailDomain}`,
+					name: "Queen",
+					rank: UserRank.Manager,
+				},
+				{
+					uid: 3,
+					email: `dilip${emailDomain}`,
+					name: "Dilip Smith",
+					rank: UserRank.Manager,
+				},
+			],
 			status: TaskStatus.Todo,
 			deadline: new Date("2022-12-25").getTime(),
 		},
