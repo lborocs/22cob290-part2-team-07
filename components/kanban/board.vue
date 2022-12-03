@@ -1,12 +1,5 @@
 <template>
 	<article class="card">
-		<header>
-			<h2>Tasks</h2>
-			<div class="right-buttons">
-				<Button icon="material-symbols:filter-alt-outline">Filter</Button>
-				<Button icon="material-symbols:add">New Task</Button>
-			</div>
-		</header>
 		<section class="kanban-wrapper">
 			<div
 				class="kanban-col"
@@ -43,19 +36,9 @@
 @use "sass:list";
 @use "/assets/core" as *;
 
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
 .kanban-wrapper {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-}
-
-.right-buttons {
-	@extend %flex-row, %flex-centre;
 }
 
 .kanban-col {
