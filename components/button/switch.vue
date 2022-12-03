@@ -22,9 +22,24 @@
 
 <style scoped lang="scss">
 .switch-form {
-	display: flex;
-	gap: 1rem;
+	display: grid;
+	grid-template-columns: 0 1fr 0 1fr;
+	text-align: center;
 }
+
+label {
+	padding: 0.4rem 1rem;
+	background-color: var(--colour-background-3);
+	cursor: pointer;
+
+	&:nth-of-type(1) {
+		border-radius: 100vmax 0 0 100vmax;
+	}
+	&:nth-of-type(2) {
+		border-radius: 0 100vmax 100vmax 0;
+	}
+}
+
 input[type="radio"] {
 	/* Add if not using autoprefixer */
 	-webkit-appearance: none;
@@ -33,10 +48,14 @@ input[type="radio"] {
 	background-color: #fff;
 	/* Not removed via appearance */
 	margin: 0;
-}
 
-input[type="radio"]:checked + label {
-	color: red;
+	&:checked + label {
+		background-color: var(--colour-accent);
+		color: var(--colour-background-1);
+	}
+	&:focus:checked + label {
+		outline: 3px solid black;
+	}
 }
 </style>
 
