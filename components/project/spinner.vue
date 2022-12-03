@@ -1,17 +1,35 @@
 <script setup>
 const props = defineProps({})
+
+// Update circular progress bar
+function updateProgressBar() {
+	const progress = project.progress()
+
+	document.querySelector("#percentageDone").innerHTML =
+		(progress.percentage * 100).toFixed(1) + "%"
+	document.querySelector("#tasksDone").innerHTML =
+		progress.done + "/" + progress.total + " tasks done"
+
+	document
+		.querySelector("#progress-bar")
+		.style.setProperty("--progress", progress.percentage * 100 + "%")
+	document
+		.querySelector("#progress-bar")
+		.style.setProperty("--progress-angle", progress.percentage + "turn")
+}
 </script>
 
 <template>
 	<div
 		class="spinner-parent"
+		id="progress-bar"
 		style="--progress: 60%; --progress-angle: 0.6turn"
 	>
 		<div class="spinner"></div>
 		<div class="spinner-end-wrapper"></div>
 		<div class="center">
-			<h3>60%</h3>
-			<p>9/15 tasks complete</p>
+			<h3 id="percentageDone">60%</h3>
+			<p id="tasksDone">9/15 tasks complete</p>
 		</div>
 	</div>
 </template>
