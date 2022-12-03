@@ -1,23 +1,44 @@
 <script setup lang="ts">
-defineProps<{}>()
+import { extend } from "@vue/shared"
+
+defineProps<{
+	text: boolean
+}>()
 </script>
 
 <template>
-	<div class="card flex-col flex-centre">
-		<header>
-			<slot name="title">Card title</slot>
-		</header>
-		<main class="flex-col flex-centre">
+	<div class="card-small flex-col centre" :class="{ 'card-text': text }">
+		<slot name="title"> </slot>
+		<main class="flex-col">
 			<slot name="largeContent"></slot>
 
-			<slot name="smallText"> small text</slot>
+			<slot name="smallText"></slot>
 		</main>
-		<footer>
-			<slot name="footerText">Footer text</slot>
-		</footer>
 	</div>
 </template>
 
 <style scoped lang="scss">
-@use "~/assets/core";
+@use "/assets/core.scss" as *;
+
+.card {
+	@extend .card;
+
+	width: 100%;
+	max-width: 30ch;
+	height: 100%;
+
+	&-text {
+		font-size: 1.5em;
+		font-weight: 500;
+	}
+}
+
+.flex-col {
+	@extend %flex-col;
+}
+
+.centre {
+	@extend %flex-centre;
+	text-align: center;
+}
 </style>
