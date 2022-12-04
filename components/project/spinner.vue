@@ -38,7 +38,6 @@ function updateProgressBar() {
 @use "/assets/core.scss" as *;
 @use "/assets/colour.scss" as *;
 
-$width: calc(25% / 2);
 .spinner-parent {
 	position: relative;
 	display: flex;
@@ -51,14 +50,15 @@ $width: calc(25% / 2);
 	border-radius: 100vh;
 	isolation: isolate;
 	margin: 0.5rem 0 0 1rem;
+	--width: calc(25% / 2);
 
 	&::before {
 		position: absolute;
 		top: 0;
 		content: "";
-		width: $width;
+		width: var(--width);
 		aspect-ratio: 1;
-		background: $accent;
+		background: --colour-accent;
 		border-radius: 100vmax;
 		z-index: 1;
 	}
@@ -74,7 +74,7 @@ $width: calc(25% / 2);
 	animation: initialise-prog 1s ease-in-out forwards;
 	background: conic-gradient(
 		from 0deg at 50% 50%,
-		$accent var(--prog),
+		var(--colour-accent) var(--prog),
 		$mid-grey var(--prog)
 	);
 }
@@ -105,7 +105,7 @@ $width: calc(25% / 2);
 .spinner-parent .center {
 	width: 75%;
 	z-index: 1;
-	background-color: $highlight;
+	background-color: var(--colour-highlight);
 	aspect-ratio: 1;
 	border-radius: 100vmax;
 	display: flex;
@@ -124,11 +124,11 @@ $width: calc(25% / 2);
 	&::after {
 		content: "";
 		position: absolute;
-		width: $width;
-		left: calc(50% - $width / 2);
+		width: var(--width);
+		left: calc(50% - var(--width) / 2);
 
 		aspect-ratio: 1;
-		background: $accent;
+		background: var(--colour-accent);
 		border-radius: 100vmax;
 		z-index: 3;
 	}

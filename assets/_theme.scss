@@ -14,6 +14,7 @@
 	--colour-red: #e32020bf;
 	--colour-amber: #ff9d30db;
 	--colour-green: #43d34a91;
+	--colour-highlight: #fff;
 
 	@media screen and (prefers-color-scheme: dark) {
 		--colour-text: #{colour.$text-dark};
@@ -21,6 +22,7 @@
 		--colour-background-1: #{colour.$background-1-dark};
 		--colour-background-2: #{colour.$background-2-dark};
 		--colour-background-3: #{colour.$background-3-dark};
+		--colour-highlight: #1d1d1d;
 	}
 
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
