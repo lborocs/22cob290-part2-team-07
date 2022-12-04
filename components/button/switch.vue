@@ -21,6 +21,7 @@
 </template>
 
 <style scoped lang="scss">
+@use "assets/animation";
 .switch-form {
 	display: grid;
 	grid-template-columns: 0 1fr 0 1fr;
@@ -31,6 +32,8 @@ label {
 	padding: 0.4rem 1rem;
 	background-color: var(--colour-background-3);
 	cursor: pointer;
+	transition: background-color animation.$transition-medium,
+		color animation.$transition-medium;
 
 	&:nth-of-type(1) {
 		border-radius: 100vmax 0 0 100vmax;
