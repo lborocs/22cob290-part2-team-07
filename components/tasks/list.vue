@@ -1,7 +1,7 @@
 <template>
 	<div class="task-list">
 		<div class="task-row" v-for="task in tasks" :key="task.uid">
-			<div class="project">
+			<div class="project details">
 				<span v-if="task.project" class="project-title">
 					<Icon icon="material-symbols:push-pin-outline" />
 					<p>{{ task.project.name }}</p>
@@ -12,7 +12,7 @@
 				</span>
 			</div>
 			<h3>{{ task.name }}</h3>
-			<p class="details">{{ task.description }}</p>
+			<p class="details line-limit">{{ task.description }}</p>
 
 			<p class="details">
 				<Icon icon="material-symbols:hourglass-bottom-rounded" />
@@ -60,9 +60,18 @@
 
 .details {
 	color: var(--colour-text-faded);
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	svg {
+		font-size: 1.4rem;
+	}
+}
+
+.line-limit {
+	display: -webkit-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: -webkit-box;
 	-webkit-line-clamp: 2; /* number of lines to show */
 	line-clamp: 2;
 	-webkit-box-orient: vertical;
