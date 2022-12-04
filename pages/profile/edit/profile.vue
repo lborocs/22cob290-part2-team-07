@@ -19,17 +19,6 @@ definePageMeta({
 			<!-- Need to make this dynamic -->
 		</template>
 	</profile-card>
-	<Modal v-show="false" class="align">
-		<template #popup-title>
-			<h2>Upload Photo</h2>
-		</template>
-		<template #popup-text>
-			<p>Upload a photo of your choice</p>
-		</template>
-		<template #popup-buttons>
-			<button class="upload-button">Upload</button>
-		</template>
-	</Modal>
 </template>
 
 <style scoped lang="scss">
@@ -39,14 +28,6 @@ definePageMeta({
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-
-.upload-button {
-	margin-top: 1.2rem;
-	width: 25%;
-	border-radius: 0.5rem;
-	height: 2.5em;
-	background: colour.$accent;
 }
 
 #title-card {
