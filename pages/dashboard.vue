@@ -7,7 +7,7 @@ const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
 
 <template>
 	<p>The home dashboard</p>
-	<KanbanBoard :tasks="tasks!" />
+	<TaskSwitcher :tasks="tasks!" />
 </template>
 
 <style scoped lang="scss"></style>
