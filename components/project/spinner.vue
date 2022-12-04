@@ -23,13 +23,13 @@ function updateProgressBar() {
 	<div
 		class="spinner-parent"
 		id="progress-bar"
-		style="--progress: 60%; --progress-angle: 0.6turn"
+		style="--progress: 70%; --progress-angle: 0.7turn"
 	>
 		<div class="spinner"></div>
 		<div class="spinner-end-wrapper"></div>
 		<div class="center">
-			<h3 id="percentageDone">60%</h3>
-			<p id="tasksDone">9/15 tasks complete</p>
+			<h3 id="percentageDone">70%</h3>
+			<p id="tasksDone">9/15 tasks done</p>
 		</div>
 	</div>
 </template>
@@ -44,12 +44,11 @@ function updateProgressBar() {
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	width: 15rem;
+	width: 14rem;
 	aspect-ratio: 1;
 	background: transparent;
 	border-radius: 100vh;
 	isolation: isolate;
-	margin: 0.5rem 0 0 1rem;
 	--width: calc(25% / 2);
 
 	&::before {
@@ -111,7 +110,7 @@ function updateProgressBar() {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	/*box-shadow: 0 0 5px 5px rgb(0, 0, 0, 0.2);*/
+	//box-shadow: 0 0 5px 5px rgb(0, 0, 0, 0.2);
 }
 
 .spinner-end-wrapper {
