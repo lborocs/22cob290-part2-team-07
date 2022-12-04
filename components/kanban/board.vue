@@ -1,35 +1,33 @@
 <template>
-	<article class="card">
-		<section class="kanban-wrapper">
-			<div
-				class="kanban-col"
-				@dragover="onDragOver($event)"
-				@drop="onDrop($event)"
-			>
-				<KanbanCard
-					v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
-					:key="task.uid"
-					:task="task"
-				/>
-			</div>
-			<div class="kanban-col">
-				<KanbanCard
-					v-for="task in tasks.filter(
-						task => task.status == TaskStatus.InProgress,
-					)"
-					:key="task.uid"
-					:task="task"
-				/>
-			</div>
-			<div class="kanban-col">
-				<KanbanCard
-					v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
-					:key="task.uid"
-					:task="task"
-				/>
-			</div>
-		</section>
-	</article>
+	<div class="kanban-wrapper">
+		<div
+			class="kanban-col"
+			@dragover="onDragOver($event)"
+			@drop="onDrop($event)"
+		>
+			<KanbanCard
+				v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
+				:key="task.uid"
+				:task="task"
+			/>
+		</div>
+		<div class="kanban-col">
+			<KanbanCard
+				v-for="task in tasks.filter(
+					task => task.status == TaskStatus.InProgress,
+				)"
+				:key="task.uid"
+				:task="task"
+			/>
+		</div>
+		<div class="kanban-col">
+			<KanbanCard
+				v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
+				:key="task.uid"
+				:task="task"
+			/>
+		</div>
+	</div>
 </template>
 
 <style scoped lang="scss">

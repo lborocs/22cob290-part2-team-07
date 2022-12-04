@@ -7,18 +7,8 @@
 	>
 		<div class="task-header">
 			<h3>{{ props.task.name }}</h3>
-			<div class="assignees" v-if="task.assignees.length > 0">
-				<img
-					v-for="person in task.assignees.slice(0, 3)"
-					:src="`https://ui-avatars.com/api/?name=${person.name.replace(
-						' ',
-						'+',
-					)}&background=random&color=fff&size=42&rounded=true`"
-					:alt="`Avatar for ${person}`"
-				/>
-				<div v-if="task.assignees.length > 3" class="more-assignees">
-					+{{ task.assignees.length - 3 }}
-				</div>
+			<div v-if="task.assignees.length > 0">
+				<AvatarStack :array="task.assignees.slice(0, 3)" />
 			</div>
 			<p v-else>No-one assigned to task</p>
 		</div>
@@ -49,24 +39,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
-	.assignees {
-		display: flex;
-		flex-direction: row-reverse;
-		img:not(:last-child) {
-			margin-left: -1.5rem;
-		}
-		.more-assignees {
-			display: block;
-			--image-size: 42px;
-			width: var(--image-size);
-			height: var(--image-size);
-			background-color: var(--colour-accent);
-			border-radius: 100vmax;
-			display: grid;
-			place-items: center;
-		}
-	}
 }
 
 h3 {

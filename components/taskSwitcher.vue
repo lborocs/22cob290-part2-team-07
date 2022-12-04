@@ -8,10 +8,7 @@
 				<Button icon="material-symbols:add">New Task</Button>
 			</div>
 		</header>
-		<div v-if="selectedViewMode == 1">
-			Put the list here when it's done
-			<code> //TODO </code>
-		</div>
+		<TasksList v-if="selectedViewMode == 1" :tasks="tasks" />
 		<KanbanBoard v-else :tasks="tasks" />
 	</article>
 </template>
