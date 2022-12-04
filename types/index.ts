@@ -40,7 +40,7 @@ declare global {
 		readonly uid: number
 		name: string
 		description: string
-		tasks: Task[]
+		tasks?: Task[]
 		deadline: Date
 		leader: User
 	}

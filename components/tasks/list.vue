@@ -1,33 +1,41 @@
 <template>
 	<div class="task-list">
 		<div class="task-row" v-for="task in tasks" :key="task.uid">
+			<div class="project">
+				<span v-if="task.project" class="project-title">
+					<Icon icon="material-symbols:push-pin-outline" />
+					<p>{{ task.project.name }}</p>
+				</span>
+				<span v-else class="project-title">
+					<Icon icon="material-symbols:person-outline" />
+					<p>Personal</p>
+				</span>
+			</div>
 			<h3>{{ task.name }}</h3>
 			<p class="details">{{ task.description }}</p>
 
-			<div class="end-details">
-				<AvatarStack :array="task.assignees.slice(0, 3)" />
-
-				<p class="details">
-					<Icon icon="material-symbols:hourglass-bottom-rounded" />
-					{{ task.workerHours }} Hours
-				</p>
-				<p class="details">
-					<Icon icon="material-symbols:calendar-month-outline-rounded" />
-					{{ new Date(task.deadline).toLocaleDateString() }}
-				</p>
-			</div>
+			<p class="details">
+				<Icon icon="material-symbols:hourglass-bottom-rounded" />
+				{{ task.workerHours }} Hours
+			</p>
+			<p class="details">
+				<Icon icon="material-symbols:calendar-month-outline-rounded" />
+				{{ new Date(task.deadline).toLocaleDateString() }}
+			</p>
+			<AvatarStack :array="task.assignees.slice(0, 3)" />
 		</div>
 	</div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .task-list {
 	display: flex;
 	flex-direction: column;
 }
 
 .task-row {
-	display: flex;
+	display: grid;
+	grid-template-columns: 0.8fr 1fr 3fr 1fr 1fr 0.5fr;
 	flex-direction: row;
 	align-items: center;
 	gap: 1rem;
@@ -41,15 +49,23 @@
 	}
 }
 
-.end-details {
+.project-title {
+	font-size: 2rem;
 	display: flex;
-	flex-direction: row;
 	align-items: center;
-	gap: 1rem;
-	margin-left: auto;
+	p {
+		font-size: 1rem;
+	}
 }
+
 .details {
 	color: var(--colour-text-faded);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* number of lines to show */
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 </style>
 
