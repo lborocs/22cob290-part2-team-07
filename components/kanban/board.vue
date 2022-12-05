@@ -1,10 +1,14 @@
 <template>
+	<div
+		class="draggable"
+		draggable="true"
+		style="background: red"
+		@drag="onDrag"
+	>
+		This is draggable
+	</div>
 	<div class="kanban-wrapper">
-		<div
-			class="kanban-col"
-			@dragover="onDragOver($event)"
-			@drop="onDrop($event)"
-		>
+		<div class="kanban-col" @dragover="onDragOver" @drop="onDrop">
 			<h3 class="kanban-col-title">TODO</h3>
 			<KanbanCard
 				v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
@@ -81,13 +85,34 @@ defineProps<{
 	tasks: Task[]
 }>()
 
-function onDragOver(event: DragEvent) {
+function onDrag(event: DragEvent) {
+	// console.log(event)
+	// console.log(item)
 	event.preventDefault()
+	/* if (event.dataTransfer) {
+		// event.dataTransfer.dropEffect = "move"
+		// event.dataTransfer.effectAllowed = "move"
+		
+	} else {
+		console.log("No data transfer")
+	} */
+	event.dataTransfer!.setData("task", `This is draggable`)
+	console.log(event.dataTransfer!)
+	console.log(event.dataTransfer!.getData("task"))
+}
+
+function onDragOver(event: DragEvent) {
+	if (event.preventDefault) {
+		event.preventDefault()
+	}
+	return false
+
 	// console.log("dragging over")
 }
 
 function onDrop(event: DragEvent) {
-	event.preventDefault()
+	console.log(event.dataTransfer!.types)
+
 	if (event.dataTransfer) {
 		const data = event.dataTransfer.getData("task")
 		const target = event.target as HTMLElement
