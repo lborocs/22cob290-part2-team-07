@@ -4,4 +4,11 @@ export default defineNuxtConfig({
 	experimental: {
 		reactivityTransform: true,
 	},
+	app: {
+		head: {
+			htmlAttrs: {
+				lang: "en",
+			},
+		},
+	},
 })

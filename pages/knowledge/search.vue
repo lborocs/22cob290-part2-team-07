@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { emailDomain } from "@/types/user"
-
 definePageMeta({
 	name: "Knowledge Search Results",
 })

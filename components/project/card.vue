@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { extend } from "@vue/shared"
-
 defineProps<{
 	text: boolean
 	title: string
@@ -14,9 +12,7 @@ defineProps<{
 			class="flex-col centre card-project-body"
 			:class="{ 'card-project-text': text }"
 		>
-			<slot name="largeContent"></slot>
-
-			<slot name="smallText"></slot>
+			<slot></slot>
 		</div>
 	</div>
 </template>
@@ -29,7 +25,6 @@ defineProps<{
 	width: 100%;
 	max-width: 40ch;
 	margin: 0.5rem;
-	padding: 1rem;
 
 	&-text {
 		font-size: 1.75rem;
@@ -42,7 +37,8 @@ defineProps<{
 	}
 
 	&-body {
-		margin: 1rem auto;
+		margin: 1rem auto; // top right bottom left
+		margin-bottom: 0;
 		flex-grow: 2;
 	}
 }

@@ -1,22 +1,5 @@
-<script>
-export default {
-	data() {
-		return {
-			name: "Name", // need to make dynamic
-			isShown: false,
-			passIsShown: false,
-		}
-	},
-	methods: {
-		toggleUpload() {
-			this.isShown = !this.isShown
-		},
-		togglePassword() {
-			this.passIsShown = !this.passIsShown
-		},
-	},
-}
-</script>
+<script setup></script>
+
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
@@ -33,87 +16,16 @@ export default {
 				class="profile-pic"
 			/>
 		</div>
-		<Modal v-show="isShown" class="align">
-			<template #close-btn>
-				<div class="close-btn" @click="toggleUpload">&#10006;</div>
-			</template>
-			<template #popup-title>
-				<h2>Upload Photo</h2>
-			</template>
-			<template #popup-text>
-				<p>Upload a photo of your choice</p>
-			</template>
-			<template #popup-buttons>
-				<button class="upload-button">Upload</button>
-			</template>
-		</Modal>
-		<div class="card-button-wrapper">
-			<button @click="toggleUpload" id="card-upload-button">
-				<p>Upload photo</p>
-			</button>
-		</div>
 
 		<div class="card-customisation-wrapper">
-			<div class="wrapper-appearance">
-				<hr class="solid" />
-				<h1 class="bold-title">Appearance</h1>
-				<label for="theme" class="label-subtext"
-					>Customize how Make-It-All looks on your device</label
-				>
-				<select name="theme" class="theme">
-					<option value="light">Light</option>
-					<option value="dark">Dark</option>
-				</select>
-			</div>
-			<div class="wrapper-password">
-				<hr class="solid" />
-				<h1 class="bold-title">Password</h1>
-				<label for="change-password-btn" class="label-subtext"
-					>Change your password to a more memorable one</label
-				>
-				<button @click="togglePassword" id="change-password-btn">
-					<p>Change Password</p>
-				</button>
-			</div>
-			<Modal v-show="passIsShown" class="align">
-				<template #close-btn>
-					<div class="close-btn" @click="togglePassword">&#10006;</div>
-				</template>
-				<template #popup-title>
-					<h2>Change Password</h2>
-				</template>
-				<template #popup-text>
-					<p>Change your password to a more memorable one</p>
-				</template>
-				<template #popup-buttons>
-					<button class="upload-button spacing">Change Password</button>
-					<button class="upload-button spacing">Save</button>
-				</template>
-			</Modal>
 			<div class="wrapper-email">
 				<hr class="solid" />
-				<h1 class="bold-title">My Email</h1>
+				<h1 class="bold-title">Their email</h1>
 				<label for="email-box" class="label-subtext"
-					>This is your assigned company email</label
+					>This is their assigned company email</label
 				>
 				<label id="email-box">f.batmaz@lboro.ac.uk</label>
 				<img class="email-lock-img" src="~/assets/lock.png" alt="lock" />
-			</div>
-			<div class="wrapper-invite">
-				<hr class="solid" />
-				<h1 class="bold-title">Invite Others</h1>
-				<label for="invite-btn" class="label-subtext"
-					>Invite your co-workers who have not yet signed up</label
-				>
-				<button id="invite-btn">
-					<p>Invite</p>
-				</button>
-			</div>
-			<div class="wrapper-logout">
-				<hr />
-				<button class="logout-btn" id="logout">
-					<p>Logout</p>
-				</button>
 			</div>
 		</div>
 	</div>
@@ -215,15 +127,10 @@ $logout: #da0000;
 }
 .upload-button {
 	margin-top: 1.2rem;
-	width: fit-content;
+	width: 25%;
 	border-radius: 0.5rem;
 	height: 2.5em;
 	background: colour.$accent;
-	cursor: pointer;
-}
-
-.spacing:not(:last-child) {
-	margin-right: 1rem;
 }
 
 #email-box {
@@ -257,10 +164,5 @@ $logout: #da0000;
 	background: $logout;
 	border-radius: 0.438rem;
 	margin-top: 1rem;
-}
-
-.close-btn {
-	float: right;
-	cursor: pointer;
 }
 </style>

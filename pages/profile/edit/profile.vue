@@ -24,11 +24,6 @@ definePageMeta({
 <style scoped lang="scss">
 @use "/assets/core.scss" as *;
 @use "/assets/colour";
-.align {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
 
 #title-card {
 	text-decoration: underline;

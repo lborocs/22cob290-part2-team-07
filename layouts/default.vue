@@ -1,8 +1,6 @@
 <!-- The default layout is used on every page unless explicity specified -->
 
 <script setup lang="ts">
-import { Ref } from "vue"
-import { emailDomain } from "@/types/user"
 const route = useRoute()
 // Updates the page head information on navigation.
 useHead(() => {
@@ -23,7 +21,7 @@ function logout() {
 	<div class="page-wrapper">
 		<header>
 			<h1>{{ $route.name }}</h1>
-			<UserIcon v-if="user !== null" v-bind="user" />
+			<UserIcon v-if="user !== null" v-bind="user" :size="50" />
 		</header>
 		<nav>
 			<img src="~/assets/tools.svg" alt="Make It All Logo" class="nav-logo" />

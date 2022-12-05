@@ -3,6 +3,7 @@
 <template>
 	<div class="backdrop">
 		<div class="modal">
+			<slot name="close-btn"></slot>
 			<slot name="popup-title"></slot>
 			<slot name="popup-text"></slot>
 			<slot name="popup-buttons"></slot>
