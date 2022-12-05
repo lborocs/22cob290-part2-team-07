@@ -5,6 +5,8 @@ export default {
 			name: "Name", // need to make dynamic
 			isShown: false,
 			passIsShown: false,
+			invIsShown: false,
+			logout: false,
 		}
 	},
 	methods: {
@@ -13,6 +15,12 @@ export default {
 		},
 		togglePassword() {
 			this.passIsShown = !this.passIsShown
+		},
+		toggleInv() {
+			this.invIsShown = !this.invIsShown
+		},
+		toggleLogout() {
+			this.logout = !this.logout
 		},
 	},
 }
@@ -105,16 +113,44 @@ export default {
 				<label for="invite-btn" class="label-subtext"
 					>Invite your co-workers who have not yet signed up</label
 				>
-				<button id="invite-btn">
+				<button @click="toggleInv" id="invite-btn">
 					<p>Invite</p>
 				</button>
 			</div>
+			<Modal v-show="invIsShown" class="align">
+				<template #close-btn>
+					<div class="close-btn" @click="toggleInv">&#10006;</div>
+				</template>
+				<template #popup-title>
+					<h2>Invite User</h2>
+				</template>
+				<template #popup-text>
+					<p>Invite a colleague to the Make-It-All Portal</p>
+				</template>
+				<template #popup-buttons>
+					<button class="upload-button">Invite</button>
+				</template>
+			</Modal>
 			<div class="wrapper-logout">
 				<hr />
-				<button class="logout-btn" id="logout">
+				<button @click="toggleLogout" class="logout-btn" id="logout">
 					<p>Logout</p>
 				</button>
 			</div>
+			<Modal v-show="logout" class="align">
+				<template #close-btn>
+					<div class="close-btn" @click="toggleLogout">&#10006;</div>
+				</template>
+				<template #popup-title>
+					<h2>Logout</h2>
+				</template>
+				<template #popup-text>
+					<p>Are you sure you want to logout?</p>
+				</template>
+				<template #popup-buttons>
+					<button class="logout-button">Logout</button>
+				</template>
+			</Modal>
 		</div>
 	</div>
 </template>
@@ -219,6 +255,15 @@ $logout: #da0000;
 	border-radius: 0.5rem;
 	height: 2.5em;
 	background: colour.$accent;
+	cursor: pointer;
+}
+
+.logout-button {
+	margin-top: 1.2rem;
+	width: fit-content;
+	border-radius: 0.5rem;
+	height: 2.5em;
+	background: $logout;
 	cursor: pointer;
 }
 
