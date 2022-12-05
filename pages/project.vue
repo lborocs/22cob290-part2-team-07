@@ -55,6 +55,7 @@ function dateDiffInDays(a: any, b: any) {
 					alt="Team leader"
 					class="profile-pic"
 				/>
+				<!-- <UserIcon /> -->
 				<p>Firat Batmaz</p>
 			</ProjectCard>
 			<ProjectCard title="Project Client" :text="true">
@@ -99,8 +100,7 @@ function dateDiffInDays(a: any, b: any) {
 .deadline {
 	font-size: 3rem;
 	font-weight: 500;
-	margin: 2rem auto; /* top right bottom left */
-	margin-bottom: 0;
+	margin: 0 auto; /* top right bottom left */
 	text-align: center;
 	/* margin-top: 3rem;
   margin-bottom: 1rem; */
