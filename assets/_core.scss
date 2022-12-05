@@ -91,3 +91,9 @@ $rag-colours: ("red", "amber", "green");
 		cursor: pointer;
 	}
 }
+
+.profile-pic {
+	aspect-ratio: 1;
+	border-radius: 50%;
+	border: 2px var(--colour-accent-faded) solid;
+}

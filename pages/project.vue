@@ -3,13 +3,6 @@ definePageMeta({
 	name: "Project",
 })
 
-const projects = [
-	{
-		title: "Project 1",
-		content: "This is the first project",
-	},
-]
-
 const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
 
 // Set project deadline date
@@ -47,63 +40,38 @@ function dateDiffInDays(a: any, b: any) {
 </script>
 
 <template>
-	<p>The project page</p>
 	<main>
-		<section class="flex-row centre">
-			<ProjectCard :text="false">
-				<template #title>
-					<h3>Project Progress</h3>
-				</template>
-				<template #largeContent>
-					<ProjectSpinner />
-				</template>
-				<template #smallText> </template>
+		<section class="flex-row">
+			<ProjectCard title="Project Progress" :text="false">
+				<ProjectSpinner />
 			</ProjectCard>
-
-			<ProjectCard :text="true">
-				<template #title>
-					<h3>Project deadline</h3>
-				</template>
-				<template #smallText>
-					<p id="project-deadline">12th December 2021</p>
-					<p id="days-remaining">5 days remaining</p>
-				</template>
+			<ProjectCard title="Project Deadline" :text="true">
+				<p id="project-deadline" class="deadline">12th December 2021</p>
+				<p id="days-remaining" class="deadline-days">5 days remaining</p>
 			</ProjectCard>
-
-			<ProjectCard :text="true">
-				<template #title>
-					<h3>Team leader</h3>
-				</template>
-				<template #largeContent>
-					<img
-						src="https://ui-avatars.com/api/?name=Firat Batmaz&background=random&size=50&format=svg"
-						alt="Team leader"
-					/>
-				</template>
-				<template #smallText>
-					<p>Firat Batmaz</p>
-				</template>
+			<ProjectCard title="Project Lead" :text="true">
+				<img
+					src="https://ui-avatars.com/api/?name=Firat Batmaz&background=random&size=150&format=svg"
+					alt="Team leader"
+					class="profile-pic"
+				/>
+				<p>Firat Batmaz</p>
 			</ProjectCard>
-
-			<ProjectCard :text="true">
-				<template #title>
-					<h3>Client details</h3>
-				</template>
-				<template #largeContent>
-					<img
-						src="https://ui-avatars.com/api/?name=Loughborough University&background=random&size=50&format=svg"
-						alt="Team leader"
-					/>
-				</template>
-				<template #smallText>
-					<p>Loughborough University</p>
-				</template>
+			<ProjectCard title="Project Client" :text="true">
+				<img
+					src="https://ui-avatars.com/api/?name=Loughborough University&background=random&size=150&format=svg"
+					alt="Project client"
+					class="profile-pic"
+				/>
+				<p>Loughborough University</p>
 			</ProjectCard>
 		</section>
 
-		<section>
-			<KanbanBoard :tasks="tasks!" />
+		<section class="card">
+			<TaskSwitcher :tasks="tasks!" />
 		</section>
+
+		<section class="card"></section>
 	</main>
 </template>
 
@@ -112,9 +80,39 @@ function dateDiffInDays(a: any, b: any) {
 
 .flex-row {
 	@extend %flex-row;
+	justify-content: center;
+	flex-wrap: nowrap;
 }
 
 .centre {
 	@extend %flex-centre;
+}
+
+.card-small-image {
+	aspect-ratio: 1;
+	border-radius: 100vh;
+	width: 8rem;
+	height: 8rem;
+	margin: 1rem 0 1rem 0;
+}
+
+.deadline {
+	font-size: 3rem;
+	font-weight: 500;
+	margin: 2rem auto; /* top right bottom left */
+	margin-bottom: 0;
+	text-align: center;
+	/* margin-top: 3rem;
+  margin-bottom: 1rem; */
+
+	&-days {
+		font-size: 1.25rem;
+		font-weight: 400;
+		margin: 1rem auto; /* top right bottom left */
+		text-align: center;
+		color: var(--colour-red);
+		/* margin-top: 1rem;
+  		margin-bottom: 3rem; */
+	}
 }
 </style>
