@@ -1,13 +1,6 @@
 <template>
 	<div class="assignees">
-		<img
-			v-for="person in array"
-			:src="`https://ui-avatars.com/api/?name=${person.name.replace(
-				' ',
-				'+',
-			)}&background=random&color=fff&size=42&rounded=true`"
-			:alt="`Avatar for ${person}`"
-		/>
+		<UserIcon v-for="person in array" v-bind="person" :size="42" />
 		<div v-if="array.length > 3" class="more-assignees">
 			+{{ array.length - 3 }}
 		</div>
@@ -18,7 +11,7 @@
 .assignees {
 	display: flex;
 	flex-direction: row-reverse;
-	img:not(:last-child) {
+	a:not(:last-child) {
 		margin-left: -1.5rem;
 	}
 	.more-assignees {
@@ -35,6 +28,8 @@
 </style>
 
 <script setup lang="ts">
+import { profilePicture } from "@/types/user"
+
 const props = defineProps<{
 	array: User[]
 }>()
