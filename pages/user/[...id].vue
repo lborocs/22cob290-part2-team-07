@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// defining the page
+definePageMeta({
+	name: "Profile-view",
+})
+
+</script>
 
 <template>
 	<div>{{ $route.params.id[0] }}</div>
