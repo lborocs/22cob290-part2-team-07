@@ -1,7 +1,15 @@
 <template>
 	<div class="task-list">
 		<div class="task-row" v-for="task in tasks" :key="task.uid">
-			<input type="checkbox" name="completed" class="checkbox" />
+			<input
+				type="checkbox"
+				name="completed"
+				:id="`completed=${task.uid}`"
+				class="checkbox"
+			/>
+			<label :for="`completed=${task.uid}`" class="sr-only">
+				Mark {{ task.name }} as completed
+			</label>
 			<div class="project details">
 				<span v-if="task.project" class="project-title">
 					<Icon icon="material-symbols:push-pin-outline" />
