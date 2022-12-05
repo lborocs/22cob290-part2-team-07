@@ -8,7 +8,7 @@ const { data: posts } = useFetch("/api/posts")
 
 <template>
 	<KnowledgeSearchbar id="searchbar" />
-	<KnowledgePostPreview v-for="post in posts" v-bind="post" />
+	<KnowledgePostPreview v-for="post in posts" :key="post.uid" v-bind="post" />
 </template>
 
 <style scoped lang="scss">
