@@ -26,15 +26,13 @@ defineProps<{
 		</div>
 		<Date :date="created" class="date aside" />
 		<h2>{{ title }}</h2>
-		<main>
-			<div class="preview">{{ preview }}</div>
-			<ButtonNuxt
-				class="view"
-				:to="`/knowledge/post/${uid}`"
-				icon="material-symbols:visibility-outline-rounded"
-				>View</ButtonNuxt
-			>
-		</main>
+		<div class="preview">{{ preview }}</div>
+		<ButtonNuxt
+			class="view"
+			:to="`/knowledge/post/${uid}`"
+			icon="material-symbols:visibility-outline-rounded"
+			>View</ButtonNuxt
+		>
 	</article>
 </template>
 
@@ -48,7 +46,7 @@ article {
 	grid-template:
 		"topic title" 1fr
 		"owner body" auto
-		"date body" 1fr / auto 1fr;
+		"date view" 1fr / auto 1fr;
 }
 
 .aside {
@@ -74,14 +72,11 @@ h2 {
 	margin: 0;
 }
 
-main {
+div.preview {
 	margin-top: 0.1rem;
 	padding-top: 0.1rem;
 	border-top: 2px solid var(--colour-text);
 	grid-area: body;
-
-	@extend %flex-col;
-	justify-content: space-between;
 }
 
 .preview {
@@ -89,6 +84,8 @@ main {
 }
 
 .view {
+	margin-left: auto;
+	grid-area: view;
 	align-self: flex-end;
 }
 </style>
