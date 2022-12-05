@@ -30,8 +30,9 @@
 
 label {
 	padding: 0.4rem 1rem;
-	background-color: var(--colour-background-3);
 	cursor: pointer;
+	background-color: var(--colour-accent);
+	color: var(--colour-background-1);
 	transition: background-color animation.$transition-medium,
 		color animation.$transition-medium;
 
@@ -53,8 +54,8 @@ input[type="radio"] {
 	margin: 0;
 
 	&:checked + label {
-		background-color: var(--colour-accent);
-		color: var(--colour-background-1);
+		background-color: var(--colour-background-3);
+		color: var(--colour-text);
 	}
 	&:focus:checked + label {
 		outline: 3px solid black;
