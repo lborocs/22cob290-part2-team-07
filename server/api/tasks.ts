@@ -1,33 +1,17 @@
 import { TaskStatus } from "~~/types"
-import { emailDomain } from "~~/types/user"
 import { UserRank } from "~~/types"
 
-export default defineEventHandler(event => {
-	return <Task[]>[
+export default defineEventHandler(async event => {
+	const tasks: Task[] = [
 		{
 			uid: 1,
 			name: "Task 1",
 			description: "Task 1 description",
 			workerHours: 1,
 			assignees: [
-				{
-					uid: 1,
-					email: `king${emailDomain}`,
-					name: "Neumann",
-					rank: UserRank.Manager,
-				},
-				{
-					uid: 2,
-					email: `queen${emailDomain}`,
-					name: "Queen",
-					rank: UserRank.Manager,
-				},
-				{
-					uid: 3,
-					email: `dilip${emailDomain}`,
-					name: "Dilip Smith",
-					rank: UserRank.Manager,
-				},
+				await $fetch("/api/user/1"),
+				await $fetch("/api/user/2"	),
+				await $fetch("/api/user/3"),
 			],
 			status: TaskStatus.Todo,
 			deadline: new Date("2022-12-25").getTime(),
@@ -77,4 +61,5 @@ export default defineEventHandler(event => {
 			deadline: new Date("2022-12-25").getTime(),
 		},
 	]
+	return tasks
 })
