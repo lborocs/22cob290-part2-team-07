@@ -3,15 +3,15 @@ export default defineCachedEventHandler(
 		return <Topic[]>[
 			{
 				uid: 1,
-				name: "Topic A",
+				name: "Latin",
 			},
 			{
 				uid: 2,
-				name: "Topic B",
+				name: "Movies",
 			},
 			{
 				uid: 3,
-				name: "Topic C",
+				name: "PC Issues",
 			},
 		]
 	},

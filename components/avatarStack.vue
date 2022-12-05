@@ -1,6 +1,11 @@
 <template>
 	<div class="assignees">
-		<UserIcon v-for="person in array" v-bind="person" :size="42" />
+		<UserIcon
+			v-for="person in array"
+			:key="person.uid"
+			v-bind="person"
+			:size="42"
+		/>
 		<div v-if="array.length > 3" class="more-assignees">
 			+{{ array.length - 3 }}
 		</div>

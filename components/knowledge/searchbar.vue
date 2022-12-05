@@ -28,6 +28,7 @@ const { data: topics } = useLazyFetch("/api/topics")
 
 form {
 	@extend %flex-row, %flex-centre;
+	width: 70%;
 	> * {
 		margin: {
 			top: 0.25rem;
