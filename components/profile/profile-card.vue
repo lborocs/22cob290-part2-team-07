@@ -1,5 +1,18 @@
-<script setup></script>
-
+<script>
+export default {
+	data() {
+		return {
+			name: "Name", // need to make dynamic
+			isShown: false,
+		}
+	},
+	methods: {
+		toggleModal() {
+			this.isShown = !this.isShown
+		},
+	},
+}
+</script>
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
@@ -16,7 +29,10 @@
 				class="profile-pic"
 			/>
 		</div>
-		<Modal v-show="false" class="align">
+		<Modal v-show="isShown" class="align">
+			<template #close-btn>
+				<div class="close-btn" @click="toggleModal">&#10006;</div>
+			</template>
 			<template #popup-title>
 				<h2>Upload Photo</h2>
 			</template>
@@ -28,7 +44,7 @@
 			</template>
 		</Modal>
 		<div class="card-button-wrapper">
-			<button @click="showModal" id="card-upload-button">
+			<button @click="toggleModal" id="card-upload-button">
 				<p>Upload photo</p>
 			</button>
 		</div>
@@ -184,6 +200,7 @@ $logout: #da0000;
 	border-radius: 0.5rem;
 	height: 2.5em;
 	background: colour.$accent;
+	cursor: pointer;
 }
 
 #email-box {
@@ -217,5 +234,10 @@ $logout: #da0000;
 	background: $logout;
 	border-radius: 0.438rem;
 	margin-top: 1rem;
+}
+
+.close-btn {
+	float: right;
+	cursor: pointer;
 }
 </style>
