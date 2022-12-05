@@ -1,5 +1,22 @@
-<script setup></script>
-
+<script>
+export default {
+	data() {
+		return {
+			name: "Name", // need to make dynamic
+			isShown: false,
+			passIsShown: false,
+		}
+	},
+	methods: {
+		toggleUpload() {
+			this.isShown = !this.isShown
+		},
+		togglePassword() {
+			this.passIsShown = !this.passIsShown
+		},
+	},
+}
+</script>
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
@@ -16,7 +33,10 @@
 				class="profile-pic"
 			/>
 		</div>
-		<Modal v-show="false" class="align">
+		<Modal v-show="isShown" class="align">
+			<template #close-btn>
+				<div class="close-btn" @click="toggleUpload">&#10006;</div>
+			</template>
 			<template #popup-title>
 				<h2>Upload Photo</h2>
 			</template>
@@ -28,7 +48,7 @@
 			</template>
 		</Modal>
 		<div class="card-button-wrapper">
-			<button @click="showModal" id="card-upload-button">
+			<button @click="toggleUpload" id="card-upload-button">
 				<p>Upload photo</p>
 			</button>
 		</div>
@@ -51,10 +71,25 @@
 				<label for="change-password-btn" class="label-subtext"
 					>Change your password to a more memorable one</label
 				>
-				<button id="change-password-btn">
+				<button @click="togglePassword" id="change-password-btn">
 					<p>Change Password</p>
 				</button>
 			</div>
+			<Modal v-show="passIsShown" class="align">
+				<template #close-btn>
+					<div class="close-btn" @click="togglePassword">&#10006;</div>
+				</template>
+				<template #popup-title>
+					<h2>Change Password</h2>
+				</template>
+				<template #popup-text>
+					<p>Change your password to a more memorable one</p>
+				</template>
+				<template #popup-buttons>
+					<button class="upload-button spacing">Change Password</button>
+					<button class="upload-button spacing">Save</button>
+				</template>
+			</Modal>
 			<div class="wrapper-email">
 				<hr class="solid" />
 				<h1 class="bold-title">My Email</h1>
@@ -180,10 +215,15 @@ $logout: #da0000;
 }
 .upload-button {
 	margin-top: 1.2rem;
-	width: 25%;
+	width: fit-content;
 	border-radius: 0.5rem;
 	height: 2.5em;
 	background: colour.$accent;
+	cursor: pointer;
+}
+
+.spacing:not(:last-child) {
+	margin-right: 1rem;
 }
 
 #email-box {
@@ -217,5 +257,10 @@ $logout: #da0000;
 	background: $logout;
 	border-radius: 0.438rem;
 	margin-top: 1rem;
+}
+
+.close-btn {
+	float: right;
+	cursor: pointer;
 }
 </style>
