@@ -4,7 +4,7 @@ import { rankTitle } from "@/types/user"
 defineProps<{
 	uid: number
 	title: string
-	preview: string
+	markdown: string
 
 	owner: User
 	topics: Topic[]
@@ -26,7 +26,11 @@ defineProps<{
 		</div>
 		<Date :date="created" class="date aside" />
 		<h2>{{ title }}</h2>
-		<div class="preview">{{ preview }}</div>
+		<KnowledgePostMarkdown
+			class="preview"
+			:markdown="markdown"
+			:header-level="3"
+		/>
 		<ButtonNuxt
 			class="view"
 			:to="`/knowledge/post/${uid}`"

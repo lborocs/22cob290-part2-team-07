@@ -8,18 +8,13 @@ const { data: posts } = useFetch("/api/posts")
 
 <template>
 	<KnowledgeSearchbar id="searchbar" />
-	<KnowledgePostPreview
-		v-for="post in posts"
-		v-bind="post"
-		:preview="post.markdown"
-	/>
+	<KnowledgePostPreview v-for="post in posts" v-bind="post" />
 </template>
 
 <style scoped lang="scss">
 @use "~/assets/mobile";
 
 #searchbar {
-	width: 70%;
 	@media (max-width: mobile.$width) {
 		width: 100%;
 	}
