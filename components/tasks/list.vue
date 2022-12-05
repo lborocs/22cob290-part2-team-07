@@ -6,6 +6,7 @@
 				name="completed"
 				:id="`completed=${task.uid}`"
 				class="checkbox"
+				@change="onChecked($event, task)"
 			/>
 			<label :for="`completed=${task.uid}`" class="sr-only">
 				Mark {{ task.name }} as completed
@@ -102,8 +103,14 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { TaskStatus } from "~~/types"
 
 defineProps<{
 	tasks: Task[]
 }>()
+
+function onChecked(event: Event, task: Task) {
+	const isChecked = (event.target as HTMLInputElement).checked
+	task.status = isChecked ? TaskStatus.Done : TaskStatus.Todo
+}
 </script>
