@@ -6,6 +6,7 @@ body {
 	min-height: 100vh;
 	display: grid;
 	grid-template-rows: 1fr;
+	overflow-y: scroll;
 }
 
 .sr-only:not(:focus):not(:active) {
