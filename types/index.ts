@@ -43,6 +43,7 @@ declare global {
 		tasks?: Task[]
 		deadline: Date
 		leader: User
+		team: User[]
 	}
 
 	interface Client {
