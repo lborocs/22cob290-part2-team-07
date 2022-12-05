@@ -19,7 +19,7 @@ definePageMeta({
 		</template>
 		<template #hierachy>
 			<h2 id="hierarchy-card">Employee</h2>
-			<!-- Need to make this dynamic -->
+			<!-- Need to make this dynamic (profile picture and email address) -->
 		</template>
 	</profile-view-card>
 </template>

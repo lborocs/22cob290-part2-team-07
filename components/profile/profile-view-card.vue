@@ -20,7 +20,7 @@
 		<div class="card-customisation-wrapper">
 			<div class="wrapper-email">
 				<hr class="solid" />
-				<h1 class="bold-title">My Email</h1>
+				<h1 class="bold-title">Their email</h1>
 				<label for="email-box" class="label-subtext"
 					>This is their assigned company email</label
 				>
