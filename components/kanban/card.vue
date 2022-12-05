@@ -1,12 +1,12 @@
 <template>
-	<div
+	<article
 		class="card-small rag-band"
 		draggable="true"
 		@drag="onDrag($event, task)"
 		:id="`task-${task.uid}`"
 	>
 		<div class="task-header">
-			<h3>{{ props.task.name }}</h3>
+			<h4>{{ props.task.name }}</h4>
 			<div v-if="task.assignees.length > 0">
 				<AvatarStack :array="task.assignees.slice(0, 3)" />
 			</div>
@@ -25,7 +25,7 @@
 				<Icon icon="material-symbols:more-horiz" />
 			</button>
 		</div>
-	</div>
+	</article>
 </template>
 
 <style scoped lang="scss">

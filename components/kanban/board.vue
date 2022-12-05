@@ -5,6 +5,7 @@
 			@dragover="onDragOver($event)"
 			@drop="onDrop($event)"
 		>
+			<h3 class="kanban-col-title">TODO</h3>
 			<KanbanCard
 				v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
 				:key="task.uid"
@@ -12,6 +13,7 @@
 			/>
 		</div>
 		<div class="kanban-col">
+			<h3 class="kanban-col-title">In Progress</h3>
 			<KanbanCard
 				v-for="task in tasks.filter(
 					task => task.status == TaskStatus.InProgress,
@@ -21,6 +23,7 @@
 			/>
 		</div>
 		<div class="kanban-col">
+			<h3 class="kanban-col-title">Done</h3>
 			<KanbanCard
 				v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
 				:key="task.uid"
@@ -57,6 +60,10 @@
 		translate: 50% 0;
 		background-color: var(--colour-text);
 	}
+}
+
+.kanban-col-title {
+	margin-inline: auto;
 }
 
 // rag-colours = names in css vars

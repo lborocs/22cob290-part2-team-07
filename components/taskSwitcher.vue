@@ -1,5 +1,5 @@
 <template>
-	<article class="card">
+	<section class="card">
 		<header>
 			<h2>Tasks</h2>
 			<div class="right-buttons">
@@ -10,7 +10,7 @@
 		</header>
 		<TasksList v-if="selectedViewMode == 1" :tasks="tasks" />
 		<KanbanBoard v-else :tasks="tasks" />
-	</article>
+	</section>
 </template>
 
 <style scoped lang="scss">
