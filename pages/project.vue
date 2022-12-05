@@ -40,36 +40,34 @@ function dateDiffInDays(a: any, b: any) {
 </script>
 
 <template>
-	<main>
-		<section class="flex-row">
-			<ProjectCard title="Project Progress" :text="false">
-				<ProjectSpinner />
-			</ProjectCard>
-			<ProjectCard title="Project Deadline" :text="true">
-				<p id="project-deadline" class="deadline">12th December 2021</p>
-				<p id="days-remaining" class="deadline-days">5 days remaining</p>
-			</ProjectCard>
-			<ProjectCard title="Project Lead" :text="true">
-				<!-- <img
+	<section class="flex-row">
+		<ProjectCard title="Project Progress" :text="false">
+			<ProjectSpinner />
+		</ProjectCard>
+		<ProjectCard title="Project Deadline" :text="true">
+			<p id="project-deadline" class="deadline">12th December 2021</p>
+			<p id="days-remaining" class="deadline-days">5 days remaining</p>
+		</ProjectCard>
+		<ProjectCard title="Project Lead" :text="true">
+			<!-- <img
 					src="https://ui-avatars.com/api/?name=Firat Batmaz&background=random&size=150&format=svg"
 					alt="Team leader"
 					class="profile-pic"
 				/> -->
-				<UserIcon :uid="1" name="Firat Batmaz" :size="150" />
-				<p>Firat Batmaz</p>
-			</ProjectCard>
-			<ProjectCard title="Project Client" :text="true">
-				<UserIcon :uid="1" name="Loughborough University" :size="150" />
-				<p>Loughborough University</p>
-			</ProjectCard>
-		</section>
+			<UserIcon :uid="1" name="Firat Batmaz" :size="150" />
+			<p>Firat Batmaz</p>
+		</ProjectCard>
+		<ProjectCard title="Project Client" :text="true">
+			<UserIcon :uid="1" name="Loughborough University" :size="150" />
+			<p>Loughborough University</p>
+		</ProjectCard>
+	</section>
 
-		<section class="card">
-			<TaskSwitcher :tasks="tasks!" />
-		</section>
+	<section class="card">
+		<TaskSwitcher :tasks="tasks!" />
+	</section>
 
-		<section class="card"></section>
-	</main>
+	<section class="card"></section>
 </template>
 
 <style scoped lang="scss">
