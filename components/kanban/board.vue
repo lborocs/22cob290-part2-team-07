@@ -1,61 +1,42 @@
 <template>
-	<article class="card">
-		<header>
-			<h2>Tasks</h2>
-			<div class="right-buttons">
-				<Button icon="material-symbols:filter-alt-outline">Filter</Button>
-				<Button icon="material-symbols:add">New Task</Button>
-			</div>
-		</header>
-		<section class="kanban-wrapper">
-			<div
-				class="kanban-col"
-				@dragover="onDragOver($event)"
-				@drop="onDrop($event)"
-			>
-				<KanbanCard
-					v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
-					:key="task.uid"
-					:task="task"
-				/>
-			</div>
-			<div class="kanban-col">
-				<KanbanCard
-					v-for="task in tasks.filter(
-						task => task.status == TaskStatus.InProgress,
-					)"
-					:key="task.uid"
-					:task="task"
-				/>
-			</div>
-			<div class="kanban-col">
-				<KanbanCard
-					v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
-					:key="task.uid"
-					:task="task"
-				/>
-			</div>
-		</section>
-	</article>
+	<div class="kanban-wrapper">
+		<div
+			class="kanban-col"
+			@dragover="onDragOver($event)"
+			@drop="onDrop($event)"
+		>
+			<KanbanCard
+				v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
+				:key="task.uid"
+				:task="task"
+			/>
+		</div>
+		<div class="kanban-col">
+			<KanbanCard
+				v-for="task in tasks.filter(
+					task => task.status == TaskStatus.InProgress,
+				)"
+				:key="task.uid"
+				:task="task"
+			/>
+		</div>
+		<div class="kanban-col">
+			<KanbanCard
+				v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
+				:key="task.uid"
+				:task="task"
+			/>
+		</div>
+	</div>
 </template>
 
 <style scoped lang="scss">
 @use "sass:list";
 @use "/assets/core" as *;
 
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
 .kanban-wrapper {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-}
-
-.right-buttons {
-	@extend %flex-row, %flex-centre;
 }
 
 .kanban-col {

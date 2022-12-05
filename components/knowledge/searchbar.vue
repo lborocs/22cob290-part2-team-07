@@ -17,7 +17,7 @@ const { data: topics } = useLazyFetch("/api/topics")
 			</option>
 		</select>
 		<Button type="submit" icon="material-symbols:search-rounded">Search</Button>
-		<ButtonNuxt to="/knowledge/post/" icon="material-symbols:add"
+		<ButtonNuxt to="/knowledge/post/new" icon="material-symbols:add"
 			>Create Post</ButtonNuxt
 		>
 	</Form>
@@ -33,7 +33,6 @@ form {
 			top: 0.25rem;
 			bottom: 0.25rem;
 		}
-		font-size: 1.5em;
 	}
 }
 
@@ -44,10 +43,12 @@ input {
 	padding: 0.75rem;
 	width: 80%;
 	box-shadow: var(--card-shadow);
+	font-size: inherit;
 }
 
 select {
 	@extend %input;
+	font-size: inherit;
 	--input-background: var(--colour-background-2);
 	width: fit-content;
 	max-width: 15ch;

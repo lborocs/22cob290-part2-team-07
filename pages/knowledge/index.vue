@@ -8,7 +8,7 @@ definePageMeta({
 	<div>
 		<h4>Search</h4>
 		<h3>Make-It-All</h3>
-		<KnowledgeSearchbar />
+		<KnowledgeSearchbar id="searchbar" />
 	</div>
 </template>
 
@@ -20,6 +20,7 @@ div {
 	top: 45%;
 	box-sizing: border-box;
 	width: 100%;
+	font-size: 1.25em;
 }
 
 h3 {

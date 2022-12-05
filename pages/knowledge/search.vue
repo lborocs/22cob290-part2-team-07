@@ -19,7 +19,6 @@ const { data: posts } = useFetch("/api/posts")
 @use "~/assets/mobile";
 
 #searchbar {
-	font-size: 0.7em;
 	width: 70%;
 	@media (max-width: mobile.$width) {
 		width: 100%;

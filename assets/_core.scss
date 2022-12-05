@@ -55,11 +55,12 @@
 	background: var(--colour-background-2);
 	border-radius: var(--card-radius);
 	padding: 1rem 1.5rem;
-	margin: 0 auto;
+	margin: 1.5rem auto;
 	&-small {
 		@extend .card;
 		background: var(--colour-accent-faded);
 		padding: 0.5rem 1rem;
+		margin: 0 auto;
 	}
 }
 
@@ -89,4 +90,10 @@ $rag-colours: ("red", "amber", "green");
 	&:hover {
 		cursor: pointer;
 	}
+}
+
+.profile-pic {
+	aspect-ratio: 1;
+	border-radius: 50%;
+	border: 2px var(--colour-accent-faded) solid;
 }

@@ -15,5 +15,11 @@ export default defineEventHandler(event => {
 			name: "Queen",
 			rank: UserRank.Manager,
 		},
+		{
+			uid: 3,
+			email: `dilip${emailDomain}`,
+			name: "Dilip Smith",
+			rank: UserRank.Employee,
+		},
 	]
 })
