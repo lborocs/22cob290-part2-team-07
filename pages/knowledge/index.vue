@@ -6,7 +6,7 @@ definePageMeta({
 
 <template>
 	<div>
-		<h4>Search</h4>
+		<h2>Search</h2>
 		<h3>Make-It-All</h3>
 		<KnowledgeSearchbar id="searchbar" />
 	</div>
@@ -30,7 +30,7 @@ h3 {
 	margin-bottom: 1rem;
 }
 
-h4 {
+h2 {
 	font-size: 2.5em;
 	margin: 0;
 }
