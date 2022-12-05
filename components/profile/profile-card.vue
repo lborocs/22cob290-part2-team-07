@@ -16,7 +16,7 @@
 				class="profile-pic"
 			/>
 		</div>
-		<Modal v-show="showModal" class="align">
+		<Modal v-show="false" class="align">
 			<template #popup-title>
 				<h2>Upload Photo</h2>
 			</template>
@@ -74,6 +74,12 @@
 					<p>Invite</p>
 				</button>
 			</div>
+			<div class="wrapper-logout">
+				<hr />
+				<button class="logout-btn" id="logout">
+					<p>Logout</p>
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -82,6 +88,12 @@
 @use "/assets/core.scss" as *;
 @use "/assets/colour";
 
+$logout: #da0000;
+.align {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .card-title-wrapper {
 	display: flex;
 	justify-content: space-between;
@@ -192,5 +204,18 @@
 	float: right;
 	padding-right: 1rem;
 	padding-top: 0.5rem;
+}
+
+.logout-btn {
+	width: fit-content;
+	height: 2rem;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	margin: auto;
+	cursor: pointer;
+	background: $logout;
+	border-radius: 0.438rem;
+	margin-top: 1rem;
 }
 </style>
