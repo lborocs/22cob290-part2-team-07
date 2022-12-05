@@ -19,7 +19,9 @@ defineProps<{
 </template>
 
 <style scoped lang="scss">
+@use "/assets/core.scss" as *;
+
 img {
-	border-radius: 50%;
+	@extend .profile-picture;
 }
 </style>

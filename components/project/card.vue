@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { extend } from "@vue/shared"
-
 defineProps<{
 	text: boolean
 	title: string
