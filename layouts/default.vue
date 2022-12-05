@@ -1,6 +1,8 @@
 <!-- The default layout is used on every page unless explicity specified -->
 
 <script setup lang="ts">
+import { Icon } from "@iconify/vue"
+
 const route = useRoute()
 // Updates the page head information on navigation.
 useHead(() => {
@@ -11,9 +13,15 @@ useHead(() => {
 
 const user = useCurrentUser()
 
+const isNavExpanded = ref(false)
+
 // Temporary until the login / logout logic is finalised
 function logout() {
 	alert("User Logged Out!")
+}
+
+function toggleMobileNav() {
+	isNavExpanded.value = !isNavExpanded.value
 }
 </script>
 
@@ -24,6 +32,15 @@ function logout() {
 			<UserIcon v-if="user !== null" v-bind="user" :size="50" />
 		</header>
 		<nav>
+			<button
+				class="mobile-nav-toggle"
+				aria-controls="menu"
+				:aria-expanded="isNavExpanded"
+				@click="toggleMobileNav"
+			>
+				<span class="sr-only">Menu</span>
+				<Icon icon="mdi:menu" />
+			</button>
 			<img src="~/assets/tools.svg" alt="Make It All Logo" class="nav-logo" />
 			<ul>
 				<li>
@@ -105,6 +122,33 @@ nav {
 		padding: 0 0.5rem;
 		margin: 0;
 		margin-top: 1rem;
+	}
+}
+
+.mobile-nav-toggle {
+	display: none;
+}
+
+@media screen and (max-width: mobile.$width) {
+	.mobile-nav-toggle {
+		display: block;
+		position: fixed;
+	}
+	.page-wrapper {
+		grid-template-areas:
+			"head"
+			"nav"
+			"main";
+		grid-template-columns: 1fr;
+		// grid-template-rows: min-content min-content 1fr;
+	}
+
+	nav {
+		width: 100%;
+	}
+
+	button[aria-expanded="true"] ~ :is(ul, img) {
+		display: none;
 	}
 }
 
