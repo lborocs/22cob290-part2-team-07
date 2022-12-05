@@ -49,7 +49,7 @@ article {
 	display: grid;
 	grid-template:
 		"topic title" 1fr
-		"owner body" auto
+		"owner body" max-content
 		"date view" 1fr / auto 1fr;
 }
 
@@ -81,15 +81,28 @@ div.preview {
 	padding-top: 0.1rem;
 	border-top: 2px solid var(--colour-text);
 	grid-area: body;
-}
-
-.preview {
-	max-height: 10ch;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	max-height: 10em;
 }
 
 .view {
 	margin-left: auto;
 	grid-area: view;
 	align-self: flex-end;
+}
+</style>
+
+<!-- Preview -->
+<style lang="scss">
+div.preview {
+	> * {
+		margin: 0.25em 0;
+	}
+	@for $i from 3 through 6 {
+		h#{$i} {
+			margin: 0.45em 0;
+		}
+	}
 }
 </style>
