@@ -50,20 +50,16 @@ function dateDiffInDays(a: any, b: any) {
 				<p id="days-remaining" class="deadline-days">5 days remaining</p>
 			</ProjectCard>
 			<ProjectCard title="Project Lead" :text="true">
-				<img
+				<!-- <img
 					src="https://ui-avatars.com/api/?name=Firat Batmaz&background=random&size=150&format=svg"
 					alt="Team leader"
 					class="profile-pic"
-				/>
-				<!-- <UserIcon /> -->
+				/> -->
+				<UserIcon :uid="1" name="Firat Batmaz" :size="150" />
 				<p>Firat Batmaz</p>
 			</ProjectCard>
 			<ProjectCard title="Project Client" :text="true">
-				<img
-					src="https://ui-avatars.com/api/?name=Loughborough University&background=random&size=150&format=svg"
-					alt="Project client"
-					class="profile-pic"
-				/>
+				<UserIcon :uid="1" name="Loughborough University" :size="150" />
 				<p>Loughborough University</p>
 			</ProjectCard>
 		</section>
