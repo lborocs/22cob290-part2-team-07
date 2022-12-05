@@ -31,7 +31,7 @@ button {
 	}
 
 	border-radius: 0.5rem;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	#slot {
 		margin: 0 0.2rem;
 		font-weight: bold;
@@ -51,7 +51,7 @@ button {
 		&:not(.fix) {
 			aspect-ratio: 1;
 			border-radius: 50%;
-			font-size: 2em;
+			font-size: 1.4rem;
 			#slot {
 				display: none;
 			}

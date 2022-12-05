@@ -13,7 +13,7 @@
 	</article>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @use "/assets/core";
 
 header {

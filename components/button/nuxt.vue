@@ -22,12 +22,4 @@ a {
 	color: var(--colour-background-1);
 	text-decoration: none;
 }
-button {
-	font-size: inherit;
-	@media (max-width: mobile.$width) {
-		&:not(.fix) {
-			font-size: 1.5em;
-		}
-	}
-}
 </style>

@@ -12,6 +12,11 @@ useHead(() => {
 })
 
 const user = useCurrentUser()
+
+// Temporary until the login / logout logic is finalised
+function logout() {
+	alert("User Logged Out!")
+}
 </script>
 
 <template>
@@ -51,6 +56,14 @@ const user = useCurrentUser()
 						icon="material-symbols:folder-outline-rounded"
 					/>
 				</li>
+				<li>
+					<NavButton
+						@click="logout"
+						location="/login"
+						name="Logout"
+						icon="material-symbols:logout-rounded"
+					/>
+				</li>
 			</ul>
 		</nav>
 		<main>
@@ -61,6 +74,7 @@ const user = useCurrentUser()
 
 <style scoped lang="scss">
 @use "~/assets/mobile";
+@use "~/assets/core";
 .page-wrapper {
 	display: grid;
 	grid-template-areas:
@@ -72,6 +86,8 @@ const user = useCurrentUser()
 }
 
 header {
+	@extend %flex-row, %flex-centre;
+	justify-content: space-between;
 	grid-area: head;
 }
 
