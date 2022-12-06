@@ -9,8 +9,13 @@ const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
 const currentProject = await $fetch("/api/project/1")
 const deadlines = setProjectDeadlineDate(currentProject.deadline)
 
+const daysRemaing = $computed(() => {
+	const date = new Date(currentProject.deadline)
+	return dateDiffInDays(new Date(), date)
+})
+
 // Set project deadline date
-function setProjectDeadlineDate(deadline: any) {
+function setProjectDeadlineDate(deadline: DateNumber) {
 	const projectDeadlineDate = new Date(deadline)
 	const projectDeadlineDateFormatted = projectDeadlineDate.toLocaleDateString(
 		"en-gb",
@@ -20,8 +25,7 @@ function setProjectDeadlineDate(deadline: any) {
 			year: "numeric",
 		},
 	)
-	const daysRemaing =
-		dateDiffInDays(new Date(), projectDeadlineDate) + " days remaining"
+	const daysRemaing = +" days remaining"
 
 	return { projectDeadlineDateFormatted, daysRemaing }
 }
@@ -44,10 +48,10 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 		<ProjectCard title="Project Deadline" :text="true">
 			<p id="project-deadline" class="deadline">
-				{{ deadlines.projectDeadlineDateFormatted }}
+				<Date :date="currentProject.deadline" format="long" />
 			</p>
 			<p id="days-remaining" class="deadline-days">
-				{{ deadlines.daysRemaing }}
+				{{ daysRemaing }} Days remaining
 			</p>
 		</ProjectCard>
 		<ProjectCard title="Project Lead" :text="true">
