@@ -7,6 +7,7 @@ export default {
 			passIsShown: false,
 			invIsShown: false,
 			logout: false,
+			src: "https://placekitten.com/150/150",
 		}
 	},
 	methods: {
@@ -22,6 +23,21 @@ export default {
 		toggleLogout() {
 			this.logout = !this.logout
 		},
+		uploadPhoto(e) {
+			this.$emit("input", e.target.files[0])
+			let reader = new FileReader()
+			reader.readAsDataURL(e.target.files[0])
+			reader.onload = e => {
+				this.src = e.target.result
+				console.log(this.src)
+			}
+		},
+		triggerFileInput() {
+			this.$refs.fileInput.click()
+		},
+	},
+	props: {
+		value: File,
 	},
 }
 </script>
@@ -34,12 +50,7 @@ export default {
 		<hr />
 		<div class="card-image-wrapper">
 			<slot name="hierarchy">Employee</slot>
-			<img
-				id="card-profile-picture"
-				src="https://ui-avatars.com/api/?name=Neumann&background=random&size=50&format=svg"
-				alt=""
-				class="profile-pic"
-			/>
+			<img id="card-profile-picture" :src="src" alt="" class="profile-pic" />
 		</div>
 		<Modal v-show="isShown" class="align">
 			<template #close-btn>
@@ -52,7 +63,19 @@ export default {
 				<p>Upload a photo of your choice</p>
 			</template>
 			<template #popup-buttons>
-				<button class="upload-button">Upload</button>
+				<input
+					type="file"
+					accept="image/*"
+					ref="fileInput"
+					@change="uploadPhoto"
+					class="hidden"
+				/>
+				<button @click="triggerFileInput" class="upload-button spacing">
+					Upload photo
+				</button>
+				<button class="upload-button spacing" @click="toggleUpload">
+					Save
+				</button>
 			</template>
 		</Modal>
 		<div class="card-button-wrapper">
@@ -160,6 +183,10 @@ export default {
 @use "/assets/colour";
 
 $logout: #da0000;
+
+.hidden {
+	display: none;
+}
 .align {
 	display: flex;
 	align-items: center;
