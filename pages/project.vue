@@ -68,9 +68,7 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 	</section>
 
-	<section class="card">
-		<TaskSwitcher :tasks="tasks!" />
-	</section>
+	<TaskSwitcher :tasks="tasks!" />
 
 	<section class="card wrap-grid">
 		<ProjectMember
