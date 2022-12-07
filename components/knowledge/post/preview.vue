@@ -21,7 +21,8 @@ defineProps<{
 			>{{ topics[0].name }}</ButtonNuxt
 		>
 		<div class="owner">
-			<UserIcon v-bind="owner" :size="50" />
+			<UserIcon :uid="owner.uid" :name="owner.name" :size="50" />
+			<UserName class="name" :uid="owner.uid" :name="owner.name" />
 			<span>{{ rankTitle(owner.rank) }}</span>
 		</div>
 		<Date :date="created" class="date" />
@@ -66,14 +67,14 @@ article {
 
 	&-start {
 		@extend %aside;
-		border-radius: 1rem 0 0 0;
+		border-radius: var(--card-radius) 0 0 0;
 	}
 	&-body {
 		background-color: var(--colour-background-3);
 	}
 	&-end {
 		@extend %aside;
-		border-radius: 0 0 0 1rem;
+		border-radius: 0 0 0 var(--card-radius);
 		background-color: var(--colour-background-3);
 	}
 }
@@ -86,6 +87,9 @@ article {
 .owner {
 	grid-area: owner;
 	@extend %aside-body, %flex-col, %flex-centre;
+	.name {
+		font-weight: bold;
+	}
 }
 
 .date {
