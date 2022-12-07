@@ -5,6 +5,7 @@
 			:key="person.uid"
 			v-bind="person"
 			:size="42"
+			:is-link="false"
 		/>
 		<div v-if="array.length > 3" class="more-assignees">
 			+{{ array.length - 3 }}
@@ -16,7 +17,7 @@
 .assignees {
 	display: flex;
 	flex-direction: row-reverse;
-	a:not(:last-child) {
+	img:not(:last-child) {
 		margin-left: -1.5rem;
 	}
 	.more-assignees {
