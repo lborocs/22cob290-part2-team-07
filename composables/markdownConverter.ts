@@ -1,4 +1,5 @@
-import { Converter } from "showdown"
+import showdown from "showdown"
+const { Converter } = showdown
 
 export const useMarkdownConverter = (headerLevel: number = 3) => {
 	const showdown = new Converter({
