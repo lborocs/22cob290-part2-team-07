@@ -2,11 +2,11 @@
 	<article
 		class="card-small rag-band"
 		draggable="true"
-		@drag="onDrag($event, task)"
+		@dragstart="onDrag"
 		:id="`task-${task.uid}`"
 	>
 		<div class="task-header">
-			<h4>{{ props.task.name }}</h4>
+			<h4>{{ task.name }}</h4>
 			<div v-if="task.assignees.length > 0">
 				<AvatarStack :array="task.assignees.slice(0, 3)" />
 			</div>
@@ -15,11 +15,11 @@
 		<div class="info">
 			<p>
 				<Icon icon="material-symbols:hourglass-bottom-rounded" />
-				{{ props.task.workerHours }} Hours
+				{{ task.workerHours }} Hours
 			</p>
 			<p>
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
-				{{ new Date(props.task.deadline).toLocaleDateString() }}
+				<Date :date="task.deadline" />
 			</p>
 			<button class="content-button">
 				<Icon icon="material-symbols:more-horiz" />
@@ -69,20 +69,14 @@ h3 {
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
-const props = defineProps<{
+const { task } = defineProps<{
 	task: Task
 }>()
 
-function onDrag(event: DragEvent, item: Task) {
-	// console.log(event)
-	// console.log(item)
-
+function onDrag(event: DragEvent) {
 	if (event.dataTransfer) {
 		event.dataTransfer.dropEffect = "move"
-		event.dataTransfer.effectAllowed = "move"
-		event.dataTransfer.setData("task", item.uid.toString())
-	} else {
-		console.log("No data transfer")
+		event.dataTransfer.setData("task", task.uid.toString())
 	}
 }
 </script>

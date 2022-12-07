@@ -1,35 +1,38 @@
+<script setup lang="ts">
+import { TaskStatus } from "@/types"
+import { statusName } from "@/types/task"
+
+const { tasks } = defineProps<{
+	tasks: Task[]
+}>()
+
+const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
+
+function onDragOver(event: DragEvent) {
+	if (event.dataTransfer) event.dataTransfer.dropEffect = "move"
+}
+
+function onDrop(event: DragEvent, status: TaskStatus) {
+	if (!event.dataTransfer) return
+	const data = +event.dataTransfer.getData("task")
+	const task = tasks.find(task => task.uid == data)
+	if (!task) return
+	task.status = status
+}
+</script>
+
 <template>
-	<div
-		class="draggable"
-		draggable="true"
-		style="background: red"
-		@drag="onDrag"
-	>
-		This is draggable
-	</div>
 	<div class="kanban-wrapper">
-		<div class="kanban-col" @dragover="onDragOver" @drop="onDrop">
-			<h3 class="kanban-col-title">TODO</h3>
+		<div
+			v-for="status in STATUSES"
+			:key="status"
+			class="kanban-col"
+			@dragover.prevent="onDragOver"
+			@drop.prevent="onDrop($event, status)"
+		>
+			<h3 class="kanban-col-title">{{ statusName(status) }}</h3>
 			<KanbanCard
-				v-for="task in tasks.filter(task => task.status == TaskStatus.Todo)"
-				:key="task.uid"
-				:task="task"
-			/>
-		</div>
-		<div class="kanban-col">
-			<h3 class="kanban-col-title">In Progress</h3>
-			<KanbanCard
-				v-for="task in tasks.filter(
-					task => task.status == TaskStatus.InProgress,
-				)"
-				:key="task.uid"
-				:task="task"
-			/>
-		</div>
-		<div class="kanban-col">
-			<h3 class="kanban-col-title">Done</h3>
-			<KanbanCard
-				v-for="task in tasks.filter(task => task.status == TaskStatus.Done)"
+				v-for="task in tasks.filter(task => task.status == status)"
 				:key="task.uid"
 				:task="task"
 			/>
@@ -77,54 +80,3 @@
 	}
 }
 </style>
-
-<script setup lang="ts">
-import { TaskStatus } from "~~/types"
-
-defineProps<{
-	tasks: Task[]
-}>()
-
-function onDrag(event: DragEvent) {
-	// console.log(event)
-	// console.log(item)
-	event.preventDefault()
-	/* if (event.dataTransfer) {
-		// event.dataTransfer.dropEffect = "move"
-		// event.dataTransfer.effectAllowed = "move"
-		
-	} else {
-		console.log("No data transfer")
-	} */
-	event.dataTransfer!.setData("task", `This is draggable`)
-	console.log(event.dataTransfer!)
-	console.log(event.dataTransfer!.getData("task"))
-}
-
-function onDragOver(event: DragEvent) {
-	if (event.preventDefault) {
-		event.preventDefault()
-	}
-	return false
-
-	// console.log("dragging over")
-}
-
-function onDrop(event: DragEvent) {
-	console.log(event.dataTransfer!.types)
-
-	if (event.dataTransfer) {
-		const data = event.dataTransfer.getData("task")
-		const target = event.target as HTMLElement
-		const id = `task-${data}`
-		console.log(id)
-
-		// target.appendChild(document.getElementById(id)!)
-		console.table(event.dataTransfer)
-
-		console.log(data)
-	} else {
-		console.log("no data")
-	}
-}
-</script>
