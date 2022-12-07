@@ -101,7 +101,7 @@ function toggleMobileNav() {
 		"main";
 	grid-template-rows: min-content 1fr;
 	height: 100%;
-	--nav-width: 3.5rem;
+	--nav-width: 3.625rem;
 }
 
 %content {
@@ -114,14 +114,27 @@ header {
 	grid-area: head;
 }
 
+@keyframes navlabel {
+	0% {
+		color: transparent;
+	}
+	50% {
+		color: transparent;
+	}
+	100% {
+		color: var(--colour-text);
+	}
+}
+
 .nav-wrapper {
 	position: fixed;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	width: var(--nav-width);
-	transition: width animation.$transition-short;
+	transition: width animation.$transition-medium;
 	background-color: var(--colour-accent);
+	z-index: 1;
 
 	&:hover,
 	&:focus-within {
@@ -129,6 +142,8 @@ header {
 
 		.nav-label {
 			display: block;
+
+			animation: navlabel animation.$transition-medium forwards;
 		}
 	}
 
@@ -169,7 +184,7 @@ header {
 
 .nav-logo {
 	aspect-ratio: 1;
-	width: 5rem;
+	width: clamp(2rem, 50%, 5rem);
 	margin-inline: auto;
 }
 

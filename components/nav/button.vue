@@ -32,6 +32,7 @@ a {
 
 	.iconify {
 		font-size: 2.25rem;
+		min-width: 2.25rem;
 	}
 
 	&.router-link-active {
