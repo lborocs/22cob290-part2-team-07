@@ -45,6 +45,7 @@ defineProps<{
 
 article {
 	@extend .card;
+	--post-preview-border-radius: var(--card-radius)
 	padding: 0;
 	margin-bottom: 1rem;
 	display: grid;
@@ -66,14 +67,14 @@ article {
 
 	&-start {
 		@extend %aside;
-		border-radius: 1rem 0 0 0;
+		border-radius: var(--post-preview-border-radius) 0 0 0;
 	}
 	&-body {
 		background-color: var(--colour-background-3);
 	}
 	&-end {
 		@extend %aside;
-		border-radius: 0 0 0 1rem;
+		border-radius: 0 0 0 var(--post-preview-border-radius);
 		background-color: var(--colour-background-3);
 	}
 }
