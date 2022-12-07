@@ -1,12 +1,16 @@
-@mixin link {
+%link {
+	color: var(--colour-text);
+	text-decoration: underline var(--colour-accent);
 	transition: {
-		property: text-shadow;
-		duration: 0.2s;
+		property: color, text-decoration;
+		duration: 0.1s;
 		timing-function: ease-in-out;
 	}
-	&:hover {
-		$shadow: 0 0 5px #eee;
-		text-shadow: $shadow, $shadow, $shadow, $shadow;
+	&:hover,
+	&:focus,
+	&:active {
+		color: var(--colour-accent);
+		text-decoration-color: var(--colour-text);
 	}
 }
 
