@@ -41,8 +41,9 @@ declare global {
 		name: string
 		description: string
 		tasks?: Task[]
-		deadline: Date
+		deadline: DateNumber
 		leader: User
+		team: User[]
 	}
 
 	interface Client {

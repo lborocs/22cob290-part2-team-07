@@ -9,17 +9,24 @@ const { fix = false } = defineProps<{
 </script>
 
 <template>
-	<NuxtLink :to="to">
-		<Button :icon="icon" :fix="fix">
+	<NuxtLink :to="to" class="btn" :class="{ fix: fix }">
+		<ButtonBase :icon="icon">
 			<slot />
-		</Button>
+		</ButtonBase>
 	</NuxtLink>
 </template>
 
 <style scoped lang="scss">
-@use "~/assets/mobile";
+@use "~/assets/button";
 a {
-	color: var(--colour-background-1);
 	text-decoration: none;
+}
+</style>
+
+<style lang="scss">
+@use "~/assets/button";
+
+a.btn {
+	@extend %button;
 }
 </style>

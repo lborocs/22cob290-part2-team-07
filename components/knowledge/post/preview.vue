@@ -15,16 +15,16 @@ defineProps<{
 <template>
 	<article>
 		<ButtonNuxt
-			class="topic aside"
+			class="topic"
 			:to="`/knowledge/search/?q=&topic=${topics[0].uid}`"
 			icon="material-symbols:topic-outline-rounded"
 			>{{ topics[0].name }}</ButtonNuxt
 		>
-		<div class="owner aside">
+		<div class="owner">
 			<UserIcon v-bind="owner" :size="50" />
 			<span>{{ rankTitle(owner.rank) }}</span>
 		</div>
-		<Date :date="created" class="date aside" />
+		<Date :date="created" class="date" />
 		<h2>{{ title }}</h2>
 		<KnowledgePostMarkdown
 			class="preview"
@@ -45,35 +45,58 @@ defineProps<{
 
 article {
 	@extend .card;
+	padding: 0;
 	margin-bottom: 1rem;
 	display: grid;
+	column-gap: 0.5rem;
 	grid-template:
 		"topic title" 1fr
 		"owner body" max-content
-		"date view" 1fr / auto 1fr;
+		"date view" 1fr
+		/ auto 1fr 0.5rem;
 }
 
-.aside {
+%aside {
 	justify-self: center;
+	margin: 0;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+
+	&-start {
+		@extend %aside;
+		border-radius: 1rem 0 0 0;
+	}
+	&-body {
+		background-color: var(--colour-background-3);
+	}
+	&-end {
+		@extend %aside;
+		border-radius: 0 0 0 1rem;
+		background-color: var(--colour-background-3);
+	}
 }
 
 .topic {
 	grid-area: topic;
+	@extend %aside-start;
 }
 
 .owner {
 	grid-area: owner;
-	@extend %flex-col, %flex-centre;
+	@extend %aside-body, %flex-col, %flex-centre;
 }
 
 .date {
 	grid-area: date;
+	@extend %aside-end;
 	align-self: flex-end;
 }
 
 h2 {
 	grid-area: title;
-	margin: 0;
+	margin: auto 0;
 }
 
 div.preview {
@@ -81,12 +104,12 @@ div.preview {
 	padding-top: 0.1rem;
 	border-top: 2px solid var(--colour-text);
 	grid-area: body;
-	overflow-x: hidden;
-	overflow-y: hidden;
+	overflow: hidden;
 	max-height: 10em;
 }
 
 .view {
+	margin: 0.5rem;
 	margin-left: auto;
 	grid-area: view;
 	align-self: flex-end;
@@ -95,7 +118,7 @@ div.preview {
 
 <!-- Preview -->
 <style lang="scss">
-div.preview {
+article div.preview {
 	> * {
 		margin: 0.25em 0;
 	}

@@ -1,13 +1,22 @@
 <script setup lang="ts">
+import { rankTitle } from "~/types/user"
+
 definePageMeta({
 	name: "Project",
 })
 
 const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
+const currentProject = await $fetch("/api/project/1")
+const deadlines = setProjectDeadlineDate(currentProject.deadline)
+
+const daysRemaing = $computed(() => {
+	const date = new Date(currentProject.deadline)
+	return dateDiffInDays(new Date(), date)
+})
 
 // Set project deadline date
-function setProjectDeadlineDate() {
-	const projectDeadlineDate = new Date()
+function setProjectDeadlineDate(deadline: DateNumber) {
+	const projectDeadlineDate = new Date(deadline)
 	const projectDeadlineDateFormatted = projectDeadlineDate.toLocaleDateString(
 		"en-gb",
 		{
@@ -16,14 +25,9 @@ function setProjectDeadlineDate() {
 			year: "numeric",
 		},
 	)
+	const daysRemaing = +" days remaining"
 
-	// Commented to avoid annoying typescript error
-
-	// document.querySelector("#project-deadline").innerHTML =
-	// 	projectDeadlineDateFormatted
-
-	// document.querySelector("#days-remaining").innerHTML =
-	// 	dateDiffInDays(new Date(), projectDeadlineDate) + " days remaining"
+	return { projectDeadlineDateFormatted, daysRemaing }
 }
 
 // Display days left until project deadline
@@ -35,8 +39,6 @@ function dateDiffInDays(a: any, b: any) {
 
 	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
-
-// setProjectDeadlineDate()
 </script>
 
 <template>
@@ -45,17 +47,20 @@ function dateDiffInDays(a: any, b: any) {
 			<ProjectSpinner />
 		</ProjectCard>
 		<ProjectCard title="Project Deadline" :text="true">
-			<p id="project-deadline" class="deadline">12th December 2021</p>
-			<p id="days-remaining" class="deadline-days">5 days remaining</p>
+			<p id="project-deadline" class="deadline">
+				<Date :date="currentProject.deadline" format="long" />
+			</p>
+			<p id="days-remaining" class="deadline-days">
+				{{ daysRemaing }} Days remaining
+			</p>
 		</ProjectCard>
 		<ProjectCard title="Project Lead" :text="true">
-			<!-- <img
-					src="https://ui-avatars.com/api/?name=Firat Batmaz&background=random&size=150&format=svg"
-					alt="Team leader"
-					class="profile-pic"
-				/> -->
-			<UserIcon :uid="1" name="Firat Batmaz" :size="150" />
-			<p>Firat Batmaz</p>
+			<UserIcon
+				:uid="currentProject.leader.uid"
+				:name="currentProject.leader.name"
+				:size="150"
+			/>
+			<p>{{ currentProject.leader.name }}</p>
 		</ProjectCard>
 		<ProjectCard title="Project Client" :text="true">
 			<UserIcon :uid="1" name="Loughborough University" :size="150" />
@@ -63,11 +68,17 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 	</section>
 
-	<section class="card">
-		<TaskSwitcher :tasks="tasks!" />
-	</section>
+	<TaskSwitcher :tasks="tasks!" />
 
-	<section class="card"></section>
+	<section class="card wrap-grid">
+		<ProjectMember
+			v-for="member in currentProject.team"
+			:key="member.uid"
+			:uid="member.uid"
+			:uname="member.name"
+			:rank="rankTitle(member.rank)"
+		/>
+	</section>
 </template>
 
 <style scoped lang="scss">
@@ -108,5 +119,18 @@ function dateDiffInDays(a: any, b: any) {
 		/* margin-top: 1rem;
   		margin-bottom: 3rem; */
 	}
+}
+
+.wrap-grid {
+	display: grid;
+	justify-items: center;
+	--card-width: 20ch;
+	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
+	gap: 0.5rem;
+}
+
+.wrap-grid .card-small {
+	text-align: center;
+	max-width: var(--card-width, 20ch);
 }
 </style>
