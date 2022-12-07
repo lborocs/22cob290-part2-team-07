@@ -31,87 +31,106 @@ function toggleMobileNav() {
 			<h1>{{ $route.name }}</h1>
 			<UserIcon v-if="user !== null" v-bind="user" :size="50" />
 		</header>
-		<nav>
-			<button
-				class="mobile-nav-toggle"
-				aria-controls="menu"
-				:aria-expanded="isNavExpanded"
-				@click="toggleMobileNav"
-			>
-				<span class="sr-only">Menu</span>
-				<Icon icon="mdi:menu" />
-			</button>
+
+		<aside class="nav-wrapper">
 			<img src="~/assets/tools.svg" alt="Make It All Logo" class="nav-logo" />
-			<ul>
-				<li>
-					<NavButton
-						location="/dashboard"
-						name="Dashboard"
-						icon="material-symbols:analytics-outline-rounded"
-					/>
-				</li>
-				<li>
-					<NavButton
-						location="/manager"
-						name="Manager"
-						icon="material-symbols:admin-panel-settings-outline-rounded"
-					/>
-				</li>
-				<li>
-					<NavButton
-						location="/knowledge"
-						name="Knowledge"
-						icon="material-symbols:book-outline-rounded"
-					/>
-				</li>
-				<li>
-					<NavButton
-						location="/project"
-						name="Project"
-						icon="material-symbols:folder-outline-rounded"
-					/>
-				</li>
-				<li>
-					<NavButton
-						@click="logout"
-						location="/login"
-						name="Logout"
-						icon="material-symbols:logout-rounded"
-					/>
-				</li>
-			</ul>
-		</nav>
+			<nav>
+				<button
+					class="mobile-nav-toggle"
+					aria-controls="menu"
+					:aria-expanded="isNavExpanded"
+					@click="toggleMobileNav"
+				>
+					<span class="sr-only">Menu</span>
+					<Icon icon="mdi:menu" />
+				</button>
+				<ul>
+					<li>
+						<NavButton
+							location="/dashboard"
+							name="Dashboard"
+							icon="material-symbols:analytics-outline-rounded"
+						/>
+					</li>
+					<li>
+						<NavButton
+							location="/manager"
+							name="Manager"
+							icon="material-symbols:admin-panel-settings-outline-rounded"
+						/>
+					</li>
+					<li>
+						<NavButton
+							location="/knowledge"
+							name="Knowledge"
+							icon="material-symbols:book-outline-rounded"
+						/>
+					</li>
+					<li>
+						<NavButton
+							location="/project"
+							name="Project"
+							icon="material-symbols:folder-outline-rounded"
+						/>
+					</li>
+					<li>
+						<NavButton
+							@click="logout"
+							location="/login"
+							name="Logout"
+							icon="material-symbols:logout-rounded"
+						/>
+					</li>
+				</ul>
+			</nav>
+		</aside>
 		<main>
 			<slot />
 		</main>
 	</div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @use "~/assets/mobile";
 @use "~/assets/core";
+@use "~/assets/animation";
 .page-wrapper {
 	display: grid;
 	grid-template-areas:
-		"nav head"
-		"nav main";
-	grid-template-columns: min-content 1fr;
+		"head"
+		"main";
 	grid-template-rows: min-content 1fr;
 	height: 100%;
+	--nav-width: 3.5rem;
+}
+
+%content {
+	margin-left: var(--nav-width);
 }
 
 header {
-	@extend %flex-row, %flex-centre;
+	@extend %flex-row, %flex-centre, %content;
 	justify-content: space-between;
 	grid-area: head;
 }
 
-nav {
-	grid-area: nav;
+.nav-wrapper {
+	position: fixed;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	width: fit-content;
+	width: var(--nav-width);
+	transition: width animation.$transition-short;
 	background-color: var(--colour-accent);
+
+	&:hover,
+	&:focus-within {
+		--nav-width: 12rem;
+
+		.nav-label {
+			display: block;
+		}
+	}
 
 	ul {
 		display: flex;
@@ -122,6 +141,10 @@ nav {
 		padding: 0 0.5rem;
 		margin: 0;
 		margin-top: 1rem;
+	}
+
+	.nav-label {
+		display: none;
 	}
 }
 
@@ -134,16 +157,8 @@ nav {
 		display: block;
 		position: fixed;
 	}
-	.page-wrapper {
-		grid-template-areas:
-			"head"
-			"nav"
-			"main";
-		grid-template-columns: 1fr;
-		// grid-template-rows: min-content min-content 1fr;
-	}
 
-	nav {
+	.nav-wrapper {
 		width: 100%;
 	}
 
@@ -159,6 +174,7 @@ nav {
 }
 
 main {
+	@extend %content;
 	grid-area: main;
 	padding: 2rem;
 	@media (max-width: mobile.$width) {

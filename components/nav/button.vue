@@ -12,7 +12,7 @@ defineProps<{
 <template>
 	<NuxtLink :to="location">
 		<Icon :icon="icon" />
-		<span>{{ name }}</span>
+		<span class="nav-label">{{ name }}</span>
 	</NuxtLink>
 </template>
 
