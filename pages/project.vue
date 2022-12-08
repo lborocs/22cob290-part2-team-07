@@ -7,29 +7,23 @@ definePageMeta({
 
 const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
 const currentProject = await $fetch("/api/project/1")
-const deadlines = setProjectDeadlineDate(currentProject.deadline)
 
 const daysRemaing = $computed(() => {
 	const date = new Date(currentProject.deadline)
 	return dateDiffInDays(new Date(), date)
 })
 
-// Set project deadline date
-function setProjectDeadlineDate(deadline: DateNumber) {
-	const projectDeadlineDate = new Date(deadline)
-	const projectDeadlineDateFormatted = projectDeadlineDate.toLocaleDateString(
-		"en-gb",
-		{
-			day: "numeric",
-			month: "long",
-			year: "numeric",
-		},
-	)
-	const daysRemaing = +" days remaining"
-
-	return { projectDeadlineDateFormatted, daysRemaing }
-}
-
+// get members of project based on tasks they are assigned to
+const projectMembers = $computed(() => {
+	const members: User[] = []
+	for (const task of tasks.value!) {
+		if (task.project && task.project.uid === currentProject.uid) {
+			for (const user of task.assignees)
+				if (!members.includes(user)) members.push(user)
+		}
+	}
+	return members
+})
 // Display days left until project deadline
 function dateDiffInDays(a: any, b: any) {
 	const _MS_PER_DAY = 1000 * 60 * 60 * 24
@@ -42,6 +36,7 @@ function dateDiffInDays(a: any, b: any) {
 </script>
 
 <template>
+	<p>{{ currentProject.description }}</p>
 	<section class="flex-row">
 		<ProjectCard title="Project Progress" :text="false">
 			<ProjectSpinner />
@@ -72,7 +67,7 @@ function dateDiffInDays(a: any, b: any) {
 
 	<section class="card wrap-grid">
 		<ProjectMember
-			v-for="member in currentProject.team"
+			v-for="member in projectMembers"
 			:key="member.uid"
 			:uid="member.uid"
 			:uname="member.name"
@@ -87,7 +82,7 @@ function dateDiffInDays(a: any, b: any) {
 .flex-row {
 	@extend %flex-row;
 	justify-content: center;
-	flex-wrap: nowrap;
+	flex-wrap: wrap;
 }
 
 .centre {
@@ -127,10 +122,10 @@ function dateDiffInDays(a: any, b: any) {
 	--card-width: 20ch;
 	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
 	gap: 0.5rem;
-}
 
-.wrap-grid .card-small {
-	text-align: center;
-	max-width: var(--card-width, 20ch);
+	.card-small {
+		text-align: center;
+		max-width: var(--card-width, 20ch);
+	}
 }
 </style>
