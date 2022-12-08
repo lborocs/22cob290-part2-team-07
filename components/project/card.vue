@@ -23,7 +23,7 @@ defineProps<{
 .card-project {
 	@extend %card;
 	width: 100%;
-	max-width: 40ch;
+	max-width: 38ch;
 	margin: 0.5rem;
 
 	&-text {
