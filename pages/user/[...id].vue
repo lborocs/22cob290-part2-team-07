@@ -3,9 +3,7 @@
 definePageMeta({
 	name: "Profile view",
 })
-
 </script>
-
 
 <template>
 	<div>{{ $route.params.id[0] }}</div>
@@ -24,15 +22,12 @@ definePageMeta({
 	</profile-view-card>
 </template>
 
-
-
 <style scoped lang="scss">
-@use "/assets/core.scss" as *;
+@use "~/assets/core";
 @use "/assets/colour";
 
 #title-card {
 	text-decoration: underline;
 	text-decoration-color: colour.$accent;
 }
-
 </style>

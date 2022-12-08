@@ -22,14 +22,14 @@ defineProps<{
 </template>
 
 <style lang="scss">
-@use "/assets/core.scss" as *;
+@use "~/assets/core";
 
 .flex-col {
 	@extend %flex-col;
 }
 
 .card-small {
-	@extend .card-small;
+	@extend %card-small;
 }
 
 .detail-highlight {

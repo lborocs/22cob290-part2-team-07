@@ -42,7 +42,7 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 
 <style scoped lang="scss">
 @use "sass:list";
-@use "/assets/core" as *;
+@use "~/assets/core";
 
 .kanban-wrapper {
 	display: grid;
@@ -76,7 +76,7 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 // rag-colours = names in css vars
 @for $i from 1 through 3 {
 	.kanban-col:nth-child(#{$i}) {
-		@extend [data-rag="#{list.nth($rag-colours, $i)}"];
+		@extend [data-rag="#{list.nth(core.$rag-colours, $i)}"];
 	}
 }
 </style>

@@ -14,8 +14,8 @@ withDefaults(
 )
 </script>
 
+<!-- IK the img is repeated, couldn't think of a neater way -->
 <template>
-	<!-- IK the img is repeated, couldn't think of a neater way -->
 	<NuxtLink v-if="isLink" :to="`/user/${uid}`"
 		><img
 			:src="profilePicture(name)"
@@ -33,9 +33,9 @@ withDefaults(
 </template>
 
 <style scoped lang="scss">
-@use "/assets/core.scss" as *;
+@use "~/assets/core";
 
 img {
-	@extend .profile-picture;
+	@extend %profile-picture;
 }
 </style>

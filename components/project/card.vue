@@ -18,10 +18,10 @@ defineProps<{
 </template>
 
 <style scoped lang="scss">
-@use "/assets/core.scss" as *;
+@use "~/assets/core";
 
 .card-project {
-	@extend .card;
+	@extend %card;
 	width: 100%;
 	max-width: 40ch;
 	margin: 0.5rem;

@@ -9,6 +9,10 @@ body {
 	overflow-y: scroll;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 .sr-only:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
 	clip-path: inset(50%);
@@ -17,4 +21,12 @@ body {
 	position: absolute;
 	white-space: nowrap;
 	width: 1px;
+}
+
+.card {
+	@extend %card;
+}
+
+.profile-picture {
+	@extend %profile-picture;
 }

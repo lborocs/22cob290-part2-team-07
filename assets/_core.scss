@@ -50,17 +50,13 @@
 	padding: 0.5rem;
 }
 
-* {
-	box-sizing: border-box;
-}
-
-.card {
+%card {
 	background: var(--colour-background-2);
 	border-radius: var(--card-radius);
 	padding: 1rem 1.5rem;
 	margin: 1.5rem auto;
 	&-small {
-		@extend .card;
+		@extend %card;
 		background: var(--colour-accent-faded);
 		padding: 0.5rem 1rem;
 		margin: 0 auto;
@@ -95,7 +91,7 @@ $rag-colours: ("red", "amber", "green");
 	}
 }
 
-.profile-picture {
+%profile-picture {
 	aspect-ratio: 1;
 	border-radius: 50%;
 }

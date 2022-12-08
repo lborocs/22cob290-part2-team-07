@@ -14,7 +14,7 @@
 </template>
 
 <style scoped lang="scss">
-@use "/assets/core";
+@use "~/assets/core";
 
 header {
 	display: flex;

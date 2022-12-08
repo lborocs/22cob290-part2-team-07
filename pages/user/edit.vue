@@ -22,7 +22,7 @@ definePageMeta({
 </template>
 
 <style scoped lang="scss">
-@use "/assets/core.scss" as *;
+@use "~/assets/core";
 @use "/assets/colour";
 
 #title-card {

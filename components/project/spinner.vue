@@ -35,8 +35,8 @@ function updateProgressBar() {
 </template>
 
 <style scoped lang="scss">
-@use "/assets/core.scss" as *;
-@use "/assets/colour.scss" as *;
+@use "~/assets/core";
+@use "~/assets/colour";
 
 .spinner-parent {
 	position: relative;
@@ -74,7 +74,7 @@ function updateProgressBar() {
 	background: conic-gradient(
 		from 0deg at 50% 50%,
 		var(--colour-accent) var(--prog),
-		$mid-grey var(--prog)
+		colour.$mid-grey var(--prog)
 	);
 }
 

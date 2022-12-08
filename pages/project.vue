@@ -82,7 +82,7 @@ function dateDiffInDays(a: any, b: any) {
 </template>
 
 <style scoped lang="scss">
-@use "/assets/core.scss" as *;
+@use "~/assets/core";
 
 .flex-row {
 	@extend %flex-row;
