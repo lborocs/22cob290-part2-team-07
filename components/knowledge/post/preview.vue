@@ -22,7 +22,7 @@ defineProps<{
 		>
 		<div class="owner">
 			<UserIcon :uid="owner.uid" :name="owner.name" :size="50" />
-			<UserName class="name" :uid="owner.uid" :name="owner.name" />
+			<UserName :uid="owner.uid" :name="owner.name" />
 			<span>{{ rankTitle(owner.rank) }}</span>
 		</div>
 		<Date :date="created" class="date" />
@@ -87,9 +87,6 @@ article {
 .owner {
 	grid-area: owner;
 	@extend %aside-body, %flex-col, %flex-centre;
-	.name {
-		font-weight: bold;
-	}
 }
 
 .date {

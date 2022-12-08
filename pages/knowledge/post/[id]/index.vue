@@ -1,16 +1,11 @@
 <script setup lang="ts">
-const route = useRoute()
-const { data: post } = await useFetch(`/api/post/${route.params.id}`)
+defineProps<{
+	post: Post
+}>()
 </script>
 
 <template>
-	<p>Post: {{ $route.params.id }}</p>
-	<KnowledgePostMarkdown
-		v-if="post"
-		:markdown="post.markdown"
-		:header-level="2"
-	/>
-	<KnowledgePostMissing v-else />
+	<KnowledgePostMarkdown :markdown="post.markdown" :header-level="3" />
 </template>
 
 <style scoped lang="scss"></style>

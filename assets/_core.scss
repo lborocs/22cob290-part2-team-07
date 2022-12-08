@@ -1,5 +1,6 @@
 %link {
 	color: var(--colour-text);
+	font-weight: bold;
 	text-decoration: underline var(--colour-accent);
 	transition: {
 		property: color, text-decoration;
@@ -50,10 +51,13 @@
 	padding: 0.5rem;
 }
 
+$card-padding-vert: 1rem;
+$card-padding-hori: 1.5rem;
+$card-padding: $card-padding-vert $card-padding-hori;
 %card {
 	background: var(--colour-background-2);
 	border-radius: var(--card-radius);
-	padding: 1rem 1.5rem;
+	padding: $card-padding;
 	margin: 1.5rem auto;
 	&-small {
 		@extend %card;
