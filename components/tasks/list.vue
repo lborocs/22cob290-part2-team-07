@@ -1,11 +1,17 @@
 <template>
 	<div class="task-list">
-		<div class="task-row" v-for="task in tasks" :key="task.uid">
+		<div
+			class="task-row"
+			v-for="task in tasks"
+			:key="task.uid"
+			:data-status="task.status"
+		>
 			<input
 				type="checkbox"
 				name="completed"
 				:id="`completed=${task.uid}`"
 				class="checkbox"
+				:checked="task.status == 2"
 				@change="onChecked($event, task)"
 			/>
 			<label :for="`completed=${task.uid}`" class="sr-only">
@@ -38,8 +44,10 @@
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/core" as *;
 .task-list {
 	display: flex;
+	gap: 1rem;
 	flex-direction: column;
 }
 
@@ -52,12 +60,25 @@
 	gap: 1rem;
 	position: relative;
 
+	border-radius: 0.5rem;
+	border-left: 0.3rem solid var(--colour-card-highlight, var(--colour-text));
+
+	&[data-status="0"] {
+		@extend [data-rag="green"];
+	}
+	&[data-status="1"] {
+		@extend [data-rag="amber"];
+	}
+	&[data-status="2"] {
+		@extend [data-rag="red"];
+	}
+
 	h3 {
 		padding-right: 0.5rem;
 	}
 
 	&:not(:last-child) {
-		border-bottom: 1px solid var(--colour-text);
+		// border-bottom: 1px solid var(--colour-text);
 	}
 
 	&:has(.checkbox:checked) {
