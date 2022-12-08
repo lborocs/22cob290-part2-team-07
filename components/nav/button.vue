@@ -30,6 +30,11 @@ a {
 	padding: 0.2rem;
 	border-radius: 0.4rem;
 
+	&:hover {
+		color: var(--colour-text);
+		text-decoration: underline;
+	}
+
 	.iconify {
 		font-size: 2.25rem;
 		min-width: 2.25rem;
@@ -37,6 +42,7 @@ a {
 
 	&.router-link-active {
 		background-color: var(--colour-background-1);
+		color: var(--colour-text);
 	}
 }
 </style>
