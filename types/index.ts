@@ -17,7 +17,7 @@ declare global {
 
 	interface Post {
 		readonly uid: number
-		topics: Topic[]
+		topic: Topic
 		owner: User
 		title: string
 		markdown: string

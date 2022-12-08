@@ -2,7 +2,7 @@ export default defineEventHandler(async event => {
 	const posts: Post[] = [
 		{
 			uid: 1,
-			topics: [await $fetch("/api/topic/2")],
+			topic: await $fetch("/api/topic/2"),
 			owner: await $fetch("/api/user/2"),
 			created: new Date("2022-12-01").getTime(),
 			title: "Film WatchList",
@@ -11,7 +11,7 @@ export default defineEventHandler(async event => {
 		},
 		{
 			uid: 2,
-			topics: [await $fetch("/api/topic/1")],
+			topic: await $fetch("/api/topic/1"),
 			owner: await $fetch("/api/user/1"),
 			created: new Date("2022-11-15").getTime(),
 			title: "The Best Guide to Speaking Latin in the World",
@@ -20,7 +20,7 @@ export default defineEventHandler(async event => {
 		},
 		{
 			uid: 3,
-			topics: [await $fetch("/api/topic/3")],
+			topic: await $fetch("/api/topic/3"),
 			owner: await $fetch("/api/user/1"),
 			created: new Date("2022-12-05").getTime(),
 			title: "Monitor Not Working",
@@ -29,7 +29,7 @@ export default defineEventHandler(async event => {
 		},
 		{
 			uid: 4,
-			topics: [await $fetch("/api/topic/3")],
+			topic: await $fetch("/api/topic/3"),
 			owner: await $fetch("/api/user/2"),
 			created: new Date("2022-10-23").getTime(),
 			title: "Keyboard Not Working",
@@ -38,7 +38,7 @@ export default defineEventHandler(async event => {
 		},
 		{
 			uid: 5,
-			topics: [await $fetch("/api/topic/2")],
+			topic: await $fetch("/api/topic/2"),
 			owner: await $fetch("/api/user/1"),
 			created: new Date("2022-12-07").getTime(),
 			title: "Best Movies",
