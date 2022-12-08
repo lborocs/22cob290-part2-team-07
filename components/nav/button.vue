@@ -18,6 +18,7 @@ defineProps<{
 
 <style scoped lang="scss">
 @use "assets/animation";
+
 a {
 	display: flex;
 	align-items: center;
