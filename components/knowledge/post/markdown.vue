@@ -14,4 +14,9 @@ const markdownHTML = $computed(() => {
 	<div v-html="markdownHTML" />
 </template>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+@use "~/assets/core";
+a {
+	@extend %link;
+}
+</style>
