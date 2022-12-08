@@ -10,7 +10,12 @@ const { data: post } = await useFetch(`/api/post/${route.params.id}`)
 
 // If the current user has access to edit the post
 const editor = true
-const isEditing = $computed(() => route.path.endsWith("edit"))
+const editing = $computed(() => route.path.endsWith("edit"))
+let preview = $ref(false)
+
+function togglePreview() {
+	preview = !preview
+}
 </script>
 
 <template>
@@ -27,38 +32,65 @@ const isEditing = $computed(() => route.path.endsWith("edit"))
 			<h2>{{ post.title }}</h2>
 		</template>
 		<template #header-control>
-			<div class="control">
+			<div class="control" v-if="!editing">
 				<ButtonNuxt
-					v-if="editor && !isEditing"
 					icon="material-symbols:topic-outline-rounded"
 					:to="`/knowledge/search/?topic=${post.topic.uid}`"
 					>{{ post.topic.name }}</ButtonNuxt
 				>
 			</div>
+			<div class="control" v-else-if="editor && editing">
+				<Button
+					v-if="preview"
+					icon="material-symbols:edit-outline-rounded"
+					@click="togglePreview()"
+				>
+					Edit
+				</Button>
+				<Button
+					v-else
+					icon="material-symbols:visibility-outline-rounded"
+					@click="togglePreview()"
+				>
+					Preview
+				</Button>
+			</div>
 		</template>
 		<slot />
+		<template #footer-extra
+			><div class="control" v-if="editing">
+				<Button icon="material-symbols:key-outline-rounded">Key</Button>
+			</div></template
+		>
 		<template #footer><Date class="date" :date="post.created" /></template>
 		<template #footer-control>
-			<div class="control" v-if="editor && !isEditing">
+			<div class="control" v-if="editor && !editing">
 				<ButtonNuxt
 					icon="material-symbols:edit-outline-rounded"
 					:to="`/knowledge/post/${post.uid}/edit`"
+					@click="preview = false"
 					>Edit</ButtonNuxt
 				>
 			</div>
-			<div class="control" v-if="editor && isEditing">
+			<div class="control" v-else-if="editing">
 				<ButtonNuxt
 					icon="material-symbols:cancel-outline-rounded"
 					:to="`/knowledge/post/${post.uid}`"
 					>Cancel</ButtonNuxt
 				><ButtonNuxt
+					v-if="editor"
 					icon="material-symbols:save-outline-rounded"
 					:to="`/knowledge/post/${post.uid}`"
 					>Save</ButtonNuxt
 				>
 			</div>
 		</template>
-		<NuxtPage :post="post" />
+		<KnowledgePostMarkdown
+			v-if="!editing || (editing && preview)"
+			:markdown="post.markdown"
+			:header-level="3"
+		/>
+		<KnowledgePostEdit :post="post" v-else />
 	</Sandwich>
 	<KnowledgePostMissing v-else />
 </template>
