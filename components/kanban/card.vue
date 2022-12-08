@@ -8,7 +8,7 @@
 		<div class="task-header">
 			<h4>{{ task.name }}</h4>
 			<div v-if="task.assignees.length > 0">
-				<AvatarStack :array="task.assignees.slice(0, 3)" />
+				<AvatarStack :array="task.assignees" />
 			</div>
 			<p v-else>No-one assigned to task</p>
 		</div>

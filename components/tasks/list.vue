@@ -32,7 +32,7 @@
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
 				{{ new Date(task.deadline).toLocaleDateString() }}
 			</p>
-			<AvatarStack :array="task.assignees.slice(0, 3)" />
+			<AvatarStack :array="task.assignees" />
 		</div>
 	</div>
 </template>

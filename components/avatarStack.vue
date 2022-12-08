@@ -1,15 +1,15 @@
 <template>
 	<div class="assignees">
+		<div v-if="array.length > 3" class="more-assignees">
+			+{{ array.length - 3 }}
+		</div>
 		<UserIcon
-			v-for="person in array"
+			v-for="person in array.slice(0, 3)"
 			:key="person.uid"
 			v-bind="person"
 			:size="42"
 			:is-link="false"
 		/>
-		<div v-if="array.length > 3" class="more-assignees">
-			+{{ array.length - 3 }}
-		</div>
 	</div>
 </template>
 
@@ -17,7 +17,8 @@
 .assignees {
 	display: flex;
 	flex-direction: row-reverse;
-	img:not(:last-child) {
+	img:not(:last-child),
+	.more-assignees {
 		margin-left: -1.5rem;
 	}
 	.more-assignees {
