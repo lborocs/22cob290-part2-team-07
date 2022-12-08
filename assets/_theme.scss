@@ -16,6 +16,8 @@
 	--colour-green: #43d34a91;
 	--colour-highlight: #fff;
 
+	--box-shadow: 0.4rem 0.4rem 0.5rem rgba(0, 0, 0, 0.15);
+
 	@media screen and (prefers-color-scheme: dark) {
 		--colour-text: #{colour.$text-dark};
 		--colour-text-faded: #{colour.$text-dark-faded};
