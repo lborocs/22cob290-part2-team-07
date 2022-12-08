@@ -47,7 +47,8 @@
 @use "@/assets/core" as *;
 .task-list {
 	display: flex;
-	gap: 1rem;
+	--gap: 2rem;
+	gap: var(--gap);
 	flex-direction: column;
 }
 
@@ -77,13 +78,20 @@
 		padding-right: 0.5rem;
 	}
 
-	&:not(:last-child) {
+	&:not(:last-child)::after {
+		content: "";
+		position: absolute;
+		bottom: calc(-1 * var(--gap) / 2);
+		width: 100%;
+		height: 0.2rem;
+		background: var(--colour-text-faded);
+		border-radius: 100vmax;
 		// border-bottom: 1px solid var(--colour-text);
 	}
 
-	&:has(.checkbox:checked) {
-		opacity: 0.5;
+	&:has(.checkbox:checked) :where(.details, h3) {
 		text-decoration: line-through;
+		opacity: 0.2;
 	}
 }
 
