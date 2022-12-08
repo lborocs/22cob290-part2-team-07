@@ -45,7 +45,7 @@ defineProps<{
 @use "~/assets/core";
 
 article {
-	@extend .card;
+	@extend %card;
 	padding: 0;
 	margin-bottom: 1rem;
 	display: grid;
