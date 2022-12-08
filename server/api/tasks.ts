@@ -10,11 +10,12 @@ export default defineEventHandler(async event => {
 			workerHours: 1,
 			assignees: [
 				await $fetch("/api/user/1"),
-				await $fetch("/api/user/2"	),
+				await $fetch("/api/user/2"),
 				await $fetch("/api/user/3"),
 			],
 			status: TaskStatus.Todo,
 			deadline: new Date("2022-12-25").getTime(),
+			project: await $fetch("/api/project/1"),
 		},
 		{
 			uid: 2,
@@ -24,13 +25,7 @@ export default defineEventHandler(async event => {
 			assignees: [],
 			status: TaskStatus.InProgress,
 			deadline: new Date("2022-12-25").getTime(),
-			project: {
-				uid: 1,
-				name: "Project 1",
-				description: "Project 1 description",
-				tasks: [],
-				deadline: new Date("2022-12-25").getTime(),
-			},
+			project: await $fetch("/api/project/1"),
 		},
 		{
 			uid: 3,
