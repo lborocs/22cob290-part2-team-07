@@ -40,10 +40,8 @@ declare global {
 		readonly uid: number
 		name: string
 		description: string
-		tasks?: Task[]
 		deadline: DateNumber
 		leader: User
-		team: User[]
 	}
 
 	interface Client {
