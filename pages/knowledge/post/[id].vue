@@ -2,7 +2,7 @@
 import { rankTitle } from "@/types/user"
 
 definePageMeta({
-	name: "Post Name",
+	name: "Knowledge Post",
 })
 
 const route = useRoute()

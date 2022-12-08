@@ -4,10 +4,14 @@
 import { Icon } from "@iconify/vue"
 
 const route = useRoute()
+const pageName = $computed<string>(
+	() => route.meta.name ?? route.name!.toString(),
+)
+
 // Updates the page head information on navigation.
 useHead(() => {
 	return {
-		title: route.name?.toString(),
+		title: pageName,
 	}
 })
 
@@ -28,7 +32,7 @@ function toggleMobileNav() {
 <template>
 	<div class="page-wrapper">
 		<header>
-			<h1>{{ $route.name }}</h1>
+			<h1>{{ pageName }}</h1>
 			<UserIcon v-if="user !== null" v-bind="user" :size="50" />
 		</header>
 
