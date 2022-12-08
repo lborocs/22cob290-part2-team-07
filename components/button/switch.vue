@@ -33,9 +33,11 @@ label {
 	cursor: pointer;
 	background-color: var(--colour-accent);
 	color: var(--colour-background-1);
-	transition: background-color animation.$transition-medium,
-		color animation.$transition-medium;
-
+	transition: {
+		property: color, background-color;
+		duration: animation.$transition-medium;
+		timing-function: ease-in-out;
+	}
 	&:nth-of-type(1) {
 		border-radius: 100vmax 0 0 100vmax;
 	}

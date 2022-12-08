@@ -135,7 +135,7 @@ header {
 	display: flex;
 	flex-direction: column;
 	width: var(--nav-width);
-	transition: width animation.$transition-medium;
+	transition: width animation.$transition-medium ease-in-out;
 	background-color: var(--colour-accent);
 	z-index: 1;
 
@@ -146,7 +146,7 @@ header {
 
 			.nav-label {
 				display: block;
-				animation: navlabel animation.$transition-medium forwards;
+				animation: navlabel animation.$transition-medium ease-in-out forwards;
 			}
 		}
 
