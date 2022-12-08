@@ -6,6 +6,11 @@ definePageMeta({
 })
 
 const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
+const projectTasks = $computed(() =>
+	tasks.value!.filter(
+		task => task.project && task.project.uid === currentProject.uid,
+	),
+)
 const currentProject = await $fetch("/api/project/1")
 
 const daysRemaing = $computed(() => {
@@ -16,11 +21,9 @@ const daysRemaing = $computed(() => {
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
 	const members: User[] = []
-	for (const task of tasks.value!) {
-		if (task.project && task.project.uid === currentProject.uid) {
-			for (const user of task.assignees)
-				if (!members.includes(user)) members.push(user)
-		}
+	for (const task of projectTasks) {
+		for (const user of task.assignees)
+			if (!members.includes(user)) members.push(user)
 	}
 	return members
 })
@@ -63,7 +66,7 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 	</section>
 
-	<TaskSwitcher :tasks="tasks!" />
+	<TaskSwitcher :tasks="projectTasks" />
 
 	<section class="card wrap-grid">
 		<ProjectMember
