@@ -40,7 +40,7 @@ article {
 		justify-items: stretch;
 		align-items: center;
 
-		padding: core.$card-padding-vert / 2 core.$card-padding-hori / 2;
+		padding: calc(core.$card-padding-vert / 2) calc(core.$card-padding-hori / 2);
 
 		.title {
 			text-align: center;
