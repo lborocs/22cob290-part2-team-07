@@ -112,6 +112,9 @@ header {
 	@extend %flex-row, %flex-centre, %content;
 	justify-content: space-between;
 	grid-area: head;
+	@media screen and (max-width: mobile.$width) {
+		margin: 0;
+	}
 }
 
 @keyframes navlabel {
@@ -136,14 +139,21 @@ header {
 	background-color: var(--colour-accent);
 	z-index: 1;
 
-	&:hover,
-	&:focus-within {
-		--nav-width: 12rem;
+	@media screen and (min-width: mobile.$width) {
+		&:hover,
+		&:focus-within {
+			--nav-width: 12rem;
 
-		.nav-label {
-			display: block;
+			.nav-label {
+				display: block;
+				animation: navlabel animation.$transition-medium forwards;
+			}
+		}
 
-			animation: navlabel animation.$transition-medium forwards;
+		.nav-logo {
+			aspect-ratio: 1;
+			width: clamp(2rem, 50%, 5rem);
+			margin-inline: auto;
 		}
 	}
 
@@ -174,18 +184,21 @@ header {
 	}
 
 	.nav-wrapper {
-		width: 100%;
+		// width: min-content;
+		--nav-width: max-content;
+		.nav-label {
+			display: block;
+		}
 	}
 
 	button[aria-expanded="true"] ~ :is(ul, img) {
 		display: none;
 	}
-}
 
-.nav-logo {
-	aspect-ratio: 1;
-	width: clamp(2rem, 50%, 5rem);
-	margin-inline: auto;
+	.nav-logo {
+		width: 2rem;
+		height: 2rem;
+	}
 }
 
 main {
@@ -194,6 +207,7 @@ main {
 	padding: 2rem;
 	@media (max-width: mobile.$width) {
 		padding: 0.1rem;
+		margin: 0;
 	}
 }
 </style>
