@@ -46,7 +46,7 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 
 .kanban-wrapper {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 1fr;
 }
 
 .kanban-col {
@@ -59,13 +59,12 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 	&:not(:last-child)::after {
 		position: absolute;
 		content: "";
-		right: 0;
-		top: 0;
-		bottom: 0;
-		width: 0.2rem;
 		border-radius: 100vmax;
-		translate: 50% 0;
 		background-color: var(--colour-text);
+		bottom: 0;
+		width: 100%;
+		translate: 0 1rem;
+		height: 0.2rem;
 	}
 }
 
@@ -77,6 +76,20 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 @for $i from 1 through 3 {
 	.kanban-col:nth-child(#{$i}) {
 		@extend [data-rag="#{list.nth(core.$rag-colours, $i)}"];
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.kanban-wrapper {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.kanban-col:not(:last-child)::after {
+		translate: 50% 0;
+		right: 0;
+		top: 0;
+		height: 100%;
+		width: 0.2rem;
 	}
 }
 </style>
