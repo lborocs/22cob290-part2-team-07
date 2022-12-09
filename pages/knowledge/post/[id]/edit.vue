@@ -1,7 +1,7 @@
-<script setup lang="ts"></script>
-
-<template>
-	<p>I AM NOW EDITING!</p>
-</template>
-
+<script setup lang="ts">
+definePageMeta({
+	name: "Knowledge Post Edit",
+})
+</script>
+<template></template>
 <style scoped lang="scss"></style>

@@ -18,6 +18,7 @@ defineProps<{
 
 <style scoped lang="scss">
 @use "assets/animation";
+
 a {
 	display: flex;
 	align-items: center;
@@ -25,7 +26,7 @@ a {
 
 	text-decoration: none;
 	color: var(--colour-text);
-	transition: background-color animation.$transition-short;
+	transition: background-color animation.$transition-short ease-in-out;
 
 	padding: 0.2rem;
 	border-radius: 0.4rem;

@@ -11,12 +11,15 @@ const markdownHTML = $computed(() => {
 </script>
 
 <template>
-	<div v-html="markdownHTML" />
+	<div class="markdown-html" v-html="markdownHTML" />
 </template>
 
 <style lang="scss">
 @use "~/assets/core";
-a {
-	@extend %link;
+
+.markdown-html {
+	a {
+		@extend %link;
+	}
 }
 </style>

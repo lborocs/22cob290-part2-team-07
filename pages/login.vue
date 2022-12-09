@@ -2,7 +2,7 @@
 definePageMeta({
 	layout: false,
 	name: "Login",
-});
+})
 </script>
 
 <template>

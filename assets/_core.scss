@@ -1,10 +1,12 @@
+@use "animation";
+
 %link {
 	color: var(--colour-text);
 	font-weight: bold;
 	text-decoration: underline var(--colour-accent);
 	transition: {
 		property: color, text-decoration;
-		duration: 0.1s;
+		duration: animation.$transition-short;
 		timing-function: ease-in-out;
 	}
 	&:hover,

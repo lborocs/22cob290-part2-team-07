@@ -1,5 +1,6 @@
 @use "core";
 @use "mobile";
+@use "animation";
 
 %button {
 	@extend %flex-row, %flex-centre;
@@ -11,7 +12,7 @@
 	// width: max-content;
 	transition: {
 		property: color, background-color;
-		duration: 0.1s;
+		duration: animation.$transition-short;
 		timing-function: ease-in-out;
 	}
 

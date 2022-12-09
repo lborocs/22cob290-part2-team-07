@@ -7,7 +7,7 @@ defineProps<{
 	markdown: string
 
 	owner: User
-	topics: Topic[]
+	topic: Topic
 	created: DateNumber
 }>()
 </script>
@@ -16,9 +16,9 @@ defineProps<{
 	<article>
 		<ButtonNuxt
 			class="topic"
-			:to="`/knowledge/search/?q=&topic=${topics[0].uid}`"
+			:to="`/knowledge/search/?q=&topic=${topic.uid}`"
 			icon="material-symbols:topic-outline-rounded"
-			>{{ topics[0].name }}</ButtonNuxt
+			>{{ topic.name }}</ButtonNuxt
 		>
 		<div class="owner">
 			<UserIcon :uid="owner.uid" :name="owner.name" :size="50" />

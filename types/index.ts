@@ -17,7 +17,7 @@ declare global {
 
 	interface Post {
 		readonly uid: number
-		topics: Topic[]
+		topic: Topic
 		owner: User
 		title: string
 		markdown: string
@@ -40,10 +40,8 @@ declare global {
 		readonly uid: number
 		name: string
 		description: string
-		tasks?: Task[]
 		deadline: DateNumber
 		leader: User
-		team: User[]
 	}
 
 	interface Client {

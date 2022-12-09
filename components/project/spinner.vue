@@ -37,6 +37,7 @@ function updateProgressBar() {
 <style scoped lang="scss">
 @use "~/assets/core";
 @use "~/assets/colour";
+@use "~/assets/animation";
 
 .spinner-parent {
 	position: relative;
@@ -69,7 +70,7 @@ function updateProgressBar() {
 	position: absolute;
 	border-radius: 100vmax;
 	inset: 0;
-	transition: --prog 0.2s ease-in;
+	transition: --prog animation.$transition-medium ease-in;
 	animation: initialise-prog 1s ease-in-out forwards;
 	background: conic-gradient(
 		from 0deg at 50% 50%,

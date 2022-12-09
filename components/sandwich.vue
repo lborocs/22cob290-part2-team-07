@@ -37,13 +37,21 @@ article {
 		background-color: var(--colour-accent-faded);
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
+		column-gap: 0.5rem;
 		justify-items: stretch;
 		align-items: center;
 
 		padding: calc(core.$card-padding-vert / 2) calc(core.$card-padding-hori / 2);
 
+		.extra {
+			justify-self: start;
+		}
 		.title {
+			justify-self: center;
 			text-align: center;
+		}
+		.cntrl {
+			justify-self: end;
 		}
 	}
 
