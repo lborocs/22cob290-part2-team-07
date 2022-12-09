@@ -195,13 +195,16 @@ header {
 		}
 	}
 
-	button[aria-expanded="true"] ~ :is(ul, img) {
+	button[aria-expanded="false"] ~ :is(ul, img) {
 		display: none;
 	}
 
+	.nav-wrapper ul {
+		margin-top: 3rem;
+	}
+
 	.nav-logo {
-		width: 2rem;
-		height: 2rem;
+		display: none;
 	}
 }
 
