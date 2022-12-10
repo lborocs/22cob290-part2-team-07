@@ -33,7 +33,20 @@ a {
 
 	&:hover {
 		color: var(--colour-text);
-		text-decoration: underline;
+		.nav-label {
+			position: relative;
+
+			&::after {
+				content: "";
+				position: absolute;
+				bottom: -0.05rem;
+				left: 0;
+				width: 100%;
+				height: 0.11rem;
+				border-radius: 0.4rem;
+				background-color: currentColor;
+			}
+		}
 	}
 
 	.iconify {
