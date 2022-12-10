@@ -28,17 +28,19 @@
 				</span>
 			</div>
 			<h3>{{ task.name }}</h3>
-			<p class="details line-limit">{{ task.description }}</p>
+			<p class="details line-limit description">{{ task.description }}</p>
 
-			<p class="details">
+			<p class="details hours">
 				<Icon icon="material-symbols:hourglass-bottom-rounded" />
 				{{ task.workerHours }} Hours
 			</p>
-			<p class="details">
+			<p class="details deadline">
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
 				{{ new Date(task.deadline).toLocaleDateString() }}
 			</p>
-			<AvatarStack :array="task.assignees" />
+			<div class="avatars">
+				<AvatarStack :array="task.assignees" />
+			</div>
 		</div>
 	</div>
 </template>
@@ -55,10 +57,11 @@
 .task-row {
 	display: grid;
 	--cb-size: 1.5rem;
-	grid-template-columns: var(--cb-size) 0.8fr 1fr 3fr 1fr 1fr 0.5fr;
+	grid-template-columns: var(--cb-size) 0.8fr 1fr 3fr 1fr 1fr 5rem;
+	grid-template-areas: "checkbox project title description hours deadline avatar";
 	flex-direction: row;
 	align-items: center;
-	gap: 1rem;
+	gap: 0 1rem;
 	position: relative;
 
 	border-radius: 0.5rem;
@@ -76,6 +79,7 @@
 
 	h3 {
 		padding-right: 0.5rem;
+		grid-area: "title";
 	}
 
 	&:not(:last-child)::after {
@@ -93,6 +97,25 @@
 		text-decoration: line-through;
 		opacity: 0.2;
 	}
+}
+
+.project {
+	grid-area: project;
+}
+.description {
+	grid-area: description;
+}
+
+.hours {
+	grid-area: hours;
+}
+
+.deadline {
+	grid-area: deadline;
+}
+
+.avatars {
+	grid-area: avatar;
 }
 
 .project-title {
@@ -124,9 +147,20 @@
 }
 
 .checkbox {
+	grid-area: checkbox;
 	width: var(--cb-size);
 	height: var(--cb-size);
 	accent-color: var(--colour-accent);
+}
+
+@media screen and (max-width: 900px) {
+	.task-row {
+		grid-template-columns: var(--cb-size) 1fr 1fr 2fr;
+		grid-template-areas:
+			"checkbox title hours  description"
+			"checkbox project deadline  avatar";
+		gap: 0 0.5rem;
+	}
 }
 </style>
 
