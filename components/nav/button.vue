@@ -7,10 +7,14 @@ defineProps<{
 	name: string
 	icon: string
 }>()
+
+const emit = defineEmits<{
+	(e: "navigate"): void
+}>()
 </script>
 
 <template>
-	<NuxtLink :to="location">
+	<NuxtLink :to="location" @click.prevent="$emit('navigate')">
 		<Icon :icon="icon" />
 		<span class="nav-label">{{ name }}</span>
 	</NuxtLink>
