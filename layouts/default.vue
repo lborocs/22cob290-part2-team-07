@@ -27,6 +27,11 @@ function logout() {
 function toggleMobileNav() {
 	isNavExpanded.value = !isNavExpanded.value
 }
+
+function clearFocus() {
+	isNavExpanded.value = false
+	if (document.activeElement) (document.activeElement as HTMLElement).blur()
+}
 </script>
 
 <template>
@@ -46,7 +51,7 @@ function toggleMobileNav() {
 					@click="toggleMobileNav"
 				>
 					<span class="sr-only">Menu</span>
-					<Icon icon="mdi:menu" />
+					<Icon icon="material-symbols:menu" />
 				</button>
 				<ul>
 					<li>
@@ -54,6 +59,7 @@ function toggleMobileNav() {
 							location="/dashboard"
 							name="Dashboard"
 							icon="material-symbols:analytics-outline-rounded"
+							@navigate="clearFocus"
 						/>
 					</li>
 					<li>
@@ -61,6 +67,7 @@ function toggleMobileNav() {
 							location="/manager"
 							name="Manager"
 							icon="material-symbols:admin-panel-settings-outline-rounded"
+							@navigate="clearFocus"
 						/>
 					</li>
 					<li>
@@ -68,6 +75,7 @@ function toggleMobileNav() {
 							location="/knowledge"
 							name="Knowledge"
 							icon="material-symbols:book-outline-rounded"
+							@navigate="clearFocus"
 						/>
 					</li>
 					<li>
@@ -75,6 +83,7 @@ function toggleMobileNav() {
 							location="/project"
 							name="Project"
 							icon="material-symbols:folder-outline-rounded"
+							@navigate="clearFocus"
 						/>
 					</li>
 					<li>

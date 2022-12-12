@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import { Icon } from "@iconify/vue"
-</script>
+<script setup lang="ts"></script>
 
 <template>
 	<header>
@@ -8,15 +6,10 @@ import { Icon } from "@iconify/vue"
 		<!-- will fix positioning-->
 		<img src="~/assets/tools.svg" alt="Make-It-All Logo" class="logo" />
 	</header>
-	<body>
-		<svg viewBox="1 1 1651 480">
-			<path
-				d="M 1 901 L 1651 901 C 2120 81 371 396 1 1"
-				stroke="var(--colour-accent)"
-				fill="var(--colour-accent)"
-			/>
-		</svg>
-	</body>
+	<SvgLogin />
+	<main>
+		<slot />
+	</main>
 </template>
 
 <style scoped lang="scss">
@@ -46,19 +39,5 @@ h1 u {
 
 .logo {
 	width: 5rem;
-}
-
-svg {
-	margin: 0;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	left: -1px;
-	top: 0px;
-	background: var(--colour-block);
-	border: 1px solid var(--colour-block);
-	backdrop-filter: blur(2px);
-	z-index: -1;
 }
 </style>
