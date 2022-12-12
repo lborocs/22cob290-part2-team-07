@@ -1,53 +1,55 @@
 
 <template>
-    <div class="card-title-wrapper">
-        <slot name="client-details"></slot>
-    </div>
-
-    <div class="client-details-wrap">
-        <div class="card-small bg-accent card-bigger">
-        <h3 class="title-card-small text-center">Client representative</h3>
-        <div class="flex-col-center">
-            <img
-            src=""
-            alt="profile"
-            class="card-small-image profile-pic"
-            id="client-image"
-            />
-            <p class="card-small-text" id="client-representative"></p>
-        </div>
+	<div class="card flex-col centre">
+        <div class="card-title-wrapper">
+            <slot name="client-details"></slot>
         </div>
 
-        <div class="card-small bg-accent card-bigger">
-        <h3 class="title-card-small text-center">Contact information</h3>
-        <div class="flex-col-center">
-            <p
-            class="card-small-text text-center-positioning"
-            id="client-info"
-            ></p>
-            <div class="link-list text-center">
-            <a href="" id="client-email" target="_blank">
-                Contact via email</a
-            >
-            <a href="" id="client-web" target="_blank"
-                >Access website
-                <span class="material-symbols-outlined">outbound</span></a
-            >
+        <div class="client-details-wrap">
+            <div class="card-small bg-accent card-bigger">
+            <h3 class="title-card-small text-center">Client representative</h3>
+            <div class="flex-col-center">
+                <img
+                src=""
+                alt="profile"
+                class="card-small-image profile-pic"
+                id="client-image"
+                />
+                <p class="card-small-text" id="client-representative"></p>
             </div>
-        </div>
-        </div>
-
-        <div class="card-small bg-accent card-bigger">
-        <h3 class="title-card-small text-center">Office location</h3>
-        <div class="flex-col-center">
-            <p
-            class="card-small-text text-center-positioning"
-            id="client-address"
-            ></p>
-            <div class="link-list text-center">
-            <a href="#">View on Google Maps</a>
             </div>
-        </div>
+
+            <div class="card-small bg-accent card-bigger">
+            <h3 class="title-card-small text-center">Contact information</h3>
+            <div class="flex-col-center">
+                <p
+                class="card-small-text text-center-positioning"
+                id="client-info"
+                ></p>
+                <div class="link-list text-center">
+                <a href="" id="client-email" target="_blank">
+                    Contact via email</a
+                >
+                <a href="" id="client-web" target="_blank"
+                    >Access website
+                    <span class="material-symbols-outlined">outbound</span></a
+                >
+                </div>
+            </div>
+            </div>
+
+            <div class="card-small bg-accent card-bigger">
+            <h3 class="title-card-small text-center">Office location</h3>
+            <div class="flex-col-center">
+                <p
+                class="card-small-text text-center-positioning"
+                id="client-address"
+                ></p>
+                <div class="link-list text-center">
+                <a href="#">View on Google Maps</a>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </template>
@@ -117,7 +119,7 @@
 
 .client-details-wrap {
   display: grid;
-  --card-width: min(35ch, 75%);
+  --card-width: min(20ch, 75%);
   grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
   gap: 1rem;
   justify-items: center;
