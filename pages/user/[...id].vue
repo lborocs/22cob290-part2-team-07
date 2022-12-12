@@ -5,10 +5,7 @@ definePageMeta({
 })
 </script>
 
-<<<<<<< Updated upstream
-=======
 <!-- template for the majority of the code to makeup the profile view page -->
->>>>>>> Stashed changes
 <template>
 	<!-- returns the ID of the user who is currently logged in -->
 	<div>{{ $route.params.id[0] }}</div>
