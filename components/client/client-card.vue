@@ -10,12 +10,12 @@
             <h3 class="title-card-small text-center">Client representative</h3>
             <div class="flex-col-center">
                 <img
-                src=""
+                src="https://ui-avatars.com/api/?name=Neumann&background=random&size=50&format=svg"
                 alt="profile"
                 class="card-small-image profile-pic"
-                id="client-image"
+                id=""
                 />
-                <p class="card-small-text" id="client-representative"></p>
+                <slot name="client-name"></slot>
             </div>
             </div>
 
@@ -114,12 +114,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 90%;
+  height: 30%;
 }
 
 .client-details-wrap {
   display: grid;
   --card-width: min(20ch, 75%);
+
   grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
   gap: 1rem;
   justify-items: center;
