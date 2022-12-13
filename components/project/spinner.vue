@@ -58,7 +58,7 @@ function updateProgressBar() {
 		content: "";
 		width: var(--width);
 		aspect-ratio: 1;
-		background: --colour-accent;
+		background: var(--colour-accent);
 		border-radius: 100vmax;
 		z-index: 1;
 	}
