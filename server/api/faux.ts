@@ -93,6 +93,13 @@ export default defineEventHandler(async event => {
 				description: "The team project for module COB290.",
 				deadline: new Date("2023-02-20"),
 				leader: { connect: { email: "queen" } },
+				client: {
+					create: {
+						name: "Loughborough University",
+						representative: "Firat Batmaz",
+						email: "f.batmaz@lboro.ac.uk",
+					},
+				},
 				tasks: {
 					create: [
 						{
@@ -112,6 +119,22 @@ export default defineEventHandler(async event => {
 								],
 							},
 						},
+						{
+							name: "Knowledge Management",
+							description: "Create the knowledge management system",
+							subtasks: {
+								create: [
+									{
+										name: "Create Post Editor",
+										workerHours: 4,
+									},
+									{
+										name: "Create Post Viewer",
+										workerHours: 5,
+									},
+								],
+							},
+						},
 					],
 				},
 			},
@@ -125,10 +148,25 @@ export default defineEventHandler(async event => {
 		}),
 	])
 
+	const tasks = await prisma.$transaction([
+		prisma.task.create({
+			data: {
+				name: "Water the Plants",
+				description: "Give the tulips 2L of water",
+				assignees: { connect: [{ email: "queen" }] },
+			},
+			include: {
+				assignees: true,
+				subtasks: true,
+			},
+		}),
+	])
+
 	return {
 		users,
 		topics,
 		posts,
 		projects,
+		tasks,
 	}
 })
