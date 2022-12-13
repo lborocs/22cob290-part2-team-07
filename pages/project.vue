@@ -77,9 +77,7 @@ function dateDiffInDays(a: any, b: any) {
 		<ProjectMember
 			v-for="member in projectMembers"
 			:key="member.uid"
-			:uid="member.uid"
-			:uname="member.name"
-			:rank="rankTitle(member.rank)"
+			:user="member"
 		/>
 	</section>
 </template>

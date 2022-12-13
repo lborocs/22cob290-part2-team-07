@@ -1,22 +1,22 @@
 <script setup lang="ts">
+import { rankTitle } from "~~/types/user"
+
 defineProps<{
-	uid: number
-	uname: string
-	rank: string
+	user: User
 	assigned?: number
 }>()
 </script>
 
 <template>
 	<div class="flex-col card-small">
-		<NuxtLink :to="`/user/${uid}`">
-			<UserIcon :uid="uid" :name="uname" :size="50" />
-			<h3 class="card-margins">{{ uname }}</h3>
+		<NuxtLink :to="`/user/${user.uid}`">
+			<UserIcon :uid="user.uid" :name="user.name" :size="50" />
+			<h3 class="card-margins">{{ user.name }}</h3>
 		</NuxtLink>
-		<p class="dimmed card-margins">{{ rank }}</p>
+		<p class="dimmed card-margins">{{ rankTitle(user.rank) }}</p>
 		<p class="card-margins">
 			Assigned hours
-			<span class="detail-highlight"> {{ assigned }} 0 </span>
+			<span class="detail-highlight"> {{ assigned ? assigned : "0" }} </span>
 		</p>
 	</div>
 </template>
