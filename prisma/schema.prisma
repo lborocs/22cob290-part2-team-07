@@ -40,7 +40,7 @@ model Task {
 model Project {
   uid         Int      @id @default(autoincrement())
   leader      User     @relation(fields: [leaderId], references: [uid])
-  leaderId      String @map("userId")
+  leaderId    String
   name        String
   description String
   createdAt   DateTime @default(now())
@@ -60,14 +60,14 @@ model Client {
 
 model Topic {
   uid   Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
   posts Post[]
 }
 
 model Post {
   uid       Int      @id @default(autoincrement())
   owner     User     @relation(fields: [ownerId], references: [uid])
-  ownerId    String @map("userId")
+  ownerId   String
   topic     Topic    @relation(fields: [topicId], references: [uid])
   topicId   Int
   title     String
