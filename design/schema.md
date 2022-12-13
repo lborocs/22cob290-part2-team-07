@@ -11,13 +11,16 @@ Project o-- Client: client
 User --o Project: leader
 User --o Post: owner
 Topic --o Post: topic
+Post *--o Asset: references
 
 class User {
-	uid: number
+	uid: string
 	email: string
 	name: string
-	password: hash
-	settings: Settings
+	password: string
+	leads: Project[]
+	assigned: Task[]
+	posts: Post[]
 }
 
 class Task {
@@ -26,9 +29,12 @@ class Task {
 	description: string
 	status: TaskStatus
 	workerHours: number
-	deadline: DateNumber
-	subtasks: Task[]?
+	createdAt: DateString
+	deadline: DateString
+	subtasks: Task[]
 	project: Project?
+	assigned: User[]
+	parent: Task
 }
 
 class TaskStatus {
@@ -43,7 +49,8 @@ class Project {
 	leader: User
 	name: string
 	description: string
-	deadline: DateNumber
+	createdAt: DateString
+	deadline: DateString
 	tasks: Task[]
 }
 
@@ -60,15 +67,23 @@ class Client {
 class Topic {
 	uid: number
 	name: string
+	posts: Post[]
 }
 
 class Post {
 	uid: number
-	topic: Topic
 	owner: User
+	topic: Topic
 	title: string
 	markdown: string
-	created: DateNumber
+	createdAt: DateString
+	updatedAt: DateString
+	assets: Asset[]
+}
+
+class Asset {
+	uid: string
+	posts: Post[]
 }
 
 class Settings {
