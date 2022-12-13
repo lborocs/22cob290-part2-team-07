@@ -28,7 +28,7 @@ function updateProgressBar() {
 		<div class="spinner"></div>
 		<div class="spinner-end-wrapper"></div>
 		<div class="center">
-			<h3 id="percentageDone">70%</h3>
+			<span id="percentageDone">70%</span>
 			<p id="tasksDone">9/15 tasks done</p>
 		</div>
 	</div>
@@ -133,9 +133,10 @@ function updateProgressBar() {
 		z-index: 3;
 	}
 }
-.center h3 {
+.center #percentageDone {
 	font-size: 2em;
 	margin: 0;
+	font-weight: 700;
 }
 .center p {
 	margin: 0;

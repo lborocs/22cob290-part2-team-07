@@ -74,6 +74,7 @@ function dateDiffInDays(a: any, b: any) {
 	<TaskSwitcher :tasks="projectTasks" />
 
 	<section class="card wrap-grid">
+		<h2 class="sr-only">Project Members</h2>
 		<ProjectMember
 			v-for="member in projectMembers"
 			:key="member.uid"
