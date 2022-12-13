@@ -42,6 +42,7 @@ declare global {
 		description: string
 		deadline: DateNumber
 		leader: User
+		client: Client
 	}
 
 	interface Client {
