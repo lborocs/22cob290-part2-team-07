@@ -220,7 +220,7 @@ header {
 main {
 	@extend %content;
 	grid-area: main;
-	padding: 2rem;
+	padding: 0 2rem;
 	@media (max-width: mobile.$width) {
 		padding: 0.1rem;
 		margin: 0;
