@@ -1,6 +1,6 @@
 import prisma from "@/prisma"
 
-export default defineCachedEventHandler(event => {
+export default defineEventHandler(event => {
 	const query = getQuery(event)
 	console.log(query)
 
