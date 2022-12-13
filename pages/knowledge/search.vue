@@ -3,8 +3,14 @@ definePageMeta({
 	name: "Knowledge Search Results",
 })
 const route = useRoute()
-const { data: posts } = await useFetch("/api/post/search", {
-	query: route.query,
+
+async function search() {
+	return (await useFetch("/api/search/post", { query: route.query })).data
+}
+
+const posts = await search()
+watch(route, async () => {
+	posts.value = (await search()).value
 })
 </script>
 

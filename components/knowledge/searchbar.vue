@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const { data: topics } = useLazyFetch("/api/topics")
+const topicSelector = ref<HTMLSelectElement>()
+
+onMounted(() => {
+	topicSelector.value!.value = (useRoute().query.topic as string) ?? ""
+})
 </script>
 
 <template>
@@ -10,7 +15,7 @@ const { data: topics } = useLazyFetch("/api/topics")
 			placeholder="Search..."
 			:value="$route.query.q"
 		/>
-		<select name="topic" :value="$route.query.topic">
+		<select name="topic" ref="topicSelector" :value="$route.query.topic">
 			<option value="">Any Topic</option>
 			<option v-for="topic in topics" :key="topic.uid" :value="topic.uid">
 				{{ topic.name }}
