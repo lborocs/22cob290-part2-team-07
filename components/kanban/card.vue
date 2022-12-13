@@ -70,7 +70,7 @@ h3 {
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
 const { task } = defineProps<{
-	task: Task
+	task: KanbanTask
 }>()
 
 function onDrag(event: DragEvent) {

@@ -165,11 +165,12 @@
 </style>
 
 <script setup lang="ts">
+import { Task } from ".prisma/client"
 import { Icon } from "@iconify/vue"
 import { TaskStatus } from "~~/types"
 
 defineProps<{
-	tasks: Task[]
+	tasks: KanbanTask[]
 }>()
 
 function onChecked(event: Event, task: Task) {

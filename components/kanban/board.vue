@@ -3,7 +3,7 @@ import { TaskStatus } from "@/types"
 import { statusName } from "@/types/task"
 
 const { tasks } = defineProps<{
-	tasks: Task[]
+	tasks: KanbanTask[]
 }>()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]

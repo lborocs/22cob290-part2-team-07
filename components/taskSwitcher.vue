@@ -29,7 +29,7 @@ header {
 
 <script setup lang="ts">
 defineProps<{
-	tasks: Task[]
+	tasks: KanbanTask[]
 }>()
 
 const selectedViewMode = ref(1)
