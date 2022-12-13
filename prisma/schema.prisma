@@ -48,6 +48,8 @@ model Project {
   uid         Int      @id @default(autoincrement())
   leader      User     @relation(fields: [leaderId], references: [uid])
   leaderId    String
+  client      Client   @relation(fields: [clientId], references: [uid])
+  clientId    Int
   name        String
   description String
   createdAt   DateTime @default(now())
@@ -56,13 +58,14 @@ model Project {
 }
 
 model Client {
-  uid            Int     @id @default(autoincrement())
+  uid            Int       @id @default(autoincrement())
   name           String
   representative String
   email          String
   address        String?
   phone          String?
   website        String?
+  projects       Project[]
 }
 
 model Topic {

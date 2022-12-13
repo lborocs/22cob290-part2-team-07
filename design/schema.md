@@ -53,6 +53,7 @@ class TaskStatus {
 class Project {
 	uid: number
 	leader: User
+	client: Client
 	name: string
 	description: string
 	createdAt: DateString
@@ -67,7 +68,8 @@ class Client {
 	email: string
 	phone: string?
 	website: string?
-	address: string
+	address: string?
+	projects: Project[]
 }
 
 class Topic {
