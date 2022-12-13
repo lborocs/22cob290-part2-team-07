@@ -1,25 +1,5 @@
-import { emailDomain } from "@/types/user"
-import { UserRank } from "@/types"
+import prisma from "@/prisma"
 
 export default defineEventHandler(event => {
-	return <User[]>[
-		{
-			uid: 1,
-			email: `king${emailDomain}`,
-			name: "Neumann",
-			rank: UserRank.Manager,
-		},
-		{
-			uid: 2,
-			email: `queen${emailDomain}`,
-			name: "Queen",
-			rank: UserRank.Manager,
-		},
-		{
-			uid: 3,
-			email: `dilip${emailDomain}`,
-			name: "Dilip Smith",
-			rank: UserRank.Employee,
-		},
-	]
+	return prisma.user.findMany()
 })
