@@ -7,16 +7,25 @@ withDefaults(
 		name: string
 		size: number
 		isLink?: boolean
+		isClient?: boolean
 	}>(),
 	{
 		isLink: true,
+		isClient: false,
 	},
 )
 </script>
 
 <!-- IK the img is repeated, couldn't think of a neater way -->
 <template>
-	<NuxtLink v-if="isLink" :to="`/user/${uid}`"
+	<NuxtLink v-if="isLink && !isClient" :to="`/user/${uid}`"
+		><img
+			:src="profilePicture(name)"
+			:alt="`Profile Picture of ${name}`"
+			:width="size"
+			:height="size"
+	/></NuxtLink>
+	<NuxtLink v-else-if="isLink && isClient" :to="`/client/${uid}`"
 		><img
 			:src="profilePicture(name)"
 			:alt="`Profile Picture of ${name}`"
