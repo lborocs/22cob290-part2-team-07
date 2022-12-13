@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Post } from ".prisma/client"
+
 defineProps<{
 	post: Post
 }>()

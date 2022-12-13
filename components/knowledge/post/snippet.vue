@@ -17,13 +17,13 @@ defineProps<{
 	<article>
 		<ButtonNuxt
 			class="topic"
-			:to="`/knowledge/search/?q=&topic=${topic.uid}`"
+			:to="`/knowledge/search/?topic=${topic.uid}`"
 			icon="material-symbols:topic-outline-rounded"
 			>{{ topic.name }}</ButtonNuxt
 		>
 		<div class="owner">
-			<UserIcon :uid="owner.uid" :name="owner.name" :size="50" />
-			<UserName :uid="owner.uid" :name="owner.name" />
+			<UserIcon :email="owner.email" :name="owner.name" :size="50" />
+			<UserName :email="owner.email" :name="owner.name" />
 			<span>{{ rankTitle(owner.rank) }}</span>
 		</div>
 		<Date :date="createdAt" class="date" />
