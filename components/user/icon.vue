@@ -3,7 +3,7 @@ import { profilePicture } from "@/types/user"
 
 withDefaults(
 	defineProps<{
-		uid: string
+		email: string
 		name: string
 		size: number
 		isLink?: boolean
@@ -16,7 +16,7 @@ withDefaults(
 
 <!-- IK the img is repeated, couldn't think of a neater way -->
 <template>
-	<NuxtLink v-if="isLink" :to="`/user/${uid}`"
+	<NuxtLink v-if="isLink" :to="`/user/${email}`"
 		><img
 			:src="profilePicture(name)"
 			:alt="`Profile Picture of ${name}`"
