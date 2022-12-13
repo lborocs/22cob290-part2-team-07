@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { format = "short" } = defineProps<{
-	date: DateNumber
+	date: DateString
 	format?: Intl.DateTimeFormatOptions["dateStyle"]
 }>()
 </script>

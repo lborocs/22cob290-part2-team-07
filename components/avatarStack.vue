@@ -35,6 +35,7 @@
 </style>
 
 <script setup lang="ts">
+import { User } from ".prisma/client"
 import { profilePicture } from "@/types/user"
 
 const props = defineProps<{

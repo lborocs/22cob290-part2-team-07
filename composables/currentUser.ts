@@ -1,3 +1,5 @@
+import { User } from ".prisma/client"
+
 // Subject to change
 export const useCurrentUser = () =>
 	useAsyncData<User>("currentUser", async () => {

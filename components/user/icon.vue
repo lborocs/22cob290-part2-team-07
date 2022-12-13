@@ -3,7 +3,7 @@ import { profilePicture } from "@/types/user"
 
 withDefaults(
 	defineProps<{
-		uid: number
+		uid: string
 		name: string
 		size: number
 		isLink?: boolean

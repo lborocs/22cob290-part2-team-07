@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Topic, User } from ".prisma/client"
 import { rankTitle } from "@/types/user"
 
 defineProps<{
@@ -8,7 +9,7 @@ defineProps<{
 
 	owner: User
 	topic: Topic
-	created: DateNumber
+	createdAt: DateString
 }>()
 </script>
 
@@ -25,7 +26,7 @@ defineProps<{
 			<UserName :uid="owner.uid" :name="owner.name" />
 			<span>{{ rankTitle(owner.rank) }}</span>
 		</div>
-		<Date :date="created" class="date" />
+		<Date :date="createdAt" class="date" />
 		<h2>{{ title }}</h2>
 		<KnowledgePostMarkdown
 			class="preview"
