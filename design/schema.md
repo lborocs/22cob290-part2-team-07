@@ -3,14 +3,14 @@ classDiagram
 direction TB
 
 User *-- Settings: settings
-User --o Task: assignees
+User o--o Task: assignees
 Task -- TaskStatus: status
-Task --o Task: subtasks
+Task o-- Subtask: subtasks
 Project o-- Task: tasks
 Project o-- Client: client
 User --o Project: leader
-User --o Post: owner
-Topic --o Post: topic
+User o--o Post: owner
+Topic o--o Post: topic
 Post *--o Asset: references
 
 class User {
@@ -28,13 +28,19 @@ class Task {
 	name: string
 	description: string
 	status: TaskStatus
-	workerHours: number
 	createdAt: DateString
 	deadline: DateString
 	subtasks: Task[]
 	project: Project?
-	assigned: User[]
+	assignees: User[]
+}
+
+class Subtask {
+	uid: number
+	name: string
 	parent: Task
+	workerHours: number
+	done: boolean
 }
 
 class TaskStatus {
