@@ -125,13 +125,14 @@ function dateDiffInDays(a: any, b: any) {
 .wrap-grid {
 	display: grid;
 	justify-items: center;
-	--card-width: 20ch;
+	--card-width: 22ch;
 	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
-	gap: 0.5rem;
+	gap: 1rem;
 
 	.card-small {
 		text-align: center;
-		max-width: var(--card-width, 20ch);
+		width: clamp(10ch, 100%, 30ch);
+		// max-width: var(--card-width);
 	}
 }
 </style>

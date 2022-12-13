@@ -30,6 +30,7 @@ defineProps<{
 
 .card-small {
 	@extend %card-small;
+	padding: 1.2rem;
 }
 
 .detail-highlight {
@@ -46,6 +47,6 @@ defineProps<{
 }
 
 .card-margins {
-	margin: 0 0 0.25rem 0; // top right bottom left
+	margin: 0 0 0.5rem 0; // top right bottom left
 }
 </style>
