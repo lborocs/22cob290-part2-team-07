@@ -2,7 +2,6 @@ import prisma from "@/prisma"
 
 export default defineEventHandler(event => {
 	const query = getQuery(event)
-	console.log(query)
 
 	const topic = {
 		uid: +(query.topic as string),

@@ -3,7 +3,9 @@ definePageMeta({
 	name: "Knowledge Search Results",
 })
 const route = useRoute()
-const { data: posts } = await useFetch("/api/posts")
+const { data: posts } = await useFetch("/api/post/search", {
+	query: route.query,
+})
 </script>
 
 <template>
