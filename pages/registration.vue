@@ -1,12 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
 	layout: "loginreg",
-	name: "Login",
+	name: "Registration",
 })
 </script>
 
 <template>
-	<form></form>
+	<LoginForm />
 </template>
 
 <style scoped lang="scss"></style>

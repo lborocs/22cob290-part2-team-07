@@ -6,7 +6,7 @@ definePageMeta({
 </script>
 
 <template>
-	<form></form>
+	<LoginForm />
 </template>
 
 <style scoped lang="scss"></style>
