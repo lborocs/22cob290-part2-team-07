@@ -6,7 +6,7 @@ declare global {
 	type DateString = string | Date
 
 	type KanbanTask = Task & {
-		project: Project | null | undefined
+		project?: Project | null
 		assignees: User[]
 		subtasks: Subtask[]
 	}
