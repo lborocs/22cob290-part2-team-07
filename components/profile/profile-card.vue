@@ -52,7 +52,7 @@ export default {
 			<slot name="hierarchy">Employee</slot>
 			<img id="card-profile-picture" :src="src" alt="" class="profile-pic" />
 		</div>
-		<Modal v-show="isShown" class="align">
+		<Modal v-show="isShown" class="align modal">
 			<template #close-btn>
 				<div class="close-btn" @click="toggleUpload">&#10006;</div>
 			</template>
@@ -106,7 +106,7 @@ export default {
 					<p>Change Password</p>
 				</button>
 			</div>
-			<Modal v-show="passIsShown" class="align">
+			<Modal v-show="passIsShown" class="align modal">
 				<template #close-btn>
 					<div class="close-btn" @click="togglePassword">&#10006;</div>
 				</template>
@@ -140,7 +140,7 @@ export default {
 					<p>Invite</p>
 				</button>
 			</div>
-			<Modal v-show="invIsShown" class="align">
+			<Modal v-show="invIsShown" class="align modal">
 				<template #close-btn>
 					<div class="close-btn" @click="toggleInv">&#10006;</div>
 				</template>
@@ -160,7 +160,7 @@ export default {
 					<p>Logout</p>
 				</button>
 			</div>
-			<Modal v-show="logout" class="align">
+			<Modal v-show="logout" class="align modal">
 				<template #close-btn>
 					<div class="close-btn" @click="toggleLogout">&#10006;</div>
 				</template>
@@ -184,6 +184,11 @@ export default {
 
 $logout: #da0000;
 
+@media (prefers-color-scheme: dark) {
+	.modal {
+		color: black;
+	}
+}
 .hidden {
 	display: none;
 }

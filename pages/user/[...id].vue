@@ -5,9 +5,12 @@ definePageMeta({
 })
 </script>
 
+<!-- template for the majority of the code to makeup the profile view page -->
 <template>
+	<!-- returns the ID of the user who is currently logged in -->
 	<div>{{ $route.params.id[0] }}</div>
 
+	<!-- The main card which has all the information being presented to the user for this page -->
 	<profile-view-card>
 		<template #name>
 			<h2 id="title-card">Name</h2>

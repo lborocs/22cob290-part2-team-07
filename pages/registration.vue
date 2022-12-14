@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
 	layout: "loginreg",
-	name: "Login",
+	name: "Registration",
 })
 </script>
 

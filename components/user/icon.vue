@@ -14,7 +14,6 @@ withDefaults(
 )
 </script>
 
-<!-- IK the img is repeated, couldn't think of a neater way -->
 <template>
 	<NuxtLink v-if="isLink" :to="`/user/${email}`"
 		><img

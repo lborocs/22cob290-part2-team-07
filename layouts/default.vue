@@ -159,6 +159,7 @@ header {
 
 			.nav-label {
 				display: block;
+				font-size: unset;
 				animation: navlabel animation.$transition-medium ease-in-out forwards;
 			}
 		}
@@ -182,7 +183,7 @@ header {
 	}
 
 	.nav-label {
-		display: none;
+		font-size: 0px;
 	}
 }
 
@@ -201,6 +202,7 @@ header {
 		--nav-width: max-content;
 		.nav-label {
 			display: block;
+			font-size: unset;
 		}
 	}
 
@@ -220,7 +222,7 @@ header {
 main {
 	@extend %content;
 	grid-area: main;
-	padding: 2rem;
+	padding: 0 2rem;
 	@media (max-width: mobile.$width) {
 		padding: 0.1rem;
 		margin: 0;

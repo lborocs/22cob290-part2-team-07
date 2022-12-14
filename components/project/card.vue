@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
 	<div class="card-project flex-col">
-		<h3 class="card-project-title">{{ title }}</h3>
+		<h2 class="card-project-title">{{ title }}</h2>
 		<div
 			class="flex-col centre card-project-body"
 			:class="{ 'card-project-text': text }"

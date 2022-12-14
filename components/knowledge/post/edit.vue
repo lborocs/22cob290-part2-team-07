@@ -7,12 +7,15 @@ defineProps<{
 </script>
 
 <template>
-	<textarea name="" id="" v-model="post.markdown" />
+	<Textarea
+		name="markdown"
+		:model="post.markdown"
+		@update:model="post.markdown = $event"
+	/>
 </template>
 
 <style scoped lang="scss">
-textarea {
-	width: 100%;
-	min-height: 10em;
+.textarea {
+	min-height: 50vh;
 }
 </style>

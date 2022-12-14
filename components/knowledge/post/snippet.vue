@@ -55,7 +55,7 @@ article {
 		"topic title" 1fr
 		"owner body" max-content
 		"date view" 1fr
-		/ auto 1fr 0.5rem;
+		/ 11rem 1fr 0.5rem;
 }
 
 %aside {
@@ -87,6 +87,7 @@ article {
 
 .owner {
 	grid-area: owner;
+	padding: 1rem 0;
 	@extend %aside-body, %flex-col, %flex-centre;
 }
 

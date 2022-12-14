@@ -62,20 +62,24 @@ function dateDiffInDays(a: any, b: any) {
 			<p>{{ currentProject.leader.name }}</p>
 		</ProjectCard>
 		<ProjectCard title="Project Client" :text="true">
-			<UserIcon :uid="1" name="Loughborough University" :size="150" />
-			<p>Loughborough University</p>
+			<UserIcon
+				:uid="currentProject.client.uid"
+				:name="currentProject.client.name"
+				:size="150"
+				:isClient="true"
+			/>
+			<p>{{ currentProject.client.name }}</p>
 		</ProjectCard>
 	</section>
 
 	<TaskSwitcher :tasks="projectTasks" />
 
 	<section class="card wrap-grid">
+		<h2 class="sr-only">Project Members</h2>
 		<ProjectMember
 			v-for="member in projectMembers"
 			:key="member.uid"
-			:uid="member.uid"
-			:uname="member.name"
-			:rank="rankTitle(member.rank)"
+			:user="member"
 		/>
 	</section>
 </template>
@@ -123,13 +127,14 @@ function dateDiffInDays(a: any, b: any) {
 .wrap-grid {
 	display: grid;
 	justify-items: center;
-	--card-width: 20ch;
+	--card-width: 22ch;
 	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
-	gap: 0.5rem;
+	gap: 1rem;
 
 	.card-small {
 		text-align: center;
-		max-width: var(--card-width, 20ch);
+		width: clamp(10ch, 100%, 30ch);
+		// max-width: var(--card-width);
 	}
 }
 </style>
