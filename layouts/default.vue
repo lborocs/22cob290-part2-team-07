@@ -100,6 +100,7 @@ function clearFocus() {
 		<main>
 			<slot />
 		</main>
+		<ModalManager />
 	</div>
 </template>
 
