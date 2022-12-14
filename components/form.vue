@@ -8,7 +8,7 @@ const { to, method = "get" } = defineProps<{
 
 const form = ref<HTMLFormElement>()
 
-function submit(event: SubmitEvent) {
+function submit(event: Event) {
 	const data = new FormData(form.value)
 	const params = new URLSearchParams(data)
 	if (method == "get") return navigateTo(`${to}?${params.toString()}`)

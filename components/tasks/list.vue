@@ -36,7 +36,7 @@
 			</p>
 			<p class="details deadline">
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
-				{{ new Date(task.deadline).toLocaleDateString() }}
+				<Date v-if="task.deadline" :date="task.deadline" />
 			</p>
 			<div class="avatars">
 				<AvatarStack :array="task.assignees" />

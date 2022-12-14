@@ -55,14 +55,14 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 		<ProjectCard title="Project Lead" :text="true">
 			<UserIcon
-				:uid="currentProject.leader.uid"
+				:email="currentProject.leader.email"
 				:name="currentProject.leader.name"
 				:size="150"
 			/>
 			<p>{{ currentProject.leader.name }}</p>
 		</ProjectCard>
 		<ProjectCard title="Project Client" :text="true">
-			<UserIcon
+			<ClientIcon
 				:uid="currentProject.client.uid"
 				:name="currentProject.client.name"
 				:size="150"

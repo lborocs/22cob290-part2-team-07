@@ -19,7 +19,7 @@
 			</p>
 			<p>
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
-				<Date :date="task.deadline" />
+				<Date v-if="task.deadline" :date="task.deadline" />
 			</p>
 			<button class="content-button">
 				<Icon icon="material-symbols:more-horiz" />
