@@ -103,10 +103,10 @@ function clearFocus() {
 	</div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @use "~/assets/mobile";
 @use "~/assets/core";
-@use "~/assets/animation";
+
 .page-wrapper {
 	display: grid;
 	grid-template-areas:
@@ -129,6 +129,22 @@ header {
 		margin: 0;
 	}
 }
+
+main {
+	@extend %content;
+	grid-area: main;
+	padding: 0 2rem;
+	@media (max-width: mobile.$width) {
+		padding: 0.1rem;
+		margin: 0;
+	}
+}
+</style>
+
+<style lang="scss">
+@use "~/assets/mobile";
+@use "~/assets/core";
+@use "~/assets/animation";
 
 @keyframes navlabel {
 	0% {
@@ -216,16 +232,6 @@ header {
 
 	.nav-logo {
 		display: none;
-	}
-}
-
-main {
-	@extend %content;
-	grid-area: main;
-	padding: 0 2rem;
-	@media (max-width: mobile.$width) {
-		padding: 0.1rem;
-		margin: 0;
 	}
 }
 </style>
