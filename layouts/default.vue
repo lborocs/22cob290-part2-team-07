@@ -159,6 +159,7 @@ header {
 
 			.nav-label {
 				display: block;
+				font-size: unset;
 				animation: navlabel animation.$transition-medium ease-in-out forwards;
 			}
 		}
@@ -182,7 +183,7 @@ header {
 	}
 
 	.nav-label {
-		display: none;
+		font-size: 0px;
 	}
 }
 
@@ -201,6 +202,7 @@ header {
 		--nav-width: max-content;
 		.nav-label {
 			display: block;
+			font-size: unset;
 		}
 	}
 
