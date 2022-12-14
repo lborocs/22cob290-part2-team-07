@@ -1,5 +1,5 @@
 import prisma from "@/prisma"
-import { TaskStatus } from "@/types"
+import { TaskStatus } from "@/types/task"
 
 export default defineEventHandler(async event => {
 	const query = getQuery(event)
@@ -154,6 +154,7 @@ export default defineEventHandler(async event => {
 				name: "Water the Plants",
 				description: "Give the tulips 2L of water",
 				assignees: { connect: [{ email: "queen" }] },
+				status: TaskStatus.InProgress,
 			},
 			include: {
 				assignees: true,

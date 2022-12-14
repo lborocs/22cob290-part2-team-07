@@ -32,7 +32,7 @@
 
 			<p class="details hours">
 				<Icon icon="material-symbols:hourglass-bottom-rounded" />
-				{{ task.workerHours }} Hours
+				{{ workerHours(task) }} Hours
 			</p>
 			<p class="details deadline">
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
@@ -167,7 +167,7 @@
 <script setup lang="ts">
 import { Task } from ".prisma/client"
 import { Icon } from "@iconify/vue"
-import { TaskStatus } from "~~/types"
+import { TaskStatus, workerHours } from "@/types/task"
 
 defineProps<{
 	tasks: KanbanTask[]

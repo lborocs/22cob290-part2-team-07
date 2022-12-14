@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { TaskStatus } from "@/types"
-import { statusName } from "@/types/task"
+import { TaskStatus, statusName } from "@/types/task"
 
 const { tasks } = defineProps<{
 	tasks: KanbanTask[]
