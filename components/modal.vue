@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { ModalControl } from "@/composables/modal"
 
-const props = defineProps<{
-	show: boolean
+const { control } = defineProps<{
+	control: ModalControl
 	title: string
 }>()
 
@@ -13,19 +14,22 @@ const emit = defineEmits<{
 
 const dialog = $ref<HTMLDialogElement>()
 
-function open() {
+function close() {
+	control.counter.value = false
+}
+
+function opening() {
 	emit("open")
 	dialog?.showModal()
 }
-
-function close() {
+function closing() {
 	dialog?.close()
 	emit("close")
 }
 
 watchEffect(() => {
-	if (props.show) open()
-	else close()
+	if (control.counter.value) opening()
+	else closing()
 })
 </script>
 
