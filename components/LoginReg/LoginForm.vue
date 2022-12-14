@@ -8,7 +8,7 @@
 		<label for="Password">Password:</label>
 		<input type="password" id="Password" />
 		<!-- i took this button from elsewhere so it just lets you log in no matter what lol-->
-		<Button type="submit" icon="">Login</Button>
+		<Button type="submit" icon="material-symbols:login-rounded">Login</Button>
 	</Form>
 </template>
 
