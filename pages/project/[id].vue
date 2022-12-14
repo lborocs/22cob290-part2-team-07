@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { rankTitle } from "~/types/user"
-
 definePageMeta({
 	name: "Project",
 })
-
+const route = useRoute()
 const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
 const projectTasks = $computed(() =>
 	tasks.value!.filter(
 		task => task.project && task.project.uid === currentProject.uid,
 	),
 )
-const currentProject = await $fetch("/api/project/1")
+const currentProject = await $fetch(`/api/project/${route.params.id}`)
 
 const daysRemaing = $computed(() => {
 	const date = new Date(currentProject.deadline)
