@@ -9,10 +9,4 @@ defineProps<{
 	<span id="slot"><slot /></span> <Icon :icon="icon" />
 </template>
 
-<style scoped lang="scss">
-// @use "~/assets/button";
-
-// #btn {
-// 	@extend %button;
-// }
-</style>
+<style scoped lang="scss"></style>
