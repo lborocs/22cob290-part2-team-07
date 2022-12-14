@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 			htmlAttrs: {
 				lang: "en",
 			},
+			meta: [{ name: "description", content: "Make-It-All Management System" }],
 		},
 	},
 })
