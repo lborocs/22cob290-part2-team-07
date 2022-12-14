@@ -70,15 +70,10 @@ $card-padding: $card-padding-vert $card-padding-hori;
 	}
 }
 
-/* kanban card top border colour (if not overwritten, defaults to colour-accent) */
-.rag-band {
-	border-top: 0.25rem solid var(--colour-card-highlight, var(--colour-accent));
-}
-
 /* RAG colours */
 $rag-colours: ("red", "amber", "green");
 @each $name in $rag-colours {
-	[data-rag="#{$name}"] {
+	%data-rag-#{$name} {
 		--colour-card-highlight: var(--colour-#{$name});
 	}
 }

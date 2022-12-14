@@ -74,7 +74,7 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 // rag-colours = names in css vars
 @for $i from 1 through 3 {
 	.kanban-col:nth-child(#{$i}) {
-		@extend [data-rag="#{list.nth(core.$rag-colours, $i)}"];
+		@extend %data-rag-#{list.nth(core.$rag-colours, $i)};
 	}
 }
 

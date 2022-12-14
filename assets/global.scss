@@ -26,7 +26,21 @@ body {
 .card {
 	@extend %card;
 }
+.card-small {
+	@extend %card-small;
+}
 
 .profile-picture {
 	@extend %profile-picture;
 }
+
+/* kanban card top border colour (if not overwritten, defaults to colour-accent) */
+.rag-band {
+	border-top: 0.25rem solid var(--colour-card-highlight, var(--colour-accent));
+}
+
+// @each $name in $rag-colours {
+// 	%data-rag-#{$name} {
+// 		--colour-card-highlight: var(--colour-#{$name});
+// 	}
+// }
