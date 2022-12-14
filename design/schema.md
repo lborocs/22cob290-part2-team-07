@@ -30,6 +30,7 @@ class Task {
 	status: TaskStatus
 	createdAt: DateString
 	deadline: DateString
+	workerHours: number
 	subtasks: Task[]
 	project: Project?
 	assignees: User[]

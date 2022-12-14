@@ -106,6 +106,7 @@ export default defineEventHandler(async event => {
 							name: "Create Task Viewer",
 							description: "Kanban board",
 							deadline: new Date("2022-12-15"),
+							workerHours: 0,
 							subtasks: {
 								create: [
 									{
@@ -122,6 +123,7 @@ export default defineEventHandler(async event => {
 						{
 							name: "Knowledge Management",
 							description: "Create the knowledge management system",
+							workerHours: 0,
 							subtasks: {
 								create: [
 									{
@@ -154,6 +156,7 @@ export default defineEventHandler(async event => {
 				name: "Water the Plants",
 				description: "Give the tulips 2L of water",
 				assignees: { connect: [{ email: "queen" }] },
+				workerHours: 1,
 				status: TaskStatus.InProgress,
 			},
 			include: {

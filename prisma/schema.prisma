@@ -30,6 +30,7 @@ model Task {
   description String
   createdAt   DateTime  @default(now())
   deadline    DateTime?
+  workerHours Int
   status      Int       @default(0)
   // SQLite does not support enums :(
 }
