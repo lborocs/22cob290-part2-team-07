@@ -2,7 +2,7 @@
 	"private": true,
 	"scripts": {
 		"build": "nuxt build",
-		"dev": "nuxt dev",
+		"dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --ssl-cert localhost.pem --ssl-key localhost-key.pem",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
@@ -11,8 +11,9 @@
 		"@iconify/vue": "^4.0.0",
 		"nuxt": "3.0.0",
 		"sass": "^1.56.1",
-		"@types/showdown": "^2.0.0",
 		"showdown": "^2.1.0"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"cross-env": "^7.0.3"
+	}
 }
