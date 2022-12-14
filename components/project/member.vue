@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { User } from ".prisma/client"
 import { rankTitle } from "~~/types/user"
 
 defineProps<{
@@ -10,7 +11,7 @@ defineProps<{
 <template>
 	<div class="flex-col card-small">
 		<NuxtLink :to="`/user/${user.uid}`">
-			<UserIcon :uid="user.uid" :name="user.name" :size="50" />
+			<UserIcon :email="user.email" :name="user.name" :size="50" />
 			<h3 class="card-margins">{{ user.name }}</h3>
 		</NuxtLink>
 		<p class="dimmed card-margins">{{ rankTitle(user.rank) }}</p>

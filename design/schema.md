@@ -3,21 +3,24 @@ classDiagram
 direction TB
 
 User *-- Settings: settings
-User --o Task: assignees
+User o--o Task: assignees
 Task -- TaskStatus: status
-Task --o Task: subtasks
+Task o-- Subtask: subtasks
 Project o-- Task: tasks
 Project o-- Client: client
 User --o Project: leader
-User --o Post: owner
-Topic --o Post: topic
+User o--o Post: owner
+Topic o--o Post: topic
+Post *--o Asset: references
 
 class User {
-	uid: number
+	uid: string
 	email: string
 	name: string
-	password: hash
-	settings: Settings
+	password: string
+	leads: Project[]
+	assigned: Task[]
+	posts: Post[]
 }
 
 class Task {
@@ -25,10 +28,19 @@ class Task {
 	name: string
 	description: string
 	status: TaskStatus
-	workerHours: number
-	deadline: DateNumber
-	subtasks: Task[]?
+	createdAt: DateString
+	deadline: DateString
+	subtasks: Task[]
 	project: Project?
+	assignees: User[]
+}
+
+class Subtask {
+	uid: number
+	name: string
+	parent: Task
+	workerHours: number
+	done: boolean
 }
 
 class TaskStatus {
@@ -41,9 +53,11 @@ class TaskStatus {
 class Project {
 	uid: number
 	leader: User
+	client: Client
 	name: string
 	description: string
-	deadline: DateNumber
+	createdAt: DateString
+	deadline: DateString
 	tasks: Task[]
 }
 
@@ -54,21 +68,30 @@ class Client {
 	email: string
 	phone: string?
 	website: string?
-	address: string
+	address: string?
+	projects: Project[]
 }
 
 class Topic {
 	uid: number
 	name: string
+	posts: Post[]
 }
 
 class Post {
 	uid: number
-	topic: Topic
 	owner: User
+	topic: Topic
 	title: string
 	markdown: string
-	created: DateNumber
+	createdAt: DateString
+	updatedAt: DateString
+	assets: Asset[]
+}
+
+class Asset {
+	uid: string
+	posts: Post[]
 }
 
 class Settings {

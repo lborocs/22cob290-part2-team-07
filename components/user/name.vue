@@ -1,12 +1,12 @@
 <script setup lang="ts">
 defineProps<{
-	uid: number
+	email: string
 	name: string
 }>()
 </script>
 
 <template>
-	<NuxtLink :to="`/user/${uid}`">{{ name }}</NuxtLink>
+	<NuxtLink :to="`/user/${email}`">{{ name }}</NuxtLink>
 </template>
 
 <style scoped lang="scss">

@@ -1,66 +1,15 @@
+import { Project, Subtask, Task, User } from ".prisma/client"
+
 export {}
 
 declare global {
-	type DateNumber = number
+	type DateString = string | Date
 
-	interface User {
-		readonly uid: number
-		email: string
-		name: string
-		rank: UserRank
-	}
-
-	interface Topic {
-		readonly uid: number
-		name: string
-	}
-
-	interface Post {
-		readonly uid: number
-		topic: Topic
-		owner: User
-		title: string
-		markdown: string
-		created: DateNumber
-	}
-
-	interface Task {
-		readonly uid: number
-		name: string
-		description: string
-		workerHours: number
+	type KanbanTask = Task & {
+		project?: Project | null
 		assignees: User[]
-		status: TaskStatus
-		deadline: DateNumber
-		subtasks?: Task[]
-		project?: Project
+		subtasks: Subtask[]
 	}
-
-	interface Project {
-		readonly uid: number
-		name: string
-		description: string
-		deadline: DateNumber
-		leader: User
-		client: Client
-	}
-
-	interface Client {
-		readonly uid: number
-		name: string
-		representative: string
-		email: string
-		phone: string
-		website: string
-		address: string
-	}
-}
-
-// cant declare an enum in a global context, must be imported when needed.
-export enum TaskStatus {
-	Todo,
-	InProgress,
-	Done,
 }
 
 export enum UserRank {

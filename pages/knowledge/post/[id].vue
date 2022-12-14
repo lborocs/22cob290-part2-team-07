@@ -62,7 +62,7 @@ function togglePreview() {
 				<Button icon="material-symbols:key-outline-rounded">Key</Button>
 			</div></template
 		>
-		<template #footer><Date class="date" :date="post.created" /></template>
+		<template #footer><Date class="date" :date="post.createdAt" /></template>
 		<template #footer-control>
 			<div class="control" v-if="editor && !editing">
 				<ButtonNuxt

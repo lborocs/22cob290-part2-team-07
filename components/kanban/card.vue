@@ -15,11 +15,11 @@
 		<div class="info">
 			<p>
 				<Icon icon="material-symbols:hourglass-bottom-rounded" />
-				{{ task.workerHours }} Hours
+				{{ workerHours(task) }} Hours
 			</p>
 			<p>
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
-				<Date :date="task.deadline" />
+				<Date v-if="task.deadline" :date="task.deadline" />
 			</p>
 			<button class="content-button">
 				<Icon icon="material-symbols:more-horiz" />
@@ -69,8 +69,9 @@ h3 {
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { workerHours } from "@/types/task"
 const { task } = defineProps<{
-	task: Task
+	task: KanbanTask
 }>()
 
 function onDrag(event: DragEvent) {

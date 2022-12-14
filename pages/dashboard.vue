@@ -2,10 +2,8 @@
 definePageMeta({
 	name: "Dashboard",
 })
-const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
-const { data: projects } = useFetch("/api/projects", {
-	default: () => [] as Project[],
-})
+const { data: tasks } = useFetch("/api/tasks")
+const { data: projects } = useFetch("/api/projects")
 </script>
 
 <template>

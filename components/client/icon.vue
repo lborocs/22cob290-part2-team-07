@@ -3,7 +3,7 @@ import { profilePicture } from "@/types/user"
 
 withDefaults(
 	defineProps<{
-		email: string
+		uid: number
 		name: string
 		size: number
 		isLink?: boolean
@@ -15,7 +15,7 @@ withDefaults(
 </script>
 
 <template>
-	<NuxtLink v-if="isLink" :to="`/user/${email}`"
+	<NuxtLink v-if="isLink" :to="`/client/${uid}`"
 		><img
 			:src="profilePicture(name)"
 			:alt="`Profile Picture of ${name}`"

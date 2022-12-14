@@ -4,5 +4,6 @@
 		"esbenp.prettier-vscode",
 		"antfu.iconify",
 		"bierner.markdown-mermaid",
+		"prisma.prisma"
 	]
 }

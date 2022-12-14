@@ -1,25 +1,22 @@
 <script setup lang="ts">
+import { User } from ".prisma/client"
+
 definePageMeta({
 	name: "Project",
 })
+
 const route = useRoute()
-const { data: tasks } = useFetch("/api/tasks", { default: () => [] as Task[] })
-const projectTasks = $computed(() =>
-	tasks.value!.filter(
-		task => task.project && task.project.uid === currentProject.uid,
-	),
-)
-const currentProject = await $fetch(`/api/project/${route.params.id}`)
+const { data: project } = await useFetch(`/api/project/${route.params.id}`)
 
 const daysRemaing = $computed(() => {
-	const date = new Date(currentProject.deadline)
+	const date = new Date(project.value!.deadline)
 	return dateDiffInDays(new Date(), date)
 })
 
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
 	const members: User[] = []
-	for (const task of projectTasks) {
+	for (const task of project.value!.tasks) {
 		for (const user of task.assignees)
 			if (!members.includes(user)) members.push(user)
 	}
@@ -37,14 +34,14 @@ function dateDiffInDays(a: any, b: any) {
 </script>
 
 <template>
-	<p>{{ currentProject.description }}</p>
+	<p>{{ project!.description }}</p>
 	<section class="flex-row">
 		<ProjectCard title="Project Progress" :text="false">
 			<ProjectSpinner />
 		</ProjectCard>
 		<ProjectCard title="Project Deadline" :text="true">
 			<p id="project-deadline" class="deadline">
-				<Date :date="currentProject.deadline" format="long" />
+				<Date :date="project!.deadline" format="long" />
 			</p>
 			<p id="days-remaining" class="deadline-days">
 				{{ daysRemaing }} Days remaining
@@ -52,24 +49,24 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 		<ProjectCard title="Project Lead" :text="true">
 			<UserIcon
-				:uid="currentProject.leader.uid"
-				:name="currentProject.leader.name"
+				:email="project!.leader.email"
+				:name="project!.leader.name"
 				:size="150"
 			/>
-			<p>{{ currentProject.leader.name }}</p>
+			<p>{{ project!.leader.name }}</p>
 		</ProjectCard>
 		<ProjectCard title="Project Client" :text="true">
-			<UserIcon
-				:uid="currentProject.client.uid"
-				:name="currentProject.client.name"
+			<ClientIcon
+				:uid="project!.client.uid"
+				:name="project!.client.name"
 				:size="150"
 				:isClient="true"
 			/>
-			<p>{{ currentProject.client.name }}</p>
+			<p>{{ project!.client.name }}</p>
 		</ProjectCard>
 	</section>
 
-	<TaskSwitcher :tasks="projectTasks" />
+	<TaskSwitcher :tasks="project!.tasks" />
 
 	<section class="card wrap-grid">
 		<h2 class="sr-only">Project Members</h2>

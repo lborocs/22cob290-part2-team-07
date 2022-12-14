@@ -32,11 +32,11 @@
 
 			<p class="details hours">
 				<Icon icon="material-symbols:hourglass-bottom-rounded" />
-				{{ task.workerHours }} Hours
+				{{ workerHours(task) }} Hours
 			</p>
 			<p class="details deadline">
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
-				{{ new Date(task.deadline).toLocaleDateString() }}
+				<Date v-if="task.deadline" :date="task.deadline" />
 			</p>
 			<div class="avatars">
 				<AvatarStack :array="task.assignees" />
@@ -165,11 +165,12 @@
 </style>
 
 <script setup lang="ts">
+import { Task } from ".prisma/client"
 import { Icon } from "@iconify/vue"
-import { TaskStatus } from "~~/types"
+import { TaskStatus, workerHours } from "@/types/task"
 
 defineProps<{
-	tasks: Task[]
+	tasks: KanbanTask[]
 }>()
 
 function onChecked(event: Event, task: Task) {
