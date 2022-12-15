@@ -5,10 +5,13 @@
 </template>
 
 <style lang="scss">
+@use "~/assets/mobile";
 #dialogues {
 	> dialog {
-		transform: translate(calc(var(--nav-width) / 2), 0);
 		margin: auto;
+		@media (min-width: mobile.$width) {
+			transform: translate(calc(var(--nav-width) / 2), 0);
+		}
 	}
 }
 </style>
