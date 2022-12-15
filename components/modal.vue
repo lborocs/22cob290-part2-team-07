@@ -9,7 +9,7 @@ const { control } = defineProps<{
 
 const emit = defineEmits<{
 	(e: "open"): void
-	(e: "close"): void
+	(e: "close", ...args: any[]): void
 }>()
 
 const dialog = $ref<HTMLDialogElement>()
@@ -24,7 +24,7 @@ function opening() {
 }
 function closing() {
 	dialog?.close()
-	emit("close")
+	emit("close", ...control.exit.value)
 }
 
 watchEffect(() => {
