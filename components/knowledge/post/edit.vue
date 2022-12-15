@@ -33,24 +33,24 @@ function insert() {
 
 	<Modal :control="modalKey" title="Markdown Key">
 		<KnowledgeMarkdownKey />
-		<template #footer
-			><ButtonNuxt
+		<ModalFooter>
+			<ButtonNuxt
 				icon="material-symbols:help-outline-rounded"
 				to="https://markdown-guide.readthedocs.io/en/latest/basics.html"
 				target="_blank"
 				>More Info</ButtonNuxt
-			></template
-		>
+			>
+		</ModalFooter>
 	</Modal>
 	<Modal :control="modalAssetPicker" title="Inset Document">
 		A Lovely List of Assets + Search Bar
-		<template #footer>
+		<ModalFooter>
 			<Button
 				@click="insert(), modalAssetPicker.hide()"
 				icon="material-symbols:done-rounded"
 				>Okay</Button
 			>
-		</template>
+		</ModalFooter>
 	</Modal>
 </template>
 

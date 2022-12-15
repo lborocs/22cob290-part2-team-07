@@ -42,7 +42,6 @@ watchEffect(() => {
 					<Icon icon="material-symbols:close-rounded" @click="close" />
 				</header>
 				<div><slot /></div>
-				<footer><slot name="footer" /></footer>
 			</dialog>
 		</Teleport>
 	</ClientOnly>
@@ -78,11 +77,6 @@ dialog {
 			margin-right: 1rem;
 		}
 		margin-bottom: 1rem;
-	}
-	footer {
-		@extend %flex-row, %flex-centre;
-		margin-top: 1rem;
-		justify-content: flex-end;
 	}
 }
 </style>
