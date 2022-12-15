@@ -53,7 +53,6 @@ textarea {
 .blaze {
 	@extend %input;
 	height: calc(var(--height, 0px) + 3em);
-	margin: 1rem 0;
 	padding: 1em;
 	min-height: inherit;
 	overflow-y: hidden;
