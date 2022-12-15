@@ -80,8 +80,9 @@ dialog {
 		margin-bottom: 1rem;
 	}
 	footer {
-		@extend %flex-row;
+		@extend %flex-row, %flex-centre;
 		margin-top: 1rem;
+		justify-content: flex-end;
 	}
 }
 </style>
