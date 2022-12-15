@@ -16,6 +16,8 @@ let preview = $ref(false)
 function togglePreview() {
 	preview = !preview
 }
+
+const modalKey = useModal()
 </script>
 
 <template>
@@ -59,9 +61,15 @@ function togglePreview() {
 		<slot />
 		<template #footer-extra
 			><div class="control" v-if="editing">
-				<Button icon="material-symbols:key-outline-rounded">Key</Button>
-			</div></template
-		>
+				<Button
+					icon="material-symbols:key-outline-rounded"
+					@click="modalKey.show"
+					>Key</Button
+				>
+				<Modal :control="modalKey" title="Markdown Key">
+					<KnowledgeMarkdownKey />
+				</Modal></div
+		></template>
 		<template #footer><Date class="date" :date="post.createdAt" /></template>
 		<template #footer-control>
 			<div class="control" v-if="editor && !editing">
@@ -81,6 +89,7 @@ function togglePreview() {
 					v-if="editor"
 					icon="material-symbols:save-outline-rounded"
 					:to="`/knowledge/post/${post.uid}`"
+					@click="post!.markdown = post!.markdown.trim()"
 					>Save</ButtonNuxt
 				>
 			</div>
