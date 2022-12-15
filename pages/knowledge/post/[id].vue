@@ -16,8 +16,6 @@ let preview = $ref(false)
 function togglePreview() {
 	preview = !preview
 }
-
-const modalKey = useModal()
 </script>
 
 <template>
@@ -59,25 +57,7 @@ const modalKey = useModal()
 			</div>
 		</template>
 		<slot />
-		<template #footer-extra
-			><div class="control" v-if="editing">
-				<Button
-					icon="material-symbols:key-outline-rounded"
-					@click="modalKey.show"
-					>Key</Button
-				>
-				<Modal :control="modalKey" title="Markdown Key">
-					<KnowledgeMarkdownKey />
-					<template #footer
-						><ButtonNuxt
-							icon="material-symbols:help-outline-rounded"
-							to="https://markdown-guide.readthedocs.io/en/latest/basics.html"
-							>More Info</ButtonNuxt
-						></template
-					>
-				</Modal>
-			</div></template
-		>
+
 		<template #footer><Date class="date" :date="post.createdAt" /></template>
 		<template #footer-control>
 			<div class="control" v-if="editor && !editing">
