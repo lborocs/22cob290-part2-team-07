@@ -18,11 +18,19 @@
 	box-shadow: var(--card-shadow);
 	color: var(--colour-background-1);
 
+	&:disabled {
+		cursor: default;
+		background-color: var(--colour-accent-faded);
+	}
+
 	&:hover,
 	&:focus {
 		outline-offset: 0.3rem;
 		background-color: var(--colour-background-1);
 		color: var(--colour-accent);
+		&:disabled {
+			background-color: var(--colour-accent-faded);
+		}
 	}
 	@media (max-width: mobile.$width) {
 		&:not(.fix) {
