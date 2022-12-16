@@ -6,7 +6,7 @@
 4. `npm i`.
 5. Prisma
    1. To setup prisma you need to create an `.env` file in the root directory of the project.
-   2. Inset a new line in the file `DATABASE_URL=../dev/database.db`.
+   2. Inset a new line in the file `DATABASE_URL=file:../dev/database.db`.
    3. `npx prisma generate` Generates the typescript from the schema.
    4. `npx prisma db push` Creates the tables in the database.
 6. `npm run dev`.
