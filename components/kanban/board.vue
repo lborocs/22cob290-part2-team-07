@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { Task } from ".prisma/client"
 import { TaskStatus, statusName } from "@/types/task"
 
 const { tasks } = defineProps<{
 	tasks: KanbanTask[]
 }>()
+
+const modalTaskDetails = useModal()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
 
@@ -17,6 +20,15 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 	const task = tasks.find(task => task.uid == data)
 	if (!task) return
 	task.status = status
+}
+
+// the task for display in the modal
+const currentTask = ref(tasks[0])
+async function showDialog(id: number) {
+	currentTask.value = (await (
+		await fetch(`/api/task/${id}`)
+	).json()) as KanbanTask
+	modalTaskDetails.show()
 }
 </script>
 
@@ -34,9 +46,13 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 				v-for="task in tasks.filter(task => task.status == status)"
 				:key="task.uid"
 				:task="task"
+				@details="showDialog"
 			/>
 		</div>
 	</div>
+	<Modal :control="modalTaskDetails" :title="currentTask.name">
+		<ModalFooter> </ModalFooter>
+	</Modal>
 </template>
 
 <style scoped lang="scss">

@@ -21,7 +21,7 @@
 				<Icon icon="material-symbols:calendar-month-outline-rounded" />
 				<Date v-if="task.deadline" :date="task.deadline" />
 			</p>
-			<button class="content-button">
+			<button class="content-button" @click="openTaskDialog">
 				<Icon icon="material-symbols:more-horiz" />
 			</button>
 		</div>
@@ -74,10 +74,18 @@ const { task } = defineProps<{
 	task: KanbanTask
 }>()
 
+const emit = defineEmits<{
+	(taskId: "details", id: number): void
+}>()
+
 function onDrag(event: DragEvent) {
 	if (event.dataTransfer) {
 		event.dataTransfer.dropEffect = "move"
 		event.dataTransfer.setData("task", task.uid.toString())
 	}
+}
+
+function openTaskDialog() {
+	emit("details", task.uid)
 }
 </script>
