@@ -179,7 +179,7 @@ const emit = defineEmits<{
 	(taskId: "details", id: number): void
 }>()
 
-function onChecked(event: Event, task: Task) {
+async function onChecked(event: Event, task: Task) {
 	const isChecked = (event.target as HTMLInputElement).checked
 	task.status = isChecked ? TaskStatus.Done : TaskStatus.Todo
 }

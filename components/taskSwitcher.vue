@@ -5,7 +5,7 @@
 			<div class="right-buttons">
 				<ButtonSwitch @change="onChange" />
 				<Button icon="material-symbols:filter-alt-outline">Filter</Button>
-				<Button icon="material-symbols:add">New Task</Button>
+				<Button icon="material-symbols:add" @click="addTask">New Task</Button>
 			</div>
 		</header>
 		<TasksList
@@ -68,5 +68,11 @@ async function showDialog(id: number) {
 	).json()) as Subtask[]
 	currentTask.value.subtasks = subtasks
 	modalTaskDetails.show()
+}
+
+async function addTask() {
+	await $fetch("/api/task", {
+		method: "PUT",
+	})
 }
 </script>
