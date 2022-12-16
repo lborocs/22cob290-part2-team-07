@@ -16,7 +16,17 @@
 		<KanbanBoard v-else :tasks="tasks" @details="showDialog" />
 	</section>
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
-		<div v-if="currentTask.subtasks.length > 0">
+		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
+			<h2>Subtasks</h2>
+			<div v-for="subtask in currentTask.subtasks" :key="subtask.uid">
+				{{ subtask.name }}
+			</div>
+		</div>
+		<ModalFooter> </ModalFooter>
+	</Modal>
+
+	<Modal :control="modalTaskDetails" :title="currentTask.name">
+		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
 			<h2>Subtasks</h2>
 			<div v-for="subtask in currentTask.subtasks" :key="subtask.uid">
 				{{ subtask.name }}
@@ -59,14 +69,11 @@ const modalTaskDetails = useModal()
 const currentTask = ref(p.tasks[0])
 
 async function showDialog(id: number) {
+	console.log(id)
+
 	currentTask.value = (await (
 		await fetch(`/api/task/${id}`)
 	).json()) as KanbanTask
-	currentTask.value.subtasks = []
-	const subtasks = (await (
-		await fetch(`/api/task/subtasks/${id}`)
-	).json()) as Subtask[]
-	currentTask.value.subtasks = subtasks
 	modalTaskDetails.show()
 }
 
