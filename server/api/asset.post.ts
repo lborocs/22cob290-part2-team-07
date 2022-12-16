@@ -1,11 +1,19 @@
 import prisma from "@/prisma"
-import { createWriteStream } from "fs"
+import { createWriteStream, mkdir } from "fs"
 import busboy from "busboy"
 import path from "path"
 import { Asset } from ".prisma/client"
 
 if (process.env.CDN_PATH == undefined) console.error("CDN_PATH is not defined!")
 const CDN = path.resolve(process.env.CDN_PATH!)
+
+mkdir(
+	CDN,
+	{
+		recursive: true,
+	},
+	() => {},
+)
 
 export default defineEventHandler(async event => {
 	const assets: Asset[] = []
