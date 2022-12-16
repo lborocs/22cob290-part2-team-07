@@ -16,6 +16,12 @@
 		<KanbanBoard v-else :tasks="tasks" @details="showDialog" />
 	</section>
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
+		<div v-if="currentTask.subtasks.length > 0">
+			<h2>Subtasks</h2>
+			<div v-for="subtask in currentTask.subtasks" :key="subtask.uid">
+				{{ subtask.name }}
+			</div>
+		</div>
 		<ModalFooter> </ModalFooter>
 	</Modal>
 </template>
@@ -35,6 +41,8 @@ header {
 </style>
 
 <script setup lang="ts">
+import { Subtask } from ".prisma/client"
+
 const p = defineProps<{
 	tasks: KanbanTask[]
 }>()
@@ -49,10 +57,16 @@ const modalTaskDetails = useModal()
 
 // the task for display in the modal
 const currentTask = ref(p.tasks[0])
+
 async function showDialog(id: number) {
 	currentTask.value = (await (
 		await fetch(`/api/task/${id}`)
 	).json()) as KanbanTask
+	currentTask.value.subtasks = []
+	const subtasks = (await (
+		await fetch(`/api/task/subtasks/${id}`)
+	).json()) as Subtask[]
+	currentTask.value.subtasks = subtasks
 	modalTaskDetails.show()
 }
 </script>
