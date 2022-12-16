@@ -34,12 +34,20 @@ async function upload() {
 		formData.append(file.name, file)
 	}
 
-	const response = await $fetch("/api/asset", {
-		method: "POST",
-		body: formData,
-	})
+	try {
+		if (staged.value.length <= 0) return
+		const response = await $fetch("/api/asset", {
+			method: "POST",
+			body: formData,
+		})
+		clear()
+	} finally {
+		uploading = false
+	}
+}
 
-	uploading = false
+function clear() {
+	staged.value = []
 }
 </script>
 
@@ -53,7 +61,7 @@ async function upload() {
 		multiple
 		:disabled="uploading"
 	/>
-	<div>
+	<div class="files">
 		<div v-for="file in staged" class="file">
 			<span>{{ file.name }}</span>
 			<Icon
@@ -62,25 +70,43 @@ async function upload() {
 			/>
 		</div>
 	</div>
-	<Button
-		icon="material-symbols:upload-rounded"
-		@click="upload"
-		:disabled="uploading"
-		>Upload</Button
-	>
+	<ModalFooter>
+		<Button
+			icon="material-symbols:clear-all-rounded"
+			@click="clear"
+			:disabled="uploading"
+			>Clear All</Button
+		>
+		<Button
+			icon="material-symbols:upload-rounded"
+			@click="upload"
+			:disabled="uploading"
+			>Upload</Button
+		>
+	</ModalFooter>
 </template>
 
 <style scoped lang="scss">
 @use "~/assets/button";
+@use "~/assets/core";
 
 label[for="file-upload"] {
-	cursor: pointer;
+	@extend %button-icon, %button-padding;
 }
 input[type="file"] {
 	display: none;
 }
 
+.files {
+	@extend %flex-col;
+}
+
 .file {
+	@extend %flex-row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+
 	.iconify {
 		@extend %button-icon;
 		font-size: 1.3em;
