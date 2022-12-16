@@ -8,9 +8,16 @@
 				<Button icon="material-symbols:add">New Task</Button>
 			</div>
 		</header>
-		<TasksList v-if="selectedViewMode == 1" :tasks="tasks" />
-		<KanbanBoard v-else :tasks="tasks" />
+		<TasksList
+			v-if="selectedViewMode == 1"
+			:tasks="tasks"
+			@details="showDialog"
+		/>
+		<KanbanBoard v-else :tasks="tasks" @details="showDialog" />
 	</section>
+	<Modal :control="modalTaskDetails" :title="currentTask.name">
+		<ModalFooter> </ModalFooter>
+	</Modal>
 </template>
 
 <style scoped lang="scss">
@@ -28,7 +35,7 @@ header {
 </style>
 
 <script setup lang="ts">
-defineProps<{
+const p = defineProps<{
 	tasks: KanbanTask[]
 }>()
 
@@ -36,5 +43,16 @@ const selectedViewMode = ref(1)
 
 function onChange(option: number) {
 	selectedViewMode.value = option
+}
+
+const modalTaskDetails = useModal()
+
+// the task for display in the modal
+const currentTask = ref(p.tasks[0])
+async function showDialog(id: number) {
+	currentTask.value = (await (
+		await fetch(`/api/task/${id}`)
+	).json()) as KanbanTask
+	modalTaskDetails.show()
 }
 </script>

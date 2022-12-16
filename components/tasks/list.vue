@@ -27,7 +27,9 @@
 					<p>Personal</p>
 				</span>
 			</div>
-			<h3>{{ task.name }}</h3>
+			<button @click="showModal(task.uid)" class="content-button">
+				<h3>{{ task.name }}</h3>
+			</button>
 			<p class="details line-limit description">{{ task.description }}</p>
 
 			<p class="details hours">
@@ -173,8 +175,16 @@ defineProps<{
 	tasks: KanbanTask[]
 }>()
 
+const emit = defineEmits<{
+	(taskId: "details", id: number): void
+}>()
+
 function onChecked(event: Event, task: Task) {
 	const isChecked = (event.target as HTMLInputElement).checked
 	task.status = isChecked ? TaskStatus.Done : TaskStatus.Todo
+}
+
+function showModal(id: number) {
+	emit("details", id)
 }
 </script>

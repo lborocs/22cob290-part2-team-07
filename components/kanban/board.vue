@@ -6,7 +6,9 @@ const { tasks } = defineProps<{
 	tasks: KanbanTask[]
 }>()
 
-const modalTaskDetails = useModal()
+const emit = defineEmits<{
+	(taskId: "details", id: number): void
+}>()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
 
@@ -22,13 +24,8 @@ function onDrop(event: DragEvent, status: TaskStatus) {
 	task.status = status
 }
 
-// the task for display in the modal
-const currentTask = ref(tasks[0])
-async function showDialog(id: number) {
-	currentTask.value = (await (
-		await fetch(`/api/task/${id}`)
-	).json()) as KanbanTask
-	modalTaskDetails.show()
+function emitDialog(id: number) {
+	emit("details", id)
 }
 </script>
 
@@ -46,13 +43,10 @@ async function showDialog(id: number) {
 				v-for="task in tasks.filter(task => task.status == status)"
 				:key="task.uid"
 				:task="task"
-				@details="showDialog"
+				@details="emitDialog"
 			/>
 		</div>
 	</div>
-	<Modal :control="modalTaskDetails" :title="currentTask.name">
-		<ModalFooter> </ModalFooter>
-	</Modal>
 </template>
 
 <style scoped lang="scss">

@@ -88,6 +88,9 @@ $rag-colours: ("red", "amber", "green");
 	padding: 0;
 	margin: 0;
 	height: fit-content;
+	color: currentColor;
+	font: inherit;
+	text-align: inherit;
 	&:hover {
 		cursor: pointer;
 	}
