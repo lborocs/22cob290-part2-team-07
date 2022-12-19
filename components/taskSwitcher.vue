@@ -4,16 +4,20 @@
 			<h2>Tasks</h2>
 			<div class="right-buttons">
 				<ButtonSwitch @change="onChange" />
-				<Button icon="material-symbols:filter-alt-outline">Filter</Button>
+				<Button
+					icon="material-symbols:filter-alt-outline"
+					@click="modalFilter.show()"
+					>Filter</Button
+				>
 				<Button icon="material-symbols:add" @click="addTask">New Task</Button>
 			</div>
 		</header>
 		<TasksList
 			v-if="selectedViewMode == 1"
-			:tasks="tasks"
+			:tasks="filteredTasks"
 			@details="showDialog"
 		/>
-		<KanbanBoard v-else :tasks="tasks" @details="showDialog" />
+		<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
 	</section>
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
@@ -25,14 +29,19 @@
 		<ModalFooter> </ModalFooter>
 	</Modal>
 
-	<Modal :control="modalTaskDetails" :title="currentTask.name">
-		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
-			<h2>Subtasks</h2>
-			<div v-for="subtask in currentTask.subtasks" :key="subtask.uid">
-				{{ subtask.name }}
-			</div>
-		</div>
-		<ModalFooter> </ModalFooter>
+	<Modal :control="modalFilter" title="Filter Tasks">
+		<ModalFooter>
+			<Button
+				@click="applyFilter(), modalFilter.hide()"
+				icon="material-symbols:filter-alt-outline"
+				>Apply</Button
+			>
+			<Button
+				@click="clearFilter(), modalFilter.hide()"
+				icon="material-symbols:filter-alt-off-outline-rounded"
+				>Clear</Button
+			>
+		</ModalFooter>
 	</Modal>
 </template>
 
@@ -57,11 +66,15 @@ const p = defineProps<{
 	tasks: KanbanTask[]
 }>()
 
+const filteredTasks = ref(p.tasks)
+
 const selectedViewMode = ref(1)
 
 function onChange(option: number) {
 	selectedViewMode.value = option
 }
+
+const modalFilter = useModal()
 
 const modalTaskDetails = useModal()
 
@@ -75,6 +88,16 @@ async function showDialog(id: number) {
 		await fetch(`/api/task/${id}`)
 	).json()) as KanbanTask
 	modalTaskDetails.show()
+}
+
+function applyFilter() {
+	filteredTasks.value = p.tasks.filter(task => {
+		return task.name.toLowerCase().includes("task")
+	})
+}
+
+function clearFilter() {
+	filteredTasks.value = p.tasks
 }
 
 async function addTask() {
