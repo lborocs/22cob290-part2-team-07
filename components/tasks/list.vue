@@ -182,6 +182,10 @@ const emit = defineEmits<{
 async function onChecked(event: Event, task: Task) {
 	const isChecked = (event.target as HTMLInputElement).checked
 	task.status = isChecked ? TaskStatus.Done : TaskStatus.Todo
+	await $fetch(`/api/task/${task.uid}`, {
+		method: "POST",
+		body: task.status.toString(),
+	})
 }
 
 function showModal(id: number) {

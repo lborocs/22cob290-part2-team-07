@@ -16,12 +16,16 @@ function onDragOver(event: DragEvent) {
 	if (event.dataTransfer) event.dataTransfer.dropEffect = "move"
 }
 
-function onDrop(event: DragEvent, status: TaskStatus) {
+async function onDrop(event: DragEvent, status: TaskStatus) {
 	if (!event.dataTransfer) return
 	const data = +event.dataTransfer.getData("task")
 	const task = tasks.find(task => task.uid == data)
 	if (!task) return
 	task.status = status
+	await $fetch(`/api/task/${task.uid}`, {
+		method: "POST",
+		body: task.status.toString(),
+	})
 }
 
 function emitDialog(id: number) {
