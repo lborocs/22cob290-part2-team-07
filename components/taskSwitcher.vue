@@ -5,7 +5,11 @@
 			<div class="right-buttons">
 				<ButtonSwitch @change="onChange" />
 				<Button
-					icon="material-symbols:filter-alt-outline"
+					:icon="
+						tasks == filteredTasks
+							? 'material-symbols:filter-alt-outline'
+							: 'material-symbols:filter-alt'
+					"
 					@click="modalFilter.show()"
 					>Filter</Button
 				>
@@ -30,6 +34,34 @@
 	</Modal>
 
 	<Modal :control="modalFilter" title="Filter Tasks">
+		<div class="filter-options">
+			<div class="filter-section">
+				<input
+					type="checkbox"
+					name="ToDo"
+					id="filter-todo"
+					@change="filterCategories.ToDo = !filterCategories.ToDo"
+					:checked="filterCategories.ToDo"
+				/>
+				<label for="filter-todo">To Do</label>
+				<input
+					type="checkbox"
+					name="InProgress"
+					id="filter-inprogress"
+					@change="filterCategories.InProgress = !filterCategories.InProgress"
+					:checked="filterCategories.InProgress"
+				/>
+				<label for="filter-inprogress">In Progress</label>
+				<input
+					type="checkbox"
+					name="Done"
+					id="filter-done"
+					@change="filterCategories.Done = !filterCategories.Done"
+					:checked="filterCategories.Done"
+				/>
+				<label for="filter-done">Done</label>
+			</div>
+		</div>
 		<ModalFooter>
 			<Button
 				@click="applyFilter(), modalFilter.hide()"
@@ -61,6 +93,7 @@ header {
 
 <script setup lang="ts">
 import { Subtask } from ".prisma/client"
+import { TaskStatus } from "~~/types/task"
 
 const p = defineProps<{
 	tasks: KanbanTask[]
@@ -90,9 +123,22 @@ async function showDialog(id: number) {
 	modalTaskDetails.show()
 }
 
+const filterCategories = ref({
+	ToDo: true,
+	InProgress: true,
+	Done: true,
+})
+
 function applyFilter() {
 	filteredTasks.value = p.tasks.filter(task => {
-		return task.name.toLowerCase().includes("task")
+		return task.status == TaskStatus.Todo && filterCategories.value.ToDo
+			? true
+			: task.status == TaskStatus.InProgress &&
+			  filterCategories.value.InProgress
+			? true
+			: task.status == TaskStatus.Done && filterCategories.value.Done
+			? true
+			: false
 	})
 }
 
