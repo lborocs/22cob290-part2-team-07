@@ -13,7 +13,9 @@
 					@click="modalFilter.show()"
 					>Filter</Button
 				>
-				<Button icon="material-symbols:add" @click="addTask">New Task</Button>
+				<Button icon="material-symbols:add" @click="modalAddTask.show()">
+					New Task
+				</Button>
 			</div>
 		</header>
 		<TasksList
@@ -31,6 +33,30 @@
 			</div>
 		</div>
 		<ModalFooter> </ModalFooter>
+	</Modal>
+
+	<Modal :control="modalAddTask" title="New Task">
+		<form action="alert('test')" class="task-form">
+			<label for="task-name">Name:</label>
+			<input type="text" name="task-name" id="task-name" ref="taskName" />
+			<label for="task-description">Description:</label>
+			<textarea
+				name="task-description"
+				id="task-description"
+				ref="taskDescription"
+				cols="30"
+				rows="10"
+			></textarea>
+			<label for="task-hours">Estimated Worker Hours:</label>
+			<input type="number" name="task-hours" id="task-hours" ref="taskHours" />
+		</form>
+		<ModalFooter>
+			<Button
+				@click="addTask(), modalAddTask.hide()"
+				icon="material-symbols:add"
+				>Apply</Button
+			>
+		</ModalFooter>
 	</Modal>
 
 	<Modal :control="modalFilter" title="Filter Tasks">
@@ -89,10 +115,17 @@ header {
 .right-buttons {
 	@extend %flex-row, %flex-centre;
 }
+
+.task-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
 </style>
 
 <script setup lang="ts">
 import { Subtask } from ".prisma/client"
+import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 
 const p = defineProps<{
@@ -107,7 +140,13 @@ function onChange(option: number) {
 	selectedViewMode.value = option
 }
 
+const taskName = ref<HTMLInputElement>()
+const taskDescription = ref<HTMLTextAreaElement>()
+const taskHours = ref<HTMLInputElement>()
+
 const modalFilter = useModal()
+
+const modalAddTask = useModal()
 
 const modalTaskDetails = useModal()
 
@@ -147,8 +186,21 @@ function clearFilter() {
 }
 
 async function addTask() {
-	await $fetch("/api/task", {
+	console.log(taskName.value, taskDescription.value, taskHours.value)
+	const hours = taskHours.value?.value as unknown as number
+
+	const body = {
+		task: {
+			name: taskName.value?.value,
+			description: taskDescription.value?.value,
+			workerHours: hours,
+		},
+	}
+	console.log(body)
+
+	await $fetch("/api/task/", {
 		method: "PUT",
+		body: body,
 	})
 }
 </script>
