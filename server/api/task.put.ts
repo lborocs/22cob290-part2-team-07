@@ -22,7 +22,7 @@ export default defineEventHandler(async event => {
 		})
 		console.log("Task created - ", task)
 
-		return { success: true }
+		return { success: true, task: task }
 	} catch (e) {
 		if (e instanceof PrismaClientValidationError) {
 			console.error(

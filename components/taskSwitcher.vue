@@ -125,6 +125,7 @@ header {
 
 <script setup lang="ts">
 import { Subtask } from ".prisma/client"
+import { Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 
@@ -198,9 +199,19 @@ async function addTask() {
 	}
 	console.log(body)
 
-	await $fetch("/api/task/", {
-		method: "PUT",
-		body: body,
-	})
+	const res: { success: boolean; task: Task | undefined } = await $fetch(
+		"/api/task/",
+		{
+			method: "PUT",
+			body: body,
+		},
+	)
+	console.log(res)
+
+	if (res.success) {
+		const response = await fetch(`/api/task/${res.task?.uid}`)
+		const newTask = (await response.json()) as KanbanTask
+		p.tasks.push(newTask)
+	}
 }
 </script>
