@@ -9,6 +9,11 @@ definePageMeta({
 		<h2>Search</h2>
 		<h3>Make-It-All</h3>
 		<KnowledgeSearchbar id="searchbar" />
+		<ButtonNuxt
+			to="/knowledge/faq"
+			icon="material-symbols:question-mark-rounded"
+			>FAQ</ButtonNuxt
+		>
 	</div>
 </template>
 
