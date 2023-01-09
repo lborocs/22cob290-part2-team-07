@@ -1,42 +1,43 @@
-# Nuxt 3 Minimal Starter
+# Devloper Environment
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+1. Clone the repository: `git clone`.
+2. Install the recommended VSCode Extensions.
+3. Disable the @builtin Typescript Language server.
+4. `npm i`.
+5. Prisma
+   1. To setup prisma you need to create an `.env` file in the root directory of the project.
+   2. Insert a new line in the file `DATABASE_URL="file:../dev/database.db"`.
+   3. `npx prisma generate` Generates the typescript from the schema.
+   4. `npx prisma db push` Creates the tables in the database.
+6. CDN
+   1. Add a new line to the `.env`, `CDN_PATH="./cdn/"` to set the folder for the cdn assets to be saved.
+7. `npm run dev`.
+8. Open the browser `localhost:3000/dev`.
+9. Click `Refresh Database` to create some data in the database.
+10. Creating the database only needs to be done once.
 
-## Setup
+# Documentation
 
-Make sure to install the dependencies:
+- [Vue 3](https://vuejs.org/guide/introduction.html)
+  - The frontend TS/JS framework which makes the webpage reactive.
+  - We are using the composition API, ensure the docs reflect this.
+- [Nuxt 3](https://nuxt.com/docs/getting-started/introduction)
 
-```bash
-# yarn
-yarn install
+  - A meta-framework which creates universal applications, producing both the client-side and server-side code.
 
-# npm
-npm install
+- [Prisma](https://www.prisma.io/)
 
-# pnpm
-pnpm install --shamefully-hoist
-```
+  - The databse ORM.
 
-## Development Server
+- [TypeScript](https://www.typescriptlang.org/)
+  - A superset of JS which adds static type checking.
+- [Sass / Scss](https://sass-lang.com/)
 
-Start the development server on http://localhost:3000
+  - A superset of CSS which allows for compile time extensions and features to CSS.
 
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [Node](https://nodejs.org/)
+  - The Javascript runtime environment that the server will be running on.
+- [npm](https://www.npmjs.com/)
+  - A package manager for Javascript.
+- [NVM](https://github.com/coreybutler/nvm-windows)
+  - A manager / installer for Node & npm and managing the installed versions.
