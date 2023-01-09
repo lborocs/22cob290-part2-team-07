@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { Ref } from "vue"
+import { TextareaHTMLAttributes } from "vue"
 
-const props = defineProps<{
-	model: string
-	name?: string
-}>()
+const props = withDefaults(
+	defineProps<{
+		model: string
+		name?: string
+		attr?: TextareaHTMLAttributes
+	}>(),
+	{
+		attr: {},
+	},
+)
 
 const emit = defineEmits<{
 	(e: "update:model", value: typeof props.model): void
@@ -22,6 +29,9 @@ function update(event: Event) {
 }
 
 onMounted(calcHeight)
+watch(() => props.model, calcHeight, {
+	flush: "post",
+})
 </script>
 
 <template>
@@ -33,6 +43,7 @@ onMounted(calcHeight)
 			:style="`--height: ${height}px`"
 			@input="update"
 			class="blaze"
+			v-bind="attr"
 		/>
 		<textarea disabled id="shadow" ref="shadow">{{ model }}</textarea>
 	</div>
