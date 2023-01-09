@@ -1,15 +1,15 @@
 export const useModal = () => {
 	const exit = ref<any[]>([])
-	const counter = ref(false)
+	const active = ref(false)
 	return {
 		show: () => {
-			counter.value = true
+			active.value = true
 		},
 		hide: (...args: any[]) => {
 			exit.value = args
-			counter.value = false
+			active.value = false
 		},
-		counter,
+		active,
 		exit,
 	}
 }

@@ -15,7 +15,7 @@ const emit = defineEmits<{
 const dialog = $ref<HTMLDialogElement>()
 
 function close() {
-	control.counter.value = false
+	control.active.value = false
 }
 
 function opening() {
@@ -27,10 +27,14 @@ function closing() {
 	emit("close", ...control.exit.value)
 }
 
-watchEffect(() => {
-	if (control.counter.value) opening()
-	else closing()
-})
+watch(
+	control.active,
+	() => {
+		if (control.active.value) opening()
+		else closing()
+	},
+	{ immediate: true },
+)
 </script>
 
 <template>
@@ -41,7 +45,7 @@ watchEffect(() => {
 					<h1>{{ title }}</h1>
 					<Icon icon="material-symbols:close-rounded" @click="close" />
 				</header>
-				<div><slot /></div>
+				<slot />
 			</dialog>
 		</Teleport>
 	</ClientOnly>

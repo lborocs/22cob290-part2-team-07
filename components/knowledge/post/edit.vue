@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import { Post } from ".prisma/client"
+import { Asset } from ".prisma/client"
 
-defineProps<{
-	post: Post
+const { markdown } = defineProps<{
+	markdown: string
 }>()
 
-const modalAssetPicker = useModal()
-const modalKey = useModal()
+const emit = defineEmits<{
+	(e: "update:markdown", value: string): any
+}>()
 
-function insert() {
-	console.log("Inserting asset...")
+const modalKey = useModal()
+const modalAssetPicker = useModal()
+
+function insert(assets: Asset[]) {
+	let local = markdown
+	for (const asset of assets) {
+		local += `[${asset.name}](/cdn/${asset.uid} "${asset.name}")\n`
+	}
+	emit("update:markdown", local)
 }
 </script>
 
 <template>
 	<Textarea
 		name="markdown"
-		:model="post.markdown"
-		@update:model="post.markdown = $event"
+		:model="markdown"
+		@update:model="$emit('update:markdown', $event)"
+		:attr="{ placeholder: '# Title\n\nBody' }"
 	/>
 	<div class="controls">
 		<Button icon="material-symbols:key-outline-rounded" @click="modalKey.show"
@@ -42,16 +51,11 @@ function insert() {
 			>
 		</ModalFooter>
 	</Modal>
-	<Modal :control="modalAssetPicker" title="Inset Document">
-		A Lovely List of Assets + Search Bar
-		<ModalFooter>
-			<Button
-				@click="insert(), modalAssetPicker.hide()"
-				icon="material-symbols:done-rounded"
-				>Okay</Button
-			>
-		</ModalFooter>
-	</Modal>
+	<AssetPickerModal
+		:control="modalAssetPicker"
+		title="Insert Documents"
+		@select="insert($event), modalAssetPicker.hide()"
+	/>
 </template>
 
 <style scoped lang="scss">
