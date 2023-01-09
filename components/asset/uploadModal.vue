@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { ModalControl } from "@/composables/modal"
+
+defineProps<{
+	control: ModalControl
+	title: string
+}>()
 
 const staged = ref<File[]>([])
 let uploading = $ref(false)
@@ -52,38 +58,40 @@ function clear() {
 </script>
 
 <template>
-	<label for="file-upload">Choose File(s)</label>
-	<input
-		@change="selected"
-		id="file-upload"
-		ref="input-files"
-		type="file"
-		multiple
-		:disabled="uploading"
-	/>
-	<div class="files">
-		<div v-for="file in staged" class="file">
-			<span>{{ file.name }}</span>
-			<Icon
-				icon="material-symbols:delete-forever-outline-rounded"
-				@click="remove(file)"
-			/>
+	<Modal :control="control" :title="title">
+		<label for="file-upload">Choose File(s)</label>
+		<input
+			@change="selected"
+			id="file-upload"
+			ref="input-files"
+			type="file"
+			multiple
+			:disabled="uploading"
+		/>
+		<div class="files">
+			<div v-for="file in staged" class="file">
+				<span>{{ file.name }}</span>
+				<Icon
+					icon="material-symbols:delete-forever-outline-rounded"
+					@click="remove(file)"
+				/>
+			</div>
 		</div>
-	</div>
-	<ModalFooter>
-		<Button
-			icon="material-symbols:clear-all-rounded"
-			@click="clear"
-			:disabled="uploading"
-			>Clear All</Button
-		>
-		<Button
-			icon="material-symbols:upload-rounded"
-			@click="upload"
-			:disabled="uploading"
-			>Upload</Button
-		>
-	</ModalFooter>
+		<ModalFooter>
+			<Button
+				icon="material-symbols:clear-all-rounded"
+				@click="clear"
+				:disabled="uploading"
+				>Clear All</Button
+			>
+			<Button
+				icon="material-symbols:upload-rounded"
+				@click="upload"
+				:disabled="uploading"
+				>Upload</Button
+			>
+		</ModalFooter>
+	</Modal>
 </template>
 
 <style scoped lang="scss">
