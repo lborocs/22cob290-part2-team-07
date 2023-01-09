@@ -1,20 +1,35 @@
 import prisma from "@/prisma"
+import { Task } from "@prisma/client"
+import { PrismaClientValidationError } from "@prisma/client/runtime"
+import { workerHours } from "~~/types/task"
 
 export default defineEventHandler(async event => {
 	const query = getQuery(event)
 	console.log("creating task")
+	try {
+		const body = await readBody(event)
 
-	const task = await prisma.task.create({
-		data: {
-			description: "hard-coded description",
-			name: "Task Name (hc)",
-			workerHours: 12,
-			assignees: {},
-			subtasks: {},
-			project: {},
-		},
-	})
-	console.log(task)
+		const details = body.task as Task
+		console.table(details)
+		console.log(typeof details.workerHours, typeof +details.workerHours)
 
-	return { success: true }
+		const task = await prisma.task.create({
+			data: {
+				name: details.name,
+				description: details.description,
+				workerHours: +details.workerHours,
+			},
+		})
+		console.log("Task created - ", task)
+
+		return { success: true, task: task }
+	} catch (e) {
+		if (e instanceof PrismaClientValidationError) {
+			console.error(
+				"PrismaClientValidationError - probably missing fields for task",
+				e,
+			)
+			return { success: false, error: "Missing fields for task" }
+		}
+	}
 })
