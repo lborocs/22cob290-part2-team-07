@@ -11,7 +11,7 @@ onMounted(() => {
 	<Form to="/knowledge/search/">
 		<input
 			name="q"
-			type="text"
+			type="search"
 			placeholder="Search..."
 			:value="$route.query.q"
 		/>

@@ -90,6 +90,7 @@ model Post {
 
 model Asset {
   uid      String @id @default(uuid())
+  name     String
   mimeType String
   posts    Post[]
 }

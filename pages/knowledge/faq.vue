@@ -1,11 +1,11 @@
 <script setup lang="ts">
 definePageMeta({
-	name: "Knowledge Post",
+	name: "Knowledge FAQ",
 })
 
 const route = useRoute()
-const { data: post } = await useFetch(`/api/post/${route.params.id}`)
-if (!post.value) console.error(`Post<${route.params.id}> does not exist!`)
+const { data: post } = await useFetch(`/api/faq`)
+if (!post.value) console.error(`Post<FAQ> does not exist!`)
 </script>
 
 <template>

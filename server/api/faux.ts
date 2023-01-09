@@ -33,6 +33,16 @@ export default defineEventHandler(async event => {
 			data: { email: "e", name: "E", password: "pe" },
 		}),
 	])
+
+	const faq = await prisma.post.create({
+		data: {
+			title: "Frequently Asked Questions",
+			markdown: "# FAQ",
+			topic: { create: { name: "FAQ" } },
+			owner: { connect: { email: "king" } },
+		},
+	})
+
 	const topics = await prisma.$transaction([
 		prisma.topic.create({ data: { name: "Latin" } }),
 		prisma.topic.create({ data: { name: "Movies" } }),
@@ -168,6 +178,7 @@ export default defineEventHandler(async event => {
 
 	return {
 		users,
+		faq,
 		topics,
 		posts,
 		projects,
