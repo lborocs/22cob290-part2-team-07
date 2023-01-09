@@ -1,9 +1,13 @@
 import prisma from "@/prisma"
 import { TaskStatus } from "@/types/task"
+import fs from "node:fs/promises"
+import path from "node:path"
+
+const CDN = path.resolve(process.env.CDN_PATH!)
 
 export default defineEventHandler(async event => {
 	const query = getQuery(event)
-	if (query.refresh !== undefined)
+	if (query.refresh !== undefined) {
 		await prisma.$transaction([
 			prisma.subtask.deleteMany(),
 			prisma.task.deleteMany(),
@@ -14,6 +18,14 @@ export default defineEventHandler(async event => {
 			prisma.client.deleteMany(),
 			prisma.user.deleteMany(),
 		])
+
+		const promises = []
+		for (const file of await fs.readdir(CDN)) {
+			promises.push(fs.unlink(path.join(CDN, file)))
+		}
+		await Promise.all(promises)
+	}
+
 	if ((await prisma.user.count()) > 0) return []
 	const users = await prisma.$transaction([
 		// Users
@@ -40,6 +52,9 @@ export default defineEventHandler(async event => {
 			markdown: "# FAQ",
 			topic: { create: { name: "FAQ" } },
 			owner: { connect: { email: "king" } },
+		},
+		include: {
+			topic: true,
 		},
 	})
 
