@@ -9,10 +9,13 @@
    2. Inset a new line in the file `DATABASE_URL=file:../dev/database.db`.
    3. `npx prisma generate` Generates the typescript from the schema.
    4. `npx prisma db push` Creates the tables in the database.
-6. `npm run dev`.
-7. Open the browser `localhost:3000/dev`.
-8. Click `Refresh Database` to create some data in the database.
-9. Creating the database only needs to be done once.
+6. CDN
+   1. Create a new folder called `cdn` in the root folder.
+   2. Add `CDN_PATH=./cdn` to your `.env` file.
+7. `npm run dev`.
+8. Open the browser `localhost:3000/dev`.
+9. Click `Refresh Database` to create some data in the database.
+10. Creating the database only needs to be done once.
 
 # Documentation
 
