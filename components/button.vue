@@ -1,12 +1,15 @@
 <script setup lang="ts">
-const { fix = false } = defineProps<{
+import { ButtonHTMLAttributes } from "vue"
+
+const { fix = false, type = "button" } = defineProps<{
 	icon: string
 	fix?: boolean
+	type?: ButtonHTMLAttributes["type"]
 }>()
 </script>
 
 <template>
-	<button class="btn" :class="{ fix: fix }">
+	<button :type="type" class="btn" :class="{ fix: fix }">
 		<ButtonBase :icon="icon"><slot /></ButtonBase>
 	</button>
 </template>
