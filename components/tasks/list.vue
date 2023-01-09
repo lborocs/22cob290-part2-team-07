@@ -69,13 +69,13 @@
 	border-radius: 0.5rem;
 	border-left: 0.3rem solid var(--colour-card-highlight, var(--colour-text));
 
-	&[data-status="0"] {
+	&[data-status="2"] {
 		@extend %data-rag-green;
 	}
 	&[data-status="1"] {
 		@extend %data-rag-amber;
 	}
-	&[data-status="2"] {
+	&[data-status="0"] {
 		@extend %data-rag-red;
 	}
 
