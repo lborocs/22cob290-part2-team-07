@@ -1,19 +1,38 @@
 <script setup lang="ts">
 import { Asset } from ".prisma/client"
 
-const { asset } = defineProps<{
+const props = defineProps<{
 	asset: Asset
 }>()
 
-const link = $computed(() => `/cdn/${asset.uid}`)
-const isImage = $computed(() => asset.mimeType.startsWith("image"))
-const isAudio = $computed(() => asset.mimeType.startsWith("audio"))
-const isVideo = $computed(() => asset.mimeType.startsWith("video"))
-const isPdf = $computed(() => asset.mimeType.startsWith("application/pdf"))
+const CDN = "/cdn/"
+
+let errorCount = $ref(0)
+watch(props, () => {
+	errorCount = 0
+})
+
+const link = $computed(() => `${CDN}${props.asset.uid}?r=${errorCount}`)
+const isImage = $computed(() => props.asset.mimeType.startsWith("image"))
+const isAudio = $computed(() => props.asset.mimeType.startsWith("audio"))
+const isVideo = $computed(() => props.asset.mimeType.startsWith("video"))
+const isPdf = $computed(() =>
+	props.asset.mimeType.startsWith("application/pdf"),
+)
+
+function loadError() {
+	errorCount++
+}
 </script>
 
 <template>
-	<img v-if="isImage" :src="link" :alt="asset.name" />
+	<img
+		v-if="isImage"
+		:src="link"
+		:alt="asset.name"
+		:title="asset.name"
+		@error="loadError"
+	/>
 	<audio controls v-else-if="isAudio">
 		<source :src="link" :type="asset.mimeType" />
 	</audio>
