@@ -28,9 +28,22 @@
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
 			<h2>Subtasks</h2>
-			<div v-for="subtask in currentTask.subtasks" :key="subtask.uid">
-				{{ subtask.name }}
-			</div>
+			<ul>
+				<li
+					v-for="subtask in currentTask.subtasks"
+					:key="subtask.uid"
+					class="flex-row"
+				>
+					<input
+						type="checkbox"
+						:name="subtask.uid.toString()"
+						:id="subtask.uid.toString()"
+						:checked="subtask.done"
+						@change="onSubtaskCheckChange($event, subtask.uid)"
+					/>
+					<label :for="subtask.uid.toString()">{{ subtask.name }}</label>
+				</li>
+			</ul>
 		</div>
 		<ModalFooter> </ModalFooter>
 	</Modal>
@@ -213,5 +226,14 @@ async function addTask() {
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
 	}
+}
+
+async function onSubtaskCheckChange(event: Event, uid: number) {
+	const isChecked = (event.target as HTMLInputElement).checked
+	console.log(isChecked)
+	await $fetch(`/api/subtask/${uid}`, {
+		method: "PUT",
+		body: isChecked.toString(),
+	})
 }
 </script>
