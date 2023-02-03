@@ -21,12 +21,13 @@ export default defineEventHandler(async event => {
 	} else {
 		newParentStatus = 1
 	}
-	const res = await prisma.task.update({
+	const updatedParent = await prisma.task.update({
 		where: { uid: subtask.parentId },
 		data: { status: newParentStatus },
 	})
 
 	return {
 		status: 200,
+		newParentStatus: updatedParent.status,
 	}
 })

@@ -47,7 +47,7 @@ function emitDialog(id: number) {
 				v-for="task in tasks.filter(task => task.status == status)"
 				:key="task.uid"
 				:task="task"
-				@details="emitDialog"
+				@details="emitDialog(tasks.indexOf(task))"
 			/>
 		</div>
 	</div>

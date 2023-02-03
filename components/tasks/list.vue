@@ -2,7 +2,7 @@
 	<div class="task-list">
 		<div
 			class="task-row"
-			v-for="task in tasks"
+			v-for="(task, index) in tasks"
 			:key="task.uid"
 			:data-status="task.status"
 		>
@@ -27,7 +27,7 @@
 					<p>Personal</p>
 				</span>
 			</div>
-			<button @click="showModal(task.uid)" class="content-button">
+			<button @click="showModal(index)" class="content-button">
 				<h3>{{ task.name }}</h3>
 			</button>
 			<p class="details line-limit description">{{ task.description }}</p>

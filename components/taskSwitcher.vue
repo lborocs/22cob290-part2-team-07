@@ -197,11 +197,15 @@ const modalTaskDetails = useModal()
 // the task for display in the modal
 const currentTask = ref(p.tasks[0])
 
-async function showDialog(id: number) {
-	console.log(id)
+let currentTaskIndex = 0
+
+async function showDialog(index: number) {
+	console.log(index)
+	currentTaskIndex = index
+	const task = filteredTasks.value[index]
 
 	currentTask.value = (await (
-		await fetch(`/api/task/${id}`)
+		await fetch(`/api/task/${task.uid}`)
 	).json()) as KanbanTask
 	modalTaskDetails.show()
 }
@@ -261,9 +265,13 @@ async function addTask() {
 async function onSubtaskCheckChange(event: Event, uid: number) {
 	const isChecked = (event.target as HTMLInputElement).checked
 	console.log(isChecked)
-	await $fetch(`/api/subtask/${uid}`, {
+	const res = await $fetch(`/api/subtask/${uid}`, {
 		method: "PUT",
 		body: isChecked.toString(),
 	})
+	if (res.status == 200) {
+		console.log(res.newParentStatus)
+		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
+	}
 }
 </script>
