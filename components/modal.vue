@@ -61,8 +61,7 @@ dialog {
 	background-color: var(--colour-highlight);
 	border-color: var(--colour-accent);
 
-	max-width: 80%;
-	width: max-content;
+	width: clamp(35ch, 50%, 80ch);
 
 	&::backdrop {
 		background-color: rgba(0, 0, 0, 0.75);
