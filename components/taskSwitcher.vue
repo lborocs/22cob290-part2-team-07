@@ -26,13 +26,17 @@
 		<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
 	</section>
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
+		<p>{{ currentTask.description }}</p>
+		<Button icon="material-symbols:add" class="center-button">
+			Add Subtask
+		</Button>
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
 			<h2>Subtasks</h2>
-			<ul>
+			<ul class="subtask-list">
 				<li
 					v-for="subtask in currentTask.subtasks"
 					:key="subtask.uid"
-					class="flex-row"
+					class="flex-row gap-3"
 				>
 					<input
 						type="checkbox"
@@ -41,7 +45,13 @@
 						:checked="subtask.done"
 						@change="onSubtaskCheckChange($event, subtask.uid)"
 					/>
-					<label :for="subtask.uid.toString()">{{ subtask.name }}</label>
+					<label :for="subtask.uid.toString()" class="flex-row space-between">
+						<h3>{{ subtask.name }}</h3>
+						<span class="dimmed flex-row gap-3">
+							{{ subtask.workerHours }} Hours
+							<Icon icon="material-symbols:hourglass-bottom-rounded" />
+						</span>
+					</label>
 				</li>
 			</ul>
 		</div>
@@ -134,6 +144,25 @@ header {
 	flex-direction: column;
 	gap: 1rem;
 }
+
+.center-button {
+	margin: auto;
+}
+
+.subtask-list {
+	list-style: none;
+	padding: 0;
+
+	li {
+		width: 100%;
+	}
+
+	input[type="checkbox"] {
+		accent-color: var(--colour-accent);
+		width: 1.2rem;
+		aspect-ratio: 1;
+	}
+}
 </style>
 
 <script setup lang="ts">
@@ -141,6 +170,7 @@ import { Subtask } from ".prisma/client"
 import { Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
+import { Icon } from "@iconify/vue"
 
 const p = defineProps<{
 	tasks: KanbanTask[]

@@ -39,6 +39,26 @@ body {
 	border-top: 0.25rem solid var(--colour-card-highlight, var(--colour-accent));
 }
 
+.dimmed {
+	color: var(--colour-text-faded);
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	&.space-between {
+		justify-content: space-between;
+		flex-grow: 1;
+	}
+}
+
+@for $i from 1 through 12 {
+	.gap-#{$i} {
+		gap: $i * 0.2rem;
+	}
+}
+
 // @each $name in $rag-colours {
 // 	%data-rag-#{$name} {
 // 		--colour-card-highlight: var(--colour-#{$name});

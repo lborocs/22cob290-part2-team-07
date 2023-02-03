@@ -43,10 +43,6 @@ defineProps<{
 	display: inline-flex;
 }
 
-.dimmed {
-	color: var(--colour-text-faded);
-}
-
 .card-margins {
 	margin: 0 0 0.5rem 0; // top right bottom left
 }
