@@ -11,17 +11,18 @@ datasource db {
 }
 
 model User {
-  uid               String              @id @default(uuid())
-  email             String              @unique
-  name              String
-  password          String
-  leads             Project[]
-  assigned          Task[]
-  posts             Post[]
-  PermissionGlobal  PermissionGlobal?
-  PermissionTopic   PermissionTopic[]
-  PermissionPost    PermissionPost[]
-  PermissionProject PermissionProject[]
+  uid              String                 @id @default(uuid())
+  email            String                 @unique
+  name             String
+  password         String
+  role             Role                   @relation(fields: [roleUid], references: [uid])
+  roleUid          Int
+  leads            Project[]
+  assigned         Task[]
+  posts            Post[]
+  overridesTopic   POverrideUserTopic[]
+  overridesPost    POverrideUserPost[]
+  overridesProject POverrideUserProject[]
 }
 
 model Task {
@@ -50,17 +51,18 @@ model Subtask {
 }
 
 model Project {
-  uid               Int                 @id @default(autoincrement())
-  leader            User                @relation(fields: [leaderId], references: [uid])
-  leaderId          String
-  client            Client              @relation(fields: [clientId], references: [uid])
-  clientId          Int
-  name              String
-  description       String
-  createdAt         DateTime            @default(now())
-  deadline          DateTime
-  tasks             Task[]
-  PermissionProject PermissionProject[]
+  uid           Int                    @id @default(autoincrement())
+  leader        User                   @relation(fields: [leaderId], references: [uid])
+  leaderId      String
+  client        Client                 @relation(fields: [clientId], references: [uid])
+  clientId      Int
+  name          String
+  description   String
+  createdAt     DateTime               @default(now())
+  deadline      DateTime
+  tasks         Task[]
+  overrideRoles POverrideRoleProject[]
+  overrideUsers POverrideUserProject[]
 }
 
 model Client {
@@ -75,24 +77,26 @@ model Client {
 }
 
 model Topic {
-  uid             Int               @id @default(autoincrement())
-  name            String            @unique
-  posts           Post[]
-  PermissionTopic PermissionTopic[]
+  uid           Int                  @id @default(autoincrement())
+  name          String               @unique
+  posts         Post[]
+  overrideRoles POverrideRoleTopic[]
+  overrideUsers POverrideUserTopic[]
 }
 
 model Post {
-  uid            Int              @id @default(autoincrement())
-  owner          User             @relation(fields: [ownerId], references: [uid])
-  ownerId        String
-  topic          Topic            @relation(fields: [topicId], references: [uid])
-  topicId        Int
-  title          String
-  markdown       String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  assets         Asset[]
-  PermissionPost PermissionPost[]
+  uid           Int                 @id @default(autoincrement())
+  owner         User                @relation(fields: [ownerId], references: [uid])
+  ownerId       String
+  topic         Topic               @relation(fields: [topicId], references: [uid])
+  topicId       Int
+  title         String
+  markdown      String
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  assets        Asset[]
+  overrideRoles POverrideRolePost[]
+  overrideUsers POverrideUserPost[]
 }
 
 model Asset {
@@ -104,70 +108,93 @@ model Asset {
 
 // Permissions
 
-//  Create/Delete a topic
-// Create/Delete a project
-// Create/Delete a client
-// Manage role permissions
-// Topic
-// Create/Delete a post
-// Read posts
-// Post
-// Read post
-// Edit post
-// Delete post
-// Project
-// Create/Delete task
-// Assign to task
-// Access manager dashboard
-// Assign rank (Employee, Manager, Team Leader) based on permissions
-
-model PermissionGlobal {
-  user    User   @relation(fields: [userUid], references: [uid])
-  userUid String @id
-
-  topicCreate   Boolean
-  topicDelete   Boolean
-  projectCreate Boolean
-  projectDelete Boolean
-  clientCreate  Boolean
-  clientDelete  Boolean
+model Role {
+  uid              Int                    @id @default(autoincrement())
+  rank             Int
+  allow            Int // Permissions
+  deny             Int // Permissions
+  name             String
+  users            User[]
+  overridesTopic   POverrideRoleTopic[]
+  overridesPost    POverrideRolePost[]
+  overridesProject POverrideRoleProject[]
 }
 
-model PermissionTopic {
+// model POverrideRole {
+//   role    Role @relation(fields: [roleUid], references: [uid])
+//   roleUid Int
+//   allow   Int // Permission
+//   deny    Int // Permission
+// }
+// model POverrideUser {
+//   user     User   @relation(fields: [userUid], references: [uid])
+//   userUid  String
+//   allow    Int // Permission
+//   deny     Int // Permission
+// }
+
+model POverrideRoleTopic {
+  role     Role  @relation(fields: [roleUid], references: [uid])
+  roleUid  Int
+  allow    Int // Permission
+  deny     Int // Permission
+  topic    Topic @relation(fields: [topicUid], references: [uid])
+  topicUid Int
+
+  @@unique([roleUid, topicUid])
+}
+
+model POverrideUserTopic {
   user     User   @relation(fields: [userUid], references: [uid])
   userUid  String
+  allow    Int // Permission
+  deny     Int // Permission
   topic    Topic  @relation(fields: [topicUid], references: [uid])
   topicUid Int
 
-  postCreate Boolean
-  postDelete Boolean
-  postEdit   Boolean
-
-  @@id([userUid, topicUid])
+  @@unique([userUid, topicUid])
 }
 
-model PermissionPost {
+model POverrideRolePost {
+  role    Role @relation(fields: [roleUid], references: [uid])
+  roleUid Int
+  allow   Int // Permission
+  deny    Int // Permission
+  post    Post @relation(fields: [postUid], references: [uid])
+  postUid Int
+
+  @@unique([roleUid, postUid])
+}
+
+model POverrideUserPost {
   user    User   @relation(fields: [userUid], references: [uid])
   userUid String
+  allow   Int // Permission
+  deny    Int // Permission
   post    Post   @relation(fields: [postUid], references: [uid])
   postUid Int
 
-  postRead   Boolean
-  postEdit   Boolean
-  postDelete Boolean
-
-  @@id([userUid, postUid])
+  @@unique([userUid, postUid])
 }
 
-model PermissionProject {
-  user       User    @relation(fields: [userUid], references: [uid])
-  userUid    String
+model POverrideRoleProject {
+  role       Role    @relation(fields: [roleUid], references: [uid])
+  roleUid    Int
+  allow      Int // Permission
+  deny       Int // Permission
   project    Project @relation(fields: [projectUid], references: [uid])
   projectUid Int
 
-  taskCreate  Boolean
-  taskDelete  Boolean
-  assignTasks Boolean
+  @@unique([roleUid, projectUid])
+}
 
-  @@id([userUid, projectUid])
+model POverrideUserProject {
+  user       User    @relation(fields: [userUid], references: [uid])
+  userUid    String
+  allow      Int // Permission
+  deny       Int // Permission
+  project    Project @relation(fields: [projectUid], references: [uid])
+  projectUid Int
+
+  @@unique([userUid, projectUid])
 }
