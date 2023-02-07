@@ -2,7 +2,7 @@
 	"private": true,
 	"scripts": {
 		"build": "nuxt build",
-		"dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --ssl-cert localhost.pem --ssl-key localhost-key.pem",
+		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
@@ -14,11 +14,13 @@
 		"busboy": "^1.6.0",
 		"cross-env": "^7.0.3",
 		"nuxt": "3.0.0",
-		"prisma": "^4.7.1",
+		"prisma": "^4.9.0",
 		"sass": "^1.56.1",
 		"showdown": "^2.1.0"
 	},
 	"dependencies": {
-		"@prisma/client": "^4.7.1"
+		"@prisma/client": "^4.9.0",
+		"chart.js": "^4.2.0",
+		"vue-chartjs": "^5.2.0"
 	}
 }
