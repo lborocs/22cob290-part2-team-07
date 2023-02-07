@@ -14,11 +14,11 @@
 		"busboy": "^1.6.0",
 		"cross-env": "^7.0.3",
 		"nuxt": "3.0.0",
-		"prisma": "^4.7.1",
+		"prisma": "^4.10.0",
 		"sass": "^1.56.1",
 		"showdown": "^2.1.0"
 	},
 	"dependencies": {
-		"@prisma/client": "^4.7.1"
+		"@prisma/client": "^4.10.0"
 	}
 }
