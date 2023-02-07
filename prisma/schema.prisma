@@ -11,13 +11,17 @@ datasource db {
 }
 
 model User {
-  uid      String    @id @default(uuid())
-  email    String    @unique
-  name     String
-  password String
-  leads    Project[]
-  assigned Task[]
-  posts    Post[]
+  uid               String              @id @default(uuid())
+  email             String              @unique
+  name              String
+  password          String
+  leads             Project[]
+  assigned          Task[]
+  posts             Post[]
+  PermissionGlobal  PermissionGlobal?
+  PermissionTopic   PermissionTopic[]
+  PermissionPost    PermissionPost[]
+  PermissionProject PermissionProject[]
 }
 
 model Task {
@@ -46,16 +50,17 @@ model Subtask {
 }
 
 model Project {
-  uid         Int      @id @default(autoincrement())
-  leader      User     @relation(fields: [leaderId], references: [uid])
-  leaderId    String
-  client      Client   @relation(fields: [clientId], references: [uid])
-  clientId    Int
-  name        String
-  description String
-  createdAt   DateTime @default(now())
-  deadline    DateTime
-  tasks       Task[]
+  uid               Int                 @id @default(autoincrement())
+  leader            User                @relation(fields: [leaderId], references: [uid])
+  leaderId          String
+  client            Client              @relation(fields: [clientId], references: [uid])
+  clientId          Int
+  name              String
+  description       String
+  createdAt         DateTime            @default(now())
+  deadline          DateTime
+  tasks             Task[]
+  PermissionProject PermissionProject[]
 }
 
 model Client {
@@ -70,22 +75,24 @@ model Client {
 }
 
 model Topic {
-  uid   Int    @id @default(autoincrement())
-  name  String @unique
-  posts Post[]
+  uid             Int               @id @default(autoincrement())
+  name            String            @unique
+  posts           Post[]
+  PermissionTopic PermissionTopic[]
 }
 
 model Post {
-  uid       Int      @id @default(autoincrement())
-  owner     User     @relation(fields: [ownerId], references: [uid])
-  ownerId   String
-  topic     Topic    @relation(fields: [topicId], references: [uid])
-  topicId   Int
-  title     String
-  markdown  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  assets    Asset[]
+  uid            Int              @id @default(autoincrement())
+  owner          User             @relation(fields: [ownerId], references: [uid])
+  ownerId        String
+  topic          Topic            @relation(fields: [topicId], references: [uid])
+  topicId        Int
+  title          String
+  markdown       String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  assets         Asset[]
+  PermissionPost PermissionPost[]
 }
 
 model Asset {
@@ -93,4 +100,74 @@ model Asset {
   name     String
   mimeType String
   posts    Post[]
+}
+
+// Permissions
+
+//  Create/Delete a topic
+// Create/Delete a project
+// Create/Delete a client
+// Manage role permissions
+// Topic
+// Create/Delete a post
+// Read posts
+// Post
+// Read post
+// Edit post
+// Delete post
+// Project
+// Create/Delete task
+// Assign to task
+// Access manager dashboard
+// Assign rank (Employee, Manager, Team Leader) based on permissions
+
+model PermissionGlobal {
+  user    User   @relation(fields: [userUid], references: [uid])
+  userUid String @id
+
+  topicCreate   Boolean
+  topicDelete   Boolean
+  projectCreate Boolean
+  projectDelete Boolean
+  clientCreate  Boolean
+  clientDelete  Boolean
+}
+
+model PermissionTopic {
+  user     User   @relation(fields: [userUid], references: [uid])
+  userUid  String
+  topic    Topic  @relation(fields: [topicUid], references: [uid])
+  topicUid Int
+
+  postCreate Boolean
+  postDelete Boolean
+  postEdit   Boolean
+
+  @@id([userUid, topicUid])
+}
+
+model PermissionPost {
+  user    User   @relation(fields: [userUid], references: [uid])
+  userUid String
+  post    Post   @relation(fields: [postUid], references: [uid])
+  postUid Int
+
+  postRead   Boolean
+  postEdit   Boolean
+  postDelete Boolean
+
+  @@id([userUid, postUid])
+}
+
+model PermissionProject {
+  user       User    @relation(fields: [userUid], references: [uid])
+  userUid    String
+  project    Project @relation(fields: [projectUid], references: [uid])
+  projectUid Int
+
+  taskCreate  Boolean
+  taskDelete  Boolean
+  assignTasks Boolean
+
+  @@id([userUid, projectUid])
 }
