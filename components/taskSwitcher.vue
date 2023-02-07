@@ -3,7 +3,11 @@
 		<header>
 			<h2>Tasks</h2>
 			<div class="right-buttons">
-				<ButtonSwitch @change="onChange" />
+				<ButtonSwitch
+					option1="List"
+					option2="Kanban"
+					v-model:selected="selectedViewMode"
+				/>
 				<Button
 					:icon="
 						tasks == filteredTasks
@@ -179,10 +183,6 @@ const p = defineProps<{
 const filteredTasks = ref(p.tasks)
 
 const selectedViewMode = ref(1)
-
-function onChange(option: number) {
-	selectedViewMode.value = option
-}
 
 const taskName = ref<HTMLInputElement>()
 const taskDescription = ref<HTMLTextAreaElement>()
