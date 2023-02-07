@@ -53,7 +53,7 @@ function dateDiffInDays(a: any, b: any) {
 				:name="project!.leader.name"
 				:size="150"
 			/>
-			<p>{{ project!.leader.name }}</p>
+			<p class="no-margin">{{ project!.leader.name }}</p>
 		</ProjectCard>
 		<ProjectCard title="Project Client" :text="true">
 			<ClientIcon
@@ -62,7 +62,7 @@ function dateDiffInDays(a: any, b: any) {
 				:size="150"
 				:isClient="true"
 			/>
-			<p>{{ project!.client.name }}</p>
+			<p class="no-margin">{{ project!.client.name }}</p>
 		</ProjectCard>
 	</section>
 
@@ -130,5 +130,9 @@ function dateDiffInDays(a: any, b: any) {
 		width: clamp(10ch, 100%, 30ch);
 		// max-width: var(--card-width);
 	}
+}
+
+.no-margin {
+	margin: 1rem 0 0 0;
 }
 </style>

@@ -25,6 +25,7 @@ defineProps<{
 	width: 100%;
 	max-width: 38ch;
 	margin: 0.5rem;
+	min-height: 38ch;
 
 	&-text {
 		font-size: 1.75rem;
@@ -37,8 +38,8 @@ defineProps<{
 	}
 
 	&-body {
-		margin: 1rem auto; // top right bottom left
-		margin-bottom: 0;
+		margin: 1rem 0 0 0; // top right bottom left
+		// margin-bottom: 0;
 		flex-grow: 2;
 	}
 }
