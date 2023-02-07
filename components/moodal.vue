@@ -1,12 +1,14 @@
-<script setup></script>
+<script setup lang="ts">
+defineProps<{
+	modalActive: Boolean
+}>()
+</script>
 
 <template>
 	<div class="backdrop">
 		<div class="modal">
-			<slot name="close-btn"></slot>
-			<slot name="popup-title"></slot>
-			<slot name="popup-text"></slot>
-			<slot name="popup-buttons"></slot>
+			<button class="close-btn" @click="$emit('close')">&#10006;</button>
+			<slot name="content"></slot>
 		</div>
 	</div>
 </template>
@@ -23,10 +25,16 @@
 }
 .backdrop {
 	top: 0;
-	position: fixed;
+	position: absolute;
 	background: rgba($color: black, $alpha: 0.5);
 	width: 100%;
 	height: 100%;
 	left: 0;
+	z-index: 10;
+}
+
+.close-btn {
+	float: right;
+	cursor: pointer;
 }
 </style>
