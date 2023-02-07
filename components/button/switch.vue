@@ -8,7 +8,7 @@
 			checked
 			@click="optionClick(1)"
 		/>
-		<label for="opt-list">List</label>
+		<label for="opt-list">{{ option1 }}</label>
 		<input
 			type="radio"
 			id="opt-kanban"
@@ -16,7 +16,7 @@
 			value="kanban"
 			@click="optionClick(2)"
 		/>
-		<label for="opt-kanban">Kanban</label>
+		<label for="opt-kanban">{{ option2 }}</label>
 	</form>
 </template>
 
