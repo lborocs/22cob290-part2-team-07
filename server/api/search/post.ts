@@ -22,7 +22,22 @@ export default defineEventHandler(event => {
 		where,
 		include: {
 			owner: true,
-			topic: true,
+			topic: {
+				include: {
+					overrideRoles: {
+						where: {
+							role: { users: { some: { uid: query.u as string } } },
+						},
+					},
+					overrideUsers: { where: { userUid: query.u as string } },
+				},
+			},
+			overrideRoles: {
+				where: {
+					role: { users: { some: { uid: query.u as string } } },
+				},
+			},
+			overrideUsers: true, // { where: { userUid: query.u as string } },
 		},
 	})
 })

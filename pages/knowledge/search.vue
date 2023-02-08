@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { has, Permission, permissions } from "@/types/permission"
+
 definePageMeta({
 	name: "Knowledge Search Results",
 })
 const route = useRoute()
 
+const currentUser = useCurrentUser()
 let query = ref(route.query)
+let q = computed(() => {
+	return Object.assign(query.value, { u: currentUser.value?.uid })
+})
 const { data: posts } = await useFetch("/api/search/post", {
-	query: query,
+	query: q,
 })
 watch(route, () => {
 	query.value = route.query
@@ -15,7 +21,12 @@ watch(route, () => {
 
 <template>
 	<KnowledgeSearchbar id="searchbar" />
-	<KnowledgePostSnippet v-for="post in posts" :key="post.uid" v-bind="post" />
+	<template v-for="post in posts" :key="post.uid">
+		<KnowledgePostSnippet
+			v-bind="post"
+			v-if="has(permissions(currentUser!.roles, post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post.ownerId === currentUser!.uid"
+		/>
+	</template>
 </template>
 
 <style scoped lang="scss">
