@@ -20,7 +20,7 @@ export default defineEventHandler(async event => {
 				name: details.name,
 				description: details.description,
 				workerHours: +details.workerHours,
-				// deadline: deadlineDate,
+				deadline: deadlineDate,
 				project: { connect: { uid: +details.projectId! } },
 			},
 		})
