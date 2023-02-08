@@ -101,33 +101,61 @@
 	</Modal>
 
 	<Modal :control="modalFilter" title="Filter Tasks">
-		<div class="filter-options">
-			<div class="filter-section">
-				<input
-					type="checkbox"
-					name="ToDo"
-					id="filter-todo"
-					@change="filterCategories.ToDo = !filterCategories.ToDo"
-					:checked="filterCategories.ToDo"
-				/>
-				<label for="filter-todo">To Do</label>
-				<input
-					type="checkbox"
-					name="InProgress"
-					id="filter-inprogress"
-					@change="filterCategories.InProgress = !filterCategories.InProgress"
-					:checked="filterCategories.InProgress"
-				/>
-				<label for="filter-inprogress">In Progress</label>
-				<input
-					type="checkbox"
-					name="Done"
-					id="filter-done"
-					@change="filterCategories.Done = !filterCategories.Done"
-					:checked="filterCategories.Done"
-				/>
-				<label for="filter-done">Done</label>
-			</div>
+		<div class="filters-wrapper">
+			<section class="filters">
+				<h2 class="filter-header">By Status</h2>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="ToDo"
+						id="filter-todo"
+						@change="filterCategories.ToDo = !filterCategories.ToDo"
+						:checked="filterCategories.ToDo"
+					/>
+					<label for="filter-todo">To Do</label>
+				</div>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="InProgress"
+						id="filter-inprogress"
+						@change="filterCategories.InProgress = !filterCategories.InProgress"
+						:checked="filterCategories.InProgress"
+					/>
+					<label for="filter-inprogress">In Progress</label>
+				</div>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="Done"
+						id="filter-done"
+						@change="filterCategories.Done = !filterCategories.Done"
+						:checked="filterCategories.Done"
+					/>
+					<label for="filter-done">Done</label>
+				</div>
+			</section>
+			<section class="filter">
+				<h2 class="filter-header">By Project</h2>
+				<div class="cb-wrapper">
+					<input type="checkbox" name="personal" id="filter-personal" />
+					<label for="filter-personal">Personal Tasks</label>
+				</div>
+				<div
+					class="cb-wrapper"
+					v-for="project in visibleProjects"
+					:key="project?.uid"
+				>
+					<input
+						type="checkbox"
+						name="personal"
+						:id="`filter-project-${project?.uid}`"
+					/>
+					<label :for="`filter-project-${project?.uid}`">
+						{{ project?.name }}
+					</label>
+				</div>
+			</section>
 		</div>
 		<ModalFooter>
 			<Button
@@ -150,7 +178,7 @@
 header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-end;
 }
 
 .right-buttons {
@@ -191,6 +219,21 @@ header {
 		aspect-ratio: 1;
 	}
 }
+
+.filters-wrapper {
+	.filters {
+		display: flex;
+		flex-direction: column;
+	}
+}
+.filter-header {
+	margin: 0 0 0.2rem 0;
+}
+.cb-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
 </style>
 
 <script setup lang="ts">
@@ -199,12 +242,26 @@ import { Project, Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
+import { arrayBuffer } from "stream/consumers"
 
 const p = defineProps<{
 	tasks: KanbanTask[]
 }>()
 
 const filteredTasks = ref(p.tasks)
+
+// The projects associated with our tasks, given by mapping to get an array of
+// projects, then filtering to remove duplicates and null values
+const visibleProjects = ref<(Project | null | undefined)[]>(
+	p.tasks
+		.map(task => task.project)
+		.filter((project, index, array) => {
+			return (
+				project !== null &&
+				array.findIndex(p => p?.uid === project?.uid) === index
+			)
+		}),
+)
 
 const selectedViewMode = ref(1)
 
