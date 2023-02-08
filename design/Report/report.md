@@ -1,5 +1,4 @@
 ---
-
 title: Team 07 Report
 subtitle: Part II
 author:
@@ -50,7 +49,14 @@ dff
 ## GUI (Graphical user interface) design
 
 <!-- Talk about the user interface design. Why is it designed in the way that it is (e.g., colour scheme, layout, navigation etc.)? How does it meet the requirements?  -->
-stuff
+The GUI (graphical user interface) was designed to meet the clients at Make-It-All requirements. In this light, the system follows a yellow, grey and black colour scheme. Furthermore, many interface design decisions have been made after conversations on the online forums. For example, the Kanban style of displaying tasks was a requirement set out by the client which influenced the way that the UI (user interface) was designed. The UI incorporates modern HCI (Human Computer Interaction) and is designed with usability in mind. 
+
+Here are the guiding principles which were kept in consideration when completing the design of the system:
+-	A colour scheme which is easy to read (a strong contrast in colour between the background colour and the text, a font which is readable and colours which are still readable for people with colour blindness). This helps make the system easier and faster to use.
+-	A simple UI which isn’t overcrowded and is simple to follow. This helps the usability of the system as it means that no negative functionality is provided to the user (negative functionality is functionality which takes away from the user experience – putting the system further away from the user’s needs). The importance of a simple UI is reiterated by the requirements from the client (through the online forums).
+-	Careful attention paid to the default options which the UI incorporates (e.g., defaulting the knowledge management search function to search for all topics). By using common default options, the system can become more efficient and save the user time. 
+-	A consistent design throughout the whole system. Consistency in design helps the user feel more familiar with the system and makes the software more intuitive to new users. 
+
 
 
 ## Changes from prototype
@@ -91,6 +97,6 @@ Whatever..
 asdf
 
 ## Documentation, debugging and testing
-<!-- Breifly talk about the need for documentation for maintance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements?-->
+<!-- Breifly talk about the need for documentation for maintance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements? Talk about lighthouse (link with GUI section - testing usability)?-->
 
 asdf
