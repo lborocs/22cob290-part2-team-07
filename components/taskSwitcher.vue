@@ -214,6 +214,9 @@ header {
 		padding: 0.5rem;
 		border-radius: 0.5rem;
 	}
+	textarea {
+		resize: vertical;
+	}
 }
 
 .center-button {
