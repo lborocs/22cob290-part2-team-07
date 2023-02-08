@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps<{
-	modalActive: Boolean
-}>()
+defineProps<{}>()
 </script>
 
 <template>
@@ -22,19 +20,30 @@ defineProps<{
 	background: white;
 	border-radius: 0.625rem;
 	text-align: center;
+	position: fixed;
 }
+
 .backdrop {
-	top: 0;
 	position: absolute;
-	background: rgba($color: black, $alpha: 0.5);
-	width: 100%;
-	height: 100%;
+	background-color: #242424;
+	top: 0;
 	left: 0;
-	z-index: 10;
+	right: 0;
+	bottom: 0;
+	z-index: 5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+::backdrop {
+	background-color: black;
 }
 
 .close-btn {
 	float: right;
 	cursor: pointer;
+	border: none;
+	background-color: none;
 }
 </style>

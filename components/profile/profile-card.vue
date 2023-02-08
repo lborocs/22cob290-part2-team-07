@@ -48,11 +48,9 @@ import { ref } from "vue"
 const currentUsername = useCurrentUser().value!.name
 const currentUserRank = rankTitle()
 const modalActive = ref(false)
-console.log(modalActive)
-// const toggleModal = () => {
-// 	modalActive = !modalActive
-// 	console.log(modalActive)
-// }
+const passModalActive = ref(false)
+const invModalActive = ref(false)
+const logModalActive = ref(false)
 defineProps<{}>()
 </script>
 
@@ -117,21 +115,19 @@ defineProps<{}>()
 				<label for="change-password-btn" class="label-subtext"
 					>Change your password to a more memorable one</label
 				>
-				<button @click="togglePassword" id="change-password-btn">
+				<button @click="passModalActive = true" id="change-password-btn">
 					<p>Change Password</p>
 				</button>
 			</div>
-			<Moodal v-show="passIsShown" class="align modal">
-				<template #close-btn>
-					<div class="close-btn" @click="togglePassword">&#10006;</div>
-				</template>
-				<template #popup-title>
+			<Moodal
+				v-show="passModalActive"
+				@close="passModalActive = !passModalActive"
+				class="align modal"
+			>
+				<template #content>
 					<h2>Change Password</h2>
-				</template>
-				<template #popup-text>
 					<p>Change your password to a more memorable one</p>
-				</template>
-				<template #popup-buttons>
+
 					<button class="upload-button spacing">Change Password</button>
 					<button class="upload-button spacing">Save</button>
 				</template>
@@ -151,41 +147,35 @@ defineProps<{}>()
 				<label for="invite-btn" class="label-subtext"
 					>Invite your co-workers who have not yet signed up</label
 				>
-				<button @click="toggleInv" id="invite-btn">
+				<button @click="invModalActive = true" id="invite-btn">
 					<p>Invite</p>
 				</button>
 			</div>
-			<Moodal v-show="invIsShown" class="align modal">
-				<template #close-btn>
-					<div class="close-btn" @click="toggleInv">&#10006;</div>
-				</template>
-				<template #popup-title>
+			<Moodal
+				v-show="invModalActive"
+				@close="invModalActive = !invModalActive"
+				class="align modal"
+			>
+				<template #content>
 					<h2>Invite User</h2>
-				</template>
-				<template #popup-text>
 					<p>Invite a colleague to the Make-It-All Portal</p>
-				</template>
-				<template #popup-buttons>
 					<button class="upload-button">Invite</button>
 				</template>
 			</Moodal>
 			<div class="wrapper-logout">
 				<hr />
-				<button @click="toggleLogout" class="logout-btn" id="logout">
+				<button @click="logModalActive = true" class="logout-btn" id="logout">
 					<p>Logout</p>
 				</button>
 			</div>
-			<Moodal v-show="logout" class="align modal">
-				<template #close-btn>
-					<div class="close-btn" @click="toggleLogout">&#10006;</div>
-				</template>
-				<template #popup-title>
+			<Moodal
+				v-show="logModalActive"
+				@close="logModalActive = !logModalActive"
+				class="align modal"
+			>
+				<template #content>
 					<h2>Logout</h2>
-				</template>
-				<template #popup-text>
 					<p>Are you sure you want to logout?</p>
-				</template>
-				<template #popup-buttons>
 					<button class="logout-button">Logout</button>
 				</template>
 			</Moodal>
