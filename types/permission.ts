@@ -1,5 +1,5 @@
 import { User } from ".prisma/client"
-import assert from "assert"
+import { abort } from "process"
 
 export enum Permission {
 	NONE = 0, // No permissions
@@ -25,19 +25,16 @@ export enum Permission {
 	Task_Assign = 1 << 13, // Add users to a Task.
 	Task_Status = 1 << 14, // Edit the Status of a Task that you are not assigned to.
 
-	ALL = ~(~0 << 15), // Every permission.
+	ALL = ~(~0 << 15) & ~Administrator, // Every permission. EXCEPT Administrator
+	ALL_ADMIN = ALL | Administrator, // Every permission
 }
-assert(
-	Permission.ALL <= ~(~0 << 31),
-	"The maximum size of the bitfield should be 32 bits",
-)
+if (!(Permission.ALL_ADMIN <= ~(~0 << 31))) {
+	console.error("The maximum size of the bitfield should be 32 bits")
+}
 
 export interface PermissionGroup {
 	allow: number | Permission
 	deny: number | Permission
-}
-export interface PermissionRoleGroup extends PermissionGroup {
-	rank: number
 }
 
 function combinePermissions(
@@ -54,28 +51,19 @@ function combinePermissions(
 	permissions |= allow
 	return permissions
 }
-function combinePermissionRoles(
-	permissions: Permission,
-	overrides: PermissionRoleGroup[],
-) {
-	return combinePermissions(
-		permissions,
-		overrides.sort((a, b) => a.rank - b.rank),
-	)
-}
 
 export function permissions(
-	roles: PermissionRoleGroup[],
-	roleOverrides: PermissionRoleGroup[],
-	userOverride: PermissionGroup,
+	roles: PermissionGroup[],
+	roleOverrides?: PermissionGroup[],
+	userOverrides?: PermissionGroup[],
 ): Permission {
 	let permissions = Permission.NONE
-	permissions = combinePermissionRoles(permissions, roles)
-	if (has(permissions, Permission.Administrator)) return Permission.ALL
+	permissions = combinePermissions(permissions, roles)
+	if (has(permissions, Permission.Administrator)) return Permission.ALL_ADMIN
 	if (roleOverrides !== undefined)
-		permissions = combinePermissionRoles(permissions, roleOverrides)
-	if (userOverride !== undefined)
-		permissions = combinePermissions(permissions, [userOverride])
+		permissions = combinePermissions(permissions, roleOverrides)
+	if (userOverrides !== undefined)
+		permissions = combinePermissions(permissions, userOverrides)
 	return permissions
 }
 

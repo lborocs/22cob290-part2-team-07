@@ -41,7 +41,7 @@ export default defineEventHandler(async event => {
 			data: {
 				rank: 0,
 				name: "Admin",
-				allow: Permission.Administrator & Permission.ALL,
+				allow: Permission.ALL_ADMIN,
 				deny: Permission.NONE,
 			},
 		}),
