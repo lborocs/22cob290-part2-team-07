@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { User } from ".prisma/client"
+import { optionalMemberExpression } from "@babel/types"
 
 definePageMeta({
 	name: "Project",
@@ -22,6 +23,22 @@ const projectMembers = $computed(() => {
 	}
 	return members
 })
+
+const totalHoursByMember = $computed(() => {
+	const hoursByMember: { [key: string]: number } = {}
+	for (const task of project.value!.tasks) {
+		for (const member of projectMembers) {
+			if (task.assignees.includes(member)) {
+				if (hoursByMember.hasOwnProperty(member.name)) {
+					hoursByMember[member.name] += task.workerHours
+				} else {
+					hoursByMember[member.name] = task.workerHours
+				}
+			}
+		}
+	}
+	return hoursByMember
+})
 // Display days left until project deadline
 function dateDiffInDays(a: any, b: any) {
 	const _MS_PER_DAY = 1000 * 60 * 60 * 24
@@ -31,6 +48,8 @@ function dateDiffInDays(a: any, b: any) {
 
 	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
+
+const selectedUserViewMode = ref(1)
 </script>
 
 <template>
@@ -68,13 +87,23 @@ function dateDiffInDays(a: any, b: any) {
 
 	<TaskSwitcher :tasks="project!.tasks" />
 
-	<section class="card wrap-grid">
+	<section class="card">
 		<h2 class="sr-only">Project Members</h2>
-		<ProjectMember
-			v-for="member in projectMembers"
-			:key="member.uid"
-			:user="member"
-		/>
+		<div class="right-buttons">
+			<ButtonSwitch
+				option1="Members"
+				option2="Chart view"
+				v-model:selected="selectedUserViewMode"
+			/>
+		</div>
+		<div v-if="selectedUserViewMode == 1" class="wrap-grid">
+			<ProjectMember
+				v-for="member in projectMembers"
+				:key="member.uid"
+				:user="member"
+			/>
+		</div>
+		<ProjectChart v-else :userHours="totalHoursByMember" />
 	</section>
 </template>
 
@@ -134,5 +163,10 @@ function dateDiffInDays(a: any, b: any) {
 
 .no-margin {
 	margin: 1rem 0 0 0;
+}
+.right-buttons {
+	@extend %flex-row, %flex-centre;
+	justify-content: flex-end;
+	margin: 0.5rem 0;
 }
 </style>
