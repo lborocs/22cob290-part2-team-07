@@ -44,7 +44,7 @@ asdf
 
 ## Prisma and database design
 
-<!-- Talk about Prisma in more detail. How did we use Prisma in our system? What were the benefits provided to our system? Also need to talk about database design. Why is the database designed the way it is? Are there any limitations to the design? How does the database design allow us to meet the requirements?-->
+<!-- Talk about Prisma in more detail. How did we use Prisma in our system? What were the benefits provided to our system? Also need to talk about database design. Why is the database designed the way it is? Are there any limitations to the design? How does the database design allow us to meet the requirements? A graphic for the database design might be nice.-->
 dff
 
 ## GUI (Graphical user interface) design
@@ -56,11 +56,32 @@ stuff
 ## Changes from prototype
 
 <!-- Talk about feedback given and reasons for implementing these changes. How will they affect the system? Mention that by implementing this feedback, the requirements will be better met.-->
-asdf
+During our presentation to the clients, we received feedback on how our prototype could be improved to better meet the requirements. In order to make a better system for the client, we have implemented the majority of their feedback. See table 1 for details. 
+
+(Table 1)
+| System page | Feedback | Implemented (Yes/No) |
+| ----------------- | ------------ | ------------------------------- |
+| Dashboard | Needs to be clear where each task has originated from | XXX |
+| Dashboard | Team leaders and managers should be part of one or more teams | XXX | 
+| Dashboard | Could have functionality to swap between Kanban view and task view | XXX |
+| Project | Calculation of progress should be based on worker-hours of tasks | XXX |
+| Project | The days remaining until the project deadline should exclude holidays and weekends | XXX |
+| Project | Should be able to change the team leader of a project | XXX |
+| Project | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project | XXX |
+| Project | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task | XXX |
+| Project | Could have functionality to show more information about an employee when their icon is hovered over| XXX |
+| Knowledge management | FAQ page is needed | XXX |
+| Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics, who can create posts within a topic and who can comment on the FAQ | XXX |
+| Knowledge management | Functionality to upload images to posts is needed | XXX |
+| Knowledge management | Could search for posts by user | XXX |
+| Not page specific | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page| XXX |
+| Not page specific | The navigation bar could show text on hover | XXX |
+
 
 # System Implementation
 
 ## Planning and prioritisation of tasks
+<!-- Talk about Github Kanban board (potentially add a screenshot of it?). How did it make us more productive? How did it help us prioritise our work?-->
 
 Whatever..
 
@@ -70,6 +91,6 @@ Whatever..
 asdf
 
 ## Documentation, debugging and testing
-<!-- Breifly talk about the need for doucmentation for maintance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world).-->
+<!-- Breifly talk about the need for documentation for maintance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements?-->
 
 asdf
