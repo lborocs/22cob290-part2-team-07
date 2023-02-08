@@ -89,7 +89,10 @@ During our presentation to the clients, we received feedback on how our prototyp
 ## Planning and prioritisation of tasks
 <!-- Talk about Github Kanban board (potentially add a screenshot of it?). How did it make us more productive? How did it help us prioritise our work?-->
 
-Whatever..
+To implement the system, we first had to use reductionism to break the design down into much smaller tasks. We then needed a method to keep track of the implementation of these tasks. If only we could find a good piece of productivity management software!
+
+Jokes aside, in order to implement the system in the most efficient manner, we used a Kanban board of our own on GitHub. Therefore, we could plan the order of the tasks which would be completed and the priority of each task. The Kanban board also allowed us to assign each task to a team member and track the progression of each task. This form of productivity management allowed us to build the software in a systematic manner and ensured that we didn’t forget any tasks. Finally, and most importantly, the Kanban board allowed us to focus on the continuous delivery of the system.
+
 
 ## Bespoke vs COTS
 <!-- Briefly justify reasoning for bespoke devlopment. Talk in greater depth how requirements can only be met through bespoke development.-->
