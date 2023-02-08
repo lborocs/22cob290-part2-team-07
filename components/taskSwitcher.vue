@@ -145,7 +145,13 @@
 			<section class="filter">
 				<h2 class="filter-header">By Project</h2>
 				<div class="cb-wrapper">
-					<input type="checkbox" name="personal" id="filter-personal" />
+					<input
+						type="checkbox"
+						name="personal"
+						id="filter-personal"
+						:checked="filterProjectIds.includes(null)"
+						@change="toggleProjectFilter(null)"
+					/>
 					<label for="filter-personal">Personal Tasks</label>
 				</div>
 				<div
@@ -157,6 +163,8 @@
 						type="checkbox"
 						name="personal"
 						:id="`filter-project-${project?.uid}`"
+						:checked="filterProjectIds.includes(project?.uid)"
+						@change="toggleProjectFilter(project?.uid)"
 					/>
 					<label :for="`filter-project-${project?.uid}`">
 						{{ project?.name }}
@@ -310,21 +318,43 @@ const filterCategories = ref({
 	Done: true,
 })
 
+const filterProjectIds = ref<(number | undefined | null)[]>(
+	visibleProjects.value.map(p => p?.uid),
+)
+filterProjectIds.value.push(null)
+
 function applyFilter() {
-	filteredTasks.value = p.tasks.filter(task => {
-		return task.status == TaskStatus.Todo && filterCategories.value.ToDo
-			? true
-			: task.status == TaskStatus.InProgress &&
-			  filterCategories.value.InProgress
-			? true
-			: task.status == TaskStatus.Done && filterCategories.value.Done
-			? true
-			: false
-	})
+	filteredTasks.value = p.tasks
+		.filter(task => {
+			return task.status == TaskStatus.Todo && filterCategories.value.ToDo
+				? true
+				: task.status == TaskStatus.InProgress &&
+				  filterCategories.value.InProgress
+				? true
+				: task.status == TaskStatus.Done && filterCategories.value.Done
+				? true
+				: false
+		})
+		.filter(task => {
+			return filterProjectIds.value.includes(task.project?.uid)
+		})
+	console.log(filteredTasks.value)
 }
 
 function clearFilter() {
 	filteredTasks.value = p.tasks
+}
+
+function toggleProjectFilter(projectId: number | undefined | null) {
+	if (filterProjectIds.value.includes(projectId)) {
+		filterProjectIds.value = filterProjectIds.value.splice(
+			filterProjectIds.value.indexOf(projectId),
+			1,
+		)
+	} else {
+		filterProjectIds.value.push(projectId)
+	}
+	console.log(filterProjectIds.value)
 }
 
 async function addTask() {
