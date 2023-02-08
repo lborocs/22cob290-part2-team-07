@@ -1,4 +1,5 @@
 node_modules
+package-lock.json
 *.log*
 .nuxt
 .nitro
@@ -6,7 +7,7 @@ node_modules
 .output
 .env
 dist
-package-lock.json
+.DS_Store
 dev
 cdn
 *.pdf
