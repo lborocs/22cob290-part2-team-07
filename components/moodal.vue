@@ -20,12 +20,11 @@ defineProps<{}>()
 	background: white;
 	border-radius: 0.625rem;
 	text-align: center;
-	position: fixed;
 }
 
 .backdrop {
 	position: absolute;
-	background-color: #242424;
+	background-color: rgba(111, 111, 111, 0.8);
 	top: 0;
 	left: 0;
 	right: 0;
@@ -34,6 +33,7 @@ defineProps<{}>()
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0;
 }
 
 ::backdrop {
@@ -44,6 +44,6 @@ defineProps<{}>()
 	float: right;
 	cursor: pointer;
 	border: none;
-	background-color: none;
+	background-color: transparent;
 }
 </style>

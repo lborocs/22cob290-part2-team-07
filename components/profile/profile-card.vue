@@ -47,10 +47,6 @@ import { rankTitle } from "~~/types/user"
 import { ref } from "vue"
 const currentUsername = useCurrentUser().value!.name
 const currentUserRank = rankTitle()
-const modalActive = ref(false)
-const passModalActive = ref(false)
-const invModalActive = ref(false)
-const logModalActive = ref(false)
 defineProps<{}>()
 </script>
 
@@ -69,34 +65,8 @@ defineProps<{}>()
 				alt=""
 				class="profile-pic"
 			/>
+			<slot name="button"></slot>
 		</div>
-		<Moodal
-			v-show="modalActive"
-			@close="modalActive = !modalActive"
-			class="align modal"
-		>
-			<template #content>
-				<h2>Upload Photo</h2>
-				<p>Upload a photo of your choice</p>
-				<input
-					type="file"
-					accept="image/*"
-					ref="fileInput"
-					@change="uploadPhoto"
-					class="hidden"
-				/>
-				<button @click="" class="upload-button spacing">Upload photo</button>
-				<button class="upload-button spacing" @click="toggleUpload">
-					Save
-				</button>
-			</template>
-		</Moodal>
-		<div class="card-button-wrapper">
-			<button @click="modalActive = true" id="card-upload-button">
-				<p>Upload photo</p>
-			</button>
-		</div>
-
 		<div class="card-customisation-wrapper">
 			<div class="wrapper-appearance">
 				<hr class="solid" />
@@ -115,23 +85,8 @@ defineProps<{}>()
 				<label for="change-password-btn" class="label-subtext"
 					>Change your password to a more memorable one</label
 				>
-				<button @click="passModalActive = true" id="change-password-btn">
-					<p>Change Password</p>
-				</button>
+				<slot name="password"></slot>
 			</div>
-			<Moodal
-				v-show="passModalActive"
-				@close="passModalActive = !passModalActive"
-				class="align modal"
-			>
-				<template #content>
-					<h2>Change Password</h2>
-					<p>Change your password to a more memorable one</p>
-
-					<button class="upload-button spacing">Change Password</button>
-					<button class="upload-button spacing">Save</button>
-				</template>
-			</Moodal>
 			<div class="wrapper-email">
 				<hr class="solid" />
 				<h1 class="bold-title">My Email</h1>
@@ -147,38 +102,12 @@ defineProps<{}>()
 				<label for="invite-btn" class="label-subtext"
 					>Invite your co-workers who have not yet signed up</label
 				>
-				<button @click="invModalActive = true" id="invite-btn">
-					<p>Invite</p>
-				</button>
+				<slot name="invite"></slot>
 			</div>
-			<Moodal
-				v-show="invModalActive"
-				@close="invModalActive = !invModalActive"
-				class="align modal"
-			>
-				<template #content>
-					<h2>Invite User</h2>
-					<p>Invite a colleague to the Make-It-All Portal</p>
-					<button class="upload-button">Invite</button>
-				</template>
-			</Moodal>
 			<div class="wrapper-logout">
 				<hr />
-				<button @click="logModalActive = true" class="logout-btn" id="logout">
-					<p>Logout</p>
-				</button>
+				<slot name="logout"></slot>
 			</div>
-			<Moodal
-				v-show="logModalActive"
-				@close="logModalActive = !logModalActive"
-				class="align modal"
-			>
-				<template #content>
-					<h2>Logout</h2>
-					<p>Are you sure you want to logout?</p>
-					<button class="logout-button">Logout</button>
-				</template>
-			</Moodal>
 		</div>
 	</div>
 </template>
