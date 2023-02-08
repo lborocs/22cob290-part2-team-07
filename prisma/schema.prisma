@@ -14,15 +14,20 @@ model User {
   uid              String                 @id @default(uuid())
   email            String                 @unique
   name             String
-  password         String
-  role             Role                   @relation(fields: [roleUid], references: [uid])
-  roleUid          Int
+  roles            Role[]
+  secure           Secure?
   leads            Project[]
   assigned         Task[]
   posts            Post[]
   overridesTopic   POverrideUserTopic[]
   overridesPost    POverrideUserPost[]
   overridesProject POverrideUserProject[]
+}
+
+model Secure {
+  user     User   @relation(fields: [userUid], references: [uid])
+  userUid  String @id
+  password String
 }
 
 model Task {
