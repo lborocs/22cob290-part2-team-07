@@ -29,6 +29,7 @@
 		/>
 		<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
 	</section>
+
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
 		<p>{{ currentTask.description }}</p>
 		<Button icon="material-symbols:add" class="center-button">
@@ -76,6 +77,19 @@
 			></textarea>
 			<label for="task-hours">Estimated Worker Hours:</label>
 			<input type="number" name="task-hours" id="task-hours" ref="taskHours" />
+			<select name="project" id="task-project">
+				<option :value="null" disabled selected hidden>
+					Select project to add task to
+				</option>
+				<option value="personal">Personal Task</option>
+				<option
+					v-for="project in assignableProjects"
+					:key="project.uid"
+					:value="project.uid"
+				>
+					{{ project.name }}
+				</option>
+			</select>
 		</form>
 		<ModalFooter>
 			<Button
@@ -171,7 +185,7 @@ header {
 
 <script setup lang="ts">
 import { Subtask } from ".prisma/client"
-import { Task } from "@prisma/client"
+import { Project, Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
@@ -196,6 +210,10 @@ const modalTaskDetails = useModal()
 
 // the task for display in the modal
 const currentTask = ref(p.tasks[0])
+
+// the projects that new tasks can be assigned to
+const assignableProjects = ref<Project[]>([])
+getAssignableProjects()
 
 let currentTaskIndex = 0
 
@@ -273,5 +291,10 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		console.log(res.newParentStatus)
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
+}
+
+async function getAssignableProjects() {
+	const res = await $fetch("/api/projects")
+	assignableProjects.value = res
 }
 </script>
