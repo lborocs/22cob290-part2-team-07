@@ -97,7 +97,12 @@ Jokes aside, in order to implement the system in the most efficient manner, we u
 ## Bespoke vs COTS
 <!-- Briefly justify reasoning for bespoke devlopment. Talk in greater depth how requirements can only be met through bespoke development.-->
 
-asdf
+Bespoke development is where software is developed completely from scratch and aims to meet the requirements of the users who the software is being developed for. COTS (commercial off the shelf) development, on the other hand, is where software is generic and aims to meet the requirements of a large group of different users. For this project, we have used a bespoke development strategy. Although COTS is far less expensive, it doesn’t allow for custom functionality/requirements. In this case, the client has many unique requirements which couldn’t be implemented using COTS software. 
+
+The bespoke development process is developed by first gathering requirements. Next the software must be designed and the implemented. Penultimately, the software must be validated. This is the process whereby the developers ensure that the software meets the needs of the stakeholders. Finally, the software goes into the evolution stage of the software process. This is where the software is updated as the world changes. We have not made it to the evolution stage yet.
+
+Throughout our bespoke development process, we’ve used the XXX development methodology.
+
 
 ## Documentation, debugging and testing
 <!-- Breifly talk about the need for documentation for maintance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements? Talk about lighthouse (link with GUI section - testing usability)?-->
