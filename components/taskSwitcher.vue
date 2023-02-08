@@ -161,6 +161,16 @@ header {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	input,
+	select,
+	textarea {
+		border: none;
+		border-bottom: 0.1rem solid var(--colour-accent);
+		font-size: 1rem;
+		accent-color: var(--colour-accent);
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+	}
 }
 
 .center-button {
