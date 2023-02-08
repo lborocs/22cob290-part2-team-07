@@ -13,11 +13,15 @@ export default defineEventHandler(async event => {
 		console.table(details)
 		console.log(typeof details.workerHours, typeof +details.workerHours)
 
+		const deadlineDate = new Date(details.deadline?.toString() || "")
+
 		const task = await prisma.task.create({
 			data: {
 				name: details.name,
 				description: details.description,
 				workerHours: +details.workerHours,
+				// deadline: deadlineDate,
+				project: { connect: { uid: +details.projectId! } },
 			},
 		})
 		console.log("Task created - ", task)

@@ -77,11 +77,11 @@
 			></textarea>
 			<label for="task-hours">Estimated Worker Hours:</label>
 			<input type="number" name="task-hours" id="task-hours" ref="taskHours" />
-			<select name="project" id="task-project">
-				<option :value="null" disabled selected hidden>
+			<select name="project" id="task-project" ref="taskProject">
+				<option :value="-1" disabled selected hidden>
 					Select project to add task to
 				</option>
-				<option value="personal">Personal Task</option>
+				<option :value="null">Personal Task</option>
 				<option
 					v-for="project in assignableProjects"
 					:key="project.uid"
@@ -90,6 +90,13 @@
 					{{ project.name }}
 				</option>
 			</select>
+			<label for="task-deadline">Deadline:</label>
+			<input
+				type="date"
+				name="task-deadline"
+				id="task-deadline"
+				ref="taskDeadline"
+			/>
 		</form>
 		<ModalFooter>
 			<Button
@@ -268,6 +275,8 @@ const selectedViewMode = ref(1)
 const taskName = ref<HTMLInputElement>()
 const taskDescription = ref<HTMLTextAreaElement>()
 const taskHours = ref<HTMLInputElement>()
+const taskProject = ref<HTMLSelectElement>()
+const taskDeadline = ref<HTMLInputElement>()
 
 const modalFilter = useModal()
 
@@ -319,7 +328,13 @@ function clearFilter() {
 }
 
 async function addTask() {
-	console.log(taskName.value, taskDescription.value, taskHours.value)
+	console.log(
+		taskName.value?.value,
+		taskDescription.value?.value,
+		taskHours.value?.value,
+		taskProject.value?.value,
+		taskDeadline.value?.value,
+	)
 	const hours = taskHours.value?.value as unknown as number
 
 	const body = {
@@ -327,6 +342,8 @@ async function addTask() {
 			name: taskName.value?.value,
 			description: taskDescription.value?.value,
 			workerHours: hours,
+			deadline: taskDeadline.value?.value,
+			projectId: taskProject.value?.value as unknown as number,
 		},
 	}
 	console.log(body)
