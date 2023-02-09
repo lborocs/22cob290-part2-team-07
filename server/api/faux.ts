@@ -1,5 +1,6 @@
 import prisma from "@/prisma"
 import { TaskStatus } from "@/types/task"
+import { Permission } from "@/types/permission"
 import fs from "node:fs/promises"
 import path from "node:path"
 
@@ -9,6 +10,13 @@ export default defineEventHandler(async event => {
 	const query = getQuery(event)
 	if (query.refresh !== undefined) {
 		await prisma.$transaction([
+			prisma.pOverrideRolePost.deleteMany(),
+			prisma.pOverrideUserPost.deleteMany(),
+			prisma.pOverrideRoleTopic.deleteMany(),
+			prisma.pOverrideUserProject.deleteMany(),
+			prisma.pOverrideRoleProject.deleteMany(),
+			prisma.pOverrideUserProject.deleteMany(),
+
 			prisma.subtask.deleteMany(),
 			prisma.task.deleteMany(),
 			prisma.project.deleteMany(),
@@ -16,7 +24,9 @@ export default defineEventHandler(async event => {
 			prisma.asset.deleteMany(),
 			prisma.topic.deleteMany(),
 			prisma.client.deleteMany(),
+			prisma.secure.deleteMany(),
 			prisma.user.deleteMany(),
+			prisma.role.deleteMany(),
 		])
 
 		const promises = []
@@ -26,23 +36,79 @@ export default defineEventHandler(async event => {
 		await Promise.all(promises)
 	}
 
+	const roles = await prisma.$transaction([
+		prisma.role.create({
+			data: {
+				rank: 0,
+				name: "Admin",
+				allow: Permission.ALL_ADMIN,
+				deny: Permission.NONE,
+			},
+		}),
+		prisma.role.create({
+			data: {
+				rank: 1,
+				name: "Manager",
+				allow: Permission.ALL,
+				deny: Permission.NONE,
+			},
+		}),
+		prisma.role.create({
+			data: {
+				rank: 2,
+				name: "Employee",
+				allow:
+					Permission.Post_Read |
+					Permission.Post_Create |
+					Permission.Post_Edit |
+					Permission.Task_Status,
+				deny: Permission.NONE,
+			},
+		}),
+	])
+
 	if ((await prisma.user.count()) > 0) return []
 	const users = await prisma.$transaction([
 		// Users
 		prisma.user.create({
-			data: { email: "king", name: "Neumann", password: "pking" },
+			data: {
+				email: "king",
+				name: "Neumann",
+				secure: { create: { password: "pking" } },
+				roles: { connect: { uid: roles[0].uid } },
+			},
 		}),
 		prisma.user.create({
-			data: { email: "queen", name: "Queen", password: "pqueen" },
+			data: {
+				email: "queen",
+				name: "Queen",
+				secure: { create: { password: "pqueen" } },
+				roles: { connect: { uid: roles[1].uid } },
+			},
 		}),
 		prisma.user.create({
-			data: { email: "dilip", name: "Dilip", password: "pdilip" },
+			data: {
+				email: "dilip",
+				name: "Dilip",
+				secure: { create: { password: "pdilip" } },
+				roles: { connect: { uid: roles[2].uid } },
+			},
 		}),
 		prisma.user.create({
-			data: { email: "emma", name: "Emma", password: "pemma" },
+			data: {
+				email: "emma",
+				name: "Emma",
+				secure: { create: { password: "pemma" } },
+				roles: { connect: { uid: roles[2].uid } },
+			},
 		}),
 		prisma.user.create({
-			data: { email: "e", name: "E", password: "pe" },
+			data: {
+				email: "e",
+				name: "E",
+				secure: { create: { password: "pe" } },
+				roles: { connect: { uid: roles[2].uid } },
+			},
 		}),
 	])
 
@@ -192,6 +258,7 @@ export default defineEventHandler(async event => {
 	])
 
 	return {
+		roles,
 		users,
 		faq,
 		topics,

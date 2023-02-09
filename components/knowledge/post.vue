@@ -1,14 +1,29 @@
 <script setup lang="ts">
-import { Post, Topic, User } from ".prisma/client"
-import { rankTitle } from "@/types/user"
+import { rolesTitle } from "@/types/user"
+import {
+	has,
+	Permission,
+	permissions,
+	permissionsChain,
+} from "@/types/permission"
 
 const { post } = defineProps<{
-	post: Post & {
-		topic: Topic
-		owner: User
-	}
+	post: PostR
 }>()
 const route = useRoute()
+const currentUser = useCurrentUser()
+
+const userPermissions = $computed(() =>
+	permissionsChain(
+		permissions(
+			currentUser.value!.roles,
+			post.topic.overrideRoles,
+			post.topic.overrideUsers,
+		),
+		post.overrideRoles,
+		post.overrideUsers,
+	),
+)
 
 let markdownLocal = ref(post.markdown)
 watchEffect(() => {
@@ -16,8 +31,11 @@ watchEffect(() => {
 })
 
 // If the current user has access to edit the post
-const editor = true
+const editor = $computed(() =>
+	has(userPermissions, Permission.Post_Read | Permission.Post_Edit),
+)
 const editing = $computed(() => route.path.endsWith("edit"))
+
 let preview = $ref(false)
 
 function togglePreview() {
@@ -26,7 +44,7 @@ function togglePreview() {
 
 function saveEdit() {
 	post.markdown = markdownLocal.value.trim()
-	// Update DB
+	// TODO: Update DB
 }
 </script>
 
@@ -37,7 +55,7 @@ function saveEdit() {
 				<UserIcon class="icon" v-bind="post.owner" :size="50" />
 				<span>Posted By</span>
 				<UserName v-bind="post.owner" />
-				<span>{{ rankTitle(post.owner.rank) }}</span>
+				<span>{{ rolesTitle(post.owner.roles) }}</span>
 			</div>
 		</template>
 		<template #header>
