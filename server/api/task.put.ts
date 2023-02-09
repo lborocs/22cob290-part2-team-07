@@ -15,10 +15,6 @@ export default defineEventHandler(async event => {
 
 		const deadlineDate = new Date(details.deadline?.toString() || "")
 
-		const idConnectQuery = details.assignees?.map(assignee => {
-			return { id: +assignee }
-		})
-
 		const task = await prisma.task.create({
 			data: {
 				name: details.name,
