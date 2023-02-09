@@ -20,6 +20,7 @@
 	img:not(:last-child),
 	.more-assignees {
 		margin-left: -1.5rem;
+		aspect-ratio: 1;
 	}
 	.more-assignees {
 		display: block;
