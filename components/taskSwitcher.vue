@@ -116,7 +116,11 @@
 				ref="taskDeadline"
 				@change="onNewTaskChange"
 			/>
-			<UserSelect :users="assignableUsers" @change="taskAssignees = $event" />
+			<UserSelect
+				id="new-task-users"
+				:users="assignableUsers"
+				@change="taskAssignees = $event"
+			/>
 		</form>
 		<ModalFooter>
 			<Button
@@ -171,8 +175,8 @@
 						type="checkbox"
 						name="personal"
 						id="filter-personal"
-						:checked="filterProjectIds.includes(null)"
-						@change="toggleProjectFilter(null)"
+						:checked="filterProjects.get(null)"
+						@change="filterProjects.set(null, !filterProjects.get(null))"
 					/>
 					<label for="filter-personal">Personal Tasks</label>
 				</div>
@@ -185,8 +189,13 @@
 						type="checkbox"
 						name="personal"
 						:id="`filter-project-${project?.uid}`"
-						:checked="filterProjectIds.includes(project?.uid)"
-						@change="toggleProjectFilter(project?.uid)"
+						:checked="filterProjects.get(project?.uid)"
+						@change="
+							filterProjects.set(
+								project?.uid,
+								!filterProjects.get(project?.uid),
+							)
+						"
 					/>
 					<label :for="`filter-project-${project?.uid}`">
 						{{ project?.name }}
@@ -195,7 +204,11 @@
 			</section>
 			<section class="filter">
 				<h2 class="filter-header">By Assignees</h2>
-				<UserSelect :users="assignableUsers" />
+				<UserSelect
+					id="filter-users"
+					:users="assignableUsers"
+					v-model:selection="filteredAssignees"
+				/>
 			</section>
 		</div>
 		<ModalFooter>
@@ -356,14 +369,23 @@ const filterCategories = ref({
 	Done: true,
 })
 
-const filterProjectIds = ref<(number | undefined | null)[]>(
-	visibleProjects.value.map(p => p?.uid),
+const filterProjects = ref<Map<number | undefined | null, boolean>>(
+	new Map<number | undefined | null, boolean>(),
 )
-filterProjectIds.value.push(null)
 
-const filterUserIds = ref<string[]>([])
+// personal tasks
+filterProjects.value.set(null, true)
+
+// all projects
+for (const project of visibleProjects.value) {
+	filterProjects.value.set(project?.uid, true)
+}
+
+const filteredAssignees = ref<User[]>([])
 
 function applyFilter() {
+	console.log(p.tasks)
+
 	filteredTasks.value = p.tasks
 		.filter(task => {
 			return task.status == TaskStatus.Todo && filterCategories.value.ToDo
@@ -376,25 +398,21 @@ function applyFilter() {
 				: false
 		})
 		.filter(task => {
-			return filterProjectIds.value.includes(task.project?.uid)
+			return filterProjects.value.get(task.projectId)
+		})
+		.filter(task => {
+			return (
+				filteredAssignees.value.length == 0 ||
+				filteredAssignees.value.some(user =>
+					task.assignees?.some(assignee => assignee.uid == user.uid),
+				)
+			)
 		})
 	console.log(filteredTasks.value)
 }
 
 function clearFilter() {
 	filteredTasks.value = p.tasks
-}
-
-function toggleProjectFilter(projectId: number | undefined | null) {
-	if (filterProjectIds.value.includes(projectId)) {
-		filterProjectIds.value = filterProjectIds.value.splice(
-			filterProjectIds.value.indexOf(projectId),
-			1,
-		)
-	} else {
-		filterProjectIds.value.push(projectId)
-	}
-	console.log(filterProjectIds.value)
 }
 
 async function addTask() {

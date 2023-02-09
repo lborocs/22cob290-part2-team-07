@@ -4,10 +4,10 @@
 			<input
 				type="checkbox"
 				:name="`select-${user.uid}`"
-				:id="`select-${user.uid}`"
+				:id="`${id}-select-${user.uid}`"
 				@change="onChange(user.uid, $event)"
 			/>
-			<label class="flex-row gap-6 user" :for="`select-${user.uid}`">
+			<label class="flex-row gap-6 user" :for="`${id}-select-${user.uid}`">
 				<UserIcon
 					:email="user.email"
 					:name="user.name"
@@ -44,28 +44,46 @@ input[type="checkbox"] {
 </style>
 
 <script setup lang="ts">
-// import User type
 import { defineProps, PropType } from "vue"
 import { User } from "@prisma/client"
 
 const props = defineProps({
+	id: {
+		type: String,
+		required: true,
+	},
 	users: {
 		type: Array as PropType<User[]>,
 		required: true,
 	},
+	selection: {
+		type: Array as PropType<User[]>,
+		required: false,
+		default: () => [],
+	},
 })
 
-const emit = defineEmits(["change"])
+const emit = defineEmits(["change", "update:selection"])
 
-const selectedUsers = ref<number[]>([])
+// const selectedUsers = ref<number[]>([])
 
-function onChange(uid: number, event: Event) {
-	const target = event.target as HTMLInputElement
+function onChange(uid: string, event: Event) {
+	/* const target = event.target as HTMLInputElement
 	if (target.checked) {
 		selectedUsers.value.push(uid)
 	} else {
 		selectedUsers.value = selectedUsers.value.filter(id => id !== uid)
 	}
-	emit("change", selectedUsers.value)
+	emit("change", selectedUsers.value) */
+	const target = event.target as HTMLInputElement
+	if (target.checked) {
+		props.selection.push(props.users.find(user => user.uid === uid)!)
+	} else {
+		props.selection.splice(
+			props.selection.findIndex(user => user.uid === uid),
+			1,
+		)
+	}
+	emit("update:selection", props.selection)
 }
 </script>
