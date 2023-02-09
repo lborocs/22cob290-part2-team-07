@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RegistrationForm from "~~/components/LoginReg/RegistrationForm.vue"
+
 definePageMeta({
 	layout: "loginreg",
 	name: "Registration",
@@ -6,7 +8,7 @@ definePageMeta({
 </script>
 
 <template>
-	<LoginForm />
+	<RegistrationForm />
 </template>
 
 <style scoped lang="scss"></style>
