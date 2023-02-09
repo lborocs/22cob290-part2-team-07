@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { User } from ".prisma/client"
+import { User, Subtask } from ".prisma/client"
 import { optionalMemberExpression } from "@babel/types"
 
 definePageMeta({
@@ -26,7 +26,10 @@ const projectMembers = $computed(() => {
 
 const totalHoursByMember = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
-	const tasks = project.value!.tasks.filter(task => task.status == 0)
+	// count tasks that are done (status == 0) or in progress (status == 1)
+	const tasks = project.value!.tasks.filter(
+		task => task.status === 0 || task.status === 1,
+	)
 	for (const task of tasks) {
 		for (const member of projectMembers) {
 			if (task.assignees.includes(member)) {
@@ -42,7 +45,19 @@ const totalHoursByMember = $computed(() => {
 })
 
 function updateHours(uid: number) {
-	const task = project.value!.tasks.find(task => task.uid === uid)
+	let task = project.value!.tasks.find(task => task.uid === uid)
+	let foundSubtask: Subtask | undefined
+
+	if (!task) {
+		// Check if the uid is a subtask
+		for (const t of project.value!.tasks) {
+			foundSubtask = t.subtasks.find(subtask => subtask.uid === uid)
+			if (foundSubtask) {
+				task = t
+				break
+			}
+		}
+	}
 	if (!task) {
 		return
 	}
@@ -51,7 +66,9 @@ function updateHours(uid: number) {
 
 	for (const memberName of Object.keys(totalHoursByMember)) {
 		if (assignees.has(memberName)) {
-			totalHoursByMember[memberName] -= task.workerHours
+			totalHoursByMember[memberName] -= foundSubtask
+				? foundSubtask.workerHours
+				: task.workerHours
 		}
 	}
 }

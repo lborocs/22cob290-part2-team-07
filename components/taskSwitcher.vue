@@ -286,6 +286,7 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		console.log(res.newParentStatus)
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
+	emit("update", uid)
 }
 
 function onTaskFinish(uid: number) {
