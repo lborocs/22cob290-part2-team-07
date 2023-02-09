@@ -26,7 +26,8 @@ const projectMembers = $computed(() => {
 
 const totalHoursByMember = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
-	for (const task of project.value!.tasks) {
+	const tasks = project.value!.tasks.filter(task => task.status == 0)
+	for (const task of tasks) {
 		for (const member of projectMembers) {
 			if (task.assignees.includes(member)) {
 				if (hoursByMember.hasOwnProperty(member.name)) {
@@ -39,6 +40,22 @@ const totalHoursByMember = $computed(() => {
 	}
 	return hoursByMember
 })
+
+function updateHours(uid: number) {
+	const task = project.value!.tasks.find(task => task.uid === uid)
+	if (!task) {
+		return
+	}
+
+	const assignees = new Set(task.assignees.map(member => member.name))
+
+	for (const memberName of Object.keys(totalHoursByMember)) {
+		if (assignees.has(memberName)) {
+			totalHoursByMember[memberName] -= task.workerHours
+		}
+	}
+}
+
 // Display days left until project deadline
 function dateDiffInDays(a: any, b: any) {
 	const _MS_PER_DAY = 1000 * 60 * 60 * 24
@@ -85,7 +102,7 @@ const selectedUserViewMode = ref(1)
 		</ProjectCard>
 	</section>
 
-	<TaskSwitcher :tasks="project!.tasks" />
+	<TaskSwitcher :tasks="project!.tasks" @update="updateHours" />
 
 	<section class="card">
 		<h2 class="sr-only">Project Members</h2>
@@ -96,14 +113,14 @@ const selectedUserViewMode = ref(1)
 				v-model:selected="selectedUserViewMode"
 			/>
 		</div>
-		<div v-if="selectedUserViewMode == 1" class="wrap-grid">
+		<!-- <div class="wrap-grid">
 			<ProjectMember
 				v-for="member in projectMembers"
 				:key="member.uid"
 				:user="member"
 			/>
-		</div>
-		<ProjectChart v-else :userHours="totalHoursByMember" />
+		</div> -->
+		<ProjectChart :user-hours="totalHoursByMember" />
 	</section>
 </template>
 

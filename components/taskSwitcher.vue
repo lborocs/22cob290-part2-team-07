@@ -26,8 +26,14 @@
 			v-if="selectedViewMode == 1"
 			:tasks="filteredTasks"
 			@details="showDialog"
+			@finish="onTaskFinish"
 		/>
-		<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
+		<KanbanBoard
+			v-else
+			:tasks="filteredTasks"
+			@details="showDialog"
+			@finish="onTaskFinish"
+		/>
 	</section>
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
 		<p>{{ currentTask.description }}</p>
@@ -175,6 +181,11 @@ import { Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
+import { emitKeypressEvents } from "readline"
+
+const emit = defineEmits<{
+	(name: "update", taskId: number): void
+}>()
 
 const p = defineProps<{
 	tasks: KanbanTask[]
@@ -244,6 +255,7 @@ async function addTask() {
 			workerHours: hours,
 		},
 	}
+
 	console.log(body)
 
 	const res: { success: boolean; task: Task | undefined } = await $fetch(
@@ -259,6 +271,7 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
+		emit("update", newTask.uid)
 	}
 }
 
@@ -273,5 +286,9 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		console.log(res.newParentStatus)
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
+}
+
+function onTaskFinish(uid: number) {
+	emit("update", uid)
 }
 </script>
