@@ -193,6 +193,10 @@
 					</label>
 				</div>
 			</section>
+			<section class="filter">
+				<h2 class="filter-header">By Assignees</h2>
+				<UserSelect :users="assignableUsers" />
+			</section>
 		</div>
 		<ModalFooter>
 			<Button
@@ -265,6 +269,9 @@ header {
 		display: flex;
 		flex-direction: column;
 	}
+}
+.filter {
+	margin-top: 1rem;
 }
 .filter-header {
 	margin: 0 0 0.2rem 0;
@@ -353,6 +360,8 @@ const filterProjectIds = ref<(number | undefined | null)[]>(
 	visibleProjects.value.map(p => p?.uid),
 )
 filterProjectIds.value.push(null)
+
+const filterUserIds = ref<string[]>([])
 
 function applyFilter() {
 	filteredTasks.value = p.tasks
