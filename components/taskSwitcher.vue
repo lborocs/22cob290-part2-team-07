@@ -382,6 +382,9 @@ async function addTask() {
 			workerHours: hours,
 			deadline: taskDeadline.value?.value,
 			projectId: taskProject.value?.value as unknown as number,
+			assignees: taskAssignees.value.map(id => {
+				return { uid: id }
+			}),
 		},
 	}
 	console.log(body)
