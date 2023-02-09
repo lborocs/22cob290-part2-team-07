@@ -1,6 +1,3 @@
-import { User } from ".prisma/client"
-import { abort } from "process"
-
 export enum Permission {
 	NONE = 0, // No permissions
 
@@ -57,8 +54,15 @@ export function permissions(
 	roleOverrides?: PermissionGroup[],
 	userOverrides?: PermissionGroup[],
 ): Permission {
-	let permissions = Permission.NONE
-	permissions = combinePermissions(permissions, roles)
+	let p = Permission.NONE
+	p = combinePermissions(p, roles)
+	return permissionsChain(p, roleOverrides, userOverrides)
+}
+export function permissionsChain(
+	permissions: Permission,
+	roleOverrides?: PermissionGroup[],
+	userOverrides?: PermissionGroup[],
+): Permission {
 	if (has(permissions, Permission.Administrator)) return Permission.ALL_ADMIN
 	if (roleOverrides !== undefined)
 		permissions = combinePermissions(permissions, roleOverrides)
