@@ -3,9 +3,10 @@ import { User } from ".prisma/client"
 import { rolesTitle } from "@/types/user"
 
 defineProps<{
-	user: User & {
-		roles: RoleName[]
-	}
+	user: User
+	// user: User & {
+	// 	roles: RoleName[]
+	// }
 	assigned?: number
 }>()
 </script>
@@ -16,7 +17,9 @@ defineProps<{
 			<UserIcon :email="user.email" :name="user.name" :size="50" />
 			<h3 class="card-margins">{{ user.name }}</h3>
 		</NuxtLink>
-		<p class="dimmed card-margins">{{ rolesTitle(user.roles) }}</p>
+		<p class="dimmed card-margins">BROKEN</p>
+		<!-- Need to fix Roles! -->
+		<!-- {{rolesTitle(user.roles) }} -->
 		<p class="card-margins">
 			Assigned hours
 			<span class="detail-highlight"> {{ assigned ? assigned : "0" }} </span>
