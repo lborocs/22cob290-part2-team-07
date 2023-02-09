@@ -97,11 +97,12 @@
 				id="task-deadline"
 				ref="taskDeadline"
 			/>
+			<UserSelect :users="assignableUsers" @change="taskAssignees = $event" />
 		</form>
 		<ModalFooter>
 			<Button
 				@click="addTask(), modalAddTask.hide()"
-				icon="material-symbols:add"
+				icon="material-symbols:check"
 				>Apply</Button
 			>
 		</ModalFooter>
@@ -255,7 +256,7 @@ header {
 </style>
 
 <script setup lang="ts">
-import { Subtask } from ".prisma/client"
+import { Subtask, User } from ".prisma/client"
 import { Project, Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
@@ -288,6 +289,7 @@ const taskDescription = ref<HTMLTextAreaElement>()
 const taskHours = ref<HTMLInputElement>()
 const taskProject = ref<HTMLSelectElement>()
 const taskDeadline = ref<HTMLInputElement>()
+const taskAssignees = ref<number[]>([])
 
 const modalFilter = useModal()
 
@@ -301,6 +303,9 @@ const currentTask = ref(p.tasks[0])
 // the projects that new tasks can be assigned to
 const assignableProjects = ref<Project[]>([])
 getAssignableProjects()
+
+const assignableUsers = ref<User[]>([])
+getAssignableUsers()
 
 let currentTaskIndex = 0
 
@@ -413,5 +418,10 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 async function getAssignableProjects() {
 	const res = await $fetch("/api/projects")
 	assignableProjects.value = res
+}
+
+async function getAssignableUsers() {
+	const res = await $fetch("/api/users")
+	assignableUsers.value = res
 }
 </script>
