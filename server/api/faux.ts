@@ -13,7 +13,7 @@ export default defineEventHandler(async event => {
 			prisma.pOverrideRolePost.deleteMany(),
 			prisma.pOverrideUserPost.deleteMany(),
 			prisma.pOverrideRoleTopic.deleteMany(),
-			prisma.pOverrideUserProject.deleteMany(),
+			prisma.pOverrideUserTopic.deleteMany(),
 			prisma.pOverrideRoleProject.deleteMany(),
 			prisma.pOverrideUserProject.deleteMany(),
 
@@ -210,6 +210,7 @@ export default defineEventHandler(async event => {
 									},
 								],
 							},
+							assignees: { connect: [{ email: "emma" }] },
 						},
 						{
 							name: "Knowledge Management",
