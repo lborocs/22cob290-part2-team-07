@@ -4,7 +4,10 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { data: post } = await useFetch(`/api/faq`)
+const currentUser = useCurrentUser()
+const { data: post } = await useFetch(`/api/faq`, {
+	query: { u: currentUser.value!.uid },
+})
 if (!post.value) console.error(`Post<FAQ> does not exist!`)
 </script>
 
