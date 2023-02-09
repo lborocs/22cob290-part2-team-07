@@ -64,9 +64,15 @@
 	</Modal>
 
 	<Modal :control="modalAddTask" title="New Task">
-		<form action="alert('test')" class="task-form">
+		<form class="task-form">
 			<label for="task-name">Name:</label>
-			<input type="text" name="task-name" id="task-name" ref="taskName" />
+			<input
+				type="text"
+				name="task-name"
+				id="task-name"
+				ref="taskName"
+				@change="onNewTaskChange"
+			/>
 			<label for="task-description">Description:</label>
 			<textarea
 				name="task-description"
@@ -74,10 +80,22 @@
 				ref="taskDescription"
 				cols="30"
 				rows="10"
+				@change="onNewTaskChange"
 			></textarea>
 			<label for="task-hours">Estimated Worker Hours:</label>
-			<input type="number" name="task-hours" id="task-hours" ref="taskHours" />
-			<select name="project" id="task-project" ref="taskProject">
+			<input
+				type="number"
+				name="task-hours"
+				id="task-hours"
+				ref="taskHours"
+				@change="onNewTaskChange"
+			/>
+			<select
+				name="project"
+				id="task-project"
+				ref="taskProject"
+				@change="onNewTaskChange"
+			>
 				<option :value="-1" disabled selected hidden>
 					Select project to add task to
 				</option>
@@ -96,6 +114,7 @@
 				name="task-deadline"
 				id="task-deadline"
 				ref="taskDeadline"
+				@change="onNewTaskChange"
 			/>
 			<UserSelect :users="assignableUsers" @change="taskAssignees = $event" />
 		</form>
@@ -103,8 +122,10 @@
 			<Button
 				@click="addTask(), modalAddTask.hide()"
 				icon="material-symbols:check"
-				:disabled="true"
+				:disabled="!newTaskFormCompleted"
 			>
+				Apply
+			</Button>
 		</ModalFooter>
 	</Modal>
 
@@ -291,6 +312,8 @@ const taskProject = ref<HTMLSelectElement>()
 const taskDeadline = ref<HTMLInputElement>()
 const taskAssignees = ref<number[]>([])
 
+const newTaskFormCompleted = ref<boolean>(false)
+
 const modalFilter = useModal()
 
 const modalAddTask = useModal()
@@ -426,5 +449,21 @@ async function getAssignableProjects() {
 async function getAssignableUsers() {
 	const res = await $fetch("/api/users")
 	assignableUsers.value = res
+}
+
+function onNewTaskChange(event: Event) {
+	newTaskFormCompleted.value =
+		taskName.value?.value.length! > 0 &&
+		taskDescription.value?.value.length! > 0 &&
+		taskHours.value?.value.length! > 0 &&
+		(+taskProject.value?.value! as number) != -1 &&
+		taskDeadline.value?.value.length! > 0
+	console.log(
+		taskName.value?.value,
+		taskDescription.value?.value,
+		taskHours.value?.value,
+		taskProject.value?.value,
+		taskDeadline.value?.value,
+	)
 }
 </script>
