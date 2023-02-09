@@ -119,7 +119,7 @@
 			<UserSelect
 				id="new-task-users"
 				:users="assignableUsers"
-				@change="taskAssignees = $event"
+				v-model:selection="taskAssignees"
 			/>
 		</form>
 		<ModalFooter>
@@ -330,7 +330,7 @@ const taskDescription = ref<HTMLTextAreaElement>()
 const taskHours = ref<HTMLInputElement>()
 const taskProject = ref<HTMLSelectElement>()
 const taskDeadline = ref<HTMLInputElement>()
-const taskAssignees = ref<number[]>([])
+const taskAssignees = ref<User[]>([])
 
 const newTaskFormCompleted = ref<boolean>(false)
 
@@ -432,8 +432,8 @@ async function addTask() {
 			workerHours: hours,
 			deadline: taskDeadline.value?.value,
 			projectId: taskProject.value?.value as unknown as number,
-			assignees: taskAssignees.value.map(id => {
-				return { uid: id }
+			assignees: taskAssignees.value.map(user => {
+				return { uid: user.uid }
 			}),
 		},
 	}
