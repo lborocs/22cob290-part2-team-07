@@ -8,7 +8,16 @@ export default defineEventHandler(event => {
 			client: true,
 			tasks: {
 				include: {
-					assignees: true,
+					assignees: {
+						include: {
+							roles: {
+								select: {
+									name: true,
+									rank: true,
+								},
+							},
+						},
+					},
 					subtasks: true,
 				},
 			},
