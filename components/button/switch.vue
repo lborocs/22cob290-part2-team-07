@@ -66,8 +66,6 @@ input[type="radio"] {
 </style>
 
 <script setup lang="ts">
-import { defineEmits } from "vue"
-
 const props = defineProps({
 	selected: {
 		type: Number,
