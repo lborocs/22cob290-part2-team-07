@@ -1,5 +1,3 @@
-import { UserRank } from "."
-
 export function profilePicture(name: string, size: number = 50): string {
 	return `https://ui-avatars.com/api/?name=${encodeURIComponent(
 		name,
@@ -8,14 +6,7 @@ export function profilePicture(name: string, size: number = 50): string {
 
 export const emailDomain = "@make-it-all.co.uk"
 
-export function rankTitle(rank: UserRank): string {
-	switch (rank) {
-		case UserRank.Manager:
-			return "Manager"
-		case UserRank.TeamLeader:
-			return "Team Leader"
-		case UserRank.Employee:
-		default:
-			return "Employee"
-	}
+export function rolesTitle(roles: RoleName[]): string {
+	roles.sort((a, b) => a.rank - b.rank)
+	return (roles[0] ?? { name: "User" }).name
 }

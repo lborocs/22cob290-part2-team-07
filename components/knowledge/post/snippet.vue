@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { Topic, User } from ".prisma/client"
-import { rankTitle } from "@/types/user"
+import { rolesTitle } from "@/types/user"
 
 defineProps<{
 	uid: number
 	title: string
 	markdown: string
 
-	owner: User
+	owner: User & {
+		roles: RoleName[]
+	}
 	topic: Topic
 	createdAt: DateString
 }>()
@@ -24,7 +26,7 @@ defineProps<{
 		<div class="owner">
 			<UserIcon :email="owner.email" :name="owner.name" :size="50" />
 			<UserName :email="owner.email" :name="owner.name" />
-			<span>{{ rankTitle(owner.rank) }}</span>
+			<span>{{ rolesTitle(owner.roles) }}</span>
 		</div>
 		<Date :date="createdAt" class="date" />
 		<h2>{{ title }}</h2>
