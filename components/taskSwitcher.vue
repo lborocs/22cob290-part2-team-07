@@ -103,7 +103,7 @@
 			<Button
 				@click="addTask(), modalAddTask.hide()"
 				icon="material-symbols:check"
-				>Apply</Button
+				:disabled="true"
 			>
 		</ModalFooter>
 	</Modal>
