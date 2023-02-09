@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { has, Permission, permissions } from "@/types/permission"
+import {
+	has,
+	Permission,
+	permissions,
+	permissionsChain,
+} from "@/types/permission"
 
 definePageMeta({
 	name: "Knowledge Search Results",
@@ -24,7 +29,7 @@ watch(route, () => {
 	<template v-for="post in posts" :key="post.uid">
 		<KnowledgePostSnippet
 			v-bind="post"
-			v-if="has(permissions(currentUser!.roles, post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post.ownerId === currentUser!.uid"
+			v-if="has(permissionsChain(permissions(currentUser!.roles, post.topic.overrideRoles, post.topic.overrideUsers), post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post.ownerId === currentUser!.uid"
 		/>
 	</template>
 </template>

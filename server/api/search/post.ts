@@ -21,7 +21,16 @@ export default defineEventHandler(event => {
 	return prisma.post.findMany({
 		where,
 		include: {
-			owner: true,
+			owner: {
+				include: {
+					roles: {
+						select: {
+							name: true,
+							rank: true,
+						},
+					},
+				},
+			},
 			topic: {
 				include: {
 					overrideRoles: {
@@ -37,7 +46,7 @@ export default defineEventHandler(event => {
 					role: { users: { some: { uid: query.u as string } } },
 				},
 			},
-			overrideUsers: true, // { where: { userUid: query.u as string } },
+			overrideUsers: { where: { userUid: query.u as string } },
 		},
 	})
 })
