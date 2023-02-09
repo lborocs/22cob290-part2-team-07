@@ -22,10 +22,7 @@
             <div class="card-small bg-accent card-bigger">
             <h3 class="title-card-small text-center">Contact information</h3>
             <div class="flex-col-center">
-                <p
-                class="card-small-text text-center-positioning"
-                id="client-info"
-                ></p>
+                <slot name="contact-information"></slot>
                 <div class="link-list text-center">
                 <a href="" id="client-email" target="_blank">
                     Contact via email</a

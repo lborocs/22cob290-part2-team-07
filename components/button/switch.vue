@@ -8,7 +8,7 @@
 			checked
 			@click="optionClick(1)"
 		/>
-		<label for="opt-list">List</label>
+		<label for="opt-list">{{ option1 }}</label>
 		<input
 			type="radio"
 			id="opt-kanban"
@@ -16,7 +16,7 @@
 			value="kanban"
 			@click="optionClick(2)"
 		/>
-		<label for="opt-kanban">Kanban</label>
+		<label for="opt-kanban">{{ option2 }}</label>
 	</form>
 </template>
 
@@ -66,9 +66,26 @@ input[type="radio"] {
 </style>
 
 <script setup lang="ts">
-const emit = defineEmits(["change"])
+import { defineEmits } from "vue"
+
+const props = defineProps({
+	selected: {
+		type: Number,
+		default: false,
+	},
+	option1: {
+		type: String,
+		required: true,
+	},
+	option2: {
+		type: String,
+		required: true,
+	},
+})
+
+const emit = defineEmits(["update:selected"])
 
 function optionClick(option: number) {
-	emit("change", option)
+	emit("update:selected", option)
 }
 </script>
