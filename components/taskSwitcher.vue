@@ -22,12 +22,15 @@
 				</Button>
 			</div>
 		</header>
-		<TasksList
-			v-if="selectedViewMode == 1"
-			:tasks="filteredTasks"
-			@details="showDialog"
-		/>
-		<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
+		<div v-if="filteredTasks.length > 0">
+			<TasksList
+				v-if="selectedViewMode == 1"
+				:tasks="filteredTasks"
+				@details="showDialog"
+			/>
+			<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
+		</div>
+		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
 
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
