@@ -32,5 +32,8 @@ const markdownHTML = $computed(() => {
 	a {
 		@extend %link;
 	}
+	img {
+		width: 100%;
+	}
 }
 </style>
