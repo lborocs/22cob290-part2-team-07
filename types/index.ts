@@ -28,6 +28,11 @@ declare global {
 		rank: number
 	}
 
+	// User with roles
+	type UserR = User & {
+		roles: RoleName[]
+	}
+
 	type PostR = Post & {
 		topic: Topic & {
 			overrideRoles: POverrideRoleTopic[]
@@ -35,8 +40,6 @@ declare global {
 		}
 		overrideRoles: POverrideRolePost[]
 		overrideUsers: POverrideUserPost[]
-		owner: User & {
-			roles: RoleName[]
-		}
+		owner: UserR
 	}
 }

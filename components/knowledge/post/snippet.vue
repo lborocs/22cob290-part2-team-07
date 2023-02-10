@@ -7,9 +7,7 @@ defineProps<{
 	title: string
 	markdown: string
 
-	owner: User & {
-		roles: RoleName[]
-	}
+	owner: UserR
 	topic: Topic
 	createdAt: DateString
 }>()

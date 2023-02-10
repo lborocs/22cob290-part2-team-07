@@ -3,10 +3,7 @@ import { User } from ".prisma/client"
 import { rolesTitle } from "@/types/user"
 
 defineProps<{
-	user: User
-	// user: User & {
-	// 	roles: RoleName[]
-	// }
+	user: UserR
 	assigned?: number
 }>()
 </script>
