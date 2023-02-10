@@ -44,7 +44,32 @@ function togglePreview() {
 
 function saveEdit() {
 	post.markdown = markdownLocal.value.trim()
-	// TODO: Update DB
+	if (
+		has(
+			permissionsChain(
+				permissions(
+					currentUser.value!.roles,
+					post.topic.overrideRoles,
+					post.topic.overrideUsers,
+				),
+				post.overrideRoles,
+				post.overrideUsers,
+			),
+			Permission.Post_Read | Permission.Post_Edit,
+		)
+	) {
+		uploadChanges()
+	}
+}
+
+async function uploadChanges() {
+	await $fetch(`/api/post/${post.uid}`, {
+		method: "PUT",
+		body: {
+			markdown: post.markdown,
+		},
+		// TODO: Assets references maybe
+	})
 }
 </script>
 
