@@ -9,7 +9,10 @@ definePageMeta({
 interface PostCreate {
 	title: string
 	markdown: string
-	topic?: Topic["uid"]
+	topic?: string
+}
+interface TopicCreate {
+	name: string
 }
 
 const post: PostCreate = reactive({
@@ -17,25 +20,38 @@ const post: PostCreate = reactive({
 	markdown: "",
 	topic: undefined,
 })
+const modalTopicInfo: TopicCreate = reactive({
+	name: "",
+})
 
 const currentUser = useCurrentUser()
 const preview = ref(false)
 function togglePreview() {
 	preview.value = !preview.value
 }
+const modalTopic = useModal()
+const modalTopicResolver = ref<(value: TopicCreate | undefined) => void>()
 
 const { data: topics } = useLazyFetch("/api/topics")
+const TOPIC_CREATE_NEW = ".create-new"
 
 const btnCreate = ref<HTMLButtonElement>(null)
 
-async function createTopic() {}
+async function createTopic(info: TopicCreate) {
+	const result = await $fetch("/api/topic", {
+		method: "POST",
+		body: {
+			name: info.name,
+			u: currentUser.value!.uid,
+		},
+	})
+	return result
+}
 async function createPost(
 	title: string,
 	markdown: string,
 	topic: Topic,
 ): Promise<Post["uid"] | undefined> {
-	console.log("ALL THAT JAZZ", title, markdown, topic)
-
 	const result = await $fetch("/api/post", {
 		method: "POST",
 		body: {
@@ -47,13 +63,45 @@ async function createPost(
 	})
 	return result?.uid
 }
+
+function modalTopicResolve(submit: TopicCreate | undefined) {
+	if (modalTopicResolver.value !== undefined) {
+		const resolver = modalTopicResolver.value
+		modalTopicResolver.value = undefined
+		resolver(submit)
+	}
+}
+async function makeTopic() {
+	try {
+		const promise = new Promise<TopicCreate | undefined>(resolve => {
+			modalTopicResolver.value = resolve
+		})
+		modalTopic.show()
+		const result = await promise
+		if (result === undefined) return undefined
+		return await createTopic(result)
+	} finally {
+		modalTopic.hide()
+	}
+	return undefined
+}
+
 async function upload() {
 	try {
 		btnCreate.value.disabled = true
-		console.log("Uploading Post", post)
 
-		const topic = topics.value!.find(topic => topic.uid === post.topic)
-		console.log(topic)
+		let topic = undefined
+		if (post.topic == TOPIC_CREATE_NEW) {
+			topic = await makeTopic()
+			if (topic === undefined) return
+		} else {
+			topic = topics.value!.find(topic => topic.uid === +(post.topic ?? "-1"))
+		}
+
+		if (topic === undefined) {
+			// TODO: Error popup
+			return
+		}
 
 		if (
 			has(
@@ -109,11 +157,11 @@ async function upload() {
 				<select
 					name="topic"
 					required
-					@change="post.topic = +($event.target as HTMLSelectElement).value"
+					@change="post.topic = ($event.target as HTMLSelectElement).value"
 				>
 					<option value="">Select a Topic...</option>
 					<option
-						value=".create-new"
+						:value="TOPIC_CREATE_NEW"
 						v-if="has(permissions(currentUser!.roles), Permission.Topic_Create)"
 					>
 						New Topic...
@@ -153,8 +201,31 @@ async function upload() {
 					@update:markdown="post.markdown = $event"
 				/>
 			</template>
+			<!-- TODO -->
+			<template #footer-extra> BUTTON TO HIDE BY DEFAULT </template>
 		</Sandwich>
 	</form>
+	<Modal
+		:control="modalTopic"
+		title="Create a Topic"
+		@close="modalTopicResolve($event)"
+	>
+		<form @submit.prevent="modalTopic.hide(modalTopicInfo)">
+			<input
+				type="text"
+				placeholder="Topic Name..."
+				v-model="modalTopicInfo.name"
+				required
+			/>
+			<ModalFooter>
+				<Button
+					icon="material-symbols:create-new-folder-outline-rounded"
+					type="submit"
+					>Create</Button
+				>
+			</ModalFooter>
+		</form>
+	</Modal>
 </template>
 
 <style scoped lang="scss">
