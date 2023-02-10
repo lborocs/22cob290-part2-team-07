@@ -1,28 +1,4 @@
 <!-- <script>
-export default {
-	data() {
-		return {
-			name: "Name", // need to make dynamic
-			isShown: false,
-			passIsShown: false,
-			invIsShown: false,
-			logout: false,
-			src: "https://placekitten.com/150/150",
-		}
-	},
-	methods: {
-		toggleUpload() {
-			this.isShown = !this.isShown
-		},
-		togglePassword() {
-			this.passIsShown = !this.passIsShown
-		},
-		toggleInv() {
-			this.invIsShown = !this.invIsShown
-		},
-		toggleLogout() {
-			this.logout = !this.logout
-		},
 		uploadPhoto(e) {
 			this.$emit("input", e.target.files[0])
 			let reader = new FileReader()
@@ -31,22 +7,14 @@ export default {
 				this.src = e.target.result
 				console.log(this.src)
 			}
-		},
-		triggerFileInput() {
-			this.$refs.fileInput.click()
-		},
-	},
-	props: {
-		value: File,
-	},
-}
 </script> -->
 <script setup lang="ts">
+import { profilePicture, emailDomain } from "@/types/user"
 import { User } from ".prisma/client"
-import { rankTitle } from "~~/types/user"
-import { ref } from "vue"
 const currentUsername = useCurrentUser().value!.name
-const currentUserRank = rankTitle()
+// const currentUserRank = rankTitle()
+const currentUserProfilePicture = ref(profilePicture(currentUsername))
+const userEmail = useCurrentUser().value!.email + emailDomain
 defineProps<{}>()
 </script>
 
@@ -61,7 +29,7 @@ defineProps<{}>()
 			<h2 name="hierarchy" class="user__rank">{{ currentUserRank }}</h2>
 			<img
 				id="card-profile-picture"
-				src="https://placekitten.com/150/150"
+				:src="currentUserProfilePicture"
 				alt=""
 				class="profile-pic"
 			/>
@@ -93,7 +61,7 @@ defineProps<{}>()
 				<label for="email-box" class="label-subtext"
 					>This is your assigned company email</label
 				>
-				<label id="email-box">f.batmaz@lboro.ac.uk</label>
+				<label id="email-box"> {{ userEmail }}</label>
 				<img class="email-lock-img" src="~/assets/lock.png" alt="lock" />
 			</div>
 			<div class="wrapper-invite">
@@ -162,6 +130,7 @@ $logout: #da0000;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-bottom: 2rem;
 }
 
 #card-profile-picture {

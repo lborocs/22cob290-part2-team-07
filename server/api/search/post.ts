@@ -1,4 +1,5 @@
 import prisma from "@/prisma"
+import { User } from ".prisma/client"
 
 export default defineEventHandler(event => {
 	const query = getQuery(event)
@@ -21,8 +22,32 @@ export default defineEventHandler(event => {
 	return prisma.post.findMany({
 		where,
 		include: {
-			owner: true,
-			topic: true,
+			owner: {
+				include: {
+					roles: {
+						select: {
+							name: true,
+							rank: true,
+						},
+					},
+				},
+			},
+			topic: {
+				include: {
+					overrideRoles: {
+						where: {
+							role: { users: { some: { uid: query.u as User["uid"] } } },
+						},
+					},
+					overrideUsers: { where: { userUid: query.u as User["uid"] } },
+				},
+			},
+			overrideRoles: {
+				where: {
+					role: { users: { some: { uid: query.u as User["uid"] } } },
+				},
+			},
+			overrideUsers: { where: { userUid: query.u as User["uid"] } },
 		},
 	})
 })

@@ -1,5 +1,12 @@
 <script setup lang="ts">
-const { data: topics } = useLazyFetch("/api/topics")
+import { has, Permission, permissions } from "@/types/permission"
+
+const currentUser = useCurrentUser()
+const { data: topics } = useLazyFetch("/api/topics", {
+	params: {
+		u: currentUser.value?.uid,
+	},
+})
 const topicSelector = ref<HTMLSelectElement>()
 
 onMounted(() => {
@@ -17,9 +24,14 @@ onMounted(() => {
 		/>
 		<select name="topic" ref="topicSelector" :value="$route.query.topic">
 			<option value="">Any Topic</option>
-			<option v-for="topic in topics" :key="topic.uid" :value="topic.uid">
-				{{ topic.name }}
-			</option>
+			<template v-for="topic in topics" :key="topic.uid">
+				<option
+					v-if="has(permissions(currentUser!.roles, topic.overrideRoles, topic.overrideUsers), Permission.Post_Read)"
+					:value="topic.uid"
+				>
+					{{ topic.name }}
+				</option>
+			</template>
 		</select>
 		<Button type="submit" icon="material-symbols:search-rounded">Search</Button>
 		<ButtonNuxt to="/knowledge/post/new" icon="material-symbols:add"
