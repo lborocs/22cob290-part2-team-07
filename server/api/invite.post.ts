@@ -7,7 +7,7 @@ export default defineEventHandler(async event => {
 
 	const reg = await prisma.register.create({
 		data: {
-			email: b64,
+			code: b64,
 		},
 	})
 	return reg?.code
