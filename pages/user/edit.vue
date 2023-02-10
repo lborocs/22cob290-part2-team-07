@@ -1,7 +1,12 @@
 <script setup>
+import { PrismaClient } from "@prisma/client"
+
 definePageMeta({
 	name: "Profile",
 })
+
+const pass = PrismaClient.password
+console.log(pass)
 
 const modalActive = ref(false)
 const passModalActive = ref(false)
@@ -17,11 +22,16 @@ const promoteScroll = () => {
 	const body = document.getElementsByTagName("body")[0]
 	body.style = "overflow-y: visible;"
 }
+
+// temp until login functionality complete
+function logout() {
+	alert("User Logged Out!")
+}
 </script>
 
 <template>
 	<p>The Edit Profile Page</p>
-	<Moodal
+	<!-- <Moodal
 		v-show="modalActive"
 		@close=";(modalActive = !modalActive), promoteScroll()"
 		class="align modal"
@@ -39,7 +49,7 @@ const promoteScroll = () => {
 			<button @click="" class="upload-button spacing">Upload photo</button>
 			<button class="upload-button spacing" @click="toggleUpload">Save</button>
 		</template>
-	</Moodal>
+	</Moodal> -->
 	<Moodal
 		v-show="passModalActive"
 		@close=";(passModalActive = !passModalActive), promoteScroll()"
@@ -72,12 +82,14 @@ const promoteScroll = () => {
 		<template #content>
 			<h2>Logout</h2>
 			<p>Are you sure you want to logout?</p>
-			<button class="logout-button">Logout</button>
+			<a href="/login">
+				<button class="logout-button" @click="logout()">Logout</button></a
+			>
 		</template>
 	</Moodal>
 
 	<profile-card>
-		<template #button>
+		<!-- <template #button>
 			<div name="button" class="card-button-wrapper">
 				<button
 					name="button"
@@ -87,7 +99,7 @@ const promoteScroll = () => {
 					<p>Upload photo</p>
 				</button>
 			</div>
-		</template>
+		</template> -->
 		<template #password>
 			<button
 				@click=";(passModalActive = true), preventScoll()"

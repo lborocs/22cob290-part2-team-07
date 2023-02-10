@@ -16,7 +16,7 @@ const { data: projects } = useFetch("/api/projects")
 			v-for="project in projects"
 			:key="project.uid"
 		>
-			<h3>{{ project.name }}</h3>
+			<ProjectListItem :project="project" />
 		</div>
 	</section>
 </template>
