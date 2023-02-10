@@ -1,4 +1,5 @@
 import prisma from "@/prisma"
+import { User } from ".prisma/client"
 
 export default defineCachedEventHandler(
 	event => {
@@ -9,10 +10,10 @@ export default defineCachedEventHandler(
 			include: {
 				overrideRoles: {
 					where: {
-						role: { users: { some: { uid: query.u as string } } },
+						role: { users: { some: { uid: query.u as User["uid"] } } },
 					},
 				},
-				overrideUsers: { where: { userUid: query.u as string } },
+				overrideUsers: { where: { userUid: query.u as User["uid"] } },
 			},
 		})
 	},
