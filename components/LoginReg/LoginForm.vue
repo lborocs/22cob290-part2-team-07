@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import prisma from "@/prisma"
+</script>
 
 <template>
 	<Form to="/dashboard" class="form">

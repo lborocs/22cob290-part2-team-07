@@ -3,19 +3,17 @@
 <template>
 	<Form to="/dashboard" class="form">
 		<label id="title">Member Registration</label>
-		<label for="email">Email:</label>
-		<input
-			type="email"
-			id="Email"
-			placeholder="Example@make-it-all.com"
-			required
-		/>
+		<label for="Email">Email:</label>
+		<input type="text" id="Email" placeholder="Example" required />
+		<label id="emailPosition">@make-it-all.com</label>
 		<label for="Password">Password:</label>
 		<input type="password" id="Password" required />
 		<label for="confirmPassword">Confirm Password:</label>
 		<input type="password" id="confirmPassword" required />
 		<!-- i took this button from elsewhere so it just lets you log in no matter what lol-->
-		<Button type="submit" icon="material-symbols:login-rounded">Login</Button>
+		<Button type="submit" icon="material-symbols:login-rounded"
+			>Register</Button
+		>
 	</Form>
 </template>
 
@@ -58,5 +56,13 @@
 	font-size: 2rem;
 	text-align: center;
 	font-weight: Bold;
+}
+.form #Email {
+	width: 40%;
+	align-self: flex-start;
+}
+.form #emailPosition {
+	align-self: flex-end;
+	transform: translate(-1rem, -2.5rem);
 }
 </style>
