@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import {ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { User } from ".prisma/client"
+import { profilePicture } from "~~/types/user"
+
+
+const { params } = useRoute()
+const clientId = params.id[0]
+const { data: client } = await useFetch(`/api/client/${clientId}`)
+console.log(client)
+
+const repProfilePicture = ref(profilePicture(client.value!.representative))
+
+
+
+
+defineProps<{}>()
+</script>
+
 
 <template>
 	<div class="card flex-col centre">
@@ -10,7 +30,7 @@
             <h3 class="title-card-small text-center">Client representative</h3>
             <div class="flex-col-center">
                 <img
-                src="https://ui-avatars.com/api/?name=Neumann&background=random&size=50&format=svg"
+                :src=repProfilePicture
                 alt="profile"
                 class="card-small-image profile-pic"
                 id=""
