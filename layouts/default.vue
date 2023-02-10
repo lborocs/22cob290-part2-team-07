@@ -129,6 +129,9 @@ header {
 	@media screen and (max-width: mobile.$width) {
 		margin: 0;
 	}
+	padding: 0 1em;
+	background-color: var(--colour-background-2);
+	margin-bottom: 1em;
 }
 
 main {
