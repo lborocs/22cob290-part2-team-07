@@ -6,7 +6,8 @@ export function profilePicture(name: string, size: number = 50): string {
 
 export const emailDomain = "@make-it-all.co.uk"
 
-export function rolesTitle(roles: RoleName[]): string {
+export function rolesTitle(roles?: RoleName[]): string {
+	if (roles == null || roles.length <= 0) return "User"
 	roles.sort((a, b) => a.rank - b.rank)
-	return (roles[0] ?? { name: "User" }).name
+	return roles[0].name
 }
