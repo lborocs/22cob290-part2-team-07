@@ -1,6 +1,6 @@
 import prisma from "@/prisma"
 import { Task } from "@prisma/client"
-import { PrismaClientValidationError } from "@prisma/client/runtime"
+import { PrismaClientValidationError } from "@prisma/client/runtime/library"
 import { workerHours } from "~~/types/task"
 
 export default defineEventHandler(async event => {

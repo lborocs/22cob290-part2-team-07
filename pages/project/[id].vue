@@ -15,7 +15,7 @@ const daysRemaing = $computed(() => {
 
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
-	const members: User[] = []
+	const members: UserR[] = []
 	for (const task of project.value!.tasks) {
 		for (const user of task.assignees)
 			if (!members.includes(user)) members.push(user)
