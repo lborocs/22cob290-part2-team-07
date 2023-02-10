@@ -526,6 +526,10 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 	})
 	if (res.status == 200) {
 		console.log(res.newParentStatus)
+		const subtask = filteredTasks.value[currentTaskIndex].subtasks.find(
+			subtask => subtask.uid == uid,
+		)
+		subtask!.done = isChecked
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
 }
