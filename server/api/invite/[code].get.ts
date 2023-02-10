@@ -1,9 +1,10 @@
 import prisma from "@/prisma"
+import { decodeEmail } from "@/types/invite"
 
 export default defineEventHandler(async event => {
-	const reg = await prisma.register.findUnique({
+	const reg = await prisma.invite.findUnique({
 		where: { code: event.context.params.code as string },
 	})
 	if (reg === null) return null
-	return Buffer.from(reg.code, "base64").toString()
+	return decodeEmail(reg.code)
 })

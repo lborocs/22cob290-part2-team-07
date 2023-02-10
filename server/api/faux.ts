@@ -17,7 +17,7 @@ export default defineEventHandler(async event => {
 			prisma.pOverrideRoleProject.deleteMany(),
 			prisma.pOverrideUserProject.deleteMany(),
 
-			prisma.register.deleteMany(),
+			prisma.invite.deleteMany(),
 			prisma.subtask.deleteMany(),
 			prisma.task.deleteMany(),
 			prisma.project.deleteMany(),

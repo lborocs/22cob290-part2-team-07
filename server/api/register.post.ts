@@ -7,7 +7,7 @@ export default defineEventHandler(async event => {
 	const b64 = Buffer.from(email).toString("base64")
 
 	const results = await prisma.$transaction([
-		prisma.register.delete({
+		prisma.invite.delete({
 			where: { code: b64 },
 		}),
 		prisma.user.create({

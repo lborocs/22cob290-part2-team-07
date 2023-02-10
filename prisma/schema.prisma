@@ -206,6 +206,6 @@ model POverrideUserProject {
 
 // Active registration links
 
-model Register {
+model Invite {
   code String @id
 }
