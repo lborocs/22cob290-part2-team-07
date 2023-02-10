@@ -184,7 +184,7 @@ async function onChecked(event: Event, task: Task) {
 	task.status = isChecked ? TaskStatus.Done : TaskStatus.Todo
 	await $fetch(`/api/task/${task.uid}`, {
 		method: "POST",
-		body: task.status.toString(),
+		body: { task: task },
 	})
 }
 

@@ -5,6 +5,7 @@
 				type="checkbox"
 				:name="`select-${user.uid}`"
 				:id="`${id}-select-${user.uid}`"
+				:checked="selection.some(u => u.uid === user.uid)"
 				@change="onChange(user.uid, $event)"
 			/>
 			<label class="flex-row gap-6 user" :for="`${id}-select-${user.uid}`">

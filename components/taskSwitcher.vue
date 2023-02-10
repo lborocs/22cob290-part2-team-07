@@ -63,7 +63,19 @@
 				</li>
 			</ul>
 		</div>
-		<ModalFooter> </ModalFooter>
+		<UserSelect
+			id="edit-users"
+			:users="assignableUsers"
+			v-model:selection="taskEditAssignees"
+		/>
+		<ModalFooter>
+			<Button
+				icon="material-symbols:check"
+				@click="applyTaskEdits($event), modalTaskDetails.hide()"
+			>
+				Apply Changes
+			</Button>
+		</ModalFooter>
 	</Modal>
 
 	<Modal :control="modalAddTask" title="New Task">
@@ -335,6 +347,9 @@ const taskProject = ref<HTMLSelectElement>()
 const taskDeadline = ref<HTMLInputElement>()
 const taskAssignees = ref<User[]>([])
 
+// selected users for the current task
+const taskEditAssignees = ref<User[]>([])
+
 const newTaskFormCompleted = ref<boolean>(false)
 
 const modalFilter = useModal()
@@ -363,6 +378,7 @@ async function showDialog(index: number) {
 	currentTask.value = (await (
 		await fetch(`/api/task/${task.uid}`)
 	).json()) as KanbanTask
+	taskEditAssignees.value = currentTask.value.assignees
 	modalTaskDetails.show()
 }
 
@@ -479,6 +495,15 @@ async function getAssignableProjects() {
 async function getAssignableUsers() {
 	const res = await $fetch("/api/users")
 	assignableUsers.value = res
+}
+
+async function applyTaskEdits(event: Event) {
+	currentTask.value.assignees = taskEditAssignees.value
+	const res = await $fetch(`/api/task/${currentTask.value.uid}`, {
+		method: "POST",
+		body: { task: currentTask.value },
+	})
+	console.log(res)
 }
 
 function onNewTaskChange(event: Event) {
