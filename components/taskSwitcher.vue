@@ -35,9 +35,7 @@
 
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
 		<p>{{ currentTask.description }}</p>
-		<Button icon="material-symbols:add" class="center-button">
-			Add Subtask
-		</Button>
+
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
 			<h2>Subtasks</h2>
 			<ul class="subtask-list">
@@ -63,6 +61,13 @@
 				</li>
 			</ul>
 		</div>
+		<Button
+			icon="material-symbols:add"
+			class="center-button"
+			@click="modalTaskDetails.hide(), modalAddSubtask.show()"
+		>
+			Add Subtask
+		</Button>
 		<UserSelect
 			id="edit-users"
 			:users="assignableUsers"
@@ -142,6 +147,38 @@
 				@click="addTask(), modalAddTask.hide()"
 				icon="material-symbols:check"
 				:disabled="!newTaskFormCompleted"
+			>
+				Apply
+			</Button>
+		</ModalFooter>
+	</Modal>
+
+	<Modal :control="modalAddSubtask" title="New Subtask">
+		<form class="task-form">
+			<label for="subtask-name">Name:</label>
+			<input
+				type="text"
+				name="subtask-name"
+				id="subtask-name"
+				ref="subtaskName"
+				@change="onNewSubtaskChange"
+			/>
+			<label for="subtask-hours">Estimated Worker Hours:</label>
+			<input
+				type="number"
+				name="subtask-hours"
+				id="subtask-hours"
+				ref="subtaskHours"
+				@change="onNewSubtaskChange"
+			/>
+		</form>
+		<ModalFooter>
+			<Button
+				@click="
+					createSubtask(), modalAddSubtask.hide(), modalTaskDetails.show()
+				"
+				icon="material-symbols:check"
+				:disabled="!newSubtaskFormCompleted"
 			>
 				Apply
 			</Button>
@@ -347,6 +384,10 @@ const taskProject = ref<HTMLSelectElement>()
 const taskDeadline = ref<HTMLInputElement>()
 const taskAssignees = ref<User[]>([])
 
+const newSubtaskFormCompleted = ref<boolean>(false)
+const subtaskName = ref<HTMLInputElement>()
+const subtaskHours = ref<HTMLInputElement>()
+
 // selected users for the current task
 const taskEditAssignees = ref<User[]>([])
 
@@ -357,6 +398,8 @@ const modalFilter = useModal()
 const modalAddTask = useModal()
 
 const modalTaskDetails = useModal()
+
+const modalAddSubtask = useModal()
 
 // the task for display in the modal
 const currentTask = ref(p.tasks[0])
@@ -522,5 +565,27 @@ function onNewTaskChange(event: Event) {
 		taskProject.value?.value,
 		taskDeadline.value?.value,
 	)
+}
+function onNewSubtaskChange(event: Event) {
+	newSubtaskFormCompleted.value =
+		subtaskName.value?.value.length! > 0 &&
+		subtaskHours.value?.value.length! > 0
+}
+
+async function createSubtask() {
+	const res = await $fetch(`/api/subtask`, {
+		method: "POST",
+		body: {
+			subtask: {
+				name: subtaskName.value?.value,
+				workerHours: +subtaskHours.value?.value!,
+				parentId: currentTask.value.uid,
+			},
+		},
+	})
+	if (res.status == 200) {
+		filteredTasks.value[currentTaskIndex].assignees = taskEditAssignees.value
+		currentTask.value.subtasks.push(res.subtask!)
+	}
 }
 </script>
