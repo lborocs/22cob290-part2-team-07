@@ -4,11 +4,29 @@ export default defineEventHandler(event => {
 	return prisma.project.findUnique({
 		where: { uid: +(event.context.params.id as string) },
 		include: {
-			leader: true,
+			leader: {
+				include: {
+					roles: {
+						select: {
+							name: true,
+							rank: true,
+						},
+					},
+				},
+			},
 			client: true,
 			tasks: {
 				include: {
-					assignees: true,
+					assignees: {
+						include: {
+							roles: {
+								select: {
+									name: true,
+									rank: true,
+								},
+							},
+						},
+					},
 					subtasks: true,
 				},
 			},
