@@ -503,7 +503,9 @@ async function applyTaskEdits(event: Event) {
 		method: "POST",
 		body: { task: currentTask.value },
 	})
-	console.log(res)
+	if (res.status == 200) {
+		filteredTasks.value[currentTaskIndex].assignees = taskEditAssignees.value
+	}
 }
 
 function onNewTaskChange(event: Event) {
