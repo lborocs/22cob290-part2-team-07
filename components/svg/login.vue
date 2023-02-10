@@ -11,17 +11,23 @@
 </template>
 
 <style scoped lang="scss">
+@use "~/assets/mobile";
+
 svg {
 	margin: auto;
 	position: absolute;
-	width: 100%;
 	height: 100%;
-	overflow: hidden;
+	overflow: clip;
 	left: -1px;
-	top: 0px;
+	top: 40%;
 	background: var(--colour-block);
 	border: 1px solid var(--colour-block);
 	backdrop-filter: blur(2px);
 	z-index: -1;
+
+	@media (min-width: mobile.$width) {
+		width: 100%;
+		top: 0px;
+	}
 }
 </style>

@@ -17,10 +17,6 @@
 @use "~/assets/core";
 @use "~/assets/animation";
 
-body {
-	overflow: hidden;
-}
-
 header {
 	display: flex;
 	align-content: flex-start;
@@ -39,5 +35,10 @@ h1 u {
 
 .logo {
 	width: 5rem;
+}
+</style>
+<style lang="scss">
+body {
+	overflow: clip;
 }
 </style>
