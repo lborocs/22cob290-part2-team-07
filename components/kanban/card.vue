@@ -25,6 +25,7 @@
 				<Icon icon="material-symbols:more-horiz" />
 			</button>
 		</div>
+		<ProgressBar v-if="task.subtasks.length > 0" :progress="taskProgress" />
 	</article>
 </template>
 
@@ -88,4 +89,10 @@ function onDrag(event: DragEvent) {
 function openTaskDialog() {
 	emit("details", task.uid)
 }
+
+const taskProgress = computed(() => {
+	const done = task.subtasks.filter(subtask => subtask.done).length
+	const total = task.subtasks.length
+	return `${(done / total) * 100}%`
+})
 </script>
