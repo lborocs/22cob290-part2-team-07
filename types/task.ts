@@ -12,9 +12,8 @@ export function statusName(status: TaskStatus): string {
 }
 
 export function workerHours(task: Task & { subtasks: Subtask[] }) {
-	if (task.subtasks.length <= 0) return task.workerHours
-	return task.subtasks.reduce(
-		(total, subtask) => total + subtask.workerHours,
-		0,
+	return (
+		task.workerHours +
+		task.subtasks.reduce((total, subtask) => total + subtask.workerHours, 0)
 	)
 }
