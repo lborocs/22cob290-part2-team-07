@@ -186,7 +186,7 @@ main {
 
 		.nav-logo {
 			aspect-ratio: 1;
-			width: clamp(2rem, 50%, 5rem);
+			width: 3rem;
 			margin-inline: auto;
 		}
 	}

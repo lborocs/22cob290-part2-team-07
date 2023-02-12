@@ -9,15 +9,22 @@ export default defineEventHandler(async event => {
 	try {
 		const body = await readBody(event)
 
-		const details = body.task as Task
+		const details = body.task as KanbanTask
 		console.table(details)
 		console.log(typeof details.workerHours, typeof +details.workerHours)
+
+		const deadlineDate = new Date(details.deadline?.toString() || "")
 
 		const task = await prisma.task.create({
 			data: {
 				name: details.name,
 				description: details.description,
 				workerHours: +details.workerHours,
+				deadline: deadlineDate,
+				project: { connect: { uid: +details.projectId! } },
+				assignees: {
+					connect: [...details.assignees],
+				},
 			},
 		})
 		console.log("Task created - ", task)

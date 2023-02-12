@@ -1,11 +1,22 @@
 import prisma from "~~/prisma"
+import { Task } from "@prisma/client"
 
 export default defineEventHandler(async event => {
 	const body = await readBody(event)
-	const newStatus = body as number
+	const task = body.task as KanbanTask
+	const ids = task.assignees.map(user => {
+		return {
+			uid: user.uid,
+		}
+	})
 	await prisma.task.update({
-		where: { uid: +(event.context.params.id as number) },
-		data: { status: newStatus },
+		where: { uid: task.uid },
+		data: {
+			status: task.status,
+			assignees: {
+				set: [...ids],
+			},
+		},
 	})
 	return {
 		status: 200,

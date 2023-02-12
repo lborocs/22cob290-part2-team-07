@@ -23,7 +23,7 @@
 		background-color: var(--colour-accent-faded);
 	}
 
-	&:hover,
+	&:hover:not([disabled]),
 	&:focus {
 		outline-offset: 0.3rem;
 		background-color: var(--colour-background-1);
