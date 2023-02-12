@@ -71,9 +71,3 @@ const chartStyles = computed(() => {
 	>
 	</Bar>
 </template>
-
-<style scoped lang="scss">
-.test {
-	// I get an error if I remove this class? weird
-}
-</style>

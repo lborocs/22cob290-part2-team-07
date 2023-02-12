@@ -271,7 +271,7 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
-		emit("update", newTask.uid)
+		emit("update", newTask.uid, false)
 	}
 }
 
@@ -286,7 +286,7 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		console.log(res.newParentStatus)
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
-	emit("update", uid)
+	emit("update", uid, isChecked)
 }
 
 function onTaskFinish(uid: number, status: boolean) {
