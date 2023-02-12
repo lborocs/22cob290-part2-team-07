@@ -71,3 +71,8 @@ const chartStyles = computed(() => {
 	>
 	</Bar>
 </template>
+
+<style scoped lang="scss">
+.test {
+}
+</style>
