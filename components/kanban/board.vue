@@ -8,7 +8,7 @@ const { tasks } = defineProps<{
 
 const emit = defineEmits<{
 	(name: "details", id: number): void
-	(name: "finish", taskId: number): void
+	(name: "finish", taskId: number, status: boolean): void
 }>()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
@@ -27,10 +27,7 @@ async function onDrop(event: DragEvent, status: TaskStatus) {
 		method: "POST",
 		body: task.status.toString(),
 	})
-
-	if (task.status === 2) {
-		emit("finish", task.uid)
-	}
+	emit("finish", task.uid, task.status === 2)
 }
 
 function emitDialog(id: number) {

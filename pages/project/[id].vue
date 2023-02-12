@@ -24,9 +24,11 @@ const projectMembers = $computed(() => {
 	return members
 })
 
-const totalHoursByMember = $computed(() => {
+const memberHours = reactive(initHours())
+
+function initHours(): { [key: string]: number } {
 	const hoursByMember: { [key: string]: number } = {}
-	// count tasks that are done (status == 0) or in progress (status == 1)
+
 	const tasks = project.value!.tasks.filter(
 		task => task.status === 0 || task.status === 1,
 	)
@@ -42,9 +44,9 @@ const totalHoursByMember = $computed(() => {
 		}
 	}
 	return hoursByMember
-})
+}
 
-function updateHours(uid: number) {
+function updateHours(uid: number, status: boolean) {
 	let task = project.value!.tasks.find(task => task.uid === uid)
 	let foundSubtask: Subtask | undefined
 
@@ -64,13 +66,21 @@ function updateHours(uid: number) {
 
 	const assignees = new Set(task.assignees.map(member => member.name))
 
-	for (const memberName of Object.keys(totalHoursByMember)) {
+	for (const memberName of Object.keys(memberHours)) {
 		if (assignees.has(memberName)) {
-			totalHoursByMember[memberName] -= foundSubtask
-				? foundSubtask.workerHours
-				: task.workerHours
+			if (status) {
+				memberHours[memberName] -= foundSubtask
+					? foundSubtask.workerHours
+					: task.workerHours
+			} else {
+				memberHours[memberName] += foundSubtask
+					? foundSubtask.workerHours
+					: task.workerHours
+			}
 		}
 	}
+
+	console.log(memberHours)
 }
 
 // Display days left until project deadline
@@ -137,7 +147,7 @@ const selectedUserViewMode = ref(1)
 				:user="member"
 			/>
 		</div> -->
-		<ProjectChart :user-hours="totalHoursByMember" />
+		<ProjectChart :user-hours="memberHours" />
 	</section>
 </template>
 

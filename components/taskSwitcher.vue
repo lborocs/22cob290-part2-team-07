@@ -184,7 +184,7 @@ import { Icon } from "@iconify/vue"
 import { emitKeypressEvents } from "readline"
 
 const emit = defineEmits<{
-	(name: "update", taskId: number): void
+	(name: "update", taskId: number, status: boolean): void
 }>()
 
 const p = defineProps<{
@@ -289,7 +289,7 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 	emit("update", uid)
 }
 
-function onTaskFinish(uid: number) {
-	emit("update", uid)
+function onTaskFinish(uid: number, status: boolean) {
+	emit("update", uid, status)
 }
 </script>
