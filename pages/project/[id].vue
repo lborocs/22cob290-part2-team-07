@@ -168,6 +168,7 @@ const selectedUserViewMode = ref(1)
 				v-for="member in projectMembers"
 				:key="member.uid"
 				:user="member"
+				:assigned="memberHours[member.name]"
 			/>
 		</div>
 		<ProjectChart v-else :user-hours="memberHours" />
