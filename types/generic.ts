@@ -1,4 +1,4 @@
-function formData2Object(data: FormData) {
+export function formData2Object(data: FormData) {
 	return [...data.entries()].reduce((obj, pair) => {
 		return {
 			...obj,

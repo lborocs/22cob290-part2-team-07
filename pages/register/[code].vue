@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { emailDomain } from "@/types/user"
+import { formData2Object } from "@/types/generic"
 definePageMeta({
 	layout: "loginreg",
 	name: "Registration",
