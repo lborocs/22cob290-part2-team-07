@@ -37,8 +37,3 @@ h1 u {
 	width: 5rem;
 }
 </style>
-<style lang="scss">
-body {
-	overflow: clip;
-}
-</style>
