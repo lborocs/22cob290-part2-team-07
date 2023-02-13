@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { User, Subtask } from ".prisma/client"
-import { optionalMemberExpression } from "@babel/types"
+import { User, Subtask, Task } from ".prisma/client"
+import { workerHours } from "@/types/task"
 
 definePageMeta({
 	name: "Project",
@@ -35,14 +35,8 @@ function initHours(): { [key: string]: number } {
 	for (const task of tasks) {
 		for (const member of projectMembers) {
 			if (task.assignees.includes(member)) {
-				let taskWorkerHours = task.workerHours
-				if (task.hasOwnProperty("subtasks")) {
-					for (const subtask of task.subtasks) {
-						taskWorkerHours += subtask.workerHours
-					}
-				}
 				hoursByMember[member.name] =
-					(hoursByMember[member.name] || 0) + taskWorkerHours
+					(hoursByMember[member.name] || 0) + workerHours(task)
 			}
 		}
 	}
