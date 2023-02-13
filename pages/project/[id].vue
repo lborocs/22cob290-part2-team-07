@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { User } from ".prisma/client"
+import { User, Subtask, Task } from ".prisma/client"
+import { workerHours } from "@/types/task"
 
 definePageMeta({
 	name: "Project",
@@ -22,6 +23,89 @@ const projectMembers = $computed(() => {
 	}
 	return members
 })
+
+const memberHours = reactive(initHours())
+
+function initHours(): { [key: string]: number } {
+	const hoursByMember: { [key: string]: number } = {}
+
+	const tasks = project.value!.tasks.filter(
+		task => task.status === 0 || task.status === 1,
+	)
+	for (const task of tasks) {
+		for (const member of projectMembers) {
+			if (task.assignees.includes(member)) {
+				hoursByMember[member.name] =
+					(hoursByMember[member.name] || 0) + workerHours(task)
+			}
+		}
+	}
+	return hoursByMember
+}
+
+function updateHours(uid: number, status: boolean, isSubTask: boolean) {
+	let task: KanbanTask | undefined
+	let subtask: Subtask | undefined
+	let parentTask: KanbanTask | undefined
+	if (isSubTask) {
+		for (const t of project.value!.tasks) {
+			subtask = t.subtasks.find(subtask => subtask.uid === uid)
+			if (subtask) {
+				console.log("Subtask has been finished: ", subtask)
+				parentTask = t
+				break
+			}
+		}
+
+		if (!subtask) {
+			return
+		}
+
+		const taskHours = subtask.workerHours
+		console.log("Subtask worker hours: ", taskHours)
+		const assignedMembers = new Set(
+			parentTask!.assignees.map(member => member.name),
+		)
+
+		for (const memberName of Object.keys(memberHours)) {
+			if (assignedMembers.has(memberName)) {
+				if (status) {
+					memberHours[memberName] -= taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				} else {
+					memberHours[memberName] += taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				}
+			}
+		}
+	} else {
+		task = project.value!.tasks.find(task => task.uid === uid)
+		console.log("Task has been finished: ", subtask)
+
+		if (!task) {
+			return
+		}
+
+		const taskHours = workerHours(task)
+		console.log("Task worker hours: ", taskHours)
+		const assignedMembers = new Set(task.assignees.map(member => member.name))
+
+		for (const memberName of Object.keys(memberHours)) {
+			if (assignedMembers.has(memberName)) {
+				if (status) {
+					memberHours[memberName] -= taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				} else {
+					memberHours[memberName] += taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				}
+			}
+		}
+	}
+
+	// console.log(memberHours)
+}
+
 // Display days left until project deadline
 function dateDiffInDays(a: any, b: any) {
 	const _MS_PER_DAY = 1000 * 60 * 60 * 24
@@ -31,6 +115,8 @@ function dateDiffInDays(a: any, b: any) {
 
 	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
+
+const selectedUserViewMode = ref(1)
 </script>
 
 <template>
@@ -66,15 +152,25 @@ function dateDiffInDays(a: any, b: any) {
 		</ProjectCard>
 	</section>
 
-	<TaskSwitcher :tasks="project!.tasks" />
+	<TaskSwitcher :tasks="project!.tasks" @update="updateHours" />
 
-	<section class="card wrap-grid">
+	<section class="card">
 		<h2 class="sr-only">Project Members</h2>
-		<ProjectMember
-			v-for="member in projectMembers"
-			:key="member.uid"
-			:user="member"
-		/>
+		<div class="right-buttons">
+			<ButtonSwitch
+				option1="Members"
+				option2="Chart view"
+				v-model:selected="selectedUserViewMode"
+			/>
+		</div>
+		<div class="wrap-grid" v-if="selectedUserViewMode == 1">
+			<ProjectMember
+				v-for="member in projectMembers"
+				:key="member.uid"
+				:user="member"
+			/>
+		</div>
+		<ProjectChart v-else :user-hours="memberHours" />
 	</section>
 </template>
 
@@ -134,5 +230,10 @@ function dateDiffInDays(a: any, b: any) {
 
 .no-margin {
 	margin: 1rem 0 0 0;
+}
+.right-buttons {
+	@extend %flex-row, %flex-centre;
+	justify-content: flex-end;
+	margin: 0.5rem 0;
 }
 </style>

@@ -23,13 +23,19 @@
 			</div>
 		</header>
 		<div v-if="filteredTasks.length > 0">
-			<TasksList
-				v-if="selectedViewMode == 1"
-				:tasks="filteredTasks"
-				@details="showDialog"
-			/>
-			<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
-		</div>
+      <TasksList
+        v-if="selectedViewMode == 1"
+        :tasks="filteredTasks"
+        @details="showDialog"
+        @finish="onTaskFinish"
+      />
+      <KanbanBoard
+        v-else
+        :tasks="filteredTasks"
+        @details="showDialog"
+        @finish="onTaskFinish"
+      />
+    </div>
 		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
 
@@ -356,6 +362,11 @@ import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
 import { arrayBuffer } from "stream/consumers"
 
+const emit = defineEmits<{
+	(name: "update", taskId: number, status: boolean, isSubTask: boolean): void
+}>()
+
+
 const p = defineProps<{
 	tasks: KanbanTask[]
 }>()
@@ -499,6 +510,7 @@ async function addTask() {
 			}),
 		},
 	}
+
 	console.log(body)
 
 	const res: { success: boolean; task: Task | undefined } = await $fetch(
@@ -514,12 +526,13 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
+		emit("update", newTask.uid, false, false)
 	}
 }
 
 async function onSubtaskCheckChange(event: Event, uid: number) {
 	const isChecked = (event.target as HTMLInputElement).checked
-	console.log(isChecked)
+	// console.log(isChecked)
 	const res = await $fetch(`/api/subtask/${uid}`, {
 		method: "PUT",
 		body: isChecked.toString(),
@@ -532,6 +545,11 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		subtask!.done = isChecked
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
+	emit("update", uid, isChecked, true)
+}
+
+function onTaskFinish(uid: number, status: boolean) {
+	emit("update", uid, status, false)
 }
 
 async function getAssignableProjects() {
