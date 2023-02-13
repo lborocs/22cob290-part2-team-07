@@ -13,6 +13,7 @@ import {
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const props = defineProps<{ userHours: {} }>()
+const colorMode = useColorMode()
 
 const chartData = computed(() => {
 	return {
@@ -29,32 +30,47 @@ const chartData = computed(() => {
 })
 
 const chartOptions = computed(() => {
+	const colors =
+		colorMode.value === "light"
+			? {
+					grid: {
+						color: "#080808",
+					},
+					ticks: {
+						color: "#000",
+					},
+					labels: {
+						color: "#000",
+					},
+			  }
+			: {
+					grid: {
+						color: "#a6acbe",
+					},
+					ticks: {
+						color: "#eee",
+					},
+					labels: {
+						color: "#eee",
+					},
+			  }
+
 	return {
 		responsive: true,
 		maintainAspectRatio: true,
 		scales: {
 			x: {
-				grid: {
-					color: "black",
-				},
-				ticks: {
-					color: "#eee",
-				},
+				grid: colors.grid,
+				ticks: colors.ticks,
 			},
 			y: {
-				grid: {
-					color: "black",
-				},
-				ticks: {
-					color: "#eee",
-				},
+				grid: colors.grid,
+				ticks: colors.ticks,
 			},
 		},
 		plugins: {
 			legend: {
-				labels: {
-					color: "#eee",
-				},
+				labels: colors.labels,
 			},
 		},
 	}
