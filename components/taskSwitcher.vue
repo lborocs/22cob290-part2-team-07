@@ -184,7 +184,7 @@ import { Icon } from "@iconify/vue"
 import { emitKeypressEvents } from "readline"
 
 const emit = defineEmits<{
-	(name: "update", taskId: number, status: boolean): void
+	(name: "update", taskId: number, status: boolean, isSubTask: boolean): void
 }>()
 
 const p = defineProps<{
@@ -277,19 +277,19 @@ async function addTask() {
 
 async function onSubtaskCheckChange(event: Event, uid: number) {
 	const isChecked = (event.target as HTMLInputElement).checked
-	console.log(isChecked)
+	// console.log(isChecked)
 	const res = await $fetch(`/api/subtask/${uid}`, {
 		method: "PUT",
 		body: isChecked.toString(),
 	})
 	if (res.status == 200) {
-		console.log(res.newParentStatus)
+		// console.log(res.newParentStatus)
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
-	emit("update", uid, isChecked)
+	emit("update", uid, isChecked, true)
 }
 
 function onTaskFinish(uid: number, status: boolean) {
-	emit("update", uid, status)
+	emit("update", uid, status, false)
 }
 </script>
