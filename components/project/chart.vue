@@ -14,16 +14,18 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const props = defineProps<{ userHours: {} }>()
 
-const chartData = ref({
-	labels: Object.keys(props.userHours),
-	datasets: [
-		{
-			label: "Worker Hours per Employee",
-			data: [...Object.values(props.userHours)] as number[],
-			maxBarThickness: 32,
-			backgroundColor: "#ffb53c",
-		},
-	],
+const chartData = computed(() => {
+	return {
+		labels: Object.keys(props.userHours),
+		datasets: [
+			{
+				label: "Worker Hours per Employee",
+				data: [...Object.values(props.userHours)] as number[],
+				maxBarThickness: 32,
+				backgroundColor: "#ffb53c",
+			},
+		],
+	}
 })
 
 const chartOptions = ref({
