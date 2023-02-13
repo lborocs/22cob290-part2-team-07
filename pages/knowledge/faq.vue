@@ -11,7 +11,7 @@ definePageMeta({
 })
 
 const route = useRoute()
-const currentUser = useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
 const { data: post } = await useFetch(`/api/faq`, {
 	query: { u: currentUser.value!.uid },
 })

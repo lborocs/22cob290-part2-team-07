@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { has, Permission, permissions } from "@/types/permission"
 
-const currentUser = useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
+
 const { data: topics } = useLazyFetch("/api/topics", {
 	params: {
 		u: currentUser.value?.uid,

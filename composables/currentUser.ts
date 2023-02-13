@@ -1,14 +1,9 @@
 import { Role, User } from ".prisma/client"
+import { login } from "~~/types/user"
 
 // Subject to change
 export const useCurrentUser = () =>
-	useAsyncData<User & { roles: Role[] }>("currentUser", async () => {
-		// TODO: Use local storage or cookies to find the correct user ID
-		return await $fetch("/api/login", {
-			method: "POST",
-			body: {
-				email: "queen",
-				password: "pqueen",
-			},
-		})
-	}).data
+	useAsyncData<(User & { roles: Role[] }) | null>("currentUser", async ctx => {
+		const uid = useCookie("uid").value
+		return await $fetch(`/api/user/uid/${uid}`)
+	})
