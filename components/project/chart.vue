@@ -28,32 +28,34 @@ const chartData = computed(() => {
 	}
 })
 
-const chartOptions = ref({
-	responsive: true,
-	maintainAspectRatio: true,
-	scales: {
-		x: {
-			grid: {
-				color: "black",
+const chartOptions = computed(() => {
+	return {
+		responsive: true,
+		maintainAspectRatio: true,
+		scales: {
+			x: {
+				grid: {
+					color: "black",
+				},
+				ticks: {
+					color: "#eee",
+				},
 			},
-			ticks: {
-				color: "#eee",
+			y: {
+				grid: {
+					color: "black",
+				},
+				ticks: {
+					color: "#eee",
+				},
 			},
 		},
-		y: {
-			grid: {
-				color: "black",
-			},
-			ticks: {
-				color: "#eee",
+		legend: {
+			labels: {
+				fontColor: "#eee",
 			},
 		},
-	},
-	legend: {
-		labels: {
-			fontColor: "#eee",
-		},
-	},
+	}
 })
 
 const chartStyles = computed(() => {
