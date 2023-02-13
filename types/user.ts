@@ -11,3 +11,5 @@ export function rolesTitle(roles?: RoleName[]): string {
 	roles.sort((a, b) => a.rank - b.rank)
 	return roles[0].name
 }
+
+export function login(user: UserR) {}
