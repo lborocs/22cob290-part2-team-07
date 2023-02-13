@@ -49,7 +49,7 @@ const mapsQuery = "https://www.google.com/maps/search/?api=1&query=" + clientAdd
             <div class="card-small bg-accent card-bigger">
             <h3 class="title-card-small text-center">Contact information</h3>
             <div class="flex-col-center">
-              <h2 name="name" class="edit__titles">Email: {{clientEmail}} Phone: {{clientPhone}} Website: {{ clientWebsite }}</h2>
+              <h2 name="name" class="edit__titles">Email: <span class="client-details-text">{{clientEmail}}</span> Phone: <span class="client-details-text">{{clientPhone}}</span> Website: <span class="client-details-text">{{ clientWebsite }}</span></h2>
                 <div class="link-list text-center">
                 <a :href="`mailto:${clientEmail}`" id="client-email" target="_blank">
                     Contact via email</a
@@ -84,6 +84,10 @@ const mapsQuery = "https://www.google.com/maps/search/?api=1&query=" + clientAdd
 <style scoped lang="scss">
 @use "~/assets/core";
 @use "/assets/colour";
+
+.client-details-text {
+  font-weight: 400;
+}
 
 .topcards-wrapper {
   display: flex;
@@ -158,5 +162,10 @@ const mapsQuery = "https://www.google.com/maps/search/?api=1&query=" + clientAdd
 
 #client-web span {
   font-size: 1em;
+}
+
+.card-small {
+  width: 100%;
+  text-align:center;
 }
 </style>
