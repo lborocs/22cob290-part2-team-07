@@ -1,14 +1,15 @@
 import prisma from "@/prisma"
+import { decodeEmail } from "@/types/invite"
 import { everyoneUid } from "@/types/permission"
 
 export default defineEventHandler(async event => {
 	const body = await readBody(event)
-	const email = body.email as string
-	const b64 = Buffer.from(email).toString("base64")
+	const code = body.code as string
+	const email = decodeEmail(code)
 
 	const results = await prisma.$transaction([
 		prisma.invite.delete({
-			where: { code: b64 },
+			where: { code },
 		}),
 		prisma.user.create({
 			data: {
