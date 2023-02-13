@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { logout } from "@/types/user"
 
 const route = useRoute()
 const pageName = $computed<string>(
@@ -15,14 +16,9 @@ useHead(() => {
 	}
 })
 
-const user = useCurrentUser()
+const { data: user } = await useCurrentUser()
 
 const isNavExpanded = ref(false)
-
-// Temporary until the login / logout logic is finalised
-function logout() {
-	alert("User Logged Out!")
-}
 
 function toggleMobileNav() {
 	isNavExpanded.value = !isNavExpanded.value
