@@ -1,17 +1,44 @@
-<script setup></script>
+<script setup lang="ts">
+
+
+import { rolesTitle,profilePicture,emailDomain } from "~~/types/user"
+import {UserRank} from "~~/types"
+import {ref } from 'vue'
+import { User } from ".prisma/client"
+import { useRoute } from 'vue-router'
+
+const { params } = useRoute()
+const userEmail = params.id
+console.log(userEmail)
+const { data: user } = await useFetch(`/api/user/${userEmail}`)
+
+console.log(user)
+const username = user.value!.name
+
+const userRank = rolesTitle(user.roles)
+console.log(userRank)
+console.log(user.roles)
+
+const userProfilePicture = ref(profilePicture(username))
+const userEmailAddress = userEmail + emailDomain
+defineProps<{}>()
+</script>
 
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
-			<slot name="name"></slot>
-			<slot name="account">Account</slot>
+			<h2 name="name" class="edit__titles">{{username}}</h2>
+			<h2 name="account" class="edit__titles">Account</h2>
 		</div>
 		<hr />
 		<div class="card-image-wrapper">
-			<slot name="hierarchy">Employee</slot>
+			<h2 name="hierarchy" class="user__rank">"user_rank"</h2>
+			
+			<!-- :src= "XXX" is how to do it when i want to use variable from above -->
+
 			<img
 				id="card-profile-picture"
-				src="https://ui-avatars.com/api/?name=Neumann&background=random&size=50&format=svg"
+				:src= "userProfilePicture"
 				alt=""
 				class="profile-pic"
 			/>
@@ -24,7 +51,7 @@
 				<label for="email-box" class="label-subtext"
 					>This is their assigned company email</label
 				>
-				<label id="email-box">f.batmaz@lboro.ac.uk</label>
+				<label id="email-box">{{ userEmailAddress }}</label>
 				<img class="email-lock-img" src="~/assets/lock.png" alt="lock" />
 			</div>
 		</div>
@@ -36,6 +63,22 @@
 @use "/assets/colour";
 
 $logout: #da0000;
+
+.user__rank {
+	text-align: center;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 1.5rem;
+	line-height: 2em;
+	letter-spacing: 0.01em;
+	color: colour.$text-light-faded;
+}
+
+.edit__titles {
+	text-decoration: underline;
+	text-decoration-color: colour.$accent;
+}
+
 .align {
 	display: flex;
 	align-items: center;

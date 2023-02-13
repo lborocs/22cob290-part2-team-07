@@ -53,6 +53,11 @@ body {
 	}
 }
 
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+
 @for $i from 1 through 12 {
 	.gap-#{$i} {
 		gap: $i * 0.2rem;

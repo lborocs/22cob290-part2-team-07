@@ -129,6 +129,9 @@ header {
 	@media screen and (max-width: mobile.$width) {
 		margin: 0;
 	}
+	padding: 0 1em;
+	background-color: var(--colour-background-2);
+	margin-bottom: 1em;
 }
 
 main {
@@ -183,7 +186,7 @@ main {
 
 		.nav-logo {
 			aspect-ratio: 1;
-			width: clamp(2rem, 50%, 5rem);
+			width: 3rem;
 			margin-inline: auto;
 		}
 	}

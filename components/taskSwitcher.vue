@@ -22,24 +22,26 @@
 				</Button>
 			</div>
 		</header>
-		<TasksList
-			v-if="selectedViewMode == 1"
-			:tasks="filteredTasks"
-			@details="showDialog"
-			@finish="onTaskFinish"
-		/>
-		<KanbanBoard
-			v-else
-			:tasks="filteredTasks"
-			@details="showDialog"
-			@finish="onTaskFinish"
-		/>
+		<div v-if="filteredTasks.length > 0">
+      <TasksList
+        v-if="selectedViewMode == 1"
+        :tasks="filteredTasks"
+        @details="showDialog"
+        @finish="onTaskFinish"
+      />
+      <KanbanBoard
+        v-else
+        :tasks="filteredTasks"
+        @details="showDialog"
+        @finish="onTaskFinish"
+      />
+    </div>
+		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
+
 	<Modal :control="modalTaskDetails" :title="currentTask.name">
 		<p>{{ currentTask.description }}</p>
-		<Button icon="material-symbols:add" class="center-button">
-			Add Subtask
-		</Button>
+
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
 			<h2>Subtasks</h2>
 			<ul class="subtask-list">
@@ -65,13 +67,38 @@
 				</li>
 			</ul>
 		</div>
-		<ModalFooter> </ModalFooter>
+		<Button
+			icon="material-symbols:add"
+			class="center-button"
+			@click="modalTaskDetails.hide(), modalAddSubtask.show()"
+		>
+			Add Subtask
+		</Button>
+		<UserSelect
+			id="edit-users"
+			:users="assignableUsers"
+			v-model:selection="taskEditAssignees"
+		/>
+		<ModalFooter>
+			<Button
+				icon="material-symbols:check"
+				@click="applyTaskEdits($event), modalTaskDetails.hide()"
+			>
+				Apply Changes
+			</Button>
+		</ModalFooter>
 	</Modal>
 
 	<Modal :control="modalAddTask" title="New Task">
-		<form action="alert('test')" class="task-form">
+		<form class="task-form">
 			<label for="task-name">Name:</label>
-			<input type="text" name="task-name" id="task-name" ref="taskName" />
+			<input
+				type="text"
+				name="task-name"
+				id="task-name"
+				ref="taskName"
+				@change="onNewTaskChange"
+			/>
 			<label for="task-description">Description:</label>
 			<textarea
 				name="task-description"
@@ -79,47 +106,168 @@
 				ref="taskDescription"
 				cols="30"
 				rows="10"
+				@change="onNewTaskChange"
 			></textarea>
 			<label for="task-hours">Estimated Worker Hours:</label>
-			<input type="number" name="task-hours" id="task-hours" ref="taskHours" />
+			<input
+				type="number"
+				name="task-hours"
+				id="task-hours"
+				ref="taskHours"
+				@change="onNewTaskChange"
+			/>
+			<select
+				name="project"
+				id="task-project"
+				ref="taskProject"
+				@change="onNewTaskChange"
+			>
+				<option :value="-1" disabled selected hidden>
+					Select project to add task to
+				</option>
+				<option :value="null">Personal Task</option>
+				<option
+					v-for="project in assignableProjects"
+					:key="project.uid"
+					:value="project.uid"
+				>
+					{{ project.name }}
+				</option>
+			</select>
+			<label for="task-deadline">Deadline:</label>
+			<input
+				type="date"
+				name="task-deadline"
+				id="task-deadline"
+				ref="taskDeadline"
+				@change="onNewTaskChange"
+			/>
+			<UserSelect
+				id="new-task-users"
+				:users="assignableUsers"
+				v-model:selection="taskAssignees"
+			/>
 		</form>
 		<ModalFooter>
 			<Button
 				@click="addTask(), modalAddTask.hide()"
-				icon="material-symbols:add"
-				>Apply</Button
+				icon="material-symbols:check"
+				:disabled="!newTaskFormCompleted"
 			>
+				Apply
+			</Button>
+		</ModalFooter>
+	</Modal>
+
+	<Modal :control="modalAddSubtask" title="New Subtask">
+		<form class="task-form">
+			<label for="subtask-name">Name:</label>
+			<input
+				type="text"
+				name="subtask-name"
+				id="subtask-name"
+				ref="subtaskName"
+				@change="onNewSubtaskChange"
+			/>
+			<label for="subtask-hours">Estimated Worker Hours:</label>
+			<input
+				type="number"
+				name="subtask-hours"
+				id="subtask-hours"
+				ref="subtaskHours"
+				@change="onNewSubtaskChange"
+			/>
+		</form>
+		<ModalFooter>
+			<Button
+				@click="
+					createSubtask(), modalAddSubtask.hide(), modalTaskDetails.show()
+				"
+				icon="material-symbols:check"
+				:disabled="!newSubtaskFormCompleted"
+			>
+				Apply
+			</Button>
 		</ModalFooter>
 	</Modal>
 
 	<Modal :control="modalFilter" title="Filter Tasks">
-		<div class="filter-options">
-			<div class="filter-section">
-				<input
-					type="checkbox"
-					name="ToDo"
-					id="filter-todo"
-					@change="filterCategories.ToDo = !filterCategories.ToDo"
-					:checked="filterCategories.ToDo"
+		<div class="filters-wrapper">
+			<section class="filters">
+				<h2 class="filter-header">By Status</h2>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="ToDo"
+						id="filter-todo"
+						@change="filterCategories.ToDo = !filterCategories.ToDo"
+						:checked="filterCategories.ToDo"
+					/>
+					<label for="filter-todo">To Do</label>
+				</div>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="InProgress"
+						id="filter-inprogress"
+						@change="filterCategories.InProgress = !filterCategories.InProgress"
+						:checked="filterCategories.InProgress"
+					/>
+					<label for="filter-inprogress">In Progress</label>
+				</div>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="Done"
+						id="filter-done"
+						@change="filterCategories.Done = !filterCategories.Done"
+						:checked="filterCategories.Done"
+					/>
+					<label for="filter-done">Done</label>
+				</div>
+			</section>
+			<section class="filter">
+				<h2 class="filter-header">By Project</h2>
+				<div class="cb-wrapper">
+					<input
+						type="checkbox"
+						name="personal"
+						id="filter-personal"
+						:checked="filterProjects.get(null)"
+						@change="filterProjects.set(null, !filterProjects.get(null))"
+					/>
+					<label for="filter-personal">Personal Tasks</label>
+				</div>
+				<div
+					class="cb-wrapper"
+					v-for="project in visibleProjects"
+					:key="project?.uid"
+				>
+					<input
+						type="checkbox"
+						name="personal"
+						:id="`filter-project-${project?.uid}`"
+						:checked="filterProjects.get(project?.uid)"
+						@change="
+							filterProjects.set(
+								project?.uid,
+								!filterProjects.get(project?.uid),
+							)
+						"
+					/>
+					<label :for="`filter-project-${project?.uid}`">
+						{{ project?.name }}
+					</label>
+				</div>
+			</section>
+			<section class="filter">
+				<h2 class="filter-header">By Assignees</h2>
+				<UserSelect
+					id="filter-users"
+					:users="assignableUsers"
+					v-model:selection="filteredAssignees"
 				/>
-				<label for="filter-todo">To Do</label>
-				<input
-					type="checkbox"
-					name="InProgress"
-					id="filter-inprogress"
-					@change="filterCategories.InProgress = !filterCategories.InProgress"
-					:checked="filterCategories.InProgress"
-				/>
-				<label for="filter-inprogress">In Progress</label>
-				<input
-					type="checkbox"
-					name="Done"
-					id="filter-done"
-					@change="filterCategories.Done = !filterCategories.Done"
-					:checked="filterCategories.Done"
-				/>
-				<label for="filter-done">Done</label>
-			</div>
+			</section>
 		</div>
 		<ModalFooter>
 			<Button
@@ -142,7 +290,7 @@
 header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-end;
 }
 
 .right-buttons {
@@ -153,6 +301,19 @@ header {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	input,
+	select,
+	textarea {
+		border: none;
+		border-bottom: 0.1rem solid var(--colour-accent);
+		font-size: 1rem;
+		accent-color: var(--colour-accent);
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+	}
+	textarea {
+		resize: vertical;
+	}
 }
 
 .center-button {
@@ -173,19 +334,38 @@ header {
 		aspect-ratio: 1;
 	}
 }
+
+.filters-wrapper {
+	.filters {
+		display: flex;
+		flex-direction: column;
+	}
+}
+.filter {
+	margin-top: 1rem;
+}
+.filter-header {
+	margin: 0 0 0.2rem 0;
+}
+.cb-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
 </style>
 
 <script setup lang="ts">
-import { Subtask } from ".prisma/client"
-import { Task } from "@prisma/client"
+import { Subtask, User } from ".prisma/client"
+import { Project, Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
-import { emitKeypressEvents } from "readline"
+import { arrayBuffer } from "stream/consumers"
 
 const emit = defineEmits<{
 	(name: "update", taskId: number, status: boolean, isSubTask: boolean): void
 }>()
+
 
 const p = defineProps<{
 	tasks: KanbanTask[]
@@ -193,11 +373,36 @@ const p = defineProps<{
 
 const filteredTasks = ref(p.tasks)
 
+// The projects associated with our tasks, given by mapping to get an array of
+// projects, then filtering to remove duplicates and null values
+const visibleProjects = ref<(Project | null | undefined)[]>(
+	p.tasks
+		.map(task => task.project)
+		.filter((project, index, array) => {
+			return (
+				project !== null &&
+				array.findIndex(p => p?.uid === project?.uid) === index
+			)
+		}),
+)
+
 const selectedViewMode = ref(1)
 
 const taskName = ref<HTMLInputElement>()
 const taskDescription = ref<HTMLTextAreaElement>()
 const taskHours = ref<HTMLInputElement>()
+const taskProject = ref<HTMLSelectElement>()
+const taskDeadline = ref<HTMLInputElement>()
+const taskAssignees = ref<User[]>([])
+
+const newSubtaskFormCompleted = ref<boolean>(false)
+const subtaskName = ref<HTMLInputElement>()
+const subtaskHours = ref<HTMLInputElement>()
+
+// selected users for the current task
+const taskEditAssignees = ref<User[]>([])
+
+const newTaskFormCompleted = ref<boolean>(false)
 
 const modalFilter = useModal()
 
@@ -205,8 +410,17 @@ const modalAddTask = useModal()
 
 const modalTaskDetails = useModal()
 
+const modalAddSubtask = useModal()
+
 // the task for display in the modal
 const currentTask = ref(p.tasks[0])
+
+// the projects that new tasks can be assigned to
+const assignableProjects = ref<Project[]>([])
+getAssignableProjects()
+
+const assignableUsers = ref<User[]>([])
+getAssignableUsers()
 
 let currentTaskIndex = 0
 
@@ -218,6 +432,7 @@ async function showDialog(index: number) {
 	currentTask.value = (await (
 		await fetch(`/api/task/${task.uid}`)
 	).json()) as KanbanTask
+	taskEditAssignees.value = currentTask.value.assignees
 	modalTaskDetails.show()
 }
 
@@ -227,17 +442,46 @@ const filterCategories = ref({
 	Done: true,
 })
 
+const filterProjects = ref<Map<number | undefined | null, boolean>>(
+	new Map<number | undefined | null, boolean>(),
+)
+
+// personal tasks
+filterProjects.value.set(null, true)
+
+// all projects
+for (const project of visibleProjects.value) {
+	filterProjects.value.set(project?.uid, true)
+}
+
+const filteredAssignees = ref<User[]>([])
+
 function applyFilter() {
-	filteredTasks.value = p.tasks.filter(task => {
-		return task.status == TaskStatus.Todo && filterCategories.value.ToDo
-			? true
-			: task.status == TaskStatus.InProgress &&
-			  filterCategories.value.InProgress
-			? true
-			: task.status == TaskStatus.Done && filterCategories.value.Done
-			? true
-			: false
-	})
+	console.log(p.tasks)
+
+	filteredTasks.value = p.tasks
+		.filter(task => {
+			return task.status == TaskStatus.Todo && filterCategories.value.ToDo
+				? true
+				: task.status == TaskStatus.InProgress &&
+				  filterCategories.value.InProgress
+				? true
+				: task.status == TaskStatus.Done && filterCategories.value.Done
+				? true
+				: false
+		})
+		.filter(task => {
+			return filterProjects.value.get(task.projectId)
+		})
+		.filter(task => {
+			return (
+				filteredAssignees.value.length == 0 ||
+				filteredAssignees.value.some(user =>
+					task.assignees?.some(assignee => assignee.uid == user.uid),
+				)
+			)
+		})
+	console.log(filteredTasks.value)
 }
 
 function clearFilter() {
@@ -245,7 +489,13 @@ function clearFilter() {
 }
 
 async function addTask() {
-	console.log(taskName.value, taskDescription.value, taskHours.value)
+	console.log(
+		taskName.value?.value,
+		taskDescription.value?.value,
+		taskHours.value?.value,
+		taskProject.value?.value,
+		taskDeadline.value?.value,
+	)
 	const hours = taskHours.value?.value as unknown as number
 
 	const body = {
@@ -253,6 +503,11 @@ async function addTask() {
 			name: taskName.value?.value,
 			description: taskDescription.value?.value,
 			workerHours: hours,
+			deadline: taskDeadline.value?.value,
+			projectId: taskProject.value?.value as unknown as number,
+			assignees: taskAssignees.value.map(user => {
+				return { uid: user.uid }
+			}),
 		},
 	}
 
@@ -283,7 +538,11 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		body: isChecked.toString(),
 	})
 	if (res.status == 200) {
-		// console.log(res.newParentStatus)
+		console.log(res.newParentStatus)
+		const subtask = filteredTasks.value[currentTaskIndex].subtasks.find(
+			subtask => subtask.uid == uid,
+		)
+		subtask!.done = isChecked
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
 	emit("update", uid, isChecked, true)
@@ -291,5 +550,64 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 
 function onTaskFinish(uid: number, status: boolean) {
 	emit("update", uid, status, false)
+}
+
+async function getAssignableProjects() {
+	const res = await $fetch("/api/projects")
+	assignableProjects.value = res
+}
+
+async function getAssignableUsers() {
+	const res = await $fetch("/api/users")
+	assignableUsers.value = res
+}
+
+async function applyTaskEdits(event: Event) {
+	currentTask.value.assignees = taskEditAssignees.value
+	const res = await $fetch(`/api/task/${currentTask.value.uid}`, {
+		method: "POST",
+		body: { task: currentTask.value },
+	})
+	if (res.status == 200) {
+		filteredTasks.value[currentTaskIndex].assignees = taskEditAssignees.value
+	}
+}
+
+function onNewTaskChange(event: Event) {
+	newTaskFormCompleted.value =
+		taskName.value?.value.length! > 0 &&
+		taskDescription.value?.value.length! > 0 &&
+		taskHours.value?.value.length! > 0 &&
+		(+taskProject.value?.value! as number) != -1 &&
+		taskDeadline.value?.value.length! > 0
+	console.log(
+		taskName.value?.value,
+		taskDescription.value?.value,
+		taskHours.value?.value,
+		taskProject.value?.value,
+		taskDeadline.value?.value,
+	)
+}
+function onNewSubtaskChange(event: Event) {
+	newSubtaskFormCompleted.value =
+		subtaskName.value?.value.length! > 0 &&
+		subtaskHours.value?.value.length! > 0
+}
+
+async function createSubtask() {
+	const res = await $fetch(`/api/subtask`, {
+		method: "POST",
+		body: {
+			subtask: {
+				name: subtaskName.value?.value,
+				workerHours: +subtaskHours.value?.value!,
+				parentId: currentTask.value.uid,
+			},
+		},
+	})
+	if (res.status == 200) {
+		filteredTasks.value[currentTaskIndex].assignees = taskEditAssignees.value
+		currentTask.value.subtasks.push(res.subtask!)
+	}
 }
 </script>

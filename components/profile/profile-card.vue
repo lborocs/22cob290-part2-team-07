@@ -1,28 +1,4 @@
-<script>
-export default {
-	data() {
-		return {
-			name: "Name", // need to make dynamic
-			isShown: false,
-			passIsShown: false,
-			invIsShown: false,
-			logout: false,
-			src: "https://placekitten.com/150/150",
-		}
-	},
-	methods: {
-		toggleUpload() {
-			this.isShown = !this.isShown
-		},
-		togglePassword() {
-			this.passIsShown = !this.passIsShown
-		},
-		toggleInv() {
-			this.invIsShown = !this.invIsShown
-		},
-		toggleLogout() {
-			this.logout = !this.logout
-		},
+<!-- <script>
 		uploadPhoto(e) {
 			this.$emit("input", e.target.files[0])
 			let reader = new FileReader()
@@ -31,59 +7,34 @@ export default {
 				this.src = e.target.result
 				console.log(this.src)
 			}
-		},
-		triggerFileInput() {
-			this.$refs.fileInput.click()
-		},
-	},
-	props: {
-		value: File,
-	},
-}
+</script> -->
+<script setup lang="ts">
+import { rolesTitle, profilePicture, emailDomain } from "@/types/user"
+import { User } from ".prisma/client"
+const currentUsername = useCurrentUser().value!.name
+const currentUserRank = rolesTitle()
+const currentUserProfilePicture = ref(profilePicture(currentUsername))
+const userEmail = useCurrentUser().value!.email + emailDomain
+defineProps<{}>()
 </script>
+
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
-			<slot name="name"></slot>
-			<slot name="account">Account</slot>
+			<h2 name="name" class="edit__titles">{{ currentUsername }}</h2>
+			<h2 name="account" class="edit__titles">Account</h2>
 		</div>
 		<hr />
 		<div class="card-image-wrapper">
-			<slot name="hierarchy">Employee</slot>
-			<img id="card-profile-picture" :src="src" alt="" class="profile-pic" />
+			<h2 name="hierarchy" class="user__rank">{{ currentUserRank }}</h2>
+			<img
+				id="card-profile-picture"
+				:src="currentUserProfilePicture"
+				alt=""
+				class="profile-pic"
+			/>
+			<slot name="button"></slot>
 		</div>
-		<Moodal v-show="isShown" class="align modal">
-			<template #close-btn>
-				<div class="close-btn" @click="toggleUpload">&#10006;</div>
-			</template>
-			<template #popup-title>
-				<h2>Upload Photo</h2>
-			</template>
-			<template #popup-text>
-				<p>Upload a photo of your choice</p>
-			</template>
-			<template #popup-buttons>
-				<input
-					type="file"
-					accept="image/*"
-					ref="fileInput"
-					@change="uploadPhoto"
-					class="hidden"
-				/>
-				<button @click="triggerFileInput" class="upload-button spacing">
-					Upload photo
-				</button>
-				<button class="upload-button spacing" @click="toggleUpload">
-					Save
-				</button>
-			</template>
-		</Moodal>
-		<div class="card-button-wrapper">
-			<button @click="toggleUpload" id="card-upload-button">
-				<p>Upload photo</p>
-			</button>
-		</div>
-
 		<div class="card-customisation-wrapper">
 			<div class="wrapper-appearance">
 				<hr class="solid" />
@@ -102,32 +53,15 @@ export default {
 				<label for="change-password-btn" class="label-subtext"
 					>Change your password to a more memorable one</label
 				>
-				<button @click="togglePassword" id="change-password-btn">
-					<p>Change Password</p>
-				</button>
+				<slot name="password"></slot>
 			</div>
-			<Moodal v-show="passIsShown" class="align modal">
-				<template #close-btn>
-					<div class="close-btn" @click="togglePassword">&#10006;</div>
-				</template>
-				<template #popup-title>
-					<h2>Change Password</h2>
-				</template>
-				<template #popup-text>
-					<p>Change your password to a more memorable one</p>
-				</template>
-				<template #popup-buttons>
-					<button class="upload-button spacing">Change Password</button>
-					<button class="upload-button spacing">Save</button>
-				</template>
-			</Moodal>
 			<div class="wrapper-email">
 				<hr class="solid" />
 				<h1 class="bold-title">My Email</h1>
 				<label for="email-box" class="label-subtext"
 					>This is your assigned company email</label
 				>
-				<label id="email-box">f.batmaz@lboro.ac.uk</label>
+				<label id="email-box"> {{ userEmail }}</label>
 				<img class="email-lock-img" src="~/assets/lock.png" alt="lock" />
 			</div>
 			<div class="wrapper-invite">
@@ -136,44 +70,12 @@ export default {
 				<label for="invite-btn" class="label-subtext"
 					>Invite your co-workers who have not yet signed up</label
 				>
-				<button @click="toggleInv" id="invite-btn">
-					<p>Invite</p>
-				</button>
+				<slot name="invite"></slot>
 			</div>
-			<Moodal v-show="invIsShown" class="align modal">
-				<template #close-btn>
-					<div class="close-btn" @click="toggleInv">&#10006;</div>
-				</template>
-				<template #popup-title>
-					<h2>Invite User</h2>
-				</template>
-				<template #popup-text>
-					<p>Invite a colleague to the Make-It-All Portal</p>
-				</template>
-				<template #popup-buttons>
-					<button class="upload-button">Invite</button>
-				</template>
-			</Moodal>
 			<div class="wrapper-logout">
 				<hr />
-				<button @click="toggleLogout" class="logout-btn" id="logout">
-					<p>Logout</p>
-				</button>
+				<slot name="logout"></slot>
 			</div>
-			<Moodal v-show="logout" class="align modal">
-				<template #close-btn>
-					<div class="close-btn" @click="toggleLogout">&#10006;</div>
-				</template>
-				<template #popup-title>
-					<h2>Logout</h2>
-				</template>
-				<template #popup-text>
-					<p>Are you sure you want to logout?</p>
-				</template>
-				<template #popup-buttons>
-					<button class="logout-button">Logout</button>
-				</template>
-			</Moodal>
 		</div>
 	</div>
 </template>
@@ -189,6 +91,18 @@ $logout: #da0000;
 		color: black;
 	}
 }
+
+.modal {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+
+.edit__titles {
+	text-decoration: underline;
+	text-decoration-color: colour.$accent;
+}
 .hidden {
 	display: none;
 }
@@ -203,7 +117,7 @@ $logout: #da0000;
 	align-items: center;
 }
 
-.card-image-wrapper {
+.user__rank {
 	text-align: center;
 	font-style: normal;
 	font-weight: 800;
@@ -211,9 +125,12 @@ $logout: #da0000;
 	line-height: 2em;
 	letter-spacing: 0.01em;
 	color: colour.$text-light-faded;
+}
+.card-image-wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-bottom: 2rem;
 }
 
 #card-profile-picture {
@@ -334,10 +251,5 @@ $logout: #da0000;
 	background: $logout;
 	border-radius: 0.438rem;
 	margin-top: 1rem;
-}
-
-.close-btn {
-	float: right;
-	cursor: pointer;
 }
 </style>

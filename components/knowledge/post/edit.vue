@@ -12,6 +12,16 @@ const emit = defineEmits<{
 const modalKey = useModal()
 const modalAssetPicker = useModal()
 
+const DEFAULT_MARKDOWN = `# Title
+
+## Subtitle
+
+Interesting content
+- Bullet Point 1
+- Bullet Point 2
+- Bullet Point 3
+`
+
 function insert(assets: Asset[]) {
 	let local = markdown
 	for (const asset of assets) {
@@ -26,7 +36,7 @@ function insert(assets: Asset[]) {
 		name="markdown"
 		:model="markdown"
 		@update:model="$emit('update:markdown', $event)"
-		:attr="{ placeholder: '# Title\n\nBody' }"
+		:attr="{ placeholder: DEFAULT_MARKDOWN }"
 	/>
 	<div class="controls">
 		<Button icon="material-symbols:key-outline-rounded" @click="modalKey.show"

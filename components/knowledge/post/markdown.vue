@@ -4,9 +4,20 @@ const { markdown, headerLevel = 3 } = defineProps<{
 	headerLevel?: number
 }>()
 
+const DEFAULT_MARKDOWN = `# Title
+
+## Subtitle
+
+Interesting content
+- Bullet Point 1
+- Bullet Point 2
+- Bullet Point 3
+`
+
 const showdown = useMarkdownConverter(headerLevel)
 const markdownHTML = $computed(() => {
-	return showdown.makeHtml(markdown)
+	if (markdown) return showdown.makeHtml(markdown)
+	return showdown.makeHtml(DEFAULT_MARKDOWN)
 })
 </script>
 
@@ -20,6 +31,9 @@ const markdownHTML = $computed(() => {
 .markdown-html {
 	a {
 		@extend %link;
+	}
+	img {
+		width: 100%;
 	}
 }
 </style>

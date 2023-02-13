@@ -60,6 +60,7 @@ article {
 		.title {
 			justify-self: center;
 			text-align: center;
+			width: max-content;
 		}
 		.cntrl {
 			justify-self: end;

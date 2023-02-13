@@ -41,3 +41,11 @@
   - A package manager for Javascript.
 - [NVM](https://github.com/coreybutler/nvm-windows)
   - A manager / installer for Node & npm and managing the installed versions.
+
+# Deployment
+
+1. Clone the repo on the server.
+2. Ensure the `prisma/schema.prisma` datasource provider is set to `mysql`
+3. Create a .env with the required and relevant paths.
+4. Run `npm i && npx prisma generate && npx prisma db push && npm run build`.
+5. Move the `.output` folder and run again with the environment variables set.
