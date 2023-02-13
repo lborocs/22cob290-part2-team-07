@@ -163,14 +163,14 @@ const selectedUserViewMode = ref(1)
 				v-model:selected="selectedUserViewMode"
 			/>
 		</div>
-		<div class="wrap-grid">
+		<div class="wrap-grid" v-if="selectedUserViewMode == 1">
 			<ProjectMember
 				v-for="member in projectMembers"
 				:key="member.uid"
 				:user="member"
 			/>
 		</div>
-		<ProjectChart :user-hours="memberHours" />
+		<ProjectChart v-else :user-hours="memberHours" />
 	</section>
 </template>
 
