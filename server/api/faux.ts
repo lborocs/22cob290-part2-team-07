@@ -1,6 +1,6 @@
 import prisma from "@/prisma"
 import { TaskStatus } from "@/types/task"
-import { Permission } from "@/types/permission"
+import { Permission, everyoneUid } from "@/types/permission"
 import fs from "node:fs/promises"
 import path from "node:path"
 
@@ -17,6 +17,7 @@ export default defineEventHandler(async event => {
 			prisma.pOverrideRoleProject.deleteMany(),
 			prisma.pOverrideUserProject.deleteMany(),
 
+			prisma.invite.deleteMany(),
 			prisma.subtask.deleteMany(),
 			prisma.task.deleteMany(),
 			prisma.project.deleteMany(),
@@ -37,6 +38,15 @@ export default defineEventHandler(async event => {
 	}
 
 	const roles = await prisma.$transaction([
+		prisma.role.create({
+			data: {
+				uid: everyoneUid,
+				allow: Permission.NONE,
+				deny: Permission.NONE,
+				name: "Everyone",
+				rank: ~(~0 << 31),
+			},
+		}),
 		prisma.role.create({
 			data: {
 				rank: 0,
@@ -75,7 +85,7 @@ export default defineEventHandler(async event => {
 				email: "king",
 				name: "Neumann",
 				secure: { create: { password: "pking" } },
-				roles: { connect: { uid: roles[0].uid } },
+				roles: { connect: [{ uid: everyoneUid }, { uid: roles[1].uid }] },
 			},
 		}),
 		prisma.user.create({
@@ -83,7 +93,7 @@ export default defineEventHandler(async event => {
 				email: "queen",
 				name: "Queen",
 				secure: { create: { password: "pqueen" } },
-				roles: { connect: { uid: roles[1].uid } },
+				roles: { connect: [{ uid: everyoneUid }, { uid: roles[2].uid }] },
 			},
 		}),
 		prisma.user.create({
@@ -91,7 +101,7 @@ export default defineEventHandler(async event => {
 				email: "dilip",
 				name: "Dilip",
 				secure: { create: { password: "pdilip" } },
-				roles: { connect: { uid: roles[2].uid } },
+				roles: { connect: [{ uid: everyoneUid }, { uid: roles[3].uid }] },
 			},
 		}),
 		prisma.user.create({
@@ -99,7 +109,7 @@ export default defineEventHandler(async event => {
 				email: "emma",
 				name: "Emma",
 				secure: { create: { password: "pemma" } },
-				roles: { connect: { uid: roles[2].uid } },
+				roles: { connect: [{ uid: everyoneUid }, { uid: roles[3].uid }] },
 			},
 		}),
 		prisma.user.create({
@@ -107,7 +117,7 @@ export default defineEventHandler(async event => {
 				email: "e",
 				name: "E",
 				secure: { create: { password: "pe" } },
-				roles: { connect: { uid: roles[2].uid } },
+				roles: { connect: [{ uid: everyoneUid }, { uid: roles[3].uid }] },
 			},
 		}),
 	])
