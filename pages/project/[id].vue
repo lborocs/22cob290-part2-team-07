@@ -43,41 +43,67 @@ function initHours(): { [key: string]: number } {
 	return hoursByMember
 }
 
-function updateHours(uid: number, status: boolean) {
-	let task = project.value!.tasks.find(task => task.uid === uid)
-	let foundSubtask: Subtask | undefined
-
-	if (!task) {
-		// Check if the uid is a subtask
+function updateHours(uid: number, status: boolean, isSubTask: boolean) {
+	let task: KanbanTask | undefined
+	let subtask: Subtask | undefined
+	let parentTask: KanbanTask | undefined
+	if (isSubTask) {
 		for (const t of project.value!.tasks) {
-			foundSubtask = t.subtasks.find(subtask => subtask.uid === uid)
-			if (foundSubtask) {
-				task = t
+			subtask = t.subtasks.find(subtask => subtask.uid === uid)
+			if (subtask) {
+				console.log("Subtask has been finished: ", subtask)
+				parentTask = t
 				break
 			}
 		}
-	}
-	if (!task) {
-		return
-	}
 
-	const assignees = new Set(task.assignees.map(member => member.name))
+		if (!subtask) {
+			return
+		}
 
-	for (const memberName of Object.keys(memberHours)) {
-		if (assignees.has(memberName)) {
-			if (status) {
-				memberHours[memberName] -= foundSubtask
-					? foundSubtask.workerHours
-					: task.workerHours
-			} else {
-				memberHours[memberName] += foundSubtask
-					? foundSubtask.workerHours
-					: task.workerHours
+		const taskHours = subtask.workerHours
+		console.log("Subtask worker hours: ", taskHours)
+		const assignedMembers = new Set(
+			parentTask!.assignees.map(member => member.name),
+		)
+
+		for (const memberName of Object.keys(memberHours)) {
+			if (assignedMembers.has(memberName)) {
+				if (status) {
+					memberHours[memberName] -= taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				} else {
+					memberHours[memberName] += taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				}
+			}
+		}
+	} else {
+		task = project.value!.tasks.find(task => task.uid === uid)
+		console.log("Task has been finished: ", subtask)
+
+		if (!task) {
+			return
+		}
+
+		const taskHours = workerHours(task)
+		console.log("Task worker hours: ", taskHours)
+		const assignedMembers = new Set(task.assignees.map(member => member.name))
+
+		for (const memberName of Object.keys(memberHours)) {
+			if (assignedMembers.has(memberName)) {
+				if (status) {
+					memberHours[memberName] -= taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				} else {
+					memberHours[memberName] += taskHours
+					console.log(memberName, " hours: ", memberHours[memberName])
+				}
 			}
 		}
 	}
 
-	console.log(memberHours)
+	// console.log(memberHours)
 }
 
 // Display days left until project deadline
