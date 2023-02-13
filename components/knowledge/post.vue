@@ -11,7 +11,7 @@ const { post } = defineProps<{
 	post: PostR
 }>()
 const route = useRoute()
-const currentUser = useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
 
 const userPermissions = $computed(() =>
 	permissionsChain(
