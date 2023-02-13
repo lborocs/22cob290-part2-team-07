@@ -50,9 +50,11 @@ const chartOptions = computed(() => {
 				},
 			},
 		},
-		legend: {
-			labels: {
-				fontColor: "#eee",
+		plugins: {
+			legend: {
+				labels: {
+					color: "#eee",
+				},
 			},
 		},
 	}
