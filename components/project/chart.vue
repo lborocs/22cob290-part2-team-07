@@ -30,47 +30,38 @@ const chartData = computed(() => {
 })
 
 const chartOptions = computed(() => {
-	const colors =
-		colorMode.value === "light"
-			? {
-					grid: {
-						color: "#080808",
-					},
-					ticks: {
-						color: "#000",
-					},
-					labels: {
-						color: "#000",
-					},
-			  }
-			: {
-					grid: {
-						color: "#a6acbe",
-					},
-					ticks: {
-						color: "#eee",
-					},
-					labels: {
-						color: "#eee",
-					},
-			  }
+	const color = colorMode.value === "light" ? "#080808" : "#a6acbe"
+	const labelsColor = colorMode.value === "light" ? "#000" : "#eee"
+	const display = true
 
 	return {
 		responsive: true,
 		maintainAspectRatio: true,
 		scales: {
 			x: {
-				grid: colors.grid,
-				ticks: colors.ticks,
+				grid: {
+					color,
+					display,
+				},
+				ticks: {
+					color: labelsColor,
+				},
 			},
 			y: {
-				grid: colors.grid,
-				ticks: colors.ticks,
+				grid: {
+					color,
+					display,
+				},
+				ticks: {
+					color: labelsColor,
+				},
 			},
 		},
 		plugins: {
 			legend: {
-				labels: colors.labels,
+				labels: {
+					color: labelsColor,
+				},
 			},
 		},
 	}
