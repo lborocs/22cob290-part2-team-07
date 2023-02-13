@@ -35,11 +35,14 @@ function initHours(): { [key: string]: number } {
 	for (const task of tasks) {
 		for (const member of projectMembers) {
 			if (task.assignees.includes(member)) {
-				if (hoursByMember.hasOwnProperty(member.name)) {
-					hoursByMember[member.name] += task.workerHours
-				} else {
-					hoursByMember[member.name] = task.workerHours
+				let taskWorkerHours = task.workerHours
+				if (task.hasOwnProperty("subtasks")) {
+					for (const subtask of task.subtasks) {
+						taskWorkerHours += subtask.workerHours
+					}
 				}
+				hoursByMember[member.name] =
+					(hoursByMember[member.name] || 0) + taskWorkerHours
 			}
 		}
 	}
