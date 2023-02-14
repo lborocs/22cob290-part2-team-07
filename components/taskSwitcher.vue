@@ -122,10 +122,18 @@
 				ref="taskProject"
 				@change="onNewTaskChange"
 			>
-				<option :value="-1" disabled selected hidden>
+				<option
+					:value="-1"
+					disabled
+					selected
+					hidden
+					v-if="!p.assignableProjects"
+				>
 					Select project to add task to
 				</option>
-				<option :value="null">Personal Task</option>
+				<option :value="null" v-if="!p.assignableProjects">
+					Personal Task
+				</option>
 				<option
 					v-for="project in assignableProjects"
 					:key="project.uid"
@@ -373,6 +381,7 @@ const emit = defineEmits<{
 
 const p = defineProps<{
 	tasks: KanbanTask[]
+	assignableProjects?: Project[]
 }>()
 
 const filteredTasks = ref(p.tasks)
@@ -420,8 +429,10 @@ const modalAddSubtask = useModal()
 const currentTask = ref(p.tasks[0])
 
 // the projects that new tasks can be assigned to
-const assignableProjects = ref<Project[]>([])
-getAssignableProjects()
+const assignableProjects = ref<Project[]>(p.assignableProjects ?? [])
+if (p.assignableProjects === undefined) {
+	getAssignableProjects()
+}
 
 const assignableUsers = ref<User[]>([])
 getAssignableUsers()

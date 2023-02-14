@@ -152,7 +152,11 @@ const selectedUserViewMode = ref(1)
 		</ProjectCard>
 	</section>
 
-	<TaskSwitcher :tasks="project!.tasks" @update="updateHours" />
+	<TaskSwitcher
+		:tasks="project!.tasks"
+		@update="updateHours"
+		:assignable-projects="[project]"
+	/>
 
 	<section class="card">
 		<h2 class="sr-only">Project Members</h2>
