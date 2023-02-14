@@ -25,14 +25,13 @@ const projectMembers = $computed(() => {
 	return members
 })
 
-const memberHours = reactive(initHours())
-
-function initHours(): { [key: string]: number } {
+const memberHours = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
 
 	const tasks = project.value!.tasks.filter(
 		task => task.status === 0 || task.status === 1,
 	)
+
 	for (const task of tasks) {
 		for (const member of projectMembers) {
 			if (task.assignees.includes(member)) {
@@ -41,8 +40,9 @@ function initHours(): { [key: string]: number } {
 			}
 		}
 	}
+
 	return hoursByMember
-}
+})
 
 function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 	let task: KanbanTask | undefined
