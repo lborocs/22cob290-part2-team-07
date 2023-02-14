@@ -42,11 +42,10 @@ export function permissionsUser(roles: Role[] | undefined | null) {
 	if (roles == null) return Permission.NONE
 	const index = roles.findIndex(r => r.uid === everyoneUid)
 	if (index === -1) return Permission.NONE
-	const o = combinePermissions(
+	return combinePermissions(
 		combinePermissions(Permission.NONE, [roles[index]]),
 		[...roles.slice(undefined, index), ...roles.slice(index + 1)],
 	)
-	return o
 }
 
 function combinePermissions(
