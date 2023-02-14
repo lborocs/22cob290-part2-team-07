@@ -38,6 +38,12 @@ export interface PermissionGroup {
 	deny: number | Permission
 }
 
+export function userPermissions(roles: Role[] | null) {
+	if (roles === null) return Permission.NONE
+	roles.find(r => r.uid === everyoneUid)
+	return combinePermissions(Permission.NONE, roles)
+}
+
 function combinePermissions(
 	permissions: Permission,
 	overrides: PermissionGroup[],
@@ -53,13 +59,15 @@ function combinePermissions(
 	return permissions
 }
 
+function everyonePermissions(roles: PermissionGroup[])
+
 export function permissions(
 	roles: PermissionGroup[],
 	roleOverrides?: PermissionGroup[],
 	userOverrides?: PermissionGroup[],
 ): Permission {
 	let p = Permission.NONE
-	p = combinePermissions(p, roles)
+	if (roles.sli) p = combinePermissions(p, roles)
 	return permissionsChain(p, roleOverrides, userOverrides)
 }
 export function permissionsChain(

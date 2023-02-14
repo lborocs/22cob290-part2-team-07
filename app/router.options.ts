@@ -1,7 +1,7 @@
-import type { RouterConfig } from "@nuxt/schema";
+import type { RouterConfig } from "@nuxt/schema"
 // https://router.vuejs.org/api/interfaces/routeroptions.html
 export default <RouterConfig>{
-	routes: (_routes) => {
+	routes: _routes => {
 		return [
 			{
 				path: "/",
@@ -12,7 +12,13 @@ export default <RouterConfig>{
 				path: "/knowledge/post/",
 				redirect: "/knowledge/",
 			},
+			{
+				path: "/knowledge/topic/:uid/",
+				redirect: to => {
+					return `/knowledge/search?topic=${to.params.uid}`
+				},
+			},
 			..._routes,
-		];
+		]
 	},
-};
+}

@@ -84,6 +84,14 @@ function clearFocus() {
 					</li>
 					<li>
 						<NavButton
+							location="/permission"
+							name="Permissions"
+							icon="material-symbols:gavel-rounded"
+							@navigate="clearFocus"
+						/>
+					</li>
+					<li>
+						<NavButton
 							@click="logout"
 							location="/login"
 							name="Logout"
