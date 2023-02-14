@@ -541,7 +541,7 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
-		emit("update", newTask.uid, false, false)
+		// emit("update", newTask.uid, false, false)
 	}
 }
 

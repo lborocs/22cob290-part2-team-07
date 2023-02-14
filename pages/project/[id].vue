@@ -8,6 +8,7 @@ definePageMeta({
 
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
+const selectedUserViewMode = ref(1)
 
 const daysRemaing = $computed(() => {
 	const date = new Date(project.value!.deadline)
@@ -16,34 +17,34 @@ const daysRemaing = $computed(() => {
 
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
-	const members: UserR[] = []
+	const userMap = new Map<string, UserR>()
 	for (const task of project.value!.tasks) {
-		for (const user of task.assignees)
-			if (!members.includes(user)) members.push(user)
+		for (const user of task.assignees) {
+			if (!userMap.has(user.uid)) {
+				userMap.set(user.uid, user)
+			}
+		}
 	}
-	return members
+	return Array.from(userMap.values())
 })
 
-const memberHours = reactive(initHours())
-
-function initHours(): { [key: string]: number } {
+const memberHours = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
+	const tasks = project.value!.tasks.filter(task => task.status < 2)
 
-	const tasks = project.value!.tasks.filter(
-		task => task.status === 0 || task.status === 1,
-	)
 	for (const task of tasks) {
 		for (const member of projectMembers) {
-			if (task.assignees.includes(member)) {
+			if (task.assignees.some(assignee => assignee.uid === member.uid)) {
 				hoursByMember[member.name] =
 					(hoursByMember[member.name] || 0) + workerHours(task)
 			}
 		}
 	}
-	return hoursByMember
-}
 
-function updateHours(uid: number, status: boolean, isSubTask: boolean) {
+	return hoursByMember
+})
+
+function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 	let task: KanbanTask | undefined
 	let subtask: Subtask | undefined
 	let parentTask: KanbanTask | undefined
@@ -69,7 +70,7 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 		for (const memberName of Object.keys(memberHours)) {
 			if (assignedMembers.has(memberName)) {
-				if (status) {
+				if (isFinished) {
 					memberHours[memberName] -= taskHours
 					console.log(memberName, " hours: ", memberHours[memberName])
 				} else {
@@ -92,7 +93,7 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 		for (const memberName of Object.keys(memberHours)) {
 			if (assignedMembers.has(memberName)) {
-				if (status) {
+				if (isFinished) {
 					memberHours[memberName] -= taskHours
 					console.log(memberName, " hours: ", memberHours[memberName])
 				} else {
@@ -115,8 +116,6 @@ function dateDiffInDays(a: any, b: any) {
 
 	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
-
-const selectedUserViewMode = ref(1)
 </script>
 
 <template>
