@@ -20,7 +20,6 @@ async function submit() {
 	})
 	if (result === null) {
 		// TODO: Show Error!
-		//use a model popup
 		dialog?.showModal()
 		console.log("Error to make sure its running")
 	} else {
