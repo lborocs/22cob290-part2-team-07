@@ -17,24 +17,24 @@ const daysRemaing = $computed(() => {
 
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
-	const members: UserR[] = []
+	const userMap = new Map<string, UserR>()
 	for (const task of project.value!.tasks) {
-		for (const user of task.assignees)
-			if (!members.includes(user)) members.push(user)
+		for (const user of task.assignees) {
+			if (!userMap.has(user.uid)) {
+				userMap.set(user.uid, user)
+			}
+		}
 	}
-	return members
+	return Array.from(userMap.values())
 })
 
 const memberHours = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
-
-	const tasks = project.value!.tasks.filter(
-		task => task.status === 0 || task.status === 1,
-	)
+	const tasks = project.value!.tasks.filter(task => task.status < 2)
 
 	for (const task of tasks) {
 		for (const member of projectMembers) {
-			if (task.assignees.includes(member)) {
+			if (task.assignees.some(assignee => assignee.uid === member.uid)) {
 				hoursByMember[member.name] =
 					(hoursByMember[member.name] || 0) + workerHours(task)
 			}
@@ -167,6 +167,7 @@ function dateDiffInDays(a: any, b: any) {
 				v-for="member in projectMembers"
 				:key="member.uid"
 				:user="member"
+				:assigned="memberHours[member.name]"
 			/>
 		</div>
 		<ProjectChart v-else :user-hours="memberHours" />
