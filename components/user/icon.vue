@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { profilePicture } from "@/types/user"
+import { rolesTitle, emailDomain } from "@/types/user"
 
 withDefaults(
 	defineProps<{
@@ -60,20 +61,20 @@ img {
 		top: -20%;
 		left: 20%;
 		transform: translateX(10%) translateY(-30%);
-		background-color: #fff;
-		border: 1px solid #ddd;
-		padding: 8px;
-		border-radius: 4px;
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+		background-color: var(--colour-highlight);
+		border: 0.05em solid var(--colour-accent);
+		padding: 0.1em;
+		border-radius: 0.4em;
+		// box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 		white-space: nowrap;
 		z-index: 1;
 	}
 
 	.profile-name {
-		font-weight: bold;
+		color: var(--colour-text);
 	}
 	.profile-email {
-		color: #888;
+		color: var(--colour-text);
 	}
 }
 </style>
