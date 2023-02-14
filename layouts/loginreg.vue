@@ -17,10 +17,6 @@
 @use "~/assets/core";
 @use "~/assets/animation";
 
-body {
-	overflow: hidden;
-}
-
 header {
 	display: flex;
 	align-content: flex-start;

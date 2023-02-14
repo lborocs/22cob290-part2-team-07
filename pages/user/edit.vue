@@ -1,5 +1,6 @@
 <script setup>
 import { PrismaClient } from "@prisma/client"
+import { logout } from "@/types/user"
 
 definePageMeta({
 	name: "Profile",

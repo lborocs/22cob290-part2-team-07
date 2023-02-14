@@ -11,7 +11,7 @@ definePageMeta({
 })
 const route = useRoute()
 
-const currentUser = useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
 let query = ref(route.query)
 let q = computed(() => {
 	return Object.assign(query.value, { u: currentUser.value?.uid })

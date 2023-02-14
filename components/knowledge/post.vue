@@ -11,7 +11,7 @@ const { post } = defineProps<{
 	post: PostR
 }>()
 const route = useRoute()
-const currentUser = useCurrentUser()
+const { data: currentUser } = useCurrentUser()
 
 const userPermissions = $computed(() =>
 	permissionsChain(
@@ -44,20 +44,7 @@ function togglePreview() {
 
 function saveEdit() {
 	post.markdown = markdownLocal.value.trim()
-	if (
-		has(
-			permissionsChain(
-				permissions(
-					currentUser.value!.roles,
-					post.topic.overrideRoles,
-					post.topic.overrideUsers,
-				),
-				post.overrideRoles,
-				post.overrideUsers,
-			),
-			Permission.Post_Read | Permission.Post_Edit,
-		)
-	) {
+	if (has(userPermissions, Permission.Post_Read | Permission.Post_Edit)) {
 		uploadChanges()
 	}
 }
