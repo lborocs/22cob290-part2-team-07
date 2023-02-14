@@ -106,7 +106,7 @@ async function upload() {
 		if (
 			has(
 				permissions(
-					currentUser.value!.roles,
+					permissionsUser(currentUser.value!.roles),
 					topic?.overrideRoles,
 					topic?.overrideUsers,
 				),

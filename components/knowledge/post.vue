@@ -1,22 +1,17 @@
 <script setup lang="ts">
 import { rolesTitle } from "@/types/user"
-import {
-	has,
-	Permission,
-	permissions,
-	permissionsChain,
-} from "@/types/permission"
+import { has, Permission, permissions } from "@/types/permission"
 
 const { post } = defineProps<{
 	post: PostR
 }>()
 const route = useRoute()
-const { data: currentUser } = useCurrentUser()
+const currentUserPermissions = useCurrentUserPermissions()
 
 const userPermissions = $computed(() =>
-	permissionsChain(
+	permissions(
 		permissions(
-			currentUser.value!.roles,
+			currentUserPermissions,
 			post.topic.overrideRoles,
 			post.topic.overrideUsers,
 		),

@@ -38,10 +38,15 @@ export interface PermissionGroup {
 	deny: number | Permission
 }
 
-export function userPermissions(roles: Role[] | null) {
-	if (roles === null) return Permission.NONE
-	roles.find(r => r.uid === everyoneUid)
-	return combinePermissions(Permission.NONE, roles)
+export function permissionsUser(roles: Role[] | undefined | null) {
+	if (roles == null) return Permission.NONE
+	const index = roles.findIndex(r => r.uid === everyoneUid)
+	if (index === -1) return Permission.NONE
+	const o = combinePermissions(
+		combinePermissions(Permission.NONE, [roles[index]]),
+		[...roles.slice(undefined, index), ...roles.slice(index + 1)],
+	)
+	return o
 }
 
 function combinePermissions(
@@ -59,22 +64,11 @@ function combinePermissions(
 	return permissions
 }
 
-function everyonePermissions(roles: PermissionGroup[])
-
 export function permissions(
-	roles: PermissionGroup[],
-	roleOverrides?: PermissionGroup[],
-	userOverrides?: PermissionGroup[],
-): Permission {
-	let p = Permission.NONE
-	if (roles.sli) p = combinePermissions(p, roles)
-	return permissionsChain(p, roleOverrides, userOverrides)
-}
-export function permissionsChain(
 	permissions: Permission,
 	roleOverrides?: PermissionGroup[],
 	userOverrides?: PermissionGroup[],
-): Permission {
+) {
 	if (has(permissions, Permission.Administrator)) return Permission.ALL_ADMIN
 	if (roleOverrides !== undefined)
 		permissions = combinePermissions(permissions, roleOverrides)

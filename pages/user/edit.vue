@@ -1,5 +1,4 @@
 <script setup>
-import { PrismaClient } from "@prisma/client"
 import { logout } from "@/types/user"
 
 definePageMeta({
@@ -19,11 +18,6 @@ const preventScoll = () => {
 const promoteScroll = () => {
 	const body = document.getElementsByTagName("body")[0]
 	body.style = "overflow-y: visible;"
-}
-
-// temp until login functionality complete
-function logout() {
-	alert("User Logged Out!")
 }
 
 function validateInv(event) {
