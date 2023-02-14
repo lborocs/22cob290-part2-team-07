@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { useToggle } from "@vueuse/core"
 
 const route = useRoute()
 const pageName = $computed<string>(
@@ -15,7 +16,7 @@ useHead(() => {
 	}
 })
 
-const user = useCurrentUser()
+const currentUser = useCurrentUser()
 
 const isNavExpanded = ref(false)
 
@@ -38,7 +39,10 @@ function clearFocus() {
 	<div class="page-wrapper">
 		<header>
 			<h1>{{ pageName }}</h1>
-			<UserIcon v-if="user !== null" v-bind="user" :size="50" />
+			<div class="right">
+				<ThemeSelect class="theme-select" />
+				<UserIcon v-if="currentUser !== null" v-bind="currentUser" :size="50" />
+			</div>
 		</header>
 
 		<aside class="nav-wrapper">
@@ -132,6 +136,13 @@ header {
 	padding: 0 1em;
 	background-color: var(--colour-background-2);
 	margin-bottom: 1em;
+
+	.right {
+		@extend %flex-row, %flex-centre;
+		.theme-select {
+			margin-right: 1em;
+		}
+	}
 }
 
 main {
