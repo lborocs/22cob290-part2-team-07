@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { emailDomain, login } from "@/types/user"
 import { formData2Object } from "@/types/generic"
+import { jsxOpeningElement } from "@babel/types"
 
 definePageMeta({
 	layout: "loginreg",
 	name: "Login",
 })
+const modalError = useModal()
+const dialog = $ref<HTMLDialogElement>()
 
 const form = ref<HTMLFormElement>()
 async function submit() {
@@ -17,6 +20,9 @@ async function submit() {
 	})
 	if (result === null) {
 		// TODO: Show Error!
+		//use a model popup
+		dialog?.showModal()
+		console.log("Error to make sure its running")
 	} else {
 		login(result)
 		navigateTo("/dashboard")
@@ -45,9 +51,12 @@ async function submit() {
 			required
 			autocomplete="current-password"
 		/>
-		<!-- i took this button from elsewhere so it just lets you log in no matter what lol-->
 		<Button type="submit" icon="material-symbols:login-rounded">Login</Button>
 	</form>
+	<div id="dialogues">
+		<Modal :control="modalError" title="Incorrect Username or Password">
+		</Modal>
+	</div>
 </template>
 
 <style scoped lang="scss">
