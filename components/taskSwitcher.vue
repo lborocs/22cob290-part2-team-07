@@ -23,19 +23,19 @@
 			</div>
 		</header>
 		<div v-if="filteredTasks.length > 0">
-      <TasksList
-        v-if="selectedViewMode == 1"
-        :tasks="filteredTasks"
-        @details="showDialog"
-        @finish="onTaskFinish"
-      />
-      <KanbanBoard
-        v-else
-        :tasks="filteredTasks"
-        @details="showDialog"
-        @finish="onTaskFinish"
-      />
-    </div>
+			<TasksList
+				v-if="selectedViewMode == 1"
+				:tasks="filteredTasks"
+				@details="showDialog"
+				@finish="onTaskFinish"
+			/>
+			<KanbanBoard
+				v-else
+				:tasks="filteredTasks"
+				@details="showDialog"
+				@finish="onTaskFinish"
+			/>
+		</div>
 		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
 
@@ -363,9 +363,13 @@ import { Icon } from "@iconify/vue"
 import { arrayBuffer } from "stream/consumers"
 
 const emit = defineEmits<{
-	(name: "update", taskId: number, status: boolean, isSubTask: boolean): void
+	(
+		name: "update",
+		taskId: number,
+		isFinished: boolean,
+		isSubTask: boolean,
+	): void
 }>()
-
 
 const p = defineProps<{
 	tasks: KanbanTask[]

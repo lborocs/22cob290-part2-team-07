@@ -8,6 +8,7 @@ definePageMeta({
 
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
+const selectedUserViewMode = ref(1)
 
 const daysRemaing = $computed(() => {
 	const date = new Date(project.value!.deadline)
@@ -43,7 +44,7 @@ function initHours(): { [key: string]: number } {
 	return hoursByMember
 }
 
-function updateHours(uid: number, status: boolean, isSubTask: boolean) {
+function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 	let task: KanbanTask | undefined
 	let subtask: Subtask | undefined
 	let parentTask: KanbanTask | undefined
@@ -69,7 +70,7 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 		for (const memberName of Object.keys(memberHours)) {
 			if (assignedMembers.has(memberName)) {
-				if (status) {
+				if (isFinished) {
 					memberHours[memberName] -= taskHours
 					console.log(memberName, " hours: ", memberHours[memberName])
 				} else {
@@ -92,7 +93,7 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 		for (const memberName of Object.keys(memberHours)) {
 			if (assignedMembers.has(memberName)) {
-				if (status) {
+				if (isFinished) {
 					memberHours[memberName] -= taskHours
 					console.log(memberName, " hours: ", memberHours[memberName])
 				} else {
@@ -115,8 +116,6 @@ function dateDiffInDays(a: any, b: any) {
 
 	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
-
-const selectedUserViewMode = ref(1)
 </script>
 
 <template>
