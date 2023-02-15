@@ -10,21 +10,6 @@ const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
 const selectedUserViewMode = ref(1)
 
-const daysRemaing = $computed(() => {
-	const date = new Date(project.value!.deadline)
-	return dateDiffInDays(new Date(), date)
-})
-
-// Display days left until project deadline
-function dateDiffInDays(a: any, b: any) {
-	const _MS_PER_DAY = 1000 * 60 * 60 * 24
-	// Discard the time and time-zone information.
-	const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
-	const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
-
-	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
-}
-
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
 	const userMap = new Map<string, UserR>()
@@ -36,6 +21,18 @@ const projectMembers = $computed(() => {
 		}
 	}
 	return Array.from(userMap.values())
+})
+
+const workDaysRemaining = $computed(() => {
+	const deadline = new Date(project.value!.deadline)
+	const currentDate = new Date()
+	const timeDiff = deadline.getTime() - currentDate.getTime()
+	const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24)) // round up to include current day
+	const weekendDaysRemaining =
+		Math.floor((daysRemaining + currentDate.getDay()) / 7) * 2
+	const remainingWeekday = daysRemaining - weekendDaysRemaining
+
+	return remainingWeekday
 })
 
 const memberHours = $computed(() => {
@@ -129,7 +126,7 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 				<Date :date="project!.deadline" format="long" />
 			</p>
 			<p id="days-remaining" class="deadline-days">
-				{{ daysRemaing }} Days remaining
+				{{ workDaysRemaining }} work days remaining
 			</p>
 		</ProjectCard>
 		<ProjectCard title="Project Lead" :text="true">
