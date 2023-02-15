@@ -24,20 +24,23 @@
 </style>
 
 <script setup lang="ts">
-import { Project } from "@prisma/client"
-import { defineProps } from "vue"
+import { Project, Task } from "@prisma/client"
 definePageMeta({
 	name: "Manager Dashboard",
 })
 
-const visibleProjects = ref<Project[]>([])
-
-onMounted(() => {
-	getVisibleProjects()
-})
+const visibleProjects = ref<(Project & { tasks: KanbanTask[] })[]>([])
+getVisibleProjects()
 
 async function getVisibleProjects() {
 	const res = await $fetch("/api/projects")
-	visibleProjects.value = res
+	console.log(res)
+	for (let uid of res.map((p: Project) => p.uid)) {
+		const { data: project } = await useFetch(`/api/project/${uid}`)
+		console.log(project.value)
+		visibleProjects.value.push(project.value)
+
+		// visibleProjects.value.push(wholeProject)
+	}
 }
 </script>

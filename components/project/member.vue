@@ -34,15 +34,6 @@ defineProps<{
 	padding: 1.2rem;
 }
 
-.detail-highlight {
-	font-weight: 800;
-	background-color: var(--colour-card-highlight, var(--colour-green));
-	padding: 0.5rem;
-	border-radius: 0.25rem;
-	margin-left: auto;
-	display: inline-flex;
-}
-
 .card-margins {
 	margin: 0 0 0.5rem 0; // top right bottom left
 }
