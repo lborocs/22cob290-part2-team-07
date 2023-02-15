@@ -1,5 +1,9 @@
 <template>
-	<article class="card-small rag-band" v-if="project">
+	<article
+		class="card-small rag-band"
+		v-if="project"
+		:style="{ '--colour-card-highlight': `var(--colour-${ragColour})` }"
+	>
 		<h3 class="project-title">
 			<NuxtLink :to="`/project/${project.uid}`">{{ project.name }}</NuxtLink>
 		</h3>
@@ -20,11 +24,11 @@
 		<p class="project-description">
 			Deadline: <Date :date="project.deadline" />
 		</p>
-		<p class="project-description">
+		<p class="project-description flex-row">
 			Estimated Hours Remaining:
 			<span class="detail-highlight"> {{ hoursRemaining }} </span>
 		</p>
-		<p class="project-description">
+		<p class="project-description flex-row">
 			Worker Hours Available:
 			<span class="detail-highlight">{{ workerHoursAvailable }}</span>
 		</p>
@@ -45,6 +49,16 @@ const props = defineProps<{
 }>()
 const project = ref<CompleteProject>()
 project.value = await $fetch(`/api/project/${props.uid}`)
+
+const ragColour = $computed(() => {
+	if (workerHoursAvailable < hoursRemaining) {
+		return "red"
+	} else if (hoursRemaining > 0.75 * workerHoursAvailable) {
+		return "amber"
+	} else {
+		return "green"
+	}
+})
 
 const hoursRemaining = $computed(() => {
 	const withoutSubtasks =
