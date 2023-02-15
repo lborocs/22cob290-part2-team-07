@@ -23,6 +23,18 @@ declare global {
 		subtasks: Subtask[]
 	}
 
+	type CompleteProject = Project & {
+		tasks: (Task & {
+			assignees: (User & {
+				roles: {
+					name: string
+					rank: number
+				}[]
+			})[]
+			subtasks: Subtask[]
+		})[]
+	}
+
 	interface RoleName {
 		name: string
 		rank: number

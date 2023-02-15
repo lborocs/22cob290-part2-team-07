@@ -3,9 +3,9 @@
 		<h2>Projects Overview</h2>
 		<div class="grid-wrapper projects-wrapper">
 			<ProjectManagerOverview
-				v-for="project in visibleProjects"
-				:key="project.uid"
-				:project="project"
+				v-for="uid in visibleProjects"
+				:key="uid"
+				:uid="uid"
 			/>
 		</div>
 	</section>
@@ -24,23 +24,20 @@
 </style>
 
 <script setup lang="ts">
-import { Project, Task } from "@prisma/client"
+import { Project, Task, User, Subtask, Client } from "@prisma/client"
+
 definePageMeta({
 	name: "Manager Dashboard",
 })
 
-const visibleProjects = ref<(Project & { tasks: KanbanTask[] })[]>([])
+const visibleProjects = ref<number[]>([])
 getVisibleProjects()
 
 async function getVisibleProjects() {
 	const res = await $fetch("/api/projects")
 	console.log(res)
 	for (let uid of res.map((p: Project) => p.uid)) {
-		const { data: project } = await useFetch(`/api/project/${uid}`)
-		console.log(project.value)
-		visibleProjects.value.push(project.value)
-
-		// visibleProjects.value.push(wholeProject)
+		visibleProjects.value.push(uid)
 	}
 }
 </script>
