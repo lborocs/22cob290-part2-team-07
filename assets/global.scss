@@ -28,6 +28,9 @@ body {
 }
 .card-small {
 	@extend %card-small;
+	width: 80%;
+	min-width: 30ch;
+	margin-inline: auto;
 }
 
 .profile-picture {

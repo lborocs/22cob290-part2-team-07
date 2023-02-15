@@ -30,12 +30,6 @@
 </template>
 
 <style scoped lang="scss">
-.card-small {
-	width: 80%;
-	min-width: 30ch;
-	margin-inline: auto;
-}
-
 .task-header {
 	display: flex;
 	justify-content: space-between;
