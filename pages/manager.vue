@@ -43,10 +43,7 @@
 				/>
 			</form>
 			<ModalFooter>
-				<Button
-					@click="createProject(), modalCreateProject.hide()"
-					icon="material-symbols:check"
-				>
+				<Button @click="createProject()" icon="material-symbols:check">
 					Apply
 				</Button>
 			</ModalFooter>
@@ -114,13 +111,12 @@ const projectClient = ref<HTMLSelectElement>()
 const projectDeadline = ref<HTMLInputElement>()
 
 async function createProject() {
-	console.log(projectDeadline.value?.value)
-
-	/* console.log(
-		projectName.value?.value,
-		projectClient.value?.value,
-		projectDeadline.value?.value,
-	) */
+	if (
+		!projectName.value?.value ||
+		!projectDescription.value?.value ||
+		!projectDeadline.value?.value
+	)
+		return
 
 	const res = await $fetch("/api/project", {
 		method: "POST",
@@ -133,5 +129,6 @@ async function createProject() {
 		}),
 	})
 	console.log(res)
+	modalCreateProject.hide()
 }
 </script>
