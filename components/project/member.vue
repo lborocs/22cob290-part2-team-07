@@ -27,20 +27,12 @@ defineProps<{
 
 .flex-col {
 	@extend %flex-col;
+	text-align: center;
 }
 
 .card-small {
 	@extend %card-small;
 	padding: 1.2rem;
-}
-
-.detail-highlight {
-	font-weight: 800;
-	background-color: var(--colour-card-highlight, var(--colour-green));
-	padding: 0.5rem;
-	border-radius: 0.25rem;
-	margin-left: auto;
-	display: inline-flex;
 }
 
 .card-margins {

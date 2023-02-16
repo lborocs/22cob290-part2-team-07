@@ -39,7 +39,11 @@
 		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
 
-	<Modal :control="modalTaskDetails" :title="currentTask.name">
+	<Modal
+		v-if="currentTask != undefined"
+		:control="modalTaskDetails"
+		:title="currentTask.name"
+	>
 		<p>{{ currentTask.description }}</p>
 
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
