@@ -20,17 +20,21 @@
 					type="text"
 					name="project-name"
 					id="project-name"
-					ref="projectName"
+					v-model="projectName"
 				/>
 				<label for="project-description">Description:</label>
 				<textarea
 					name="project-description"
 					id="project-description"
-					ref="projectDescription"
+					v-model="projectDescription"
 					cols="30"
 					rows="10"
 				></textarea>
-				<select name="project-client" id="project-client" ref="projectClient">
+				<select
+					name="project-client"
+					id="project-client"
+					v-model="projectClient"
+				>
 					<option :value="-2" disabled selected hidden>Select Client</option>
 					<option :value="-1">Add New Client</option>
 					<option
@@ -46,11 +50,20 @@
 					type="date"
 					name="project-deadline"
 					id="project-deadline"
-					ref="projectDeadline"
+					v-model="projectDeadline"
 				/>
 			</form>
 			<ModalFooter>
-				<Button @click="createProject()" icon="material-symbols:check">
+				<Button
+					@click="createProject()"
+					icon="material-symbols:check"
+					:disabled="
+						!projectName ||
+						!projectDescription ||
+						!projectClient ||
+						!projectDeadline
+					"
+				>
 					Apply
 				</Button>
 			</ModalFooter>
@@ -152,10 +165,10 @@ async function getVisibleProjects() {
 	}
 }
 
-const projectName = ref<HTMLInputElement>()
-const projectDescription = ref<HTMLTextAreaElement>()
-const projectClient = ref<HTMLSelectElement>()
-const projectDeadline = ref<HTMLInputElement>()
+const projectName = ref<string>()
+const projectDescription = ref<string>()
+const projectClient = ref<number>(-2)
+const projectDeadline = ref<string>()
 
 const clientName = ref<string>()
 const clientRep = ref<string>()
@@ -184,20 +197,21 @@ async function createClient() {
 		}),
 	})
 	clients.value?.push(res.client)
+	projectClient.value = res.client.uid
 	modalCreateClient.hide()
 	modalCreateProject.show()
 }
 
 async function createProject() {
 	if (
-		!projectName.value?.value ||
-		!projectDescription.value?.value ||
-		!projectDeadline.value?.value ||
-		projectClient.value?.value == "-2"
+		!projectName.value ||
+		!projectDescription.value ||
+		!projectDeadline.value ||
+		projectClient.value == -2
 	)
 		return
 	// user selected create new client
-	if (projectClient.value?.value == "-1") {
+	if (projectClient.value == -1) {
 		modalCreateProject.hide()
 		modalCreateClient.show()
 		return
@@ -206,11 +220,11 @@ async function createProject() {
 	const res = await $fetch("/api/project", {
 		method: "POST",
 		body: JSON.stringify({
-			name: projectName.value?.value,
-			description: projectDescription.value?.value,
+			name: projectName.value,
+			description: projectDescription.value,
 			leader: "queen",
-			client: +projectClient.value?.value! as number,
-			deadline: projectDeadline.value?.value,
+			client: +projectClient.value! as number,
+			deadline: projectDeadline.value,
 		}),
 	})
 	console.log(res)
