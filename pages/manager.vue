@@ -84,6 +84,14 @@
 
 	<section class="card">
 		<h2>Employees Overview</h2>
+		<div class="grid-wrapper employee-wrapper">
+			<ProjectMember
+				v-for="member in employees"
+				:key="member.uid"
+				:user="{ ...member, ...{ roles: [] } }"
+				:assigned="8"
+			/>
+		</div>
 	</section>
 </template>
 
@@ -92,6 +100,9 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(35ch, 1fr));
 	gap: 1rem;
+}
+.employee-wrapper {
+	grid-template-columns: repeat(auto-fill, minmax(29ch, 1fr));
 }
 header {
 	justify-content: space-between;
@@ -128,6 +139,8 @@ const visibleProjects = ref<number[]>([])
 getVisibleProjects()
 
 const { data: clients } = await useFetch("/api/clients")
+
+const { data: employees } = await useFetch("/api/users")
 
 const modalCreateProject = useModal()
 const modalCreateClient = useModal()

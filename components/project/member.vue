@@ -27,6 +27,7 @@ defineProps<{
 
 .flex-col {
 	@extend %flex-col;
+	text-align: center;
 }
 
 .card-small {
