@@ -1,6 +1,6 @@
 <template>
 	<article
-		class="card-small rag-band"
+		class="card-small rag-band project-card"
 		v-if="project"
 		:style="{ '--colour-card-highlight': `var(--colour-${ragColour})` }"
 	>
@@ -39,6 +39,10 @@
 .project-title a {
 	color: var(--colour-text);
 	text-decoration: underline var(--colour-accent);
+}
+
+.project-card {
+	width: 100%;
 }
 </style>
 

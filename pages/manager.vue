@@ -58,8 +58,8 @@
 <style scoped lang="scss">
 .grid-wrapper {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(50ch, 1fr));
-	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(35ch, 1fr));
+	gap: 1rem;
 }
 header {
 	justify-content: space-between;
