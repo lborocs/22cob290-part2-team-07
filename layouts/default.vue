@@ -5,9 +5,12 @@ import { Icon } from "@iconify/vue"
 import { logout } from "@/types/user"
 
 const route = useRoute()
-const pageName = $computed<string>(
-	() => route.meta.name ?? route.name!.toString(),
-)
+const pageNameOverride = usePageName()
+const pageName = $computed<string>(() => {
+	if (pageNameOverride.value.route === route.fullPath)
+		return pageNameOverride.value.name
+	return route.meta.name ?? route.name!.toString()
+})
 
 // Updates the page head information on navigation.
 useHead(() => {

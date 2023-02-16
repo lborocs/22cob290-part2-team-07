@@ -5,6 +5,7 @@ const route = useRoute()
 const { data: project, refresh } = await useFetch(
 	`/api/permission/project/${route.params.uid}`,
 )
+usePageName(`${project.value?.name} Permissions`)
 </script>
 
 <template>
