@@ -83,6 +83,14 @@
 			:users="assignableUsers"
 			v-model:selection="taskEditAssignees"
 		/>
+		<Button
+			icon="material-symbols:delete-outline"
+			class="center-button"
+			@click="deleteTask()"
+		>
+			Delete Task
+		</Button>
+
 		<ModalFooter>
 			<Button
 				icon="material-symbols:check"
@@ -330,6 +338,7 @@ header {
 
 .center-button {
 	margin: auto;
+	margin-block: 1.5rem;
 }
 
 .subtask-list {
@@ -579,6 +588,24 @@ async function getAssignableProjects() {
 async function getAssignableUsers() {
 	const res = await $fetch("/api/users")
 	assignableUsers.value = res
+}
+
+/**
+ * Confirm to the user, then delete the current task
+ */
+async function deleteTask() {
+	const response = window.confirm(
+		`You are about to delete the task "${currentTask.value.name}".\nThis action cannot be undone. Are you sure you want to continue?`,
+	)
+	if (response) {
+		const res = await $fetch(`/api/task/${currentTask.value.uid}`, {
+			method: "DELETE",
+		})
+		if (res.status == 200) {
+			filteredTasks.value.splice(currentTaskIndex, 1)
+			modalTaskDetails.hide()
+		}
+	}
 }
 
 async function applyTaskEdits(event: Event) {

@@ -75,9 +75,3 @@ body {
 		gap: $i * 0.2rem;
 	}
 }
-
-// @each $name in $rag-colours {
-// 	%data-rag-#{$name} {
-// 		--colour-card-highlight: var(--colour-#{$name});
-// 	}
-// }
