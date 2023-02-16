@@ -30,9 +30,16 @@
 					cols="30"
 					rows="10"
 				></textarea>
-				<select name="project-client" id="project-client" ref="project-client">
-					<option :value="-1" disabled selected hidden>Select Client</option>
+				<select name="project-client" id="project-client" ref="projectClient">
+					<option :value="-2" disabled selected hidden>Select Client</option>
 					<option :value="-1">Add New Client</option>
+					<option
+						v-for="client in clients"
+						:key="client.uid"
+						:value="client.uid"
+					>
+						{{ client.name }}
+					</option>
 				</select>
 				<label for="project-deadline">Deadline:</label>
 				<input
@@ -95,11 +102,12 @@ definePageMeta({
 const visibleProjects = ref<number[]>([])
 getVisibleProjects()
 
+const { data: clients } = await useFetch("/api/clients")
+
 const modalCreateProject = useModal()
 
 async function getVisibleProjects() {
 	const res = await $fetch("/api/projects")
-	console.log(res)
 	for (let uid of res.map((p: Project) => p.uid)) {
 		visibleProjects.value.push(uid)
 	}
@@ -114,7 +122,8 @@ async function createProject() {
 	if (
 		!projectName.value?.value ||
 		!projectDescription.value?.value ||
-		!projectDeadline.value?.value
+		!projectDeadline.value?.value ||
+		projectClient.value?.value == "-2"
 	)
 		return
 
@@ -124,7 +133,7 @@ async function createProject() {
 			name: projectName.value?.value,
 			description: projectDescription.value?.value,
 			leader: "queen",
-			client: 8,
+			client: +projectClient.value?.value! as number,
 			deadline: projectDeadline.value?.value,
 		}),
 	})
