@@ -199,6 +199,10 @@ export default defineEventHandler(async event => {
 						name: "Loughborough University",
 						representative: "Firat Batmaz",
 						email: "f.batmaz@lboro.ac.uk",
+						phone: "01509 222222",
+						website: "https://www.lboro.ac.uk/",
+						address:
+							"Loughborough University, Loughborough, Leicestershire, LE11 3TU, United Kingdom",
 					},
 				},
 				tasks: {

@@ -42,10 +42,7 @@ defineProps<{}>()
 				<label for="theme" class="label-subtext"
 					>Customize how Make-It-All looks on your device</label
 				>
-				<select name="theme" class="theme">
-					<option value="light">Light</option>
-					<option value="dark">Dark</option>
-				</select>
+				<slot name="theme"></slot>
 			</div>
 			<div class="wrapper-password">
 				<hr class="solid" />
@@ -85,19 +82,6 @@ defineProps<{}>()
 @use "/assets/colour";
 
 $logout: #da0000;
-
-@media (prefers-color-scheme: dark) {
-	.modal {
-		color: black;
-	}
-}
-
-.modal {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	z-index: 10;
-}
 
 .edit__titles {
 	text-decoration: underline;

@@ -1,35 +1,50 @@
-<script setup>
-const props = defineProps({})
+<script setup lang="ts">
+import { Task } from "@prisma/client"
+import { workerHours } from "~~/types/task"
 
-// Update circular progress bar
-function updateProgressBar() {
-	const progress = project.progress()
+const p = defineProps<{
+	tasks: KanbanTask[]
+}>()
 
-	document.querySelector("#percentageDone").innerHTML =
-		(progress.percentage * 100).toFixed(1) + "%"
-	document.querySelector("#tasksDone").innerHTML =
-		progress.done + "/" + progress.total + " tasks done"
+const totalHours = computed(() => {
+	let sum = 0
+	for (const task of p.tasks) {
+		sum += workerHours(task)
+	}
+	return sum
+})
 
-	document
-		.querySelector("#progress-bar")
-		.style.setProperty("--progress", progress.percentage * 100 + "%")
-	document
-		.querySelector("#progress-bar")
-		.style.setProperty("--progress-angle", progress.percentage + "turn")
-}
+const hoursProgress = computed(() => {
+	let sum = 0
+	for (const task of p.tasks) {
+		if (task.status === 2) {
+			sum += workerHours(task)
+		}
+	}
+	return sum
+})
+
+const percentage = $computed(() => {
+	let result = (hoursProgress.value / totalHours.value) * 100
+	return Math.round(result)
+})
 </script>
 
 <template>
 	<div
 		class="spinner-parent"
 		id="progress-bar"
-		style="--progress: 70%; --progress-angle: 0.7turn"
+		:style="`--progress: ${percentage}%; --progress-angle: ${
+			percentage / 100
+		}turn`"
 	>
 		<div class="spinner"></div>
 		<div class="spinner-end-wrapper"></div>
 		<div class="center">
-			<span id="percentageDone">70%</span>
-			<p id="tasksDone">9/15 tasks done</p>
+			<span id="percentageDone">{{ percentage }}%</span>
+			<p id="tasksDone">
+				{{ hoursProgress }}/{{ totalHours }} work hours completed
+			</p>
 		</div>
 	</div>
 </template>

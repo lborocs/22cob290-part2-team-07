@@ -36,6 +36,31 @@ function clearCheck() {
 	const check = document.getElementsByClassName("email__sent")[0]
 	check.style.display = "none"
 }
+
+function setLight() {
+	console.log("setLight")
+	const index = document.getElementsByClassName("theme")[0].selectedIndex
+	const page = document.getElementsByTagName("html")[0]
+	const modal = document.getElementsByClassName("modal")
+	console.log(index)
+	switch (index) {
+		case 0:
+			console.log("hello")
+			break
+		case 1:
+			console.log("light")
+			page.classList.remove("theme-dark")
+			page.classList.add("theme-light")
+			break
+		case 2:
+			console.log(modal)
+			page.classList.remove("theme-light")
+			page.classList.add("theme-dark")
+			break
+		default:
+			console.log("nothing")
+	}
+}
 </script>
 
 <template>
@@ -113,6 +138,13 @@ function clearCheck() {
 				</button>
 			</div>
 		</template> -->
+		<template #theme>
+			<select @change="setLight()" name="theme" class="theme">
+				<option value="default">Default</option>
+				<option value="light">Light</option>
+				<option value="dark">Dark</option>
+			</select>
+		</template>
 		<template #password>
 			<button
 				@click=";(passModalActive = true), preventScoll()"
@@ -242,6 +274,7 @@ $logout: #da0000;
 	float: right;
 	padding: 0.5rem;
 	border-radius: 1rem;
+	width: min-content;
 }
 .wrapper-appearance,
 .wrapper-password,
