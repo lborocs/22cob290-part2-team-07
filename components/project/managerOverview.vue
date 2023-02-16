@@ -10,9 +10,11 @@
 		<p class="project-description">Progress:</p>
 		<ProgressBar
 			:progress="`${
-				(project.tasks.filter(task => task.status === 2).length /
-					project.tasks.length) *
-				100
+				project.tasks.length > 0
+					? (project.tasks.filter(task => task.status === 2).length /
+							project.tasks.length) *
+					  100
+					: 0
 			}%`"
 		/>
 		<p class="project-description">
