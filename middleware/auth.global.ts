@@ -1,4 +1,4 @@
-const pub = ["Login", "Registration"]
+const pub = ["Login", "Registration", "dev"]
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	const { data: currentUser } = await useCurrentUser()
