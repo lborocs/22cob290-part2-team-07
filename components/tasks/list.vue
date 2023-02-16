@@ -54,6 +54,9 @@
 	--gap: 2rem;
 	gap: var(--gap);
 	flex-direction: column;
+
+	max-height: 40rem;
+	overflow-y: auto;
 }
 
 .task-row {

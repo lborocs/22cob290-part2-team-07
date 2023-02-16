@@ -81,6 +81,9 @@ function emitDialog(id: number) {
 	flex-direction: column;
 	gap: 1rem;
 	position: relative;
+	max-height: 45rem;
+	overflow-x: hidden;
+	overflow-y: auto;
 
 	// right margin between each column
 	&:not(:last-child)::after {
