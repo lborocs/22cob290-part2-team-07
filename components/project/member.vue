@@ -11,10 +11,8 @@ defineProps<{
 <template>
 	<ClientOnly>
 		<div class="flex-col card-small">
-			<NuxtLink :to="`/user/${user.uid}`">
-				<UserIcon :email="user.email" :name="user.name" :size="50" />
-				<h3 class="card-margins">{{ user.name }}</h3>
-			</NuxtLink>
+			<UserIcon :email="user.email" :name="user.name" :size="50" />
+			<UserName :email="user.email" :name="user.name" class="card-margins" />
 			<p class="dimmed card-margins">{{ rolesTitle(user.roles) }}</p>
 			<p class="card-margins">
 				Assigned hours
