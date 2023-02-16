@@ -24,7 +24,7 @@ const modalTopicInfo: TopicCreate = reactive({
 	name: "",
 })
 
-const currentUser = useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
 const preview = ref(false)
 function togglePreview() {
 	preview.value = !preview.value
@@ -106,7 +106,7 @@ async function upload() {
 		if (
 			has(
 				permissions(
-					currentUser.value!.roles,
+					permissionsUser(currentUser.value!.roles),
 					topic?.overrideRoles,
 					topic?.overrideUsers,
 				),

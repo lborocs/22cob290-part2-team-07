@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
+import { logout } from "@/types/user"
 
 const route = useRoute()
 const pageName = $computed<string>(
@@ -15,14 +16,9 @@ useHead(() => {
 	}
 })
 
-const user = useCurrentUser()
+const { data: user } = await useCurrentUser()
 
 const isNavExpanded = ref(false)
-
-// Temporary until the login / logout logic is finalised
-function logout() {
-	alert("User Logged Out!")
-}
 
 function toggleMobileNav() {
 	isNavExpanded.value = !isNavExpanded.value
@@ -83,6 +79,14 @@ function clearFocus() {
 							location="/project"
 							name="Project"
 							icon="material-symbols:folder-outline-rounded"
+							@navigate="clearFocus"
+						/>
+					</li>
+					<li>
+						<NavButton
+							location="/permission"
+							name="Permissions"
+							icon="material-symbols:gavel-rounded"
 							@navigate="clearFocus"
 						/>
 					</li>

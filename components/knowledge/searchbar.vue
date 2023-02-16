@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { has, Permission, permissions } from "@/types/permission"
+import {
+	has,
+	Permission,
+	permissions,
+	permissionsUser,
+} from "@/types/permission"
 
-const currentUser = useCurrentUser()
+const { data: currentUser } = await useCurrentUser()
+
 const { data: topics } = useLazyFetch("/api/topics", {
 	params: {
 		u: currentUser.value?.uid,
@@ -26,7 +32,16 @@ onMounted(() => {
 			<option value="">Any Topic</option>
 			<template v-for="topic in topics" :key="topic.uid">
 				<option
-					v-if="has(permissions(currentUser!.roles, topic.overrideRoles, topic.overrideUsers), Permission.Post_Read)"
+					v-if="
+						has(
+							permissions(
+								permissionsUser(currentUser?.roles),
+								topic.overrideRoles,
+								topic.overrideUsers,
+							),
+							Permission.Post_Read,
+						)
+					"
 					:value="topic.uid"
 				>
 					{{ topic.name }}

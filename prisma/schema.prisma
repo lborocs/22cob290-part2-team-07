@@ -203,3 +203,9 @@ model POverrideUserProject {
 
   @@unique([userUid, projectUid])
 }
+
+// Active registration links
+
+model Invite {
+  code String @id
+}

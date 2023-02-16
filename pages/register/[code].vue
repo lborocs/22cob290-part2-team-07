@@ -1,45 +1,50 @@
 <script setup lang="ts">
-import { emailDomain, login } from "@/types/user"
+import { emailDomain } from "@/types/user"
 import { formData2Object } from "@/types/generic"
-import { jsxOpeningElement } from "@babel/types"
-
 definePageMeta({
 	layout: "loginreg",
-	name: "Login",
+	name: "Registration",
 })
-const modalError = useModal()
+
+const route = useRoute()
+const { data: email } = await useFetch(`/api/invite/${route.params.code}`)
 
 const form = ref<HTMLFormElement>()
 async function submit() {
+	console.log(form.value)
+
 	const data = new FormData(form.value)
+	data.append("code", route.params.code)
+
+	if (data.get("password") != data.get("passwordConfirm")) {
+		// TODO: Show error message
+	}
+
+	let test = {}
 	const body = formData2Object(data)
-	//console.log(body)
-	const result = await $fetch("/api/login", {
-		method: "POST",
-		body,
-	})
-	//console.log(result)
-	if (!result) {
-		modalError.show()
-		//console.log("Error to make sure its running")
-	} else {
-		login(result)
-		navigateTo("/dashboard")
+
+	try {
+		const result = await $fetch("/api/register", { method: "POST", body })
+		navigateTo("/login")
+	} catch (err) {
+		// TODO: Show error. Should not happen though!
 	}
 }
 </script>
 
 <template>
-	<form class="form" ref="form" @submit.prevent="submit">
-		<label id="title">Member Login</label>
+	<div v-if="!email">Sorry you don't exist</div>
+	<form @submit.prevent="submit" class="form" ref="form" v-else>
+		<label id="title">Member Registration</label>
 		<label for="Email">Email:</label>
 		<input
 			type="text"
 			id="Email"
-			name="email"
 			placeholder="Example"
-			required
+			:value="email"
 			autocomplete="username"
+			required
+			disabled
 		/>
 		<label id="emailPosition">{{ emailDomain }}</label>
 		<label for="Password">Password:</label>
@@ -47,16 +52,24 @@ async function submit() {
 			type="password"
 			id="Password"
 			name="password"
+			autocomplete="new-password"
 			required
-			autocomplete="current-password"
 		/>
-		<Button type="submit" icon="material-symbols:login-rounded">Login</Button>
+		<label for="confirmPassword">Confirm Password:</label>
+		<input
+			type="password"
+			id="confirmPassword"
+			name="passwordConfirm"
+			required
+			autocomplete="new-password"
+		/>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" required autocomplete="name" />
+		<!-- i took this button from elsewhere so it just lets you log in no matter what lol-->
+		<Button type="submit" icon="material-symbols:login-rounded"
+			>Register</Button
+		>
 	</form>
-	<div id="dialogues">
-		<Modal :control="modalError" title="Incorrect Username or Password">
-			<p>Please try again</p>
-		</Modal>
-	</div>
 </template>
 
 <style scoped lang="scss">
@@ -86,6 +99,7 @@ async function submit() {
 	background: var(--colour-highlight);
 	border: 0.1rem solid var(--colour-accent);
 	border-radius: 1rem;
+	width: fit-content;
 	font-size: 1.2rem;
 	padding: 0.5rem;
 	margin: 0.6rem;
@@ -104,10 +118,6 @@ async function submit() {
 }
 .form #emailPosition {
 	align-self: flex-end;
-	transform: translate(1rem, -2.5rem);
-}
-
-#dialogues {
-	position: absolute;
+	transform: translate(-1rem, -2.5rem);
 }
 </style>

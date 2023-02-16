@@ -1,22 +1,17 @@
 <script setup lang="ts">
 import { rolesTitle } from "@/types/user"
-import {
-	has,
-	Permission,
-	permissions,
-	permissionsChain,
-} from "@/types/permission"
+import { has, Permission, permissions } from "@/types/permission"
 
 const { post } = defineProps<{
 	post: PostR
 }>()
 const route = useRoute()
-const currentUser = useCurrentUser()
+const currentUserPermissions = useCurrentUserPermissions()
 
 const userPermissions = $computed(() =>
-	permissionsChain(
+	permissions(
 		permissions(
-			currentUser.value!.roles,
+			currentUserPermissions,
 			post.topic.overrideRoles,
 			post.topic.overrideUsers,
 		),
@@ -44,20 +39,7 @@ function togglePreview() {
 
 function saveEdit() {
 	post.markdown = markdownLocal.value.trim()
-	if (
-		has(
-			permissionsChain(
-				permissions(
-					currentUser.value!.roles,
-					post.topic.overrideRoles,
-					post.topic.overrideUsers,
-				),
-				post.overrideRoles,
-				post.overrideUsers,
-			),
-			Permission.Post_Read | Permission.Post_Edit,
-		)
-	) {
+	if (has(userPermissions, Permission.Post_Read | Permission.Post_Edit)) {
 		uploadChanges()
 	}
 }

@@ -11,6 +11,7 @@ import {
 	Topic,
 	User,
 } from ".prisma/client"
+import { Permission } from "./permission"
 
 export {}
 
@@ -26,6 +27,22 @@ declare global {
 	interface RoleName {
 		name: string
 		rank: number
+	}
+
+	interface PermissionOverride {
+		allow: Permission
+		deny: Permission
+	}
+
+	interface OverrideRole extends PermissionOverride {
+		role: Role & {
+			_count: {
+				users: number
+			}
+		}
+	}
+	interface OverrideUser extends PermissionOverride {
+		user: UserR
 	}
 
 	// User with roles
