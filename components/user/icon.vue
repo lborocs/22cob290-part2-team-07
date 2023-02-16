@@ -71,20 +71,18 @@ img {
 		top: -20%;
 		right: 50%;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1.5fr 0.5fr;
-		gap: 0px 0px;
 		grid-template-areas:
 			"pic name"
 			"email email";
 		background-color: var(--colour-highlight);
 		border: 0.05em solid var(--colour-accent);
-		padding: 1em;
+		padding: 0.5em;
 		border-radius: 0.4em;
 		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 		z-index: 1;
 		justify-items: center;
 		align-items: center;
+		width: max-content;
 	}
 
 	.profile-image {
@@ -99,8 +97,9 @@ img {
 	.profile-email {
 		color: var(--colour-text);
 		margin: 0;
-		font-size: 1em;
+		font-size: 0.7em;
 		grid-area: email;
+		// width: 100%;
 	}
 }
 </style>
