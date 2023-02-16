@@ -221,12 +221,6 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 	--card-width: 22ch;
 	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
 	gap: 1rem;
-
-	.card-small {
-		text-align: center;
-		width: clamp(10ch, 100%, 30ch);
-		// max-width: var(--card-width);
-	}
 }
 
 .no-margin {

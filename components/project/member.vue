@@ -35,6 +35,9 @@ defineProps<{
 .card-small {
 	@extend %card-small;
 	padding: 1.2rem;
+	text-align: center;
+	width: clamp(10ch, 100%, 30ch);
+	min-width: var(--card-width);
 }
 
 .card-margins {
