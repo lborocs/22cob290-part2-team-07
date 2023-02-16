@@ -7,6 +7,17 @@ async function refreshDatabase() {
 	await useLazyFetch("/api/faux?refresh")
 	activeProcesses--
 }
+
+async function createInvite() {
+	activeProcesses++
+	await useLazyFetch("/api/invite", {
+		method: "POST",
+		body: {
+			email: "bobby",
+		},
+	})
+	activeProcesses--
+}
 </script>
 
 <template>
@@ -16,6 +27,14 @@ async function refreshDatabase() {
 		@click="refreshDatabase"
 		:disabled="disable"
 		>Refresh Database</Button
+	>
+
+	<Button
+		icon="material-symbols:refresh-rounded"
+		:fix="true"
+		@click="createInvite"
+		:disabled="disable"
+		>Create Bobby Invite</Button
 	>
 </template>
 

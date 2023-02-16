@@ -5,7 +5,8 @@
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare"
+		"postinstall": "nuxt prepare",
+		"db": "npx prisma generate && npx prisma db push"
 	},
 	"devDependencies": {
 		"@iconify/vue": "^4.1.0",

@@ -9,17 +9,19 @@ defineProps<{
 </script>
 
 <template>
-	<div class="flex-col card-small">
-		<NuxtLink :to="`/user/${user.uid}`">
-			<UserIcon :email="user.email" :name="user.name" :size="50" />
-			<h3 class="card-margins">{{ user.name }}</h3>
-		</NuxtLink>
-		<p class="dimmed card-margins">{{ rolesTitle(user.roles) }}</p>
-		<p class="card-margins">
-			Assigned hours
-			<span class="detail-highlight"> {{ assigned ? assigned : "0" }} </span>
-		</p>
-	</div>
+	<ClientOnly>
+		<div class="flex-col card-small">
+			<NuxtLink :to="`/user/${user.uid}`">
+				<UserIcon :email="user.email" :name="user.name" :size="50" />
+				<h3 class="card-margins">{{ user.name }}</h3>
+			</NuxtLink>
+			<p class="dimmed card-margins">{{ rolesTitle(user.roles) }}</p>
+			<p class="card-margins">
+				Assigned hours
+				<span class="detail-highlight"> {{ assigned ? assigned : "0" }} </span>
+			</p>
+		</div>
+	</ClientOnly>
 </template>
 
 <style scoped lang="scss">
@@ -27,20 +29,15 @@ defineProps<{
 
 .flex-col {
 	@extend %flex-col;
+	text-align: center;
 }
 
 .card-small {
 	@extend %card-small;
 	padding: 1.2rem;
-}
-
-.detail-highlight {
-	font-weight: 800;
-	background-color: var(--colour-card-highlight, var(--colour-green));
-	padding: 0.5rem;
-	border-radius: 0.25rem;
-	margin-left: auto;
-	display: inline-flex;
+	text-align: center;
+	width: clamp(10ch, 100%, 30ch);
+	min-width: var(--card-width);
 }
 
 .card-margins {

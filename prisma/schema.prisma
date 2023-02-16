@@ -47,7 +47,7 @@ model Task {
 
 model Subtask {
   uid         Int      @id @default(autoincrement())
-  parent      Task     @relation(fields: [parentId], references: [uid])
+  parent      Task     @relation(fields: [parentId], references: [uid], onDelete: Cascade)
   parentId    Int
   name        String
   workerHours Int
@@ -202,4 +202,10 @@ model POverrideUserProject {
   projectUid Int
 
   @@unique([userUid, projectUid])
+}
+
+// Active registration links
+
+model Invite {
+  code String @id
 }
