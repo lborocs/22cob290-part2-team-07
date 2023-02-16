@@ -14,14 +14,14 @@ withDefaults(
 	},
 )
 
-const showDiv = ref(false)
+const showDiv = ref(true)
 </script>
 
 <template>
 	<div
-		class="profile-picture-container"
 		@mouseover="showDiv = true"
-		@mouseleave="showDiv = false"
+		@mouseleave="showDiv = true"
+		class="profile-picture-container"
 	>
 		<NuxtLink v-if="isLink" :to="`/user/${email}`">
 			<img
@@ -39,8 +39,19 @@ const showDiv = ref(false)
 			:height="size"
 		/>
 		<div v-if="showDiv" class="profile-info">
-			<p>{{ name }}</p>
-			<p>{{ email }}</p>
+			<img
+				:src="profilePicture(name)"
+				:alt="`Profile Picture of ${name}`"
+				:width="size"
+				:height="size"
+				class="profile-picture"
+			/>
+			<div class="profile-name">
+				<h3>{{ name }}</h3>
+			</div>
+			<div class="profile-email">
+				<p>{{ email + emailDomain }}</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -54,27 +65,42 @@ img {
 
 .profile-picture-container {
 	position: relative;
-	display: inline-block;
 
 	.profile-info {
 		position: absolute;
 		top: -20%;
-		left: 20%;
-		transform: translateX(10%) translateY(-30%);
+		right: 50%;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1.5fr 0.5fr;
+		gap: 0px 0px;
+		grid-template-areas:
+			"pic name"
+			"email email";
 		background-color: var(--colour-highlight);
 		border: 0.05em solid var(--colour-accent);
-		padding: 0.1em;
+		padding: 1em;
 		border-radius: 0.4em;
-		// box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-		white-space: nowrap;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 		z-index: 1;
+		justify-items: center;
+		align-items: center;
 	}
 
+	.profile-image {
+		grid-area: pic;
+	}
 	.profile-name {
 		color: var(--colour-text);
+		margin: 0;
+		margin-left: 0.5em;
+		grid-area: name;
 	}
 	.profile-email {
 		color: var(--colour-text);
+		margin: 0;
+		font-size: 1em;
+		grid-area: email;
 	}
 }
 </style>
