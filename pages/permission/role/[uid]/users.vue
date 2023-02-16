@@ -26,11 +26,7 @@ const { data: role } = await useFetch(`/api/role/${route.params.uid}/users`)
 			>
 		</div>
 		<div class="user-container">
-			<div
-				v-for="user in role?.users"
-				:key="user.uid"
-				class="user-but-not-the-global-one"
-			>
+			<div v-for="user in role?.users" :key="user.uid" class="user-chunk">
 				<UserIcon :email="user.email" :name="user.name" :size="50" />
 				<UserName :email="user.email" :name="user.name" />
 				<span class="dimmed">{{ rolesTitle(user.roles) }}</span>
@@ -48,8 +44,7 @@ div.title {
 	border-radius: 1rem;
 	margin-bottom: 1rem;
 
-	@extend %flex-row, %flex-centre;
-	justify-content: space-between;
+	@extend %flex-space;
 
 	h2 a {
 		@extend %link;
@@ -57,10 +52,9 @@ div.title {
 }
 
 div.user-container {
-	@extend %flex-row, %flex-centre;
-	justify-content: flex-start;
+	@extend %flex-space;
 }
-.user-but-not-the-global-one {
+.user-chunk {
 	@extend %flex-col, %flex-centre, %card-small;
 	background-color: var(--colour-background-2);
 	padding: 2rem;

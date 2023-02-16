@@ -58,19 +58,19 @@ function edit(state: PermissionState) {
 						class="content-button deny"
 						@click="edit(PermissionState.DENY)"
 					>
-						<Icon icon="material-symbols:block" />
+						<Icon icon="material-symbols:cancel-outline-rounded" />
 					</button>
 					<button
 						class="content-button neutral"
 						@click="edit(PermissionState.NEUTRAL)"
 					>
-						<Icon icon="material-symbols:smoking-rooms" />
+						<Icon icon="material-symbols:lens-outline" />
 					</button>
 					<button
 						class="content-button allow"
 						@click="edit(PermissionState.ALLOW)"
 					>
-						<Icon icon="material-symbols:done-rounded" />
+						<Icon icon="material-symbols:check-circle-outline-rounded" />
 					</button>
 				</div>
 			</ClientOnly>
@@ -92,8 +92,7 @@ div.container {
 }
 
 .head {
-	@extend %flex-row, %flex-centre;
-	justify-content: space-between;
+	@extend %flex-space;
 }
 
 $permission-state-colours: (

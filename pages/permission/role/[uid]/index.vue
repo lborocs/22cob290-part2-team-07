@@ -41,8 +41,7 @@ const { data: role } = await useFetch(`/api/role/${route.params.uid}`)
 
 .head {
 	.title {
-		@extend %flex-row, %flex-centre;
-		justify-content: space-between;
+		@extend %flex-space;
 	}
 
 	background-color: var(--colour-background-3);

@@ -2,19 +2,27 @@
 import { Prisma, Role } from ".prisma/client"
 import { Icon } from "@iconify/vue"
 
-defineProps<{
-	role: Role & {
-		_count: {
-			users: number
+withDefaults(
+	defineProps<{
+		role: Role & {
+			_count: {
+				users: number
+			}
 		}
-	}
-}>()
+		prefix?: string
+	}>(),
+	{
+		prefix: "",
+	},
+)
 </script>
 
 <template>
 	<div class="role">
 		<h3>
-			<NuxtLink :to="`/permission/role/${role.uid}/`">{{ role.name }}</NuxtLink>
+			<NuxtLink :to="`${prefix}/permission/role/${role.uid}/`">{{
+				role.name
+			}}</NuxtLink>
 		</h3>
 		<ButtonNuxt
 			icon="material-symbols:group-outline"
@@ -29,8 +37,7 @@ defineProps<{
 @use "@/assets/core";
 
 div.role {
-	@extend %flex-row, %flex-centre;
-	justify-content: space-between;
+	@extend %flex-space;
 }
 
 h3 a {

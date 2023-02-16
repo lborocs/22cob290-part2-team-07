@@ -87,11 +87,13 @@ export enum PermissionState {
 }
 
 export enum PermissionCollection {
-	General,
-	Post,
-	Topic,
-	Project,
-	Task,
+	Admin = 1 << 0,
+	Post = 1 << 1,
+	Topic = 1 << 2,
+	Project = 1 << 3,
+	Task = 1 << 4,
+	Client = 1 << 5,
+	ALL = ~(~0 << 6),
 }
 
 interface PermissionInfo {
@@ -105,77 +107,77 @@ const permissionInfoMap: {
 	[Permission.Administrator]: {
 		name: "Administrator",
 		desc: "A user can do anything without restriction regardless of other permissions.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Admin,
 	},
 	[Permission.Topic_Create]: {
 		name: "Topic Create",
 		desc: "Create a new Topic",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Topic,
 	},
 	[Permission.Topic_Delete]: {
 		name: "Topic Delete",
-		desc: "Delete a Topic.",
-		collection: PermissionCollection.General,
+		desc: "Delete an existing Topic.",
+		collection: PermissionCollection.Topic,
 	},
 	[Permission.Post_Read]: {
 		name: "Post Read",
 		desc: "Read a Post by other Users.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Post,
 	},
 	[Permission.Post_Create]: {
 		name: "Post Create",
-		desc: "Create a Post under a Topic.",
-		collection: PermissionCollection.General,
+		desc: "Create a new Post under a Topic.",
+		collection: PermissionCollection.Post,
 	},
 	[Permission.Post_Delete]: {
 		name: "Post Delete",
-		desc: "Delete a Post.",
-		collection: PermissionCollection.General,
+		desc: "Delete an existing Post.",
+		collection: PermissionCollection.Post,
 	},
 	[Permission.Post_Edit]: {
 		name: "Post Edit",
 		desc: "Edit an existing Post written by other Users.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Post,
 	},
 	[Permission.Project_Create]: {
 		name: "ProjectCreate",
 		desc: "Create a new Project.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Project,
 	},
 	[Permission.Project_Delete]: {
 		name: "Project Delete",
 		desc: "Delete an existing Project.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Project,
 	},
 	[Permission.Client_Create]: {
 		name: "Client Create",
 		desc: "Create a new Client.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Client,
 	},
 	[Permission.Client_Delete]: {
 		name: "Client Delete",
 		desc: "Delete an existing Client.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Client,
 	},
 	[Permission.Task_Create]: {
 		name: "Task Create",
 		desc: "Create a new Task for a Project.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Task,
 	},
 	[Permission.Task_Delete]: {
 		name: "Task Delete",
-		desc: "Delete an Task.",
-		collection: PermissionCollection.General,
+		desc: "Delete an existing Task.",
+		collection: PermissionCollection.Task,
 	},
 	[Permission.Task_Assign]: {
 		name: "Task Assign",
 		desc: "Add users to a Task.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Task,
 	},
 	[Permission.Task_Status]: {
 		name: "Task Status",
 		desc: "Edit the Status of a Task that you are not assigned to.",
-		collection: PermissionCollection.General,
+		collection: PermissionCollection.Task,
 	},
 }
 
