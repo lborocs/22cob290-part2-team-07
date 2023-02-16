@@ -8,6 +8,7 @@
 	<SvgLogin />
 	<main>
 		<slot />
+		<ModalManager />
 	</main>
 </template>
 

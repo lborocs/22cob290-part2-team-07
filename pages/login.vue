@@ -8,20 +8,20 @@ definePageMeta({
 	name: "Login",
 })
 const modalError = useModal()
-const dialog = $ref<HTMLDialogElement>()
 
 const form = ref<HTMLFormElement>()
 async function submit() {
 	const data = new FormData(form.value)
 	const body = formData2Object(data)
+	//console.log(body)
 	const result = await $fetch("/api/login", {
 		method: "POST",
 		body,
 	})
-	if (result === null) {
-		// TODO: Show Error!
-		dialog?.showModal()
-		console.log("Error to make sure its running")
+	//console.log(result)
+	if (!result) {
+		modalError.show()
+		//console.log("Error to make sure its running")
 	} else {
 		login(result)
 		navigateTo("/dashboard")
@@ -54,6 +54,7 @@ async function submit() {
 	</form>
 	<div id="dialogues">
 		<Modal :control="modalError" title="Incorrect Username or Password">
+			<p>Please try again</p>
 		</Modal>
 	</div>
 </template>
@@ -104,5 +105,9 @@ async function submit() {
 .form #emailPosition {
 	align-self: flex-end;
 	transform: translate(1rem, -2.5rem);
+}
+
+#dialogues {
+	position: absolute;
 }
 </style>
