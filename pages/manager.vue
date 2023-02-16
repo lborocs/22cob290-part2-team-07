@@ -55,6 +55,31 @@
 				</Button>
 			</ModalFooter>
 		</Modal>
+		<Modal :control="modalCreateClient" title="New Client">
+			<form class="flex-col project-form">
+				<label for="client-name">Name:</label>
+				<input type="text" id="client-name" v-model="clientName" />
+				<label for="client-rep">Representative:</label>
+				<input type="text" id="client-rep" v-model="clientRep" />
+				<label for="client-email">Email:</label>
+				<input type="email" id="client-email" v-model="clientEmail" />
+				<label for="client-phone">Phone: (optional)</label>
+				<input type="tel" id="client-phone" v-model="clientPhone" />
+				<label for="client-address">Address: (optional)</label>
+				<input type="tel" id="client-address" v-model="clientAddress" />
+				<label for="client-website">Webite: (optional)</label>
+				<input type="text" id="client-website" v-model="clientWebsite" />
+			</form>
+			<ModalFooter>
+				<Button
+					@click="createClient()"
+					icon="material-symbols:check"
+					:disabled="!clientName || !clientRep || !clientEmail"
+				>
+					Apply
+				</Button>
+			</ModalFooter>
+		</Modal>
 	</section>
 
 	<section class="card">
@@ -105,6 +130,7 @@ getVisibleProjects()
 const { data: clients } = await useFetch("/api/clients")
 
 const modalCreateProject = useModal()
+const modalCreateClient = useModal()
 
 async function getVisibleProjects() {
 	const res = await $fetch("/api/projects")
@@ -118,6 +144,37 @@ const projectDescription = ref<HTMLTextAreaElement>()
 const projectClient = ref<HTMLSelectElement>()
 const projectDeadline = ref<HTMLInputElement>()
 
+const clientName = ref<string>()
+const clientRep = ref<string>()
+const clientEmail = ref<string>()
+const clientPhone = ref<string>()
+const clientAddress = ref<string>()
+const clientWebsite = ref<string>()
+
+/**
+ * Create a new client from inputs in form, then unhide the project creation modal
+ */
+async function createClient() {
+	if (!clientName.value || !clientRep.value || !clientEmail.value) return
+
+	alert(clientName.value)
+	console.log(clientName.value)
+	const res = await $fetch("/api/client", {
+		method: "POST",
+		body: JSON.stringify({
+			name: clientName.value,
+			representative: clientRep.value,
+			email: clientEmail.value,
+			phone: clientPhone.value,
+			address: clientAddress.value,
+			website: clientWebsite.value,
+		}),
+	})
+	clients.value?.push(res.client)
+	modalCreateClient.hide()
+	modalCreateProject.show()
+}
+
 async function createProject() {
 	if (
 		!projectName.value?.value ||
@@ -126,6 +183,12 @@ async function createProject() {
 		projectClient.value?.value == "-2"
 	)
 		return
+	// user selected create new client
+	if (projectClient.value?.value == "-1") {
+		modalCreateProject.hide()
+		modalCreateClient.show()
+		return
+	}
 
 	const res = await $fetch("/api/project", {
 		method: "POST",
