@@ -170,13 +170,15 @@
 import { Task } from ".prisma/client"
 import { Icon } from "@iconify/vue"
 import { TaskStatus, workerHours } from "@/types/task"
+import { emitKeypressEvents } from "readline"
 
 defineProps<{
 	tasks: KanbanTask[]
 }>()
 
 const emit = defineEmits<{
-	(taskId: "details", id: number): void
+	(name: "details", id: number): void
+	(name: "finish", taskId: number, status: boolean): void
 }>()
 
 async function onChecked(event: Event, task: Task) {
@@ -186,6 +188,7 @@ async function onChecked(event: Event, task: Task) {
 		method: "POST",
 		body: { task: task },
 	})
+	emit("finish", task.uid, isChecked)
 }
 
 function showModal(id: number) {

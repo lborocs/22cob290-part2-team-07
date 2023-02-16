@@ -38,6 +38,16 @@ export interface PermissionGroup {
 	deny: number | Permission
 }
 
+export function permissionsUser(roles: Role[] | undefined | null) {
+	if (roles == null) return Permission.NONE
+	const index = roles.findIndex(r => r.uid === everyoneUid)
+	if (index === -1) return Permission.NONE
+	return combinePermissions(
+		combinePermissions(Permission.NONE, [roles[index]]),
+		[...roles.slice(undefined, index), ...roles.slice(index + 1)],
+	)
+}
+
 function combinePermissions(
 	permissions: Permission,
 	overrides: PermissionGroup[],
@@ -54,19 +64,10 @@ function combinePermissions(
 }
 
 export function permissions(
-	roles: PermissionGroup[],
-	roleOverrides?: PermissionGroup[],
-	userOverrides?: PermissionGroup[],
-): Permission {
-	let p = Permission.NONE
-	p = combinePermissions(p, roles)
-	return permissionsChain(p, roleOverrides, userOverrides)
-}
-export function permissionsChain(
 	permissions: Permission,
 	roleOverrides?: PermissionGroup[],
 	userOverrides?: PermissionGroup[],
-): Permission {
+) {
 	if (has(permissions, Permission.Administrator)) return Permission.ALL_ADMIN
 	if (roleOverrides !== undefined)
 		permissions = combinePermissions(permissions, roleOverrides)
@@ -77,4 +78,127 @@ export function permissionsChain(
 
 export function has(permissions: Permission, flags: Permission): boolean {
 	return (permissions & flags) === flags
+}
+
+export enum PermissionState {
+	ALLOW = "allow",
+	DENY = "deny",
+	NEUTRAL = "neutral",
+}
+
+export enum PermissionCollection {
+	Admin = 1 << 0,
+	Post = 1 << 1,
+	Topic = 1 << 2,
+	Project = 1 << 3,
+	Task = 1 << 4,
+	Client = 1 << 5,
+	ALL = ~(~0 << 6),
+}
+
+interface PermissionInfo {
+	name: string
+	desc: string
+	collection: PermissionCollection
+}
+const permissionInfoMap: {
+	[x: number]: PermissionInfo
+} = {
+	[Permission.Administrator]: {
+		name: "Administrator",
+		desc: "A user can do anything without restriction regardless of other permissions.",
+		collection: PermissionCollection.Admin,
+	},
+	[Permission.Topic_Create]: {
+		name: "Topic Create",
+		desc: "Create a new Topic",
+		collection: PermissionCollection.Topic,
+	},
+	[Permission.Topic_Delete]: {
+		name: "Topic Delete",
+		desc: "Delete an existing Topic.",
+		collection: PermissionCollection.Topic,
+	},
+	[Permission.Post_Read]: {
+		name: "Post Read",
+		desc: "Read a Post by other Users.",
+		collection: PermissionCollection.Post,
+	},
+	[Permission.Post_Create]: {
+		name: "Post Create",
+		desc: "Create a new Post under a Topic.",
+		collection: PermissionCollection.Post,
+	},
+	[Permission.Post_Delete]: {
+		name: "Post Delete",
+		desc: "Delete an existing Post.",
+		collection: PermissionCollection.Post,
+	},
+	[Permission.Post_Edit]: {
+		name: "Post Edit",
+		desc: "Edit an existing Post written by other Users.",
+		collection: PermissionCollection.Post,
+	},
+	[Permission.Project_Create]: {
+		name: "ProjectCreate",
+		desc: "Create a new Project.",
+		collection: PermissionCollection.Project,
+	},
+	[Permission.Project_Delete]: {
+		name: "Project Delete",
+		desc: "Delete an existing Project.",
+		collection: PermissionCollection.Project,
+	},
+	[Permission.Client_Create]: {
+		name: "Client Create",
+		desc: "Create a new Client.",
+		collection: PermissionCollection.Client,
+	},
+	[Permission.Client_Delete]: {
+		name: "Client Delete",
+		desc: "Delete an existing Client.",
+		collection: PermissionCollection.Client,
+	},
+	[Permission.Task_Create]: {
+		name: "Task Create",
+		desc: "Create a new Task for a Project.",
+		collection: PermissionCollection.Task,
+	},
+	[Permission.Task_Delete]: {
+		name: "Task Delete",
+		desc: "Delete an existing Task.",
+		collection: PermissionCollection.Task,
+	},
+	[Permission.Task_Assign]: {
+		name: "Task Assign",
+		desc: "Add users to a Task.",
+		collection: PermissionCollection.Task,
+	},
+	[Permission.Task_Status]: {
+		name: "Task Status",
+		desc: "Edit the Status of a Task that you are not assigned to.",
+		collection: PermissionCollection.Task,
+	},
+}
+
+export const permissionList = [
+	Permission.Administrator,
+	Permission.Topic_Create,
+	Permission.Topic_Delete,
+	Permission.Post_Read,
+	Permission.Post_Create,
+	Permission.Post_Delete,
+	Permission.Post_Edit,
+	Permission.Project_Create,
+	Permission.Project_Delete,
+	Permission.Client_Create,
+	Permission.Client_Delete,
+	Permission.Task_Create,
+	Permission.Task_Delete,
+	Permission.Task_Assign,
+	Permission.Task_Status,
+]
+
+export function permissionInfo(permission: Permission) {
+	return permissionInfoMap[permission]
 }

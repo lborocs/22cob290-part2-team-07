@@ -84,6 +84,14 @@ function clearFocus() {
 					</li>
 					<li>
 						<NavButton
+							location="/permission"
+							name="Permissions"
+							icon="material-symbols:gavel-rounded"
+							@navigate="clearFocus"
+						/>
+					</li>
+					<li>
+						<NavButton
 							@click="logout"
 							location="/login"
 							name="Logout"
@@ -211,6 +219,21 @@ main {
 	.mobile-nav-toggle {
 		display: block;
 		position: fixed;
+		right: 0;
+		background: var(--colour-background-1);
+		color: var(--colour-accent);
+		border: none;
+		--size: 3.5rem;
+
+		margin: 0.5rem;
+		padding: 0;
+		display: grid;
+		place-items: center;
+		font-size: calc(var(--size) / 2);
+
+		width: var(--size);
+		aspect-ratio: 1.25;
+		border-radius: 100vmax;
 	}
 
 	.nav-wrapper {

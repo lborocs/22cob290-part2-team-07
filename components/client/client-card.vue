@@ -7,22 +7,28 @@ import { profilePicture } from "~~/types/user"
 
 const { params } = useRoute()
 const clientId = params.id[0]
+
+// server isnt respodning with any data for /api/client/6. why???
 const { data: client } = await useFetch(`/api/client/${clientId}`)
-console.log(client)
+const clientRep = client.value!.representative
+const clientEmail = client.value!.email
+const clientPhone = client.value!.phone
+const clientAddress = client.value!.address
+const clientWebsite = client.value!.website
 
-const repProfilePicture = ref(profilePicture(client.value!.representative))
+const repProfilePicture = ref(profilePicture(clientRep))
+let clientAddressMaps = clientAddress
+// replace any spaces with commas with a plus symbol to meet the google maps URL requirements
+clientAddressMaps = clientAddressMaps.replace(/, /g,"+")
+const mapsQuery = "https://www.google.com/maps/search/?api=1&query=" + clientAddressMaps
 
-
-
-
-defineProps<{}>()
 </script>
 
 
 <template>
 	<div class="card flex-col centre">
         <div class="card-title-wrapper">
-            <slot name="client-details"></slot>
+          <h2 name="name" class="edit__titles">Client details</h2>
         </div>
 
         <div class="client-details-wrap">
@@ -30,24 +36,25 @@ defineProps<{}>()
             <h3 class="title-card-small text-center">Client representative</h3>
             <div class="flex-col-center">
                 <img
-                :src=repProfilePicture
+                :src="repProfilePicture"
                 alt="profile"
                 class="card-small-image profile-pic"
                 id=""
                 />
-                <slot name="client-name"></slot>
+                <h2 name="name" class="edit__titles">{{ clientRep }}</h2>
+
             </div>
             </div>
 
             <div class="card-small bg-accent card-bigger">
             <h3 class="title-card-small text-center">Contact information</h3>
             <div class="flex-col-center">
-                <slot name="contact-information"></slot>
+              <h2 name="name" class="edit__titles">Email: <span class="client-details-text">{{clientEmail}}</span> Phone: <span class="client-details-text">{{clientPhone}}</span> Website: <span class="client-details-text">{{ clientWebsite }}</span></h2>
                 <div class="link-list text-center">
-                <a href="" id="client-email" target="_blank">
+                <a :href="`mailto:${clientEmail}`" id="client-email" target="_blank">
                     Contact via email</a
                 >
-                <a href="" id="client-web" target="_blank"
+                <a :href="clientWebsite" id="client-web" target="_blank"
                     >Access website
                     <span class="material-symbols-outlined">outbound</span></a
                 >
@@ -63,7 +70,8 @@ defineProps<{}>()
                 id="client-address"
                 ></p>
                 <div class="link-list text-center">
-                <a href="#">View on Google Maps</a>
+                  <h2 name="name" class="edit__titles">{{ clientAddress }}</h2>
+                  <a :href="mapsQuery" target="_blank">View on Google Maps</a>
                 </div>
             </div>
             </div>
@@ -76,6 +84,10 @@ defineProps<{}>()
 <style scoped lang="scss">
 @use "~/assets/core";
 @use "/assets/colour";
+
+.client-details-text {
+  font-weight: 400;
+}
 
 .topcards-wrapper {
   display: flex;
@@ -150,5 +162,10 @@ defineProps<{}>()
 
 #client-web span {
   font-size: 1em;
+}
+
+.card-small {
+  width: 100%;
+  text-align:center;
 }
 </style>

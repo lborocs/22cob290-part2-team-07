@@ -3,7 +3,7 @@ import {
 	has,
 	Permission,
 	permissions,
-	permissionsChain,
+	permissionsUser,
 } from "@/types/permission"
 
 definePageMeta({
@@ -21,7 +21,7 @@ if (!post.value) console.error(`Post<FAQ> does not exist!`)
 <template>
 	<KnowledgePost
 		:post="post!"
-		v-if="post && (has(permissionsChain(permissions(currentUser!.roles, post.topic.overrideRoles, post.topic.overrideUsers), post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post!.ownerId == currentUser!.uid)"
+		v-if="post && (has(permissions(permissions(permissionsUser(currentUser!.roles), post.topic.overrideRoles, post.topic.overrideUsers), post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post!.ownerId == currentUser!.uid)"
 	/>
 	<KnowledgePostMissing v-else />
 </template>

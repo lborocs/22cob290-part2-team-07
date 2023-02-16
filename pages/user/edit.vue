@@ -1,13 +1,9 @@
 <script setup>
-import { PrismaClient } from "@prisma/client"
 import { logout } from "@/types/user"
 
 definePageMeta({
 	name: "Profile",
 })
-
-const pass = PrismaClient.password
-console.log(pass)
 
 const modalActive = ref(false)
 const passModalActive = ref(false)
@@ -22,6 +18,23 @@ const preventScoll = () => {
 const promoteScroll = () => {
 	const body = document.getElementsByTagName("body")[0]
 	body.style = "overflow-y: visible;"
+}
+
+function validateInv(event) {
+	event.preventDefault()
+	const email = document.getElementsByTagName("input")[0]
+	if (email.value != "") {
+		// Add logic for sending invite email here
+
+		const check = document.getElementsByClassName("email__sent")[0]
+		check.style.display = "block"
+		email.value = ""
+	}
+}
+
+function clearCheck() {
+	const check = document.getElementsByClassName("email__sent")[0]
+	check.style.display = "none"
 }
 </script>
 
@@ -61,13 +74,17 @@ const promoteScroll = () => {
 	</Moodal>
 	<Moodal
 		v-show="invModalActive"
-		@close=";(invModalActive = !invModalActive), promoteScroll()"
+		@close=";(invModalActive = !invModalActive), promoteScroll(), clearCheck()"
 		class="align modal"
 	>
 		<template #content>
 			<h2>Invite User</h2>
 			<p>Invite a colleague to the Make-It-All Portal</p>
-			<button class="upload-button">Invite</button>
+			<div id="inv--wrapper">
+				<input type="email" name="invite__email" id="inv--email" />
+				<p class="email__sent">Sent &check;</p>
+				<button class="upload-button" @click="validateInv">Invite</button>
+			</div>
 		</template>
 	</Moodal>
 	<Moodal
@@ -298,5 +315,27 @@ $logout: #da0000;
 	background: $logout;
 	border-radius: 0.438rem;
 	margin-top: 1rem;
+}
+
+#inv--wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#inv--email {
+	width: 80%;
+	height: 2rem;
+	border-radius: 10px;
+	padding-left: 1rem;
+	font-weight: bold;
+	font-family: inherit;
+}
+
+.email__sent {
+	font-weight: bold;
+	display: none;
+	margin-bottom: 0;
 }
 </style>

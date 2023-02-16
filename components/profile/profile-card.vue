@@ -9,10 +9,10 @@
 			}
 </script> -->
 <script setup lang="ts">
-import { profilePicture, emailDomain } from "@/types/user"
+import { rolesTitle, profilePicture, emailDomain } from "@/types/user"
 import { User } from ".prisma/client"
 const currentUsername = useCurrentUser().value!.name
-// const currentUserRank = rankTitle()
+const currentUserRank = rolesTitle()
 const currentUserProfilePicture = ref(profilePicture(currentUsername))
 const userEmail = useCurrentUser().value!.email + emailDomain
 defineProps<{}>()

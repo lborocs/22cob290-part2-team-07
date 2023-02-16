@@ -14,7 +14,7 @@ defineProps<{}>()
 <style scoped lang="scss">
 .modal {
 	width: 28rem;
-	height: 13rem;
+	height: fit-content;
 	padding: 1.25rem;
 	margin: 6.25rem auto;
 	background: white;

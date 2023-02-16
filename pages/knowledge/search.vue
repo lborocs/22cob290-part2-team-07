@@ -3,7 +3,7 @@ import {
 	has,
 	Permission,
 	permissions,
-	permissionsChain,
+	permissionsUser,
 } from "@/types/permission"
 
 definePageMeta({
@@ -29,7 +29,7 @@ watch(route, () => {
 	<template v-for="post in posts" :key="post.uid">
 		<KnowledgePostSnippet
 			v-bind="post"
-			v-if="has(permissionsChain(permissions(currentUser!.roles, post.topic.overrideRoles, post.topic.overrideUsers), post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post.ownerId === currentUser!.uid"
+			v-if="has(permissions(permissions(permissionsUser(currentUser?.roles), post.topic.overrideRoles, post.topic.overrideUsers), post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post.ownerId === currentUser!.uid"
 		/>
 	</template>
 </template>
