@@ -7,6 +7,7 @@ definePageMeta({
 
 const route = useRoute()
 const { data: role } = await useFetch(`/api/role/${route.params.uid}`)
+usePageName(`${role.value?.name} Role`)
 </script>
 
 <template>
