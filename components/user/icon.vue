@@ -14,13 +14,13 @@ withDefaults(
 	},
 )
 
-const showDiv = ref(true)
+const showDiv = ref(false)
 </script>
 
 <template>
 	<div
 		@mouseover="showDiv = true"
-		@mouseleave="showDiv = true"
+		@mouseleave="showDiv = false"
 		class="profile-picture-container"
 	>
 		<NuxtLink v-if="isLink" :to="`/user/${email}`">
