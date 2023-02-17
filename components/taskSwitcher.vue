@@ -412,6 +412,8 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 		}),
 )
 
+const { data: currentUser } = await useCurrentUser()
+
 const selectedViewMode = ref(1)
 
 const taskName = ref<HTMLInputElement>()
@@ -527,6 +529,14 @@ async function addTask() {
 	)
 	const hours = taskHours.value?.value as unknown as number
 
+	// if it's a personal task, assign it to the current user
+	const assignees =
+		taskProjectId.value == -1
+			? [{ uid: currentUser.value?.uid }]
+			: taskAssignees.value.map(user => {
+					return { uid: user.uid }
+			  })
+	console.log(assignees)
 	const body = {
 		task: {
 			name: taskName.value?.value,
@@ -534,9 +544,7 @@ async function addTask() {
 			workerHours: hours,
 			deadline: taskDeadline.value?.value,
 			projectId: taskProject.value?.value as unknown as number,
-			assignees: taskAssignees.value.map(user => {
-				return { uid: user.uid }
-			}),
+			assignees: assignees,
 		},
 	}
 
