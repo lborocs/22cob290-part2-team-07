@@ -38,27 +38,20 @@ function clearCheck() {
 }
 
 function setLight() {
-	console.log("setLight")
 	const index = document.getElementsByClassName("theme")[0].selectedIndex
 	const page = document.getElementsByTagName("html")[0]
-	const modal = document.getElementsByClassName("modal")
-	console.log(index)
 	switch (index) {
 		case 0:
-			console.log("hello")
 			break
 		case 1:
-			console.log("light")
 			page.classList.remove("theme-dark")
 			page.classList.add("theme-light")
 			break
 		case 2:
-			console.log(modal)
 			page.classList.remove("theme-light")
 			page.classList.add("theme-dark")
 			break
 		default:
-			console.log("nothing")
 	}
 }
 </script>
