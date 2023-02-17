@@ -45,7 +45,7 @@ function createRoleOverride() {
 }
 function createUserOverride() {
 	modalAddUser.hide()
-	console.log(modalAddUserSelection.value)
+	// TODO: Selection should only have single value
 	for (const user of modalAddUserSelection.value) {
 		emit("createOverride:user", user.uid)
 	}

@@ -11,8 +11,6 @@ const { data: email } = await useFetch(`/api/invite/${route.params.code}`)
 
 const form = ref<HTMLFormElement>()
 async function submit() {
-	console.log(form.value)
-
 	const data = new FormData(form.value)
 	data.append("code", route.params.code)
 
