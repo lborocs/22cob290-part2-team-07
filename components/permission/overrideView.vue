@@ -12,9 +12,12 @@ const props = defineProps<{
 const emit = defineEmits<{
 	(e: "createOverride:role", uid: Role["uid"]): void
 	(e: "createOverride:user", uid: User["uid"]): void
+	(e: "deleteOverride:role", uid: Role["uid"]): void
+	(e: "deleteOverride:user", uid: User["uid"]): void
 }>()
 
 const { data: allRoles } = useLazyFetch("/api/roles")
+const { data: allUsers } = useLazyFetch("/api/users")
 
 const availibleRoles = $computed(
 	() =>
@@ -22,11 +25,17 @@ const availibleRoles = $computed(
 			r => props.roles.findIndex(ro => ro.role.uid === r.uid) === -1,
 		) ?? [],
 )
+const availibleUsers = $computed(
+	() =>
+		allUsers.value?.filter(
+			u => props.users.findIndex(us => us.user.uid === u.uid) === -1,
+		) ?? [],
+)
 
 const modalAddRole = useModal()
 const modalAddRoleForm = ref<HTMLFormElement>()
 const modalAddUser = useModal()
-const modalAddUserForm = ref<HTMLFormElement>()
+const modalAddUserSelection = ref<User[]>([])
 
 function createRoleOverride() {
 	const data = form2Object(modalAddRoleForm.value!)
@@ -35,10 +44,12 @@ function createRoleOverride() {
 	if (role != undefined) emit("createOverride:role", role)
 }
 function createUserOverride() {
-	const data = form2Object(modalAddUserForm.value!)
 	modalAddUser.hide()
-	const user: User["uid"] | undefined = data["user"]
-	if (user != undefined) emit("createOverride:user", user)
+	console.log(modalAddUserSelection.value)
+	for (const user of modalAddUserSelection.value) {
+		emit("createOverride:user", user.uid)
+	}
+	modalAddUserSelection.value.length = 0
 }
 </script>
 
@@ -57,8 +68,18 @@ function createUserOverride() {
 			v-for="override in roles"
 			:key="override.role.uid"
 			:role="override.role"
-			:prefix="routePrefix"
-		/>
+		>
+			<ButtonNuxt
+				:to="`${routePrefix}/permission/role/${override.role.uid}`"
+				icon="material-symbols:edit-outline-rounded"
+				>Edit</ButtonNuxt
+			>
+			<Button
+				icon="material-symbols:delete-forever-outline-rounded"
+				@click="$emit('deleteOverride:role', override.role.uid)"
+				>Remove</Button
+			>
+		</PermissionRolebar>
 	</section>
 	<section>
 		<div class="head">
@@ -69,26 +90,35 @@ function createUserOverride() {
 				>Add</Button
 			>
 		</div>
+		<hr />
 		<p v-if="users.length == 0">No User Overrides exists.</p>
 		<div v-for="override in users" :key="override.user.uid" class="user-chunk">
-			<UserIcon
-				:email="override.user.email"
-				:name="override.user.name"
-				:size="50"
-			/>
-			<UserName :email="override.user.email" :name="override.user.name" />
-			<span class="dimmed">{{ rolesTitle(override.user.roles) }}</span>
-			<ButtonNuxt
-				icon="material-symbols:edit-outline-rounded"
-				:fix="true"
-				:to="`${routePrefix}/user/${override.user.uid}`"
-				>Edit</ButtonNuxt
-			>
+			<div class="info">
+				<UserIcon
+					:email="override.user.email"
+					:name="override.user.name"
+					:size="50"
+				/>
+				<UserName :email="override.user.email" :name="override.user.name" />
+				<span class="dimmed">{{ rolesTitle(override.user.roles) }}</span>
+			</div>
+			<div class="buttons">
+				<ButtonNuxt
+					:to="`${routePrefix}/permission/user/${override!.user.email}`"
+					icon="material-symbols:edit-outline-rounded"
+					>Edit</ButtonNuxt
+				>
+				<Button
+					icon="material-symbols:delete-forever-outline-rounded"
+					@click="$emit('deleteOverride:user', override.user.uid)"
+					>Remove</Button
+				>
+			</div>
 		</div>
 	</section>
 	<Modal :control="modalAddRole" title="Role Override">
 		<form ref="modalAddRoleForm" @submit.prevent="createRoleOverride()">
-			<template v-for="role in availibleRoles">
+			<div v-for="role in availibleRoles">
 				<input
 					:id="`role-override-add-${role.uid}`"
 					type="radio"
@@ -97,7 +127,7 @@ function createUserOverride() {
 					required
 				/>
 				<label :for="`role-override-add-${role.uid}`">{{ role.name }}</label>
-			</template>
+			</div>
 			<ModalFooter
 				><Button type="submit" icon="material-symbols:add"
 					>Add</Button
@@ -106,17 +136,12 @@ function createUserOverride() {
 		</form>
 	</Modal>
 	<Modal :control="modalAddUser" title="User Override">
-		<form ref="modalAddUserForm" @submit.prevent="createUserOverride()">
-			<template v-for="role in availibleRoles">
-				<!-- <input
-					:id="`role-override-add-${role.uid}`"
-					type="radio"
-					name="role"
-					:value="role.uid"
-					required
-				/>
-				<label :for="`role-override-add-${role.uid}`">{{ role.name }}</label> -->
-			</template>
+		<form @submit.prevent="createUserOverride()">
+			<UserSelect
+				id="permission-user-add-selection"
+				:users="availibleUsers"
+				v-model:selection="modalAddUserSelection"
+			/>
 			<ModalFooter
 				><Button type="submit" icon="material-symbols:add"
 					>Add</Button
@@ -134,6 +159,36 @@ section {
 
 	.head {
 		@extend %flex-space;
+	}
+}
+
+form {
+	@extend %flex-col;
+}
+
+.user-chunk {
+	@extend %flex-space;
+	.info {
+		display: grid;
+		grid-template:
+			"icon name" auto
+			"icon role" auto / auto auto;
+		column-gap: 0.5rem;
+
+		$areas: (
+			icon: 1,
+			name: 2,
+			role: 3,
+		);
+		@each $name, $nth in $areas {
+			:nth-child(#{$nth}) {
+				grid-area: $name;
+			}
+		}
+		margin-bottom: 1rem;
+	}
+	.buttons {
+		@extend %flex-row;
 	}
 }
 </style>
