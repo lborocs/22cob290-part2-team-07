@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { createRoleOverride, createUserOverride } from "@/types/override"
+import {
+	createRoleOverride,
+	createUserOverride,
+	deleteRoleOverride,
+	deleteUserOverride,
+} from "@/types/override"
+
+definePageMeta({
+	name: "Project Permissions",
+})
 
 const route = useRoute()
 const { data: project, refresh } = await useFetch(
@@ -18,6 +27,12 @@ usePageName(`${project.value?.name} Permissions`)
 		"
 		@create-override:user="
 			createUserOverride('project', project!.uid, $event).then(() => refresh())
+		"
+		@delete-override:role="
+			deleteRoleOverride('project', project!.uid, $event).then(() => refresh())
+		"
+		@delete-override:user="
+			deleteUserOverride('project', project!.uid, $event).then(() => refresh())
 		"
 	/>
 </template>
