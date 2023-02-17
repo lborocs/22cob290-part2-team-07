@@ -6,7 +6,7 @@
 				<ButtonSwitch
 					option1="List"
 					option2="Kanban"
-					v-model:selected="selectedViewMode"
+					v-model:selected="kanbanPreference.preference"
 				/>
 				<Button
 					:icon="
@@ -24,7 +24,7 @@
 		</header>
 		<div v-if="filteredTasks.length > 0">
 			<TasksList
-				v-if="selectedViewMode == 1"
+				v-if="kanbanPreference.preference == 1"
 				:tasks="filteredTasks"
 				@details="showDialog"
 				@finish="onTaskFinish"
@@ -414,7 +414,7 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 
 const { data: currentUser } = await useCurrentUser()
 
-const selectedViewMode = ref(1)
+const kanbanPreference = useKanbanPreference()
 
 const taskName = ref<HTMLInputElement>()
 const taskDescription = ref<HTMLTextAreaElement>()

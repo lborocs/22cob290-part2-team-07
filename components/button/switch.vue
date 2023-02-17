@@ -5,7 +5,7 @@
 			:id="`switch-opt-${option1}`"
 			name="view-mode"
 			:value="option1"
-			checked
+			:checked="selected == 1"
 			@click="optionClick(1)"
 		/>
 		<label :for="`switch-opt-${option1}`">{{ option1 }}</label>
@@ -14,6 +14,7 @@
 			:id="`switch-opt-${option2}`"
 			name="view-mode"
 			:value="option2"
+			:checked="selected == 2"
 			@click="optionClick(2)"
 		/>
 		<label :for="`switch-opt-${option2}`">{{ option2 }}</label>
