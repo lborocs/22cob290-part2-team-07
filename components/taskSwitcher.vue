@@ -132,6 +132,7 @@
 				name="project"
 				id="task-project"
 				ref="taskProject"
+				v-model="taskProjectId"
 				@change="onNewTaskChange"
 			>
 				<option
@@ -161,6 +162,7 @@
 				@change="onNewTaskChange"
 			/>
 			<UserSelect
+				v-if="taskProjectId != -1"
 				id="new-task-users"
 				:users="assignableUsers"
 				v-model:selection="taskAssignees"
@@ -416,6 +418,7 @@ const taskName = ref<HTMLInputElement>()
 const taskDescription = ref<HTMLTextAreaElement>()
 const taskHours = ref<HTMLInputElement>()
 const taskProject = ref<HTMLSelectElement>()
+const taskProjectId = ref<number>(-2)
 const taskDeadline = ref<HTMLInputElement>()
 const taskAssignees = ref<User[]>([])
 
