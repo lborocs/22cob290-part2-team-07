@@ -28,6 +28,9 @@ body {
 }
 .card-small {
 	@extend %card-small;
+	width: 80%;
+	min-width: 30ch;
+	margin-inline: auto;
 }
 
 .profile-picture {
@@ -37,6 +40,15 @@ body {
 /* kanban card top border colour (if not overwritten, defaults to colour-accent) */
 .rag-band {
 	border-top: 0.25rem solid var(--colour-card-highlight, var(--colour-accent));
+}
+
+.detail-highlight {
+	font-weight: 800;
+	background-color: var(--colour-card-highlight, var(--colour-green));
+	padding: 0.5rem;
+	border-radius: 0.25rem;
+	margin-left: auto;
+	display: inline-flex;
 }
 
 .dimmed {
@@ -63,9 +75,3 @@ body {
 		gap: $i * 0.2rem;
 	}
 }
-
-// @each $name in $rag-colours {
-// 	%data-rag-#{$name} {
-// 		--colour-card-highlight: var(--colour-#{$name});
-// 	}
-// }

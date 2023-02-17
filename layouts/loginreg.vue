@@ -3,12 +3,12 @@
 <template>
 	<header>
 		<h1><u>Make-It-All</u> Portal</h1>
-		<!-- will fix positioning-->
 		<img src="~/assets/tools.svg" alt="Make-It-All Logo" class="logo" />
 	</header>
 	<SvgLogin />
 	<main>
 		<slot />
+		<ModalManager />
 	</main>
 </template>
 

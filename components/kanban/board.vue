@@ -8,7 +8,7 @@ const { tasks } = defineProps<{
 
 const emit = defineEmits<{
 	(name: "details", id: number): void
-	(name: "finish", taskId: number, status: boolean): void
+	(name: "finish", taskId: number, isFinished: boolean): void
 }>()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
@@ -19,15 +19,27 @@ function onDragOver(event: DragEvent) {
 
 async function onDrop(event: DragEvent, status: TaskStatus) {
 	if (!event.dataTransfer) return
-	const data = +event.dataTransfer.getData("task")
+	const data = +event.dataTransfer.getData("task").split(" ")[0]
+	const ogStatus = +event.dataTransfer.getData("task").split(" ")[1]
 	const task = tasks.find(task => task.uid == data)
+
 	if (!task) return
 	task.status = status
 	await $fetch(`/api/task/${task.uid}`, {
 		method: "POST",
 		body: { task: task },
 	})
-	emit("finish", task.uid, task.status === 2)
+	onDropEmit(task.uid, status, ogStatus)
+}
+
+function onDropEmit(id: number, status: number, ogStatus: number) {
+	if (status === 2 && ogStatus !== 2) {
+		console.log("finished")
+		emit("finish", id, true)
+	} else if (status !== 2 && ogStatus === 2) {
+		console.log("un-finished")
+		emit("finish", id, false)
+	}
 }
 
 function emitDialog(id: number) {
@@ -69,6 +81,9 @@ function emitDialog(id: number) {
 	flex-direction: column;
 	gap: 1rem;
 	position: relative;
+	max-height: 45rem;
+	overflow-x: hidden;
+	overflow-y: auto;
 
 	// right margin between each column
 	&:not(:last-child)::after {

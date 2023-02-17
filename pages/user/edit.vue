@@ -36,6 +36,24 @@ function clearCheck() {
 	const check = document.getElementsByClassName("email__sent")[0]
 	check.style.display = "none"
 }
+
+function setLight() {
+	const index = document.getElementsByClassName("theme")[0].selectedIndex
+	const page = document.getElementsByTagName("html")[0]
+	switch (index) {
+		case 0:
+			break
+		case 1:
+			page.classList.remove("theme-dark")
+			page.classList.add("theme-light")
+			break
+		case 2:
+			page.classList.remove("theme-light")
+			page.classList.add("theme-dark")
+			break
+		default:
+	}
+}
 </script>
 
 <template>
@@ -81,7 +99,10 @@ function clearCheck() {
 			<h2>Invite User</h2>
 			<p>Invite a colleague to the Make-It-All Portal</p>
 			<div id="inv--wrapper">
-				<input type="email" name="invite__email" id="inv--email" />
+				<div class="email__input">
+					<input type="email" name="invite__email" id="inv--email" />
+					<h2 class="email__input--text">@make-it-all.co.uk</h2>
+				</div>
 				<p class="email__sent">Sent &check;</p>
 				<button class="upload-button" @click="validateInv">Invite</button>
 			</div>
@@ -113,6 +134,13 @@ function clearCheck() {
 				</button>
 			</div>
 		</template> -->
+		<template #theme>
+			<select @change="setLight()" name="theme" class="theme">
+				<option value="default">Default</option>
+				<option value="light">Light</option>
+				<option value="dark">Dark</option>
+			</select>
+		</template>
 		<template #password>
 			<button
 				@click=";(passModalActive = true), preventScoll()"
@@ -242,6 +270,7 @@ $logout: #da0000;
 	float: right;
 	padding: 0.5rem;
 	border-radius: 1rem;
+	width: min-content;
 }
 .wrapper-appearance,
 .wrapper-password,
@@ -325,14 +354,26 @@ $logout: #da0000;
 }
 
 #inv--email {
-	width: 80%;
+	width: 30%;
 	height: 2rem;
 	border-radius: 10px;
 	padding-left: 1rem;
+	margin-left: 2rem;
 	font-weight: bold;
 	font-family: inherit;
 }
 
+.email__input {
+	display: flex;
+	align-items: baseline;
+	width: 100%;
+}
+
+.email__input--text {
+	font-size: 1.2rem;
+	padding: 0 1rem 1rem 1rem;
+	color: var(--colour-text);
+}
 .email__sent {
 	font-weight: bold;
 	display: none;

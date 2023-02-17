@@ -9,42 +9,50 @@ definePageMeta({
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
 usePageName(project.value?.name)
-
-const daysRemaing = $computed(() => {
-	const date = new Date(project.value!.deadline)
-	return dateDiffInDays(new Date(), date)
-})
+const selectedUserViewMode = ref(1)
 
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
-	const members: UserR[] = []
+	const userMap = new Map<string, UserR>()
 	for (const task of project.value!.tasks) {
-		for (const user of task.assignees)
-			if (!members.includes(user)) members.push(user)
+		for (const user of task.assignees) {
+			if (!userMap.has(user.uid)) {
+				userMap.set(user.uid, user)
+			}
+		}
 	}
-	return members
+	return Array.from(userMap.values())
 })
 
-const memberHours = reactive(initHours())
+const workDaysRemaining = $computed(() => {
+	const deadline = new Date(project.value!.deadline)
+	const currentDate = new Date()
+	const timeDiff = deadline.getTime() - currentDate.getTime()
+	const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24)) // round up to include current day
+	const weekendDaysRemaining =
+		Math.floor((daysRemaining + currentDate.getDay()) / 7) * 2
+	const remainingWeekday = daysRemaining - weekendDaysRemaining
 
-function initHours(): { [key: string]: number } {
+	return remainingWeekday
+})
+
+const memberHours = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
+	const tasks = project.value!.tasks.filter(task => task.status < 2)
 
-	const tasks = project.value!.tasks.filter(
-		task => task.status === 0 || task.status === 1,
-	)
 	for (const task of tasks) {
 		for (const member of projectMembers) {
-			if (task.assignees.includes(member)) {
+			if (task.assignees.some(assignee => assignee.uid === member.uid)) {
 				hoursByMember[member.name] =
 					(hoursByMember[member.name] || 0) + workerHours(task)
 			}
 		}
 	}
-	return hoursByMember
-}
 
-function updateHours(uid: number, status: boolean, isSubTask: boolean) {
+	return hoursByMember
+})
+
+function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 	let task: KanbanTask | undefined
 	let subtask: Subtask | undefined
 	let parentTask: KanbanTask | undefined
@@ -70,7 +78,7 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 		for (const memberName of Object.keys(memberHours)) {
 			if (assignedMembers.has(memberName)) {
-				if (status) {
+				if (isFinished) {
 					memberHours[memberName] -= taskHours
 					console.log(memberName, " hours: ", memberHours[memberName])
 				} else {
@@ -93,7 +101,7 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 		for (const memberName of Object.keys(memberHours)) {
 			if (assignedMembers.has(memberName)) {
-				if (status) {
+				if (isFinished) {
 					memberHours[memberName] -= taskHours
 					console.log(memberName, " hours: ", memberHours[memberName])
 				} else {
@@ -106,32 +114,20 @@ function updateHours(uid: number, status: boolean, isSubTask: boolean) {
 
 	// console.log(memberHours)
 }
-
-// Display days left until project deadline
-function dateDiffInDays(a: any, b: any) {
-	const _MS_PER_DAY = 1000 * 60 * 60 * 24
-	// Discard the time and time-zone information.
-	const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
-	const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
-
-	return Math.floor((utc2 - utc1) / _MS_PER_DAY)
-}
-
-const selectedUserViewMode = ref(1)
 </script>
 
 <template>
 	<p>{{ project!.description }}</p>
 	<section class="flex-row">
 		<ProjectCard title="Project Progress" :text="false">
-			<ProjectSpinner />
+			<ProjectSpinner :tasks="project!.tasks" />
 		</ProjectCard>
 		<ProjectCard title="Project Deadline" :text="true">
 			<p id="project-deadline" class="deadline">
 				<Date :date="project!.deadline" format="long" />
 			</p>
 			<p id="days-remaining" class="deadline-days">
-				{{ daysRemaing }} Days remaining
+				{{ workDaysRemaining }} work days remaining
 			</p>
 		</ProjectCard>
 		<ProjectCard title="Project Lead" :text="true">
@@ -226,12 +222,6 @@ const selectedUserViewMode = ref(1)
 	--card-width: 22ch;
 	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
 	gap: 1rem;
-
-	.card-small {
-		text-align: center;
-		width: clamp(10ch, 100%, 30ch);
-		// max-width: var(--card-width);
-	}
 }
 
 .no-margin {

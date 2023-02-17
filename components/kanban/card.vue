@@ -30,12 +30,6 @@
 </template>
 
 <style scoped lang="scss">
-.card-small {
-	width: 80%;
-	min-width: 30ch;
-	margin-inline: auto;
-}
-
 .task-header {
 	display: flex;
 	justify-content: space-between;
@@ -70,7 +64,7 @@ h3 {
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
-import { workerHours } from "@/types/task"
+import { statusName, workerHours } from "@/types/task"
 const { task } = defineProps<{
 	task: KanbanTask
 }>()
@@ -82,7 +76,10 @@ const emit = defineEmits<{
 function onDrag(event: DragEvent) {
 	if (event.dataTransfer) {
 		event.dataTransfer.dropEffect = "move"
-		event.dataTransfer.setData("task", task.uid.toString())
+		event.dataTransfer.setData(
+			"task",
+			task.uid.toString() + " " + task.status.toString(),
+		)
 	}
 }
 

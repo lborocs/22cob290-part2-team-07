@@ -12,12 +12,14 @@ defineProps<{}>()
 </template>
 
 <style scoped lang="scss">
+@use "~/assets/theme";
 .modal {
 	width: 28rem;
 	height: fit-content;
 	padding: 1.25rem;
 	margin: 6.25rem auto;
-	background: white;
+	background: var(--colour-background-2);
+	border: 2px solid var(--colour-accent);
 	border-radius: 0.625rem;
 	text-align: center;
 }

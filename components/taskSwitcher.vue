@@ -39,7 +39,11 @@
 		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
 
-	<Modal :control="modalTaskDetails" :title="currentTask.name">
+	<Modal
+		v-if="currentTask != undefined"
+		:control="modalTaskDetails"
+		:title="currentTask.name"
+	>
 		<p>{{ currentTask.description }}</p>
 
 		<div v-if="currentTask.subtasks && currentTask.subtasks.length > 0">
@@ -79,6 +83,14 @@
 			:users="assignableUsers"
 			v-model:selection="taskEditAssignees"
 		/>
+		<Button
+			icon="material-symbols:delete-outline"
+			class="center-button"
+			@click="deleteTask()"
+		>
+			Delete Task
+		</Button>
+
 		<ModalFooter>
 			<Button
 				icon="material-symbols:check"
@@ -326,6 +338,7 @@ header {
 
 .center-button {
 	margin: auto;
+	margin-block: 1.5rem;
 }
 
 .subtask-list {
@@ -541,7 +554,7 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
-		emit("update", newTask.uid, false, false)
+		// emit("update", newTask.uid, false, false)
 	}
 }
 
@@ -575,6 +588,24 @@ async function getAssignableProjects() {
 async function getAssignableUsers() {
 	const res = await $fetch("/api/users")
 	assignableUsers.value = res
+}
+
+/**
+ * Confirm to the user, then delete the current task
+ */
+async function deleteTask() {
+	const response = window.confirm(
+		`You are about to delete the task "${currentTask.value.name}".\nThis action cannot be undone. Are you sure you want to continue?`,
+	)
+	if (response) {
+		const res = await $fetch(`/api/task/${currentTask.value.uid}`, {
+			method: "DELETE",
+		})
+		if (res.status == 200) {
+			filteredTasks.value.splice(currentTaskIndex, 1)
+			modalTaskDetails.hide()
+		}
+	}
 }
 
 async function applyTaskEdits(event: Event) {
