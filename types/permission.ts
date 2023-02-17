@@ -140,7 +140,7 @@ const permissionInfoMap: {
 		collection: PermissionCollection.Post,
 	},
 	[Permission.Project_Create]: {
-		name: "ProjectCreate",
+		name: "Project Create",
 		desc: "Create a new Project.",
 		collection: PermissionCollection.Project,
 	},
@@ -201,4 +201,10 @@ export const permissionList = [
 
 export function permissionInfo(permission: Permission) {
 	return permissionInfoMap[permission]
+}
+
+export function permissionCollection(
+	collection: PermissionCollection,
+): Permission[] {
+	return permissionList.filter(p => permissionInfo(p).collection & collection)
 }
