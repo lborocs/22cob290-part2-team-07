@@ -76,23 +76,24 @@ Here are the guiding principles which were kept in consideration when completing
 During our presentation to the clients, we received feedback on how our prototype could be improved to better meet the requirements. In order to make a better system for the client, we have implemented the majority of their feedback. See table 1 for details.
 
 (Table 1)
-| System page | Feedback | Implemented (Yes/No) |
-| ----------------- | ------------ | ------------------------------- |
-| Dashboard | Needs to be clear where each task has originated from | XXX |
-| Dashboard | Team leaders and managers should be part of one or more teams | XXX |
-| Dashboard | Could have functionality to swap between Kanban view and task view | XXX |
-| Project | Calculation of progress should be based on worker-hours of tasks | XXX |
-| Project | The days remaining until the project deadline should exclude holidays and weekends | XXX |
-| Project | Should be able to change the team leader of a project | XXX |
-| Project | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project | XXX |
-| Project | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task | XXX |
-| Project | Could have functionality to show more information about an employee when their icon is hovered over| XXX |
-| Knowledge management | FAQ page is needed | XXX |
-| Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics, who can create posts within a topic and who can comment on the FAQ | XXX |
-| Knowledge management | Functionality to upload images to posts is needed | XXX |
-| Knowledge management | Could search for posts by user | XXX |
-| Not page specific | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page| XXX |
-| Not page specific | The navigation bar could show text on hover | XXX |
+
+| System page          | Feedback                                                                                                                     | Implemented (Yes/No) |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| Dashboard            | Needs to be clear where each task has originated from                                                                        | XXX                  |
+| Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
+| Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
+| Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
+| Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes (Partially)      |
+| Project              | Should be able to change the team leader of a project                                                                        | XXX                  |
+| Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
+| Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
+| Project              | Could have functionality to show more information about an employee when their icon is hovered over                          | Yes                  |
+| Knowledge management | FAQ page is needed                                                                                                           | Yes                  |
+| Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics and who can create posts within a topic | Yes                  |
+| Knowledge management | Functionality to upload images to posts is needed                                                                            | Yes                  |
+| Knowledge management | Could search for posts by user                                                                                               | XXX                  |
+| Not page specific    | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page                 | Yes                  |
+| Not page specific    | The navigation bar could show text on hover                                                                                  | Yes                  |
 
 # System Implementation
 
