@@ -21,6 +21,7 @@
 	&:disabled {
 		cursor: default;
 		background-color: var(--colour-accent-faded);
+		color: var(--colour-accent);
 	}
 
 	&:hover:not([disabled]),
