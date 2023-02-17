@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { User, Subtask, Task } from ".prisma/client"
 import { workerHours } from "@/types/task"
-import taskPut from "~~/server/api/task.put"
 
 definePageMeta({
 	name: "Project",
@@ -155,7 +154,7 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 	</section>
 
 	<TaskSwitcher
-		:tasks="project?.tasks.map(t => ({ ...t, ...{ project: project } })) ?? []"
+		:tasks="project!.tasks"
 		@update="updateHours"
 		:assignable-projects="[project]"
 	/>
