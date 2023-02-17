@@ -120,6 +120,13 @@ async function uploadChanges() {
 				>
 			</div>
 		</template>
+		<template #footer-extra>
+			<ButtonNuxt
+				icon="material-symbols:gavel-rounded"
+				:to="`/knowledge/post/${post.uid}/permission/`"
+				>Permissions</ButtonNuxt
+			>
+		</template>
 		<KnowledgePostMarkdown
 			v-if="!editing || (editing && preview)"
 			:markdown="markdownLocal"

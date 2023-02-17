@@ -63,6 +63,7 @@ function createUserOverride() {
 				>Add</Button
 			>
 		</div>
+		<hr />
 		<p v-if="roles.length == 0">No Role Overrides exists.</p>
 		<PermissionRolebar
 			v-for="override in roles"
