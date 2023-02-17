@@ -1,17 +1,6 @@
-<!-- <script>
-		uploadPhoto(e) {
-			this.$emit("input", e.target.files[0])
-			let reader = new FileReader()
-			reader.readAsDataURL(e.target.files[0])
-			reader.onload = e => {
-				this.src = e.target.result
-				console.log(this.src)
-			}
-</script> -->
 <script setup lang="ts">
 import { rolesTitle, profilePicture, emailDomain } from "@/types/user"
 const { data: user } = await useCurrentUser()
-console.log(user)
 const name = user.value!.name
 const currentUserProfilePicture = profilePicture(name)
 defineProps<{}>()
@@ -25,7 +14,7 @@ defineProps<{}>()
 		</div>
 		<hr />
 		<div class="card-image-wrapper">
-			<h2 name="hierarchy" class="user__rank">{{ rolesTitle(user?.roles) }}</h2>
+			<h2 name="hierarchy" class="user__rank">{{ rolesTitle(user!.roles) }}</h2>
 			<img
 				id="card-profile-picture"
 				:src="currentUserProfilePicture"
@@ -111,7 +100,7 @@ hr {
 	font-size: 1.5rem;
 	line-height: 2em;
 	letter-spacing: 0.01em;
-	color: colour.$text-light-faded;
+	color: var(--colour-text);
 }
 .card-image-wrapper {
 	display: flex;
