@@ -8,6 +8,10 @@ definePageMeta({
 
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
+for (const task of project.value!.tasks) {
+	task.project = project
+}
+
 const selectedUserViewMode = ref(1)
 
 // get members of project based on tasks they are assigned to

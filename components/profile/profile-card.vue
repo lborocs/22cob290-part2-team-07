@@ -10,23 +10,22 @@
 </script> -->
 <script setup lang="ts">
 import { rolesTitle, profilePicture, emailDomain } from "@/types/user"
-import { User } from ".prisma/client"
-const currentUsername = useCurrentUser().value!.name
-const currentUserRank = rolesTitle()
-const currentUserProfilePicture = ref(profilePicture(currentUsername))
-const userEmail = useCurrentUser().value!.email + emailDomain
+const { data: user } = await useCurrentUser()
+console.log(user)
+const name = user.value!.name
+const currentUserProfilePicture = profilePicture(name)
 defineProps<{}>()
 </script>
 
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
-			<h2 name="name" class="edit__titles">{{ currentUsername }}</h2>
+			<h2 name="name" class="edit__titles">{{ user?.name }}</h2>
 			<h2 name="account" class="edit__titles">Account</h2>
 		</div>
 		<hr />
 		<div class="card-image-wrapper">
-			<h2 name="hierarchy" class="user__rank">{{ currentUserRank }}</h2>
+			<h2 name="hierarchy" class="user__rank">{{ rolesTitle(user?.roles) }}</h2>
 			<img
 				id="card-profile-picture"
 				:src="currentUserProfilePicture"
@@ -58,7 +57,7 @@ defineProps<{}>()
 				<label for="email-box" class="label-subtext"
 					>This is your assigned company email</label
 				>
-				<label id="email-box"> {{ userEmail }}</label>
+				<label id="email-box"> {{ user?.email + emailDomain }}</label>
 				<img class="email-lock-img" src="~/assets/lock.png" alt="lock" />
 			</div>
 			<div class="wrapper-invite">
@@ -89,6 +88,10 @@ $logout: #da0000;
 }
 .hidden {
 	display: none;
+}
+
+hr {
+	width: 100%;
 }
 .align {
 	display: flex;
@@ -152,7 +155,7 @@ $logout: #da0000;
 }
 
 .label-subtext {
-	color: colour.$text-light-faded;
+	color: var(--colour-text);
 	font-size: 1rem;
 	line-height: 0.1rem;
 }

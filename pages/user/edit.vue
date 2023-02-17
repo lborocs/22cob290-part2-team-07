@@ -38,27 +38,20 @@ function clearCheck() {
 }
 
 function setLight() {
-	console.log("setLight")
 	const index = document.getElementsByClassName("theme")[0].selectedIndex
 	const page = document.getElementsByTagName("html")[0]
-	const modal = document.getElementsByClassName("modal")
-	console.log(index)
 	switch (index) {
 		case 0:
-			console.log("hello")
 			break
 		case 1:
-			console.log("light")
 			page.classList.remove("theme-dark")
 			page.classList.add("theme-light")
 			break
 		case 2:
-			console.log(modal)
 			page.classList.remove("theme-light")
 			page.classList.add("theme-dark")
 			break
 		default:
-			console.log("nothing")
 	}
 }
 </script>
@@ -106,7 +99,10 @@ function setLight() {
 			<h2>Invite User</h2>
 			<p>Invite a colleague to the Make-It-All Portal</p>
 			<div id="inv--wrapper">
-				<input type="email" name="invite__email" id="inv--email" />
+				<div class="email__input">
+					<input type="email" name="invite__email" id="inv--email" />
+					<h2 class="email__input--text">@make-it-all.co.uk</h2>
+				</div>
 				<p class="email__sent">Sent &check;</p>
 				<button class="upload-button" @click="validateInv">Invite</button>
 			</div>
@@ -358,14 +354,26 @@ $logout: #da0000;
 }
 
 #inv--email {
-	width: 80%;
+	width: 30%;
 	height: 2rem;
 	border-radius: 10px;
 	padding-left: 1rem;
+	margin-left: 2rem;
 	font-weight: bold;
 	font-family: inherit;
 }
 
+.email__input {
+	display: flex;
+	align-items: baseline;
+	width: 100%;
+}
+
+.email__input--text {
+	font-size: 1.2rem;
+	padding: 0 1rem 1rem 1rem;
+	color: var(--colour-text);
+}
 .email__sent {
 	font-weight: bold;
 	display: none;
