@@ -6,7 +6,23 @@
 		:id="`task-${task.uid}`"
 	>
 		<div class="task-header">
-			<h4>{{ task.name }}</h4>
+			<h4>
+				{{ task.name }}
+				<br />
+				<div>
+					<span
+						v-if="task.project"
+						class="dimmed kanban-project flex-row gap-1"
+					>
+						{{ task.project?.name }}
+						<Icon icon="material-symbols:push-pin-outline" />
+					</span>
+					<span v-else class="dimmed kanban-project flex-row gap-1">
+						Personal Task
+						<Icon icon="material-symbols:person-outline" />
+					</span>
+				</div>
+			</h4>
 			<div v-if="task.assignees.length > 0">
 				<AvatarStack :array="task.assignees" />
 			</div>
@@ -58,6 +74,12 @@ h3 {
 	button {
 		color: var(--colour-text-faded);
 		font-size: 1rem;
+	}
+}
+
+.kanban-project {
+	svg {
+		font-size: 1.5rem;
 	}
 }
 </style>
