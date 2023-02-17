@@ -15,9 +15,7 @@ const { data: user } = await useFetch(`/api/user/${userEmail}`)
 console.log(user)
 const username = user.value!.name
 
-const userRank = rolesTitle(user.roles)
-console.log(userRank)
-console.log(user.roles)
+// the roles part of each user is apprently an object. How do I find out what roles any given user has?
 
 const userProfilePicture = ref(profilePicture(username))
 const userEmailAddress = userEmail + emailDomain
@@ -32,7 +30,7 @@ defineProps<{}>()
 		</div>
 		<hr />
 		<div class="card-image-wrapper">
-			<h2 name="hierarchy" class="user__rank">"user_rank"</h2>
+			<h2 name="hierarchy" class="user__rank">{{ rolesTitle(user!.roles) }}</h2>
 			
 			<!-- :src= "XXX" is how to do it when i want to use variable from above -->
 
