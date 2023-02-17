@@ -135,7 +135,7 @@
 				@change="onNewTaskChange"
 			>
 				<option
-					:value="-1"
+					:value="-2"
 					disabled
 					selected
 					hidden
@@ -143,9 +143,7 @@
 				>
 					Select project to add task to
 				</option>
-				<option :value="null" v-if="!p.assignableProjects">
-					Personal Task
-				</option>
+				<option :value="-1" v-if="!p.assignableProjects">Personal Task</option>
 				<option
 					v-for="project in assignableProjects"
 					:key="project.uid"
@@ -621,7 +619,7 @@ function onNewTaskChange(event: Event) {
 		taskName.value?.value.length! > 0 &&
 		taskDescription.value?.value.length! > 0 &&
 		taskHours.value?.value.length! > 0 &&
-		(+taskProject.value?.value! as number) != -1 &&
+		(+taskProject.value?.value! as number) != -2 &&
 		taskDeadline.value?.value.length! > 0
 	console.log(
 		taskName.value?.value,

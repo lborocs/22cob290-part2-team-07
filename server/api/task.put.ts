@@ -10,8 +10,6 @@ export default defineEventHandler(async event => {
 		const body = await readBody(event)
 
 		const details = body.task as KanbanTask
-		console.table(details)
-		console.log(typeof details.workerHours, typeof +details.workerHours)
 
 		const deadlineDate = new Date(details.deadline?.toString() || "")
 
@@ -21,7 +19,11 @@ export default defineEventHandler(async event => {
 				description: details.description,
 				workerHours: +details.workerHours,
 				deadline: deadlineDate,
-				project: { connect: { uid: +details.projectId! } },
+				project:
+					// if personal task, set to null. Else, connect to project
+					details.projectId != -1
+						? { connect: { uid: +details.projectId! } }
+						: undefined,
 				assignees: {
 					connect: [...details.assignees],
 				},
@@ -37,6 +39,9 @@ export default defineEventHandler(async event => {
 				e,
 			)
 			return { success: false, error: "Missing fields for task" }
+		} else {
+			console.error("Error creating task", e)
+			return { success: false, error: "Error creating task" }
 		}
 	}
 })
