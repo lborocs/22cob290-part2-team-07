@@ -541,13 +541,10 @@ async function addTask() {
 
 	console.log(body)
 
-	const res: { success: boolean; task: Task | undefined } = await $fetch(
-		"/api/task/",
-		{
-			method: "PUT",
-			body: body,
-		},
-	)
+	const res = await $fetch("/api/task/", {
+		method: "PUT",
+		body: body,
+	})
 	console.log(res)
 
 	if (res.success) {
