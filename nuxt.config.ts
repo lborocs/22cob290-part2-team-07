@@ -12,7 +12,14 @@ export default defineNuxtConfig({
 			meta: [{ name: "description", content: "Make-It-All Management System" }],
 		},
 	},
-	modules: ["@nuxtjs/color-mode"],
+	modules: [
+		"@pinia/nuxt",
+		"@pinia-plugin-persistedstate/nuxt",
+		"@nuxtjs/color-mode",
+	],
+	pinia: {
+		autoImports: ["defineStore"],
+	},
 	colorMode: {
 		preference: "system", // default value of $colorMode.preference
 		fallback: "light", // fallback value if not system preference found
