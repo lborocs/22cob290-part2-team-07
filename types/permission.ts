@@ -1,6 +1,7 @@
 import { Role } from ".prisma/client"
 
 export const everyoneUid: Role["uid"] = 1
+export const adminUid: Role["uid"] = 2
 
 export enum Permission {
 	NONE = 0, // No permissions
