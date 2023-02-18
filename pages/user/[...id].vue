@@ -6,7 +6,7 @@ definePageMeta({
 
 const route = useRoute()
 const { data: user } = await useFetch(`/api/user/${route.params.id}`)
-console.log(user.value)
+//console.log(user.value)
 if (!user.value) {
 	navigateTo("/project/error")
 }
