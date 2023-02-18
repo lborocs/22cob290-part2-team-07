@@ -21,7 +21,7 @@
 	</div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .users-wrapper {
 	gap: 1rem;
 	max-height: 20rem;
