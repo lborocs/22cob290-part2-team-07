@@ -6,7 +6,7 @@
 				<ButtonSwitch
 					option1="List"
 					option2="Kanban"
-					v-model:selected="selectedViewMode"
+					v-model:selected="kanbanPreference.preference"
 				/>
 				<Button
 					:icon="
@@ -24,7 +24,7 @@
 		</header>
 		<div v-if="filteredTasks.length > 0">
 			<TasksList
-				v-if="selectedViewMode == 1"
+				v-if="kanbanPreference.preference == 1"
 				:tasks="filteredTasks"
 				@details="showDialog"
 				@finish="onTaskFinish"
@@ -132,10 +132,11 @@
 				name="project"
 				id="task-project"
 				ref="taskProject"
+				v-model="taskProjectId"
 				@change="onNewTaskChange"
 			>
 				<option
-					:value="-1"
+					:value="-2"
 					disabled
 					selected
 					hidden
@@ -143,9 +144,7 @@
 				>
 					Select project to add task to
 				</option>
-				<option :value="null" v-if="!p.assignableProjects">
-					Personal Task
-				</option>
+				<option :value="-1" v-if="!p.assignableProjects">Personal Task</option>
 				<option
 					v-for="project in assignableProjects"
 					:key="project.uid"
@@ -163,6 +162,7 @@
 				@change="onNewTaskChange"
 			/>
 			<UserSelect
+				v-if="taskProjectId != -1"
 				id="new-task-users"
 				:users="assignableUsers"
 				v-model:selection="taskAssignees"
@@ -412,12 +412,15 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 		}),
 )
 
-const selectedViewMode = ref(1)
+const { data: currentUser } = await useCurrentUser()
+
+const kanbanPreference = useKanbanPreference()
 
 const taskName = ref<HTMLInputElement>()
 const taskDescription = ref<HTMLTextAreaElement>()
 const taskHours = ref<HTMLInputElement>()
 const taskProject = ref<HTMLSelectElement>()
+const taskProjectId = ref<number>(-2)
 const taskDeadline = ref<HTMLInputElement>()
 const taskAssignees = ref<User[]>([])
 
@@ -526,6 +529,14 @@ async function addTask() {
 	)
 	const hours = taskHours.value?.value as unknown as number
 
+	// if it's a personal task, assign it to the current user
+	const assignees =
+		taskProjectId.value == -1
+			? [{ uid: currentUser.value?.uid }]
+			: taskAssignees.value.map(user => {
+					return { uid: user.uid }
+			  })
+	console.log(assignees)
 	const body = {
 		task: {
 			name: taskName.value?.value,
@@ -533,21 +544,16 @@ async function addTask() {
 			workerHours: hours,
 			deadline: taskDeadline.value?.value,
 			projectId: taskProject.value?.value as unknown as number,
-			assignees: taskAssignees.value.map(user => {
-				return { uid: user.uid }
-			}),
+			assignees: assignees,
 		},
 	}
 
 	console.log(body)
 
-	const res: { success: boolean; task: Task | undefined } = await $fetch(
-		"/api/task/",
-		{
-			method: "PUT",
-			body: body,
-		},
-	)
+	const res = await $fetch("/api/task/", {
+		method: "PUT",
+		body: body,
+	})
 	console.log(res)
 
 	if (res.success) {
@@ -624,7 +630,7 @@ function onNewTaskChange(event: Event) {
 		taskName.value?.value.length! > 0 &&
 		taskDescription.value?.value.length! > 0 &&
 		taskHours.value?.value.length! > 0 &&
-		(+taskProject.value?.value! as number) != -1 &&
+		(+taskProject.value?.value! as number) != -2 &&
 		taskDeadline.value?.value.length! > 0
 	console.log(
 		taskName.value?.value,

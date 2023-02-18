@@ -5,6 +5,7 @@ definePageMeta({
 	name: "Profile",
 })
 
+const inputRef = ref(null)
 const modalActive = ref(false)
 const passModalActive = ref(false)
 const invModalActive = ref(false)
@@ -20,18 +21,16 @@ const promoteScroll = () => {
 	body.style = "overflow-y: visible;"
 }
 
-function validateInv(event) {
-	event.preventDefault()
-	const email = document.getElementsByTagName("input")[0]
-	if (email.value != "") {
-		// Add logic for sending invite email here
-
-		const check = document.getElementsByClassName("email__sent")[0]
-		check.style.display = "block"
-		email.value = ""
-	}
+async function createInvite() {
+	const result = await useLazyFetch("/api/invite", {
+		method: "POST",
+		body: {
+			email: inputRef.value.value,
+		},
+	})
 }
 
+//
 function clearCheck() {
 	const check = document.getElementsByClassName("email__sent")[0]
 	check.style.display = "none"
@@ -58,25 +57,6 @@ function setLight() {
 
 <template>
 	<p>The Edit Profile Page</p>
-	<!-- <Moodal
-		v-show="modalActive"
-		@close=";(modalActive = !modalActive), promoteScroll()"
-		class="align modal"
-	>
-		<template #content>
-			<h2>Upload Photo</h2>
-			<p>Upload a photo of your choice</p>
-			<input
-				type="file"
-				accept="image/*"
-				ref="fileInput"
-				@change="uploadPhoto"
-				class="hidden"
-			/>
-			<button @click="" class="upload-button spacing">Upload photo</button>
-			<button class="upload-button spacing" @click="toggleUpload">Save</button>
-		</template>
-	</Moodal> -->
 	<Moodal
 		v-show="passModalActive"
 		@close=";(passModalActive = !passModalActive), promoteScroll()"
@@ -100,11 +80,11 @@ function setLight() {
 			<p>Invite a colleague to the Make-It-All Portal</p>
 			<div id="inv--wrapper">
 				<div class="email__input">
-					<input type="email" name="invite__email" id="inv--email" />
+					<input name="invite__email" id="inv--email" ref="inputRef" />
 					<h2 class="email__input--text">@make-it-all.co.uk</h2>
 				</div>
-				<p class="email__sent">Sent &check;</p>
-				<button class="upload-button" @click="validateInv">Invite</button>
+				<p class="email__sent">example</p>
+				<button class="upload-button" @click="createInvite()">Invite</button>
 			</div>
 		</template>
 	</Moodal>
@@ -141,14 +121,14 @@ function setLight() {
 				<option value="dark">Dark</option>
 			</select>
 		</template>
-		<template #password>
+		<!-- <template #password>
 			<button
 				@click=";(passModalActive = true), preventScoll()"
 				id="change-password-btn"
 			>
 				<p>Change Password</p>
 			</button>
-		</template>
+		</template> -->
 		<template #invite>
 			<button @click=";(invModalActive = true), preventScoll()" id="invite-btn">
 				<p>Invite</p>
