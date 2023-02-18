@@ -1,6 +1,7 @@
 import prisma from "@/prisma"
 import { decodeEmail } from "@/types/invite"
 import { everyoneUid } from "@/types/permission"
+import { hashPassword } from "@/types/password"
 
 export default defineEventHandler(async event => {
 	const body = await readBody(event)
@@ -16,7 +17,9 @@ export default defineEventHandler(async event => {
 				email,
 				name: body.name as string,
 				roles: { connect: { uid: everyoneUid } },
-				secure: { create: { password: body.password as string } },
+				secure: {
+					create: { password: hashPassword(email, body.password as string) },
+				},
 			},
 		}),
 	])

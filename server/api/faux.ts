@@ -3,6 +3,7 @@ import { TaskStatus } from "@/types/task"
 import { Permission, everyoneUid, adminUid } from "@/types/permission"
 import fs from "node:fs/promises"
 import path from "node:path"
+import { hashPassword } from "~~/types/password"
 
 const CDN = path.resolve(process.env.CDN_PATH!)
 
@@ -86,6 +87,9 @@ export default defineEventHandler(async event => {
 		}),
 	])
 
+	const makePassword = (username: string, password: string) =>
+		hashPassword(username, hashPassword(username, password))
+
 	if ((await prisma.user.count()) > 0) return []
 	const users = await prisma.$transaction([
 		// Users
@@ -93,7 +97,7 @@ export default defineEventHandler(async event => {
 			data: {
 				email: "king",
 				name: "Neumann",
-				secure: { create: { password: "pking" } },
+				secure: { create: { password: makePassword("king", "pking") } },
 				roles: { connect: [{ uid: everyoneUid }, { uid: roles[1].uid }] },
 			},
 		}),
@@ -101,7 +105,7 @@ export default defineEventHandler(async event => {
 			data: {
 				email: "queen",
 				name: "Queen",
-				secure: { create: { password: "pqueen" } },
+				secure: { create: { password: makePassword("queen", "pqueen") } },
 				roles: { connect: [{ uid: everyoneUid }, { uid: roles[2].uid }] },
 			},
 		}),
@@ -109,7 +113,7 @@ export default defineEventHandler(async event => {
 			data: {
 				email: "dilip",
 				name: "Dilip",
-				secure: { create: { password: "pdilip" } },
+				secure: { create: { password: makePassword("dilip", "pdilip") } },
 				roles: { connect: [{ uid: everyoneUid }, { uid: roles[3].uid }] },
 			},
 		}),
@@ -117,7 +121,7 @@ export default defineEventHandler(async event => {
 			data: {
 				email: "emma",
 				name: "Emma",
-				secure: { create: { password: "pemma" } },
+				secure: { create: { password: makePassword("emma", "pemma") } },
 				roles: { connect: [{ uid: everyoneUid }, { uid: roles[3].uid }] },
 			},
 		}),
@@ -125,7 +129,7 @@ export default defineEventHandler(async event => {
 			data: {
 				email: "e",
 				name: "E",
-				secure: { create: { password: "pe" } },
+				secure: { create: { password: makePassword("e", "pe") } },
 				roles: { connect: [{ uid: everyoneUid }, { uid: roles[3].uid }] },
 			},
 		}),

@@ -1,40 +1,32 @@
 <script setup lang="ts">
+definePageMeta({
+	name: "dev",
+	layout: false,
+})
+
 let activeProcesses = $ref(0)
 const disable = $computed(() => activeProcesses > 0)
 
 async function refreshDatabase() {
-	activeProcesses++
-	await useLazyFetch("/api/faux?refresh")
-	activeProcesses--
-}
-
-async function createInvite() {
-	activeProcesses++
-	await useLazyFetch("/api/invite", {
-		method: "POST",
-		body: {
-			email: "bobby",
-		},
-	})
-	activeProcesses--
+	try {
+		activeProcesses++
+		await useLazyFetch("/api/faux?refresh")
+	} finally {
+		activeProcesses--
+	}
 }
 </script>
 
 <template>
+	<ButtonNuxt icon="material-symbols:flight" to="/dashboard" :disabled="disable"
+		>Go To Dashboard</ButtonNuxt
+	>
 	<Button
 		icon="material-symbols:refresh-rounded"
 		:fix="true"
 		@click="refreshDatabase"
 		:disabled="disable"
 		>Refresh Database</Button
-	>
-
-	<Button
-		icon="material-symbols:refresh-rounded"
-		:fix="true"
-		@click="createInvite"
-		:disabled="disable"
-		>Create Bobby Invite</Button
 	>
 </template>
 

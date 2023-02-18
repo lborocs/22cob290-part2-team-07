@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { emailDomain, login } from "@/types/user"
-import { formData2Object } from "@/types/generic"
-import { jsxOpeningElement } from "@babel/types"
+import { form2Object } from "@/types/generic"
+import { hashPassword } from "~~/types/password"
 
 definePageMeta({
 	layout: "loginreg",
@@ -11,17 +11,14 @@ const modalError = useModal()
 
 const form = ref<HTMLFormElement>()
 async function submit() {
-	const data = new FormData(form.value)
-	const body = formData2Object(data)
-	//console.log(body)
+	const data = form2Object(form.value!)
+	data.password = hashPassword(data.email, data.password)
 	const result = await $fetch("/api/login", {
 		method: "POST",
-		body,
+		body: data,
 	})
-	//console.log(result)
 	if (!result) {
 		modalError.show()
-		//console.log("Error to make sure its running")
 	} else {
 		login(result)
 		navigateTo("/dashboard")
