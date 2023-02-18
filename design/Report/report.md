@@ -40,7 +40,11 @@ expand the implementation as its 70% of the report marks
 
 The purpose of this report is to discuss and explain the system design and implementation strategy which have been applied to this system. The system which has been created is a productivity and knowledge management system. The system has been based off set requirements delivered to us via the “specification” letter from the client, as well as ever-changing requirements and clarifications discussed with the client via the online forums. The scope of this project is set within these requirements which were outlined in our requirements document.
 
-To create the system, we were aided by many different tools. GitHub provided the distributed version control of git, which allowed each of us to write code on our different machines. GitHub also provided us with a method of tracking jobs which needed to be done. This way, we could track the progression of the software and allocate/distribute everyone’s time fairly. We used Vue.js, a JavaScript framework, to help us build the system. Vue.js gave us a multiplex of tools which could be used to build the front-end and make it interactive. We also used Nuxt, which is a higher-level framework which builds on top of vue. Nuxt takes complexity away from development as it handles client-side and server-side processing. Therefore, as developers, we could focus on the actual programming. MySQL was also used as a database management system. The database stores information about the productivity and knowledge management system (e.g., tasks, account details etc). On top of MySQL, we used Prisma to help make development faster and more intuitive – through auto-completions and easy-to-read data models.
+To create the system, we were aided by many different tools. GitHub provided the distributed version control of git, which allowed each of us to write code on our different machines. GitHub also provided us with a method of tracking jobs which needed to be done. This way, we could track the progression of the software and allocate/distribute everyone’s time fairly.
+
+We used Vue.js, a JavaScript framework, to help us build the system. Vue.js gave us a multiplex of tools which could be used to build the front-end and make it interactive. We also used Nuxt, which is a higher-level framework which builds on top of vue. Nuxt takes complexity away from development as it handles client-side and server-side processing. Therefore, as developers, we could focus on the actual programming.
+
+MySQL was also used as a database management system. The database stores information about the productivity and knowledge management system (e.g., tasks, account details etc). On top of MySQL, we used Prisma to help make development faster and more intuitive – through auto-completions and easy-to-read data models.
 
 # System Design
 
@@ -58,11 +62,13 @@ Nuxt.js is a server-side rendering framework built on Vue.js and this framework 
 
 Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently. Additionally, Nuxt came with a set of pre-configured build tools such as CSS pre-processors which we used in our project to implement SASS, making it easier to write and maintain styles for the application.
 
+All these libraries assisted in meeting the requirements in many different aspects. We were able to easily produce a responsive design (requirements.md 13.1) and make elements reactive to provide up to date and accurate information ,for example the kanban board (requirements.md 6.3)<!-- could link these? if its possible-->, just to name a few of the requirements hit due to these libraries.
+
 ## Prisma and database design
 
 <!-- Talk about Prisma in more detail. How did we use Prisma in our system? What were the benefits provided to our system? Also need to talk about database design. Why is the database designed the way it is? Are there any limitations to the design? How does the database design allow us to meet the requirements? A graphic for the database design might be nice.-->
 
-As per the requirements, a MySQL database has been used to store and interact with data needed for usage of the system. We decided to streamline this by using Prisma, an ORM (Object Relational Mapper) to manage and interact with the database.
+As per the specification, a MySQL database has been used to store and interact with data needed for usage of the system. We decided to streamline this by using Prisma, an ORM (Object Relational Mapper) to manage and interact with the database.
 
 First off, we needed to create a database design. This was done in a team meeting where we outlined the tables needed, primary keys for each and then any additional tables that were needed to follow data normalisation. During this meeting we produced schema.md, a markdown file which contains the plan for the database. This was mostly followed in the final production of the database, with the addition of other tables which we needed to implement the design. <!-- link to schema.md-->
 
@@ -99,7 +105,7 @@ During our presentation to the clients, we received feedback on how our prototyp
 
 | System page          | Feedback                                                                                                                     | Implemented (Yes/No) |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| Dashboard            | Needs to be clear where each task has originated from                                                                        | XXX                  |
+| Dashboard            | Needs to be clear where each task has originated from                                                                        | Yes                  |
 | Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
 | Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
 | Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |

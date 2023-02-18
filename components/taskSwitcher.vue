@@ -87,6 +87,13 @@
 			icon="material-symbols:delete-outline"
 			class="center-button"
 			@click="deleteTask()"
+			v-if="
+				currentTask.projectId == null ||
+				has(
+					permissions(permissionsUser(currentUser?.roles)),
+					Permission.Task_Delete,
+				)
+			"
 		>
 			Delete Task
 		</Button>
@@ -382,6 +389,12 @@ import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
 import { arrayBuffer } from "stream/consumers"
+import {
+	has,
+	permissions,
+	Permission,
+	permissionsUser,
+} from "@/types/permission"
 
 const emit = defineEmits<{
 	(
@@ -413,6 +426,12 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 )
 
 const { data: currentUser } = await useCurrentUser()
+
+console.log("current user roles:", currentUser.value?.roles)
+console.log(
+	"has delete task permission:",
+	has(permissionsUser(currentUser.value?.roles), Permission.Task_Delete),
+)
 
 const kanbanPreference = useKanbanPreference()
 
@@ -532,7 +551,7 @@ async function addTask() {
 	// if it's a personal task, assign it to the current user
 	const assignees =
 		taskProjectId.value == -1
-			? [{ uid: currentUser.value?.uid }]
+			? [{ uid: currentUser.value?.uid! }]
 			: taskAssignees.value.map(user => {
 					return { uid: user.uid }
 			  })
@@ -556,7 +575,7 @@ async function addTask() {
 	})
 	console.log(res)
 
-	if (res.success) {
+	if (res.success && assignees!.some(a => a.uid == currentUser.value?.uid!)) {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
