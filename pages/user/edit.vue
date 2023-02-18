@@ -5,6 +5,7 @@ definePageMeta({
 	name: "Profile",
 })
 
+const inputRef = ref(null)
 const modalActive = ref(false)
 const passModalActive = ref(false)
 const invModalActive = ref(false)
@@ -24,14 +25,12 @@ async function createInvite() {
 	const result = await useLazyFetch("/api/invite", {
 		method: "POST",
 		body: {
-			email: "",
+			email: inputRef.value.value,
 		},
 	})
 }
 
-// const check = document.getElementsByClassName("email__sent")[0]
-// check.style.display = "block"
-// email.value = ""
+//
 function clearCheck() {
 	const check = document.getElementsByClassName("email__sent")[0]
 	check.style.display = "none"
@@ -81,10 +80,10 @@ function setLight() {
 			<p>Invite a colleague to the Make-It-All Portal</p>
 			<div id="inv--wrapper">
 				<div class="email__input">
-					<input name="invite__email" id="inv--email" ref="emailInput" />
+					<input name="invite__email" id="inv--email" ref="inputRef" />
 					<h2 class="email__input--text">@make-it-all.co.uk</h2>
 				</div>
-				<p class="email__sent">Sent &check;</p>
+				<p class="email__sent">example</p>
 				<button class="upload-button" @click="createInvite()">Invite</button>
 			</div>
 		</template>
@@ -122,14 +121,14 @@ function setLight() {
 				<option value="dark">Dark</option>
 			</select>
 		</template>
-		<template #password>
+		<!-- <template #password>
 			<button
 				@click=";(passModalActive = true), preventScoll()"
 				id="change-password-btn"
 			>
 				<p>Change Password</p>
 			</button>
-		</template>
+		</template> -->
 		<template #invite>
 			<button @click=";(invModalActive = true), preventScoll()" id="invite-btn">
 				<p>Invite</p>
