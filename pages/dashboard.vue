@@ -7,10 +7,16 @@ const { data: currentUser } = await useCurrentUser()
 const { data: projects } = useFetch("/api/projects")
 console.log("projects: ", projects.value)
 
+console.log(
+	"is manager:",
+	currentUser.value?.roles.some(role => role.rank == 1),
+)
+
 const { data: tasks } = await useFetch("/api/tasks", {
 	method: "GET",
 	query: {
 		uid: currentUser.value?.uid,
+		getAll: currentUser.value?.roles.some(role => role.rank == 1),
 	},
 })
 console.log("tasks: ", tasks.value)

@@ -3,14 +3,19 @@ import { User } from "@prisma/client"
 
 export default defineEventHandler(event => {
 	const query = getQuery(event)
-	console.log("uid for tasks:", query.uid)
+
+	// if the query is for all tasks, then don't filter by assignee (where is undefined)
+	const whereClause =
+		query.getAll == "true"
+			? undefined
+			: {
+					assignees: {
+						some: { uid: query.uid as User["uid"] },
+					},
+			  }
 
 	return prisma.task.findMany({
-		where: {
-			assignees: {
-				some: { uid: query.uid as User["uid"] },
-			},
-		},
+		where: whereClause,
 		include: {
 			subtasks: true,
 			assignees: true,
