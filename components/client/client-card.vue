@@ -3,6 +3,7 @@ import { ref } from "vue"
 import { useRoute } from "vue-router"
 import { User } from ".prisma/client"
 import { profilePicture } from "~~/types/user"
+import { has, Permission, permissions } from "~~/types/permission"
 
 const { params } = useRoute()
 const clientId = params.id
@@ -10,6 +11,9 @@ console.log(clientId)
 
 // server isnt respodning with any data for /api/client/6. why???
 const { data: client } = await useFetch(`/api/client/${clientId}`)
+usePageName(client.value?.name)
+
+const modalDelete = useModal()
 
 const clientRep = client.value!.representative
 const clientEmail = client.value!.email
@@ -31,8 +35,19 @@ if (clientAddress) {
 
 <template>
 	<div class="card flex-col centre">
-		<div class="card-title-wrapper">
+		<div class="card-title-wrapper client-title">
 			<h2 name="name" class="edit__titles">Client details</h2>
+			<!-- <Button
+				v-if="
+					has(
+						permissions(useCurrentUserPermissions()),
+						Permission.Client_Delete,
+					)
+				"
+				icon="material-symbols:delete-outline-rounded"
+				@click="modalDelete.show()"
+				>Delete</Button
+			> -->
 		</div>
 
 		<div class="client-details-wrap">
@@ -99,11 +114,16 @@ if (clientAddress) {
 			</div>
 		</div>
 	</div>
+	<DeleteConfirmation :control="modalDelete" name="Client" />
 </template>
 
 <style scoped lang="scss">
 @use "~/assets/core";
 @use "/assets/colour";
+
+.client-title {
+	@extend %flex-space;
+}
 
 .client-details-text {
 	font-weight: 400;
