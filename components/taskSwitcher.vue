@@ -87,6 +87,13 @@
 			icon="material-symbols:delete-outline"
 			class="center-button"
 			@click="deleteTask()"
+			v-if="
+				currentTask.projectId == null ||
+				has(
+					permissions(permissionsUser(currentUser?.roles)),
+					Permission.Task_Delete,
+				)
+			"
 		>
 			Delete Task
 		</Button>
@@ -382,6 +389,12 @@ import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
 import { Icon } from "@iconify/vue"
 import { arrayBuffer } from "stream/consumers"
+import {
+	has,
+	permissions,
+	Permission,
+	permissionsUser,
+} from "@/types/permission"
 
 const emit = defineEmits<{
 	(
@@ -413,6 +426,12 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 )
 
 const { data: currentUser } = await useCurrentUser()
+
+console.log("current user roles:", currentUser.value?.roles)
+console.log(
+	"has delete task permission:",
+	has(permissionsUser(currentUser.value?.roles), Permission.Task_Delete),
+)
 
 const kanbanPreference = useKanbanPreference()
 
