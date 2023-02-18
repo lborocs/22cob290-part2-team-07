@@ -1,11 +1,9 @@
 <script setup lang="ts">
-
-
-import { rolesTitle,profilePicture,emailDomain } from "~~/types/user"
-import {UserRank} from "~~/types"
-import {ref } from 'vue'
+import { rolesTitle, profilePicture, emailDomain } from "~~/types/user"
+import { UserRank } from "~~/types"
+import { ref } from "vue"
 import { User } from ".prisma/client"
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router"
 
 const { params } = useRoute()
 const userEmail = params.id
@@ -25,18 +23,18 @@ defineProps<{}>()
 <template>
 	<div class="card flex-col centre">
 		<div class="card-title-wrapper">
-			<h2 name="name" class="edit__titles">{{username}}</h2>
+			<h2 name="name" class="edit__titles">{{ username }}</h2>
 			<h2 name="account" class="edit__titles">Account</h2>
 		</div>
 		<hr />
 		<div class="card-image-wrapper">
 			<h2 name="hierarchy" class="user__rank">{{ rolesTitle(user!.roles) }}</h2>
-			
+
 			<!-- :src= "XXX" is how to do it when i want to use variable from above -->
 
 			<img
 				id="card-profile-picture"
-				:src= "userProfilePicture"
+				:src="userProfilePicture"
 				alt=""
 				class="profile-pic"
 			/>
