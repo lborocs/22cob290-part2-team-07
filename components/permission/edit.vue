@@ -51,7 +51,7 @@ function edit(state: PermissionState) {
 <template>
 	<div class="container">
 		<div class="head">
-			<h3>{{ info.name }}</h3>
+			<h3>{{ info?.name }}</h3>
 			<ClientOnly>
 				<div class="boxes" :data-permission-state="state">
 					<button

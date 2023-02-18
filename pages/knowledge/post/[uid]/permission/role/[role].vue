@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { PermissionCollection } from "@/types/permission"
+import { Permission, PermissionCollection } from "@/types/permission"
+import { requires } from "@/middleware/permission"
 definePageMeta({
 	name: "Post Role Permissions",
+	middleware: [requires(Permission.Permission_Override)],
 })
 </script>
 

@@ -5,9 +5,12 @@ import {
 	deleteRoleOverride,
 	deleteUserOverride,
 } from "@/types/override"
+import { requires } from "@/middleware/permission"
+import { Permission } from "@/types/permission"
 
 definePageMeta({
 	name: "Post Permissions",
+	middleware: [requires(Permission.Permission_Override)],
 })
 
 const route = useRoute()

@@ -124,6 +124,12 @@ async function uploadChanges() {
 			<ButtonNuxt
 				icon="material-symbols:gavel-rounded"
 				:to="`/knowledge/post/${post.uid}/permission/`"
+				v-if="
+					has(
+						permissions(currentUserPermissions),
+						Permission.Permission_Override,
+					)
+				"
 				>Permissions</ButtonNuxt
 			>
 		</template>

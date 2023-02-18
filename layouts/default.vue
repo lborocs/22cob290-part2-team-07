@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
 import { logout } from "@/types/user"
+import { has, Permission, permissions, permissionsUser } from "~~/types/permission";
 
 const route = useRoute()
 const pageNameOverride = usePageName()
@@ -85,7 +86,7 @@ function clearFocus() {
 							@navigate="clearFocus"
 						/>
 					</li>
-					<li>
+					<li v-if="has(permissions(permissionsUser(user!.roles)), Permission.Permission_Edit)">
 						<NavButton
 							location="/permission"
 							name="Permissions"

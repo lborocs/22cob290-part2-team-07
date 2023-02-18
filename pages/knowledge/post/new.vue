@@ -202,7 +202,7 @@ async function upload() {
 				/>
 			</template>
 			<!-- TODO -->
-			<template #footer-extra> BUTTON TO HIDE BY DEFAULT </template>
+			<!-- <template #footer-extra> BUTTON TO HIDE BY DEFAULT </template> -->
 		</Sandwich>
 	</form>
 	<Modal
