@@ -27,7 +27,11 @@ export enum Permission {
 	Task_Assign = 1 << 13, // Add users to a Task.
 	Task_Status = 1 << 14, // Edit the Status of a Task that you are not assigned to.
 
-	ALL = ~(~0 << 15) & ~Administrator, // Every permission. EXCEPT Administrator
+	Permission_Add = 1 << 15, // Add role to user
+	Permission_Edit = 1 << 16, // Edit the permissions
+	Permission_Override = 1 << 17, // Control user overrides
+
+	ALL = ~(~0 << 18) & ~Administrator, // Every permission. EXCEPT Administrator
 	ALL_ADMIN = ALL | Administrator, // Every permission
 }
 if (!(Permission.ALL_ADMIN <= ~(~0 << 31))) {
@@ -180,6 +184,21 @@ const permissionInfoMap: {
 		desc: "Edit the Status of a Task that you are not assigned to.",
 		collection: PermissionCollection.Task,
 	},
+	[Permission.Permission_Edit]: {
+		name: "Edit Permission",
+		desc: "Edit the Permissions and overrides.",
+		collection: PermissionCollection.Admin,
+	},
+	[Permission.Permission_Add]: {
+		name: "User Roles",
+		desc: "Assign Roles to Users",
+		collection: PermissionCollection.Admin,
+	},
+	[Permission.Permission_Override]: {
+		name: "Control Permission Overrides",
+		desc: "Add, Edit, and Remove Permission Overrides",
+		collection: PermissionCollection.Admin,
+	},
 }
 
 export const permissionList = [
@@ -198,6 +217,9 @@ export const permissionList = [
 	Permission.Task_Delete,
 	Permission.Task_Assign,
 	Permission.Task_Status,
+	Permission.Permission_Add,
+	Permission.Permission_Edit,
+	Permission.Permission_Override,
 ]
 
 export function permissionInfo(permission: Permission) {

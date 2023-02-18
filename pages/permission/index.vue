@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { Role } from ".prisma/client"
 import { Icon } from "@iconify/vue"
-import { form2Object } from "~~/types/generic"
+import { Role } from ".prisma/client"
+import { form2Object } from "@/types/generic"
+import { Permission } from "@/types/permission"
+import { requires } from "@/middleware/permission"
 
 definePageMeta({
 	name: "Permissions",
+	middleware: [requires(Permission.Permission_Edit)],
 })
 
 const { data: roles } = await useFetch("/api/roles")
