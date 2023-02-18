@@ -71,6 +71,12 @@
 					id="project-deadline"
 					v-model="projectDeadline"
 				/>
+				<UserSelect
+					id="project-leader"
+					:users="users"
+					:selection="projectLeader"
+					:select-multiple="false"
+				/>
 			</form>
 			<ModalFooter>
 				<Button
@@ -80,7 +86,8 @@
 						!projectName ||
 						!projectDescription ||
 						!projectClient ||
-						!projectDeadline
+						!projectDeadline ||
+						projectLeader.length === 0
 					"
 				>
 					Apply
@@ -175,7 +182,7 @@ header {
 </style>
 
 <script setup lang="ts">
-import { Project } from "@prisma/client"
+import { Project, User } from "@prisma/client"
 import { has, Permission, permissions } from "@/types/permission"
 import { workerHours } from "~~/types/task"
 
@@ -196,6 +203,15 @@ definePageMeta({
 
 const visibleProjects = ref<number[]>([])
 getVisibleProjects()
+
+const { data: userRs } = await useFetch("/api/users")
+const users = $computed(() =>
+	userRs.value!.map(user => ({
+		uid: user.uid,
+		name: user.name,
+		email: user.email,
+	})),
+)
 
 const { data: clients } = await useFetch("/api/clients")
 
@@ -232,6 +248,7 @@ const projectName = ref<string>()
 const projectDescription = ref<string>()
 const projectClient = ref<number>(-2)
 const projectDeadline = ref<string>()
+const projectLeader = ref<User[]>([])
 
 const clientName = ref<string>()
 const clientRep = ref<string>()
@@ -285,7 +302,7 @@ async function createProject() {
 		body: JSON.stringify({
 			name: projectName.value,
 			description: projectDescription.value,
-			leader: "queen",
+			leader: projectLeader.value[0].email,
 			client: +projectClient.value! as number,
 			deadline: projectDeadline.value,
 		}),

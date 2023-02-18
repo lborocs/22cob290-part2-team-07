@@ -2,8 +2,8 @@
 	<div class="flex-col users-wrapper">
 		<div class="flex-row gap-6" v-for="user in users" :key="user.uid">
 			<input
-				type="checkbox"
-				:name="`select-${user.uid}`"
+				:type="selectMultiple ? 'checkbox' : 'radio'"
+				:name="`select-${id}`"
 				:id="`${id}-select-${user.uid}`"
 				:checked="selection.some(u => u.uid === user.uid)"
 				@change="onChange(user.uid, $event)"
@@ -29,7 +29,8 @@
 	background: var(--colour-background-2);
 	overflow-y: scroll;
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
 	accent-color: var(--colour-accent);
 	width: 1.2rem;
 	aspect-ratio: 1;
@@ -61,6 +62,11 @@ const props = defineProps({
 		type: Array as PropType<User[]>,
 		required: false,
 		default: () => [],
+	},
+	selectMultiple: {
+		type: Boolean,
+		required: false,
+		default: true,
 	},
 })
 
