@@ -14,7 +14,7 @@ defineProps<{}>()
 <style scoped lang="scss">
 @use "~/assets/theme";
 .modal {
-	width: 28rem;
+	width: fit-content;
 	height: fit-content;
 	padding: 1.25rem;
 	margin: 6.25rem auto;

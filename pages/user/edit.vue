@@ -7,7 +7,7 @@ definePageMeta({
 
 const inputRef = ref(null)
 const modalActive = ref(false)
-const passModalActive = ref(false)
+// const passModalActive = ref(false)
 const invModalActive = ref(false)
 const logModalActive = ref(false)
 const preventScoll = () => {
@@ -22,17 +22,27 @@ const promoteScroll = () => {
 }
 
 async function createInvite() {
-	const result = await useLazyFetch("/api/invite", {
-		method: "POST",
-		body: {
-			email: inputRef.value.value,
-		},
-	})
+	const email = document.getElementById("inv--email")
+	const check = document.getElementsByClassName("inv__link")[0]
+	if (email.value == "") {
+		console.log("called")
+		check.innerHTML = "Please enter a valid email"
+	} else {
+		const result = await useLazyFetch("/api/invite", {
+			method: "POST",
+			body: {
+				email: inputRef.value.value,
+			},
+		})
+		email.value = ""
+		check.style.display = "block"
+		check.innerHTML = `Invite your colleague with this link: <br> <span>/register/${result.data.value}</span>`
+	}
 }
 
 //
 function clearCheck() {
-	const check = document.getElementsByClassName("email__sent")[0]
+	const check = document.getElementsByClassName("inv__link")[0]
 	check.style.display = "none"
 }
 
@@ -83,7 +93,9 @@ function setLight() {
 					<input name="invite__email" id="inv--email" ref="inputRef" />
 					<h2 class="email__input--text">@make-it-all.co.uk</h2>
 				</div>
-				<p class="email__sent">example</p>
+				<div class="para__container">
+					<p class="inv__link"></p>
+				</div>
 				<button class="upload-button" @click="createInvite()">Invite</button>
 			</div>
 		</template>
@@ -347,6 +359,7 @@ $logout: #da0000;
 	display: flex;
 	align-items: baseline;
 	width: 100%;
+	justify-content: center;
 }
 
 .email__input--text {
@@ -354,9 +367,18 @@ $logout: #da0000;
 	padding: 0 1rem 1rem 1rem;
 	color: var(--colour-text);
 }
-.email__sent {
+.inv__link {
+	color: var(--colour-text);
 	font-weight: bold;
 	display: none;
 	margin-bottom: 0;
+}
+
+.para__container {
+	width: 100%;
+}
+
+span {
+	cursor: pointer;
 }
 </style>

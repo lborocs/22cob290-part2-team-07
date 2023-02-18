@@ -32,14 +32,14 @@ defineProps<{}>()
 				>
 				<slot name="theme"></slot>
 			</div>
-			<div class="wrapper-password">
+			<!-- <div class="wrapper-password">
 				<hr class="solid" />
 				<h1 class="bold-title">Password</h1>
 				<label for="change-password-btn" class="label-subtext"
 					>Change your password to a more memorable one</label
 				>
 				<slot name="password"></slot>
-			</div>
+			</div> -->
 			<div class="wrapper-email">
 				<hr class="solid" />
 				<h1 class="bold-title">My Email</h1>
