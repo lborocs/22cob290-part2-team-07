@@ -31,7 +31,9 @@ export enum Permission {
 	Permission_Edit = 1 << 16, // Edit the permissions
 	Permission_Override = 1 << 17, // Control user overrides
 
-	ALL = ~(~0 << 18) & ~Administrator, // Every permission. EXCEPT Administrator
+	Manager_Dashboard = 1 << 18, // View the manager dashboard
+
+	ALL = ~(~0 << 19) & ~Administrator, // Every permission. EXCEPT Administrator
 	ALL_ADMIN = ALL | Administrator, // Every permission
 }
 if (!(Permission.ALL_ADMIN <= ~(~0 << 31))) {
@@ -199,10 +201,19 @@ const permissionInfoMap: {
 		desc: "Add, Edit, and Remove Permission Overrides",
 		collection: PermissionCollection.Admin,
 	},
+	[Permission.Manager_Dashboard]: {
+		name: "View Manager Dashboard",
+		desc: "View the Mangers Dashboard and all Projects.",
+		collection: PermissionCollection.Admin,
+	},
 }
 
 export const permissionList = [
 	Permission.Administrator,
+	Permission.Permission_Add,
+	Permission.Permission_Edit,
+	Permission.Permission_Override,
+	Permission.Manager_Dashboard,
 	Permission.Topic_Create,
 	Permission.Topic_Delete,
 	Permission.Post_Read,
@@ -217,9 +228,6 @@ export const permissionList = [
 	Permission.Task_Delete,
 	Permission.Task_Assign,
 	Permission.Task_Status,
-	Permission.Permission_Add,
-	Permission.Permission_Edit,
-	Permission.Permission_Override,
 ]
 
 export function permissionInfo(permission: Permission) {
