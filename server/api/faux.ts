@@ -1,6 +1,6 @@
 import prisma from "@/prisma"
 import { TaskStatus } from "@/types/task"
-import { Permission, everyoneUid } from "@/types/permission"
+import { Permission, everyoneUid, adminUid } from "@/types/permission"
 import fs from "node:fs/promises"
 import path from "node:path"
 
@@ -49,6 +49,7 @@ export default defineEventHandler(async event => {
 		}),
 		prisma.role.create({
 			data: {
+				uid: adminUid,
 				rank: 0,
 				name: "Admin",
 				allow: Permission.ALL_ADMIN,

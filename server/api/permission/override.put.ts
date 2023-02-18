@@ -1,5 +1,4 @@
 import * as override from "./_override"
-import { Permission } from "@/types/permission"
 
 export default defineEventHandler(async event => {
 	const body = await readBody(event)
@@ -13,12 +12,16 @@ export default defineEventHandler(async event => {
 	const table = override.typeTable(tableName, type)
 	if (table == undefined) return null // TODO: Return error code
 
-	return await table.create({
+	return await table.update({
 		data: {
-			allow: Permission.NONE,
-			deny: Permission.NONE,
-			[type]: { connect: { uid: typeUid } },
-			[tableName]: { connect: { uid: tableUid } },
+			allow: body.allow === undefined ? undefined : +(body.allow as string),
+			deny: body.deny === undefined ? undefined : +(body.deny as string),
+		},
+		where: {
+			[`${type}Uid_${tableName}Uid`]: {
+				[`${type}Uid`]: typeUid,
+				[`${tableName}Uid`]: tableUid,
+			},
 		},
 	})
 })

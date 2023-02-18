@@ -24,19 +24,23 @@ withDefaults(
 				role.name
 			}}</NuxtLink>
 		</h3>
-		<ButtonNuxt
-			icon="material-symbols:group-outline"
-			:to="`/permission/role/${role.uid}/users`"
-			:fix="true"
-			>{{ role._count.users }}</ButtonNuxt
-		>
+		<div class="buttons">
+			<ButtonNuxt
+				icon="material-symbols:group-outline"
+				:to="`/permission/role/${role.uid}/users`"
+				:fix="true"
+				>{{ role._count.users }}</ButtonNuxt
+			>
+			<slot />
+		</div>
 	</div>
 </template>
 
 <style scoped lang="scss">
 @use "@/assets/core";
 
-div.role {
+div.role,
+div.buttons {
 	@extend %flex-space;
 }
 

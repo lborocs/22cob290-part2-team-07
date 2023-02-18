@@ -2,17 +2,17 @@
 import { Permission, PermissionCollection } from "@/types/permission"
 import { requires } from "@/middleware/permission"
 definePageMeta({
-	name: "Project Role Permissions",
+	name: "Post Role Permissions",
 	middleware: [requires(Permission.Permission_Override)],
 })
 </script>
 
 <template>
 	<PermissionOverrideRole
-		table="project"
+		table="post"
 		:table-uid="+$route.params.uid"
 		:role-uid="+$route.params.role"
-		:permissions="PermissionCollection.Task"
+		:permissions="PermissionCollection.Post"
 	/>
 </template>
 

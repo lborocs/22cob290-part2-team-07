@@ -3,11 +3,15 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
 import { logout } from "@/types/user"
+import { has, Permission, permissions, permissionsUser } from "~~/types/permission";
 
 const route = useRoute()
-const pageName = $computed<string>(
-	() => route.meta.name ?? route.name!.toString(),
-)
+const pageNameOverride = usePageName()
+const pageName = $computed<string>(() => {
+	if (pageNameOverride.value.route === route.fullPath)
+		return pageNameOverride.value.name
+	return route.meta.name ?? route.name!.toString()
+})
 
 // Updates the page head information on navigation.
 useHead(() => {
@@ -82,7 +86,7 @@ function clearFocus() {
 							@navigate="clearFocus"
 						/>
 					</li>
-					<li>
+					<li v-if="has(permissions(permissionsUser(user!.roles)), Permission.Permission_Edit)">
 						<NavButton
 							location="/permission"
 							name="Permissions"

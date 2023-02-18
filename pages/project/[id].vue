@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { User, Subtask, Task } from ".prisma/client"
+import { Subtask } from ".prisma/client"
 import { workerHours } from "@/types/task"
+import {
+	has,
+	Permission,
+	permissions,
+	permissionsUser,
+} from "@/types/permission"
 
 definePageMeta({
 	name: "Project",
@@ -8,12 +14,15 @@ definePageMeta({
 
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
+usePageName(project.value?.name)
 if (route.params.id == 1) {
 	navigateTo("/project/error")
 }
 for (const task of project.value!.tasks) {
 	task.project = project
 }
+
+const { data: currentUser } = useCurrentUser()
 
 const selectedUserViewMode = ref(1)
 
@@ -123,7 +132,22 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 </script>
 
 <template>
-	<p>{{ project!.description }}</p>
+	<div class="subtitle">
+		<p>{{ project!.description }}</p>
+		<div>
+			<ButtonNuxt
+				icon="material-symbols:gavel-rounded"
+				:to="`/project/${$route.params.id}/permission`"
+				v-if="
+					has(
+						permissions(permissionsUser(currentUser!.roles)),
+						Permission.Permission_Override,
+					)
+				"
+				>Permissions</ButtonNuxt
+			>
+		</div>
+	</div>
 	<section class="flex-row">
 		<ProjectCard title="Project Progress" :text="false">
 			<ProjectSpinner :tasks="project!.tasks" />
@@ -184,6 +208,11 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 
 <style scoped lang="scss">
 @use "~/assets/core";
+
+.subtitle {
+	@extend %flex-space, %card;
+	background-color: var(--colour-background-3);
+}
 
 .flex-row {
 	@extend %flex-row;
