@@ -26,6 +26,8 @@ const { data: currentUser } = useCurrentUser()
 
 const selectedUserViewMode = ref(1)
 
+const modalDeleteProject = useModal()
+
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
 	const userMap = new Map<string, UserR>()
@@ -129,12 +131,19 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 
 	// console.log(memberHours)
 }
+
+async function deleteProject() {
+	await $fetch(`/api/project/${route.params.id}`, {
+		method: "DELETE",
+	})
+	return navigateTo("/dashboard")
+}
 </script>
 
 <template>
 	<div class="subtitle">
 		<p>{{ project!.description }}</p>
-		<div>
+		<div class="buttons">
 			<ButtonNuxt
 				icon="material-symbols:gavel-rounded"
 				:to="`/project/${$route.params.id}/permission`"
@@ -145,6 +154,17 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 					)
 				"
 				>Permissions</ButtonNuxt
+			>
+			<Button
+				icon="material-symbols:delete-outline-rounded"
+				v-if="
+					has(
+						permissions(permissionsUser(currentUser!.roles)),
+						Permission.Project_Delete,
+					)
+				"
+				@click="modalDeleteProject.show()"
+				>Delete</Button
 			>
 		</div>
 	</div>
@@ -204,6 +224,11 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 		</div>
 		<ProjectChart v-else :user-hours="memberHours" />
 	</section>
+	<DeleteConfirmation
+		:control="modalDeleteProject"
+		name="Project"
+		@delete="deleteProject()"
+	/>
 </template>
 
 <style scoped lang="scss">
@@ -212,6 +237,9 @@ function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
 .subtitle {
 	@extend %flex-space, %card;
 	background-color: var(--colour-background-3);
+	.buttons {
+		@extend %flex-row;
+	}
 }
 
 .flex-row {

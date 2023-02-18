@@ -2,7 +2,16 @@
 	<section class="card">
 		<header class="flex-row">
 			<h2>Projects Overview</h2>
-			<Button icon="material-symbols:add" @click="modalCreateProject.show()">
+			<Button
+				icon="material-symbols:add"
+				@click="modalCreateProject.show()"
+				v-if="
+					has(
+						permissions(useCurrentUserPermissions()),
+						Permission.Project_Create,
+					)
+				"
+			>
 				New Project
 			</Button>
 		</header>
@@ -36,7 +45,17 @@
 					v-model="projectClient"
 				>
 					<option :value="-2" disabled selected hidden>Select Client</option>
-					<option :value="-1">Add New Client</option>
+					<option
+						:value="-1"
+						v-if="
+							has(
+								permissions(useCurrentUserPermissions()),
+								Permission.Client_Create,
+							)
+						"
+					>
+						Add New Client
+					</option>
 					<option
 						v-for="client in clients"
 						:key="client.uid"
@@ -172,6 +191,7 @@ const modalCreateClient = useModal()
 
 async function getVisibleProjects() {
 	const res = await $fetch("/api/projects")
+	visibleProjects.value.length = 0
 	for (let uid of res.map((p: Project) => p.uid)) {
 		visibleProjects.value.push(uid)
 	}
@@ -241,5 +261,6 @@ async function createProject() {
 	})
 	console.log(res)
 	modalCreateProject.hide()
+	getVisibleProjects()
 }
 </script>

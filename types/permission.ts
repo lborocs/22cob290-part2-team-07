@@ -223,7 +223,7 @@ export const permissionList = [
 	Permission.Project_Create,
 	Permission.Project_Delete,
 	Permission.Client_Create,
-	Permission.Client_Delete,
+	// Permission.Client_Delete,
 	Permission.Task_Create,
 	Permission.Task_Delete,
 	Permission.Task_Assign,
