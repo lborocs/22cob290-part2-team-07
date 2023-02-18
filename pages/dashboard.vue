@@ -3,8 +3,17 @@ import { Project } from "@prisma/client"
 definePageMeta({
 	name: "Dashboard",
 })
-const { data: tasks } = useFetch("/api/tasks")
+const { data: currentUser } = await useCurrentUser()
 const { data: projects } = useFetch("/api/projects")
+console.log("projects: ", projects.value)
+
+const { data: tasks } = await useFetch("/api/tasks", {
+	method: "GET",
+	query: {
+		uid: currentUser.value?.uid,
+	},
+})
+console.log("tasks: ", tasks.value)
 </script>
 
 <template>

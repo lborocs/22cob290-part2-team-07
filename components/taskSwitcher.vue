@@ -551,7 +551,7 @@ async function addTask() {
 	// if it's a personal task, assign it to the current user
 	const assignees =
 		taskProjectId.value == -1
-			? [{ uid: currentUser.value?.uid }]
+			? [{ uid: currentUser.value?.uid! }]
 			: taskAssignees.value.map(user => {
 					return { uid: user.uid }
 			  })
@@ -575,7 +575,7 @@ async function addTask() {
 	})
 	console.log(res)
 
-	if (res.success) {
+	if (res.success && assignees!.some(a => a.uid == currentUser.value?.uid!)) {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
