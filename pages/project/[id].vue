@@ -14,10 +14,10 @@ definePageMeta({
 
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
-usePageName(project.value?.name)
-if (route.params.id == 1) {
+if (!project.value) {
 	navigateTo("/project/error")
 }
+usePageName(project.value?.name)
 for (const task of project.value!.tasks) {
 	task.project = project
 }
