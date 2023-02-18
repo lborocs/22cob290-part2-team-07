@@ -12,7 +12,11 @@ import {
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const props = defineProps<{ userHours: {} }>()
+const props = defineProps<{
+	userHours: {
+		[x: string]: number
+	}
+}>()
 const colorMode = useColorMode()
 
 const chartData = computed(() => {

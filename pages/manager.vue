@@ -115,19 +115,29 @@
 	</section>
 
 	<section class="card">
-		<h2>Employees Overview</h2>
-		<div class="grid-wrapper employee-wrapper">
+		<header class="employee-top">
+			<h2>Employees Overview</h2>
+			<ButtonSwitch
+				option1="Members"
+				option2="Chart View"
+				v-model:selected="employeeHoursView"
+			/>
+		</header>
+		<div class="grid-wrapper employee-wrapper" v-if="employeeHoursView === 1">
 			<ProjectMember
-				v-for="member in employees"
-				:key="member.uid"
-				:user="member"
-				:assigned="8"
+				v-for="member in employeesHours"
+				:key="member.user.uid"
+				:user="member.user"
+				:assigned="member.hours"
 			/>
 		</div>
+		<ProjectChart v-else :userHours="graphHours" />
 	</section>
 </template>
 
 <style scoped lang="scss">
+@use "@/assets/core";
+
 .grid-wrapper {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(35ch, 1fr));
@@ -138,6 +148,10 @@
 }
 header {
 	justify-content: space-between;
+}
+
+.employee-top {
+	@extend %flex-space;
 }
 
 .project-form {
@@ -163,6 +177,7 @@ header {
 <script setup lang="ts">
 import { Project } from "@prisma/client"
 import { has, Permission, permissions } from "@/types/permission"
+import { workerHours } from "~~/types/task"
 
 definePageMeta({
 	name: "Manager Dashboard",
@@ -184,7 +199,23 @@ getVisibleProjects()
 
 const { data: clients } = await useFetch("/api/clients")
 
-const { data: employees } = await useFetch("/api/users")
+const { data: employees } = await useFetch("/api/usershours")
+const employeesHours = $computed(() =>
+	employees
+		.value!.map(user => ({
+			user,
+			hours: user.assigned.reduce((acc, val) => acc + workerHours(val), 0),
+		}))
+		.sort((a, b) => b.hours - a.hours),
+)
+const graphHours = $computed(() =>
+	employeesHours.reduce(
+		(obj, member) => ({ ...obj, [member.user.name]: member.hours }),
+		{},
+	),
+)
+
+const employeeHoursView = ref(1)
 
 const modalCreateProject = useModal()
 const modalCreateClient = useModal()
