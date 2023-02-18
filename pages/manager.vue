@@ -101,7 +101,7 @@
 			<ProjectMember
 				v-for="member in employees"
 				:key="member.uid"
-				:user="{ ...member, ...{ roles: [] } }"
+				:user="member"
 				:assigned="8"
 			/>
 		</div>
@@ -142,10 +142,22 @@ header {
 </style>
 
 <script setup lang="ts">
-import { Project, Task, User, Subtask, Client } from "@prisma/client"
+import { Project } from "@prisma/client"
+import { has, Permission, permissions } from "@/types/permission"
 
 definePageMeta({
 	name: "Manager Dashboard",
+	middleware: [
+		() => {
+			if (
+				!has(
+					permissions(useCurrentUserPermissions()),
+					Permission.Manager_Dashboard,
+				)
+			)
+				navigateTo("/dashboard")
+		},
+	],
 })
 
 const visibleProjects = ref<number[]>([])

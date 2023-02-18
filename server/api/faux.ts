@@ -41,7 +41,7 @@ export default defineEventHandler(async event => {
 		prisma.role.create({
 			data: {
 				uid: everyoneUid,
-				allow: Permission.NONE,
+				allow: Permission.Post_Read,
 				deny: Permission.NONE,
 				name: "Everyone",
 				rank: ~(~0 << 31),
@@ -67,12 +67,20 @@ export default defineEventHandler(async event => {
 		prisma.role.create({
 			data: {
 				rank: 2,
-				name: "Employee",
+				name: "Leader",
 				allow:
-					Permission.Post_Read |
-					Permission.Post_Create |
-					Permission.Post_Edit |
-					Permission.Task_Status,
+					Permission.Task_Assign |
+					Permission.Task_Status |
+					Permission.Task_Create |
+					Permission.Task_Delete,
+				deny: Permission.NONE,
+			},
+		}),
+		prisma.role.create({
+			data: {
+				rank: 2,
+				name: "Employee",
+				allow: Permission.NONE,
 				deny: Permission.NONE,
 			},
 		}),

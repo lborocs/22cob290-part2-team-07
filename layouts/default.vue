@@ -3,7 +3,12 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
 import { logout } from "@/types/user"
-import { has, Permission, permissions, permissionsUser } from "~~/types/permission";
+import {
+	has,
+	Permission,
+	permissions,
+	permissionsUser,
+} from "~~/types/permission"
 
 const route = useRoute()
 const pageNameOverride = usePageName()
@@ -62,7 +67,7 @@ function clearFocus() {
 							@navigate="clearFocus"
 						/>
 					</li>
-					<li>
+					<li v-if="has(permissions(permissionsUser(user!.roles)), Permission.Manager_Dashboard)">
 						<NavButton
 							location="/manager"
 							name="Manager"
@@ -78,15 +83,9 @@ function clearFocus() {
 							@navigate="clearFocus"
 						/>
 					</li>
-					<li>
-						<NavButton
-							location="/project"
-							name="Project"
-							icon="material-symbols:folder-outline-rounded"
-							@navigate="clearFocus"
-						/>
-					</li>
-					<li v-if="has(permissions(permissionsUser(user!.roles)), Permission.Permission_Edit)">
+					<li
+						v-if="has(permissions(permissionsUser(user!.roles)), Permission.Permission_Edit)"
+					>
 						<NavButton
 							location="/permission"
 							name="Permissions"
