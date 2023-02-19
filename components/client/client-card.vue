@@ -12,6 +12,9 @@ console.log(clientId)
 // server isnt respodning with any data for /api/client/6. why???
 const { data: client } = await useFetch(`/api/client/${clientId}`)
 usePageName(client.value?.name)
+if (!client.value) {
+	navigateTo("/client/error")
+}
 
 const modalDelete = useModal()
 

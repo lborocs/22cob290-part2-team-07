@@ -6,10 +6,7 @@
 				icon="material-symbols:add"
 				@click="modalCreateProject.show()"
 				v-if="
-					has(
-						permissions(useCurrentUserPermissions()),
-						Permission.Project_Create,
-					)
+					has(permissions(currentUserPermissions), Permission.Project_Create)
 				"
 			>
 				New Project
@@ -48,10 +45,7 @@
 					<option
 						:value="-1"
 						v-if="
-							has(
-								permissions(useCurrentUserPermissions()),
-								Permission.Client_Create,
-							)
+							has(permissions(currentUserPermissions), Permission.Client_Create)
 						"
 					>
 						Add New Client
@@ -189,7 +183,7 @@ import { workerHours } from "~~/types/task"
 definePageMeta({
 	name: "Manager Dashboard",
 	middleware: [
-		() => {
+		async () => {
 			if (
 				!has(
 					permissions(useCurrentUserPermissions()),
@@ -212,6 +206,7 @@ const users = $computed(() =>
 		email: user.email,
 	})),
 )
+const currentUserPermissions = useCurrentUserPermissions()
 
 const { data: clients } = await useFetch("/api/clients")
 
