@@ -51,18 +51,19 @@ MySQL was also used as a database management system. The database stores informa
 # System Design
 
 Our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) consists of: [Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework; [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications; and [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
-Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] which became our language of choice. This provides type safety in all aspects of our code and requires the team to be proficient in only a single language, making it simple share and reuse code as a small team.
+Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] (TS) which became our language of choice. This provides type safety in all aspects of our code and requires the team to be proficient in only a single language, making it simple share and reuse code as a small team.
 Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime.
 
-## Nuxt/Vue and component selection
+## Vue
 
-<!-- More detail about the inner workings of next and vue and how they have both been used in this particular system. Also need to talk about the different Vue components, justifying why the system has been split into the current components.-->
+Vue.js is a JavaScript framework for building reactive single-page applications (SPA). Vue uses composition with reusable, reactive components. The reactive data-binding system handles updating the DOM whenever the underlying data, making it easier to build the application.
+Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering. This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
 
-The project was developed with a Vue js framework for building user interfaces. Vue is a component-based architecture allowing for reusable components that are reactive and dynamic. It uses a reactive data-binding system, which allows for automatic updates whenever the underlying data changes, making it easier to manage complex, dynamic applications.
+The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server. The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
 
-This was particularly useful for this project as it started out as a small-scale prototype application with little use for data handling and performance optimization and progressed into a full-stack application, where management and manipulation of data was vital. We created various components that were independent or reliant on other components in order to create blocks of functionality on each page of the system. Vue allowed for greater reusability of code/components as, for example, each block of functionality was placed on a project card component where the absence of Vue would have forced the duplication of code. The project page, for example, is an amalgamation of a project card component, a progress spinner component, and a user icon component, among others used to create the finalised page. Structuring the system in this way allowed for a much faster system for many reasons.
+## Nuxt
 
-Vue js uses a virtual DOM to update and render components efficiently, making it faster than direct DOM manipulation and also allowing for lazy-loading where components are only loaded when needed, thus reducing initial load times. Not only did this benefit performance but also allowed us as a development team to work on components/pages independently and produce functionality much faster whilst being able to swap out and implement components where necessary.
+Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: file-based routing, api routes, and server-side rendering (SSR).
 
 Nuxt.js is a server-side rendering framework built on Vue.js and this framework was used in this project for many reasons. It provided automatic rendering of components on the server-side which helped to improve the performance of the system. Nuxt also provided a powerful and flexible routing system allowing for the organisation of components and pages.
 
