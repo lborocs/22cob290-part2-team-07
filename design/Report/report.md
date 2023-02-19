@@ -150,7 +150,7 @@ See table 1 for details.
 | Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
 | Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
 | Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
-| Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes (Partially)      |
+| Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes                  |
 | Project              | Should be able to change the team leader of a project                                                                        | Yes                  |
 | Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
 | Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
@@ -158,7 +158,7 @@ See table 1 for details.
 | Knowledge management | FAQ page is needed                                                                                                           | Yes                  |
 | Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics and who can create posts within a topic | Yes                  |
 | Knowledge management | Functionality to upload images to posts is needed                                                                            | Yes                  |
-| Knowledge management | Could search for posts by user                                                                                               | XXX                  |
+| Knowledge management | Could search for posts by user                                                                                               | Yes                  |
 | Not page specific    | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page                 | Yes                  |
 | Not page specific    | The navigation bar could show text on hover                                                                                  | Yes                  |
 
