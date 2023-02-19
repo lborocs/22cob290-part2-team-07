@@ -611,7 +611,12 @@ async function getAssignableProjects() {
 }
 
 async function getAssignableUsers() {
-	const res = await $fetch("/api/users")
+	const res = await $fetch("/api/users", {
+		method: "GET",
+		query: {
+			minimumRank: currentUser.value?.roles.map(role => role.rank).sort()[0],
+		},
+	})
 	assignableUsers.value = res
 }
 
