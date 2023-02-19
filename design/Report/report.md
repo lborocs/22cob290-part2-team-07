@@ -86,7 +86,7 @@ Testing was also a task that prisma aided. Normally to test the website and the 
 
 See the image below for the database design:
 
-![Database design](/prisma\ERD.svg)
+![Database design](../../prisma/ERD.png)\
 
 <!--can include and image of the database design from the initial draft, not sure where it is however-->
 
