@@ -31,7 +31,7 @@ winget or apt or whatever also have it iirc
 ~~weekly meetings~~
 ~~WhatsApp communcation usage~~
 comments
-github projects and issues
+~~github projects and issues~~
 link everthing to requirements where appropriate
 design and implementation are 70% of the marks
 10% for referencing
@@ -84,6 +84,8 @@ Now that the initial draft of the database design was complete, we needed to pro
 The use of prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript compared to SQL, which removes the risk of SQL injection attacks on the website. In addition, TypeScript allowed us to write queries much more efficiently, which assisted in the development and testing of the system.
 
 Testing was also a task that prisma aided. Normally to test the website and the database calls, we would need to run the VM (Virtual Machine) on the GCP (Google Cloud Platform). This is time consuming and every change we do requires the server to be updated accordingly. Prisma allowed us to generate a small client database which meant we were able to test database calls within our own computers. Efficiency was greatly improved due to this feature as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
+
+For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11]. Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
 
 See the image below for the database design:
 
@@ -186,17 +188,23 @@ The client has given multiple indications throughout communications that they wi
 
 <!--might write something about comments here as documentation-->
 
-Documentation has also been used for the project as a whole. Throughout the project, we have ensured to document the requirements precisely. Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement. We also documented the whole project through GitHub. GitHub gave us version control for our system’s development. Each change which was made to the project was pushed to the repository as a commit. Each commit had a commit message, making it easy to go back and see where each individual change was made.
+Documentation has also been used for the project as a whole. Throughout the project, we have ensured to document the requirements precisely. Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements]. We also documented the whole project through GitHub. GitHub gave us version control for our system’s development. Each change which was made to the project was pushed to the repository as a commit. Each commit had a commit message, making it easy to go back and see where each individual change was made.
 
 ## Debugging
 
 The version control mentioned above made debugging much simpler. Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component. Usually, the bug lay within one of the recent commits. Debugging is a useful tool which we utilised thoroughly throughout the development of our system. It’s important to note that some bugs will always remain. There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
 
+Throughout development, we adopted a static software inspection approach to debugging. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement debugging at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
+
+<!--realised static inspection is a debugging method and not a testing method-->
+
 ## Testing
 
-<!--is this needed? As we have not done any documented testing-->
+Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
 
-Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed. Throughout development, we adopted a static software inspection approach to testing. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement testing at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time. These approaches to testing helped us meet the client’s requirements as best as possible.
+During development we also tested all functionality when it was first added to the system. Before any code was committed, it was tested for functionality and bugs to ensure the development was sucessful and efficient. In case any bugs were commited, these would be discovered through static inspection and practial testing once major functionaility was introduced.
+
+For example, once the project page was produced, it was inspected and then practially tested against the requirements[^req-08]. Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
 
 [^gh-issues]: Our GitHub issue tracking: <https://github.com/orgs/lborocs/projects/1/>
 [^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#1-log-in--registration-requirements>
@@ -214,3 +222,4 @@ Throughout the implementation of the system, testing was used to ensure that the
 [^req-13]: From Requirement 13 - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#13-system-requirements>
 [^schema]: Database Design file : <https://github.com/lborocs/22cob290-part2-team-07/blob/main/design/schema.md>
 [^prisma-schema]: Prisma Schema file: <https://github.com/lborocs/22cob290-part2-team-07/blob/main/prisma/schema.prisma>
+[^requirements]: Requirements document: <https://github.com/lborocs/22cob290-part2-team-07/blob/main/design/requirements.md>
