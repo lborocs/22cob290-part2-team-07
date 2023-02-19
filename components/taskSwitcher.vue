@@ -412,13 +412,6 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 )
 
 const { data: currentUser } = await useCurrentUser()
-
-// console.log("current user roles:", currentUser.value?.roles)
-// console.log(
-// 	"has delete task permission:",
-// 	has(permissionsUser(currentUser.value?.roles), Permission.Task_Delete),
-// )
-
 const kanbanPreference = useKanbanPreference()
 
 const taskName = ref<HTMLInputElement>()
@@ -461,7 +454,6 @@ getAssignableUsers()
 let currentTaskIndex = 0
 
 async function showDialog(index: number) {
-	// console.log(index)
 	currentTaskIndex = index
 	const task = filteredTasks.value[index]
 
@@ -493,8 +485,6 @@ for (const project of visibleProjects.value) {
 const filteredAssignees = ref<User[]>([])
 
 function applyFilter() {
-	console.log(p.tasks)
-
 	filteredTasks.value = p.tasks
 		.filter(task => {
 			return task.status == TaskStatus.Todo && filterCategories.value.ToDo
@@ -517,7 +507,6 @@ function applyFilter() {
 				)
 			)
 		})
-	console.log(filteredTasks.value)
 }
 
 function clearFilter() {
@@ -525,13 +514,6 @@ function clearFilter() {
 }
 
 async function addTask() {
-	console.log(
-		taskName.value?.value,
-		taskDescription.value?.value,
-		taskHours.value?.value,
-		taskProject.value?.value,
-		taskDeadline.value?.value,
-	)
 	const hours = taskHours.value?.value as unknown as number
 
 	// if it's a personal task, assign it to the current user
@@ -541,7 +523,6 @@ async function addTask() {
 			: taskAssignees.value.map(user => {
 					return { uid: user.uid }
 			  })
-	console.log(assignees)
 	const body = {
 		task: {
 			name: taskName.value?.value,
@@ -553,13 +534,10 @@ async function addTask() {
 		},
 	}
 
-	console.log(body)
-
 	const res = await $fetch("/api/task/", {
 		method: "PUT",
 		body: body,
 	})
-	console.log(res)
 
 	if (res.success && assignees!.some(a => a.uid == currentUser.value?.uid!)) {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
@@ -571,13 +549,11 @@ async function addTask() {
 
 async function onSubtaskCheckChange(event: Event, uid: number) {
 	const isChecked = (event.target as HTMLInputElement).checked
-	// console.log(isChecked)
 	const res = await $fetch(`/api/subtask/${uid}`, {
 		method: "PUT",
 		body: isChecked.toString(),
 	})
 	if (res.status == 200) {
-		// console.log("Parent status: ", res.newParentStatus)
 		const subtask = filteredTasks.value[currentTaskIndex].subtasks.find(
 			subtask => subtask.uid == uid,
 		)
@@ -640,13 +616,6 @@ function onNewTaskChange(event: Event) {
 		taskHours.value?.value.length! > 0 &&
 		(+taskProject.value?.value! as number) != -2 &&
 		taskDeadline.value?.value.length! > 0
-	console.log(
-		taskName.value?.value,
-		taskDescription.value?.value,
-		taskHours.value?.value,
-		taskProject.value?.value,
-		taskDeadline.value?.value,
-	)
 }
 function onNewSubtaskChange(event: Event) {
 	newSubtaskFormCompleted.value =

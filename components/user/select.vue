@@ -72,8 +72,6 @@ const props = defineProps({
 
 const emit = defineEmits(["update:selection"])
 
-// const selectedUsers = ref<number[]>([])
-
 function onChange(uid: string, event: Event) {
 	const target = event.target as HTMLInputElement
 	if (target.checked) {
