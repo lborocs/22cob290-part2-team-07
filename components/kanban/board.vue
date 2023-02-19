@@ -8,7 +8,6 @@ const { tasks } = defineProps<{
 
 const emit = defineEmits<{
 	(name: "details", id: number): void
-	(name: "renew", taskId: number, isFinished: boolean): void
 }>()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
@@ -29,17 +28,6 @@ async function onDrop(event: DragEvent, status: TaskStatus) {
 		method: "POST",
 		body: { task: task },
 	})
-	onDropEmit(task.uid, status, ogStatus)
-}
-
-function onDropEmit(id: number, status: number, ogStatus: number) {
-	if (status === 2 && ogStatus !== 2) {
-		console.log("finished")
-		emit("renew", id, true)
-	} else if (status !== 2 && ogStatus === 2) {
-		console.log("un-finished")
-		emit("renew", id, false)
-	}
 }
 
 function emitDialog(id: number) {

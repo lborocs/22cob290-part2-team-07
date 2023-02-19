@@ -76,67 +76,41 @@ const memberHours = $computed(() => {
 	return hoursByMember
 })
 
-function updateHours(uid: number, isFinished: boolean, isSubTask: boolean) {
+function updateHours(uid: number, isFinished: boolean) {
 	let task: KanbanTask | undefined
 	let subtask: Subtask | undefined
 	let parentTask: KanbanTask | undefined
-	if (isSubTask) {
-		for (const t of project.value!.tasks) {
-			subtask = t.subtasks.find(subtask => subtask.uid === uid)
-			if (subtask) {
-				console.log("Subtask has been finished: ", subtask)
-				parentTask = t
-				break
-			}
-		}
 
-		if (!subtask) {
-			return
-		}
-
-		const taskHours = subtask.workerHours
-		console.log("Subtask worker hours: ", taskHours)
-		const assignedMembers = new Set(
-			parentTask!.assignees.map(member => member.name),
-		)
-
-		for (const memberName of Object.keys(memberHours)) {
-			if (assignedMembers.has(memberName)) {
-				if (isFinished) {
-					memberHours[memberName] -= taskHours
-					console.log(memberName, " hours: ", memberHours[memberName])
-				} else {
-					memberHours[memberName] += taskHours
-					console.log(memberName, " hours: ", memberHours[memberName])
-				}
-			}
-		}
-	} else {
-		task = project.value!.tasks.find(task => task.uid === uid)
-		console.log("Task has been finished: ", subtask)
-
-		if (!task) {
-			return
-		}
-
-		const taskHours = workerHours(task)
-		console.log("Task worker hours: ", taskHours)
-		const assignedMembers = new Set(task.assignees.map(member => member.name))
-
-		for (const memberName of Object.keys(memberHours)) {
-			if (assignedMembers.has(memberName)) {
-				if (isFinished) {
-					memberHours[memberName] -= taskHours
-					console.log(memberName, " hours: ", memberHours[memberName])
-				} else {
-					memberHours[memberName] += taskHours
-					console.log(memberName, " hours: ", memberHours[memberName])
-				}
-			}
+	for (const t of project.value!.tasks) {
+		subtask = t.subtasks.find(subtask => subtask.uid === uid)
+		if (subtask) {
+			console.log("Subtask has been finished: ", subtask)
+			parentTask = t
+			break
 		}
 	}
 
-	// console.log(memberHours)
+	if (!subtask) {
+		return
+	}
+
+	const taskHours = subtask.workerHours
+	console.log("Subtask worker hours: ", taskHours)
+	const assignedMembers = new Set(
+		parentTask!.assignees.map(member => member.name),
+	)
+
+	for (const memberName of Object.keys(memberHours)) {
+		if (assignedMembers.has(memberName)) {
+			if (isFinished) {
+				memberHours[memberName] -= taskHours
+				console.log(memberName, " hours: ", memberHours[memberName])
+			} else {
+				memberHours[memberName] += taskHours
+				console.log(memberName, " hours: ", memberHours[memberName])
+			}
+		}
+	}
 }
 
 async function deleteProject() {
@@ -228,8 +202,8 @@ async function updateLeader(projectLeader: UserRR) {
 
 	<TaskSwitcher
 		:tasks="project!.tasks"
-		@renew="updateHours"
 		:assignable-projects="[project]"
+		@renew="updateHours"
 	/>
 
 	<section class="card">
