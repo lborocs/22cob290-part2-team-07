@@ -68,10 +68,15 @@ Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.o
 
 ## Vue
 
-Vue.js is a JavaScript framework for building reactive single-page applications (SPA). Vue uses composition with reusable, reactive components. The reactive data-binding system handles updating the DOM whenever the underlying data, making it easier to build the application.
-Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering. This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
+Vue.js is a JavaScript framework for building reactive single-page applications (SPA).
+Vue uses composition with reusable, reactive components.
+The reactive data-binding system handles updating the DOM whenever the underlying data, making it easier to build the application.
+Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering.
+This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
 
-The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server. The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
+The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
+The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM.
+We solved this by introducing [Nuxt](#nuxt).
 
 ## Nuxt
 
