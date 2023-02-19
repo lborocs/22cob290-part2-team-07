@@ -17,8 +17,11 @@ const props = defineProps<{
 		[x: string]: number
 	}
 }>()
+
+/** Variable used for returning current color scheme used by user (light/dark). */
 const colorMode = useColorMode()
 
+/** Dynamic variable that creates the data used by the chart based on given prop.  */
 const chartData = computed(() => {
 	return {
 		labels: Object.keys(props.userHours),
@@ -33,6 +36,7 @@ const chartData = computed(() => {
 	}
 })
 
+/** Dynamic variable that creates the options used by the chart (grid, ticks, legend).  */
 const chartOptions = computed(() => {
 	const color = colorMode.value === "light" ? "#080808" : "#a6acbe"
 	const labelsColor = colorMode.value === "light" ? "#000" : "#eee"
@@ -71,12 +75,11 @@ const chartOptions = computed(() => {
 	}
 })
 
-const chartStyles = computed(() => {
-	return {
-		width: "100%",
-		height: "20ch",
-	}
-})
+/** Variable used to set the style of the chart (width, height). */
+const chartStyles = {
+	width: "100%",
+	height: "20ch",
+}
 </script>
 
 <template>

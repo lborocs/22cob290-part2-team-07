@@ -6,6 +6,7 @@ const p = defineProps<{
 	tasks: KanbanTask[]
 }>()
 
+/** Dynamic variable that calculates the total number of worker hours of tasks assigned to the project. */
 const totalHours = computed(() => {
 	let sum = 0
 	for (const task of p.tasks) {
@@ -14,6 +15,7 @@ const totalHours = computed(() => {
 	return sum
 })
 
+/** Dynamic variable that calculates the total number of worker hours of completed tasks assigned to the project */
 const hoursProgress = computed(() => {
 	let sum = 0
 	for (const task of p.tasks) {
@@ -24,6 +26,7 @@ const hoursProgress = computed(() => {
 	return sum
 })
 
+/** Dynamic variable that calculates the percentage of completed worker hours assigned to the project */
 const percentage = $computed(() => {
 	let result = (hoursProgress.value / totalHours.value) * 100
 	return Math.round(result)
@@ -126,7 +129,6 @@ const percentage = $computed(() => {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	//box-shadow: 0 0 5px 5px rgb(0, 0, 0, 0.2);
 }
 
 .spinner-end-wrapper {

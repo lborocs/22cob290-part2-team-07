@@ -39,7 +39,6 @@ defineProps<{
 
 	&-body {
 		margin: 1rem 0 0 0; // top right bottom left
-		// margin-bottom: 0;
 		flex-grow: 2;
 	}
 }

@@ -13,26 +13,32 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { data: project } = await useFetch(`/api/project/${route.params.id}`)
-const { data: users } = await useFetch("/api/users")
+const { data: project } = await useFetch(`/api/project/${route.params.id}`) // Fetch project data based on id in URL.
+const { data: users } = await useFetch("/api/users") // Fetch all users.
 
 if (!project.value) {
 	navigateTo("/project/error")
 }
 usePageName(project.value?.name)
+
+// Set each task's project to the project it belongs to.
 for (const task of project.value!.tasks) {
 	task.project = project
 }
 
-const { data: currentUser } = useCurrentUser()
+const { data: currentUser } = useCurrentUser() // Get current user logged in to the system.
 
+/** Variable used to switch between member card and chart view. */
 const selectedUserViewMode = ref(1)
 
+/** Variable used to control the Delete Project modal.*/
 const modalDeleteProject = useModal()
 
+/** Variable used to control the Edit Project Leader modal.*/
 const modalTeamLeader = useModal()
 
-// get members of project based on tasks they are assigned to
+/** Dynamic variable that contains the name of all users assigned to a project,
+ * calculated based on their assignment to that project's tasks. Updates on addition/removal of a user.*/
 const projectMembers = $computed(() => {
 	const userMap = new Map<string, UserR>()
 	for (const task of project.value!.tasks) {
@@ -45,12 +51,14 @@ const projectMembers = $computed(() => {
 	return Array.from(userMap.values())
 })
 
+/** Determines the number of business/working days until the specified deadline.
+ * Will also take into consideration the time (hours, minutes, seconds) on the deadline day. */
 const workDaysRemaining = $computed(() => {
 	const deadline = new Date(project.value!.deadline)
 	let currentDate = new Date()
 	let daysRemaining = 0
 	while (currentDate <= deadline) {
-		// Skips Sunday and Saturday
+		// Skip Sunday and Saturday
 		if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
 			daysRemaining++
 		}
@@ -60,6 +68,9 @@ const workDaysRemaining = $computed(() => {
 	return daysRemaining
 })
 
+/** Dynamic variable that contains a key-value pair of all users (name) part of a
+ * 	project with their total amount of hours assigned. Updates on any change made to a
+ *  task or subtask assigned to a project. */
 const memberHours = $computed(() => {
 	const hoursByMember: { [key: string]: number } = {}
 	const tasks = project.value!.tasks.filter(task => task.status < 2)
@@ -85,6 +96,7 @@ const memberHours = $computed(() => {
 	return hoursByMember
 })
 
+/** Function will delete the project and return user to dashboard. */
 async function deleteProject() {
 	await $fetch(`/api/project/${route.params.id}`, {
 		method: "DELETE",
@@ -92,6 +104,7 @@ async function deleteProject() {
 	return navigateTo("/dashboard")
 }
 
+/** Function will update the project leader. */
 async function updateLeader(projectLeader: UserRR) {
 	await $fetch(`/api/project/${route.params.id}`, {
 		method: "PUT",
@@ -239,17 +252,13 @@ async function updateLeader(projectLeader: UserRR) {
 	font-weight: 500;
 	margin: 0 auto; /* top right bottom left */
 	text-align: center;
-	/* margin-top: 3rem;
-  margin-bottom: 1rem; */
 
 	&-days {
 		font-size: 1.25rem;
 		font-weight: 400;
-		margin: 1rem auto; /* top right bottom left */
+		margin: 1rem auto;
 		text-align: center;
 		color: var(--colour-red);
-		/* margin-top: 1rem;
-  		margin-bottom: 3rem; */
 	}
 }
 
