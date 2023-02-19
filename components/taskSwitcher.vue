@@ -27,14 +27,8 @@
 				v-if="kanbanPreference.preference == 1"
 				:tasks="filteredTasks"
 				@details="showDialog"
-				@finish="onTaskFinish"
 			/>
-			<KanbanBoard
-				v-else
-				:tasks="filteredTasks"
-				@details="showDialog"
-				@finish="onTaskFinish"
-			/>
+			<KanbanBoard v-else :tasks="filteredTasks" @details="showDialog" />
 		</div>
 		<p v-else>There are no tasks matching your filter criteria</p>
 	</section>
@@ -384,6 +378,7 @@ header {
 
 <script setup lang="ts">
 import { Subtask, User } from ".prisma/client"
+import { workerHours } from "@/types/task"
 import { Project, Task } from "@prisma/client"
 import { Body } from "nuxt/dist/head/runtime/components"
 import { TaskStatus } from "~~/types/task"
@@ -397,7 +392,7 @@ import {
 } from "@/types/permission"
 
 const emit = defineEmits<{
-	(name: "renew", taskId: number, isFinished: boolean, isSubTask: boolean): void
+	(name: "renew", taskId: number, isFinished: boolean): void
 }>()
 
 const p = defineProps<{
@@ -593,11 +588,6 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		subtask!.done = isChecked
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
-	emit("renew", uid, isChecked, true)
-}
-
-function onTaskFinish(uid: number, status: boolean) {
-	emit("renew", uid, status, false)
 }
 
 async function getAssignableProjects() {
@@ -680,12 +670,9 @@ async function createSubtask() {
 		},
 	})
 	if (res.status == 200) {
-		console.log(+subtaskHours.value?.value!)
-
 		// reassign the current task to update the worker hour calculation
 		filteredTasks.value[currentTaskIndex] = currentTask.value
 		currentTask.value.subtasks.push(res.subtask!)
 	}
-	emit("renew", res.subtask!.uid, false, true)
 }
 </script>
