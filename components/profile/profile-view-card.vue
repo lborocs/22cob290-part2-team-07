@@ -56,6 +56,14 @@ defineProps<{}>()
 
 $logout: #da0000;
 
+hr {
+	width: 100%;
+}
+
+.solid {
+	margin-top: 2rem;
+}
+
 .user__rank {
 	text-align: center;
 	font-style: normal;
