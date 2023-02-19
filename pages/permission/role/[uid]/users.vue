@@ -102,6 +102,7 @@ async function deleteUser(user: User) {
 			id="permission-role-user-assign"
 			:users="availableUsers"
 			v-model:selection="modalAssignSelection"
+			:select-multiple="true"
 		/>
 		<ModalFooter>
 			<Button

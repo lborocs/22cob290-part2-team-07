@@ -142,6 +142,7 @@ function createUserOverride() {
 				id="permission-user-add-selection"
 				:users="availibleUsers"
 				v-model:selection="modalAddUserSelection"
+				:select-multiple="false"
 			/>
 			<ModalFooter
 				><Button type="submit" icon="material-symbols:add"
