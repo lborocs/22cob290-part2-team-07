@@ -680,7 +680,10 @@ async function createSubtask() {
 		},
 	})
 	if (res.status == 200) {
-		filteredTasks.value[currentTaskIndex].assignees = taskEditAssignees.value
+		console.log(+subtaskHours.value?.value!)
+
+		// reassign the current task to update the worker hour calculation
+		filteredTasks.value[currentTaskIndex] = currentTask.value
 		currentTask.value.subtasks.push(res.subtask!)
 	}
 	emit("renew", res.subtask!.uid, false, true)
