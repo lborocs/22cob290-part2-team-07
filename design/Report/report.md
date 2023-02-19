@@ -10,7 +10,8 @@ author:
   - Thomas Woolhouse
 date: February 2023
 numbersections: false
-documentclass: extreport
+documentclass: report
+papersize: A4
 fontsize: 11pt
 geometry: margin=2cm
 ---
