@@ -391,10 +391,6 @@ import {
 	permissionsUser,
 } from "@/types/permission"
 
-const emit = defineEmits<{
-	(name: "renew", taskId: number, isFinished: boolean): void
-}>()
-
 const p = defineProps<{
 	tasks: KanbanTask[]
 	assignableProjects?: Project[]
@@ -417,11 +413,11 @@ const visibleProjects = ref<(Project | null | undefined)[]>(
 
 const { data: currentUser } = await useCurrentUser()
 
-console.log("current user roles:", currentUser.value?.roles)
-console.log(
-	"has delete task permission:",
-	has(permissionsUser(currentUser.value?.roles), Permission.Task_Delete),
-)
+// console.log("current user roles:", currentUser.value?.roles)
+// console.log(
+// 	"has delete task permission:",
+// 	has(permissionsUser(currentUser.value?.roles), Permission.Task_Delete),
+// )
 
 const kanbanPreference = useKanbanPreference()
 
@@ -465,7 +461,7 @@ getAssignableUsers()
 let currentTaskIndex = 0
 
 async function showDialog(index: number) {
-	console.log(index)
+	// console.log(index)
 	currentTaskIndex = index
 	const task = filteredTasks.value[index]
 
@@ -581,7 +577,7 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		body: isChecked.toString(),
 	})
 	if (res.status == 200) {
-		console.log(res.newParentStatus)
+		// console.log("Parent status: ", res.newParentStatus)
 		const subtask = filteredTasks.value[currentTaskIndex].subtasks.find(
 			subtask => subtask.uid == uid,
 		)
