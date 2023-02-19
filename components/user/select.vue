@@ -77,6 +77,9 @@ const emit = defineEmits(["update:selection"])
 function onChange(uid: string, event: Event) {
 	const target = event.target as HTMLInputElement
 	if (target.checked) {
+		if (!props.selectMultiple) {
+			props.selection.splice(0, props.selection.length)
+		}
 		props.selection.push(props.users.find(user => user.uid === uid)!)
 	} else {
 		props.selection.splice(
