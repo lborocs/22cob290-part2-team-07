@@ -397,12 +397,7 @@ import {
 } from "@/types/permission"
 
 const emit = defineEmits<{
-	(
-		name: "update",
-		taskId: number,
-		isFinished: boolean,
-		isSubTask: boolean,
-	): void
+	(name: "renew", taskId: number, isFinished: boolean, isSubTask: boolean): void
 }>()
 
 const p = defineProps<{
@@ -598,11 +593,11 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 		subtask!.done = isChecked
 		filteredTasks.value[currentTaskIndex].status = res.newParentStatus
 	}
-	emit("update", uid, isChecked, true)
+	emit("renew", uid, isChecked, true)
 }
 
 function onTaskFinish(uid: number, status: boolean) {
-	emit("update", uid, status, false)
+	emit("renew", uid, status, false)
 }
 
 async function getAssignableProjects() {
@@ -685,6 +680,6 @@ async function createSubtask() {
 		filteredTasks.value[currentTaskIndex].assignees = taskEditAssignees.value
 		currentTask.value.subtasks.push(res.subtask!)
 	}
-	emit("update", res.subtask!.uid, false, true)
+	emit("renew", res.subtask!.uid, false, true)
 }
 </script>

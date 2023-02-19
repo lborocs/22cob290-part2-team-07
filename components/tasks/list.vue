@@ -181,7 +181,7 @@ defineProps<{
 
 const emit = defineEmits<{
 	(name: "details", id: number): void
-	(name: "finish", taskId: number, status: boolean): void
+	(name: "renew", taskId: number, status: boolean): void
 }>()
 
 async function onChecked(event: Event, task: Task) {
@@ -191,7 +191,7 @@ async function onChecked(event: Event, task: Task) {
 		method: "POST",
 		body: { task: task },
 	})
-	emit("finish", task.uid, isChecked)
+	emit("renew", task.uid, isChecked)
 }
 
 function showModal(id: number) {

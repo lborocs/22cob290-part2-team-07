@@ -228,7 +228,7 @@ async function updateLeader(projectLeader: UserRR) {
 
 	<TaskSwitcher
 		:tasks="project!.tasks"
-		@update="updateHours"
+		@renew="updateHours"
 		:assignable-projects="[project]"
 	/>
 
