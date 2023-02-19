@@ -8,6 +8,7 @@ const props = defineProps<{
 	tasks?: (Task & { subtasks: Subtask[] })[]
 }>()
 
+/** Dynamic variable that will calculate the total number of work hours assigned to a user. */
 const computedHours = $computed(() => {
 	if (!props.tasks) return props.assigned ?? 0
 	return props.tasks.reduce((acc, val) => {
@@ -15,6 +16,10 @@ const computedHours = $computed(() => {
 		return acc + val.subtasks.reduce((acc, val) => acc + val.workerHours, 0)
 	}, 0)
 })
+
+/** Dynamic variable that will set the color (RAG) of the work hour highlight used in the manager dashboard.
+ * Determines colour based on the amount of hours assigned to a user compared to the maximum amount of hours
+ * allowed per week, which is 37.5 hours. */
 const hoursColour = $computed(() => {
 	if (!props.tasks) return "var(--colour-green)"
 	const today = new Date()
@@ -22,7 +27,7 @@ const hoursColour = $computed(() => {
 		.map(task => new Date(task.deadline!))
 		.sort((a, b) => b.getTime() - a.getTime())[0]
 
-	// difference in weeks
+	// Calculate difference in weeks
 	const diff = Math.ceil(
 		Math.abs(today.getTime() - lastDeadline.getTime()) /
 			(1000 * 60 * 60 * 24 * 7),

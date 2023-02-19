@@ -75,6 +75,7 @@ defineProps<{
 
 const emit = defineEmits(["update:selected"])
 
+/** Function will emit an event that transmits the chosen option id (1,2). */
 function optionClick(option: number) {
 	emit("update:selected", option)
 }
