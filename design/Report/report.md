@@ -68,7 +68,7 @@ Nuxt.js is a server-side rendering framework built on Vue.js and this framework 
 
 Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently. Additionally, Nuxt came with a set of pre-configured build tools such as CSS pre-processors which we used in our project to implement SASS, making it easier to write and maintain styles for the application.
 
-All these libraries assisted in meeting the requirements in many different aspects. We were able to easily produce a responsive design (requirements.md 13.1) and make elements reactive to provide up to date and accurate information ,for example the kanban board (requirements.md 6.3)<!-- could link these? if its possible-->, just to name a few of the requirements hit due to these libraries.
+All these libraries assisted in meeting the requirements in many different aspects. We were able to easily produce a responsive design[^req-13] and make elements reactive to provide up to date and accurate information, for example the kanban board[^req-06], just to name a few of the requirements hit due to these libraries.
 
 ## Prisma and database design
 
@@ -180,3 +180,17 @@ The version control mentioned above made debugging much simpler. Anytime a bug w
 <!--is this needed? As we have not done any documented testing-->
 
 Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed. Throughout development, we adopted a static software inspection approach to testing. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement testing at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time. These approaches to testing helped us meet the client’s requirements as best as possible.
+
+[^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#1-log-in--registration-requirements>
+[^req-02]: From Requirement 02: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#2-registration-page-requirements--registration-requirements>
+[^req-03]: From Requirement 03: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#3-user-requirements>
+[^req-04]: From Requirement 04: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#4-team-leader-requirements>
+[^req-05]: From Requirement 05: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#5-project-manager-requirements>
+[^req-06]: From Requirement 06: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#6-productivity-management-requirements>
+[^req-07]: From Requirement 07: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#7-task-requirements>
+[^req-08]: From Requirement 08: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#8-project-requirements>
+[^req-09]: From Requirement 09: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#9-project-manager>
+[^req-10]: From Requirement 10: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#10-manager-dashboard-requirements>
+[^req-11]: From Requirement 11: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#11-knowledge-management-requirements>
+[^req-12]: From Requirement 12: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#12-client-requirements>
+[^req-13]: From Requirement 13 - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#13-system-requirements>
