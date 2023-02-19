@@ -1,14 +1,23 @@
 <script setup lang="ts">
+import {
+	has,
+	Permission,
+	permissions,
+	permissionsUser,
+} from "@/types/permission"
+
 // defining the page
 definePageMeta({
 	name: "Profile view",
 })
 
 const route = useRoute()
-const { data: user } = await useFetch(`/api/user/${route.params.id}`)
+const { data: user } = await useFetch(`/api/user/${route.params.id}/posts`)
 if (!user.value) {
 	navigateTo("/user/error")
 }
+
+const { data: currentUser } = useCurrentUser()
 </script>
 
 <!-- template for the majority of the code to makeup the profile view page -->
@@ -27,6 +36,16 @@ if (!user.value) {
 			<h2 id="hierarchy-card">Rank</h2>
 		</template>
 	</profile-view-card>
+
+	<div>
+		<template v-for="post in user!.posts" :key="post.uid">
+			<KnowledgePostSnippet
+				v-bind="post"
+				:owner="user!"
+				v-if="has(permissions(permissions(permissionsUser(currentUser!.roles), post.topic.overrideRoles, post.topic.overrideUsers), post.overrideRoles, post.overrideUsers), Permission.Post_Read) || post.ownerId === currentUser!.uid"
+			/>
+		</template>
+	</div>
 </template>
 
 <style scoped lang="scss">
