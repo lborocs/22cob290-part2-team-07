@@ -4,9 +4,9 @@ import { User } from ".prisma/client"
 
 export default defineEventHandler(async event => {
 	const body = await readBody(event)
-	const newLeader = body as UserRR
+	const newLeaderId = body as string
 	return await prisma.project.update({
 		where: { uid: +(event.context.params.id as string) },
-		data: { leaderId: newLeader!.uid },
+		data: { leader: { connect: { uid: newLeaderId } } },
 	})
 })

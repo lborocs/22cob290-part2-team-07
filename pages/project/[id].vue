@@ -149,7 +149,7 @@ async function deleteProject() {
 async function updateLeader(projectLeader: UserRR) {
 	await $fetch(`/api/project/${route.params.id}`, {
 		method: "PUT",
-		body: { leader: projectLeader },
+		body: projectLeader.uid,
 	})
 
 	project.value!.leader = projectLeader
