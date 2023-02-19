@@ -139,9 +139,16 @@ To implement the system, we first had to use reductionism to break the design do
 
 Jokes aside, in order to implement the system in the most efficient manner, we used a Kanban board of our own on GitHub. Therefore, we could plan the order of the tasks which would be completed and the priority of each task. The Kanban board also allowed us to assign each task to a team member and track the progression of each task. This form of productivity management allowed us to build the software in a systematic manner and ensured that we didn’t forget any tasks. Finally, and most importantly, the Kanban board allowed us to focus on the continuous delivery of the system.
 
-On top of the Github usage, we held weekly meetings to discuss progress, and address issues that had come up throughout the week's development. These meetings also included the initial discussions of what libraries we were going to use including the use of TypeScript and SASS, database design and other decisions we needed to make before development. Group tasks were also undertaken for example, the GCP, as well as the task allocation for the next week.
+## Communication
 
-In addition to the meetings, we created a WhatsApp group chat for quick communication. This proved to be very useful, as we were able to discuss issues and ask for any help where needed. Efficiency was the key takeaway from this group chat, as minor issues could be solved without the need for a meeting which meant the weekly meetings were kept on topic and not spent discussing small bugs and errors.
+Throughout the development process we were in constant communication with each-other: weekly meetings, a centralised group chat, GitHub Issues[^gh-issues] and informally throughout the week were all useful means of communication.
+
+During the weekly meetings, we discussed progress, and addressed issues that had come up throughout the week's development.
+These meetings also included the initial discussions of what libraries we were going to use including the use of TypeScript and SASS, database design and other decisions we needed to make before development.
+Group tasks were also undertaken for example, creating and configuring the server on GCP, as well as the task allocation for the next week.
+
+Online communication, including a group chat, proved to be very useful, as we were able to discuss issues and ask for any help where needed.
+Efficiency was the key takeaway from this, as minor issues could be solved without the need for a meeting which meant the weekly meetings were kept on topic and not spent discussing small bugs and errors.
 
 ## Prototyping
 
@@ -190,6 +197,7 @@ The version control mentioned above made debugging much simpler. Anytime a bug w
 
 Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed. Throughout development, we adopted a static software inspection approach to testing. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement testing at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time. These approaches to testing helped us meet the client’s requirements as best as possible.
 
+[^gh-issues]: Our GitHub issue tracking: <https://github.com/orgs/lborocs/projects/1/>
 [^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#1-log-in--registration-requirements>
 [^req-02]: From Requirement 02: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#2-registration-page-requirements--registration-requirements>
 [^req-03]: From Requirement 03: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#3-user-requirements>
