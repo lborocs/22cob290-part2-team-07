@@ -42,26 +42,27 @@ design and implementation are 70% of the marks
 
 Our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) consists of: [Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework; [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications; and [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
 Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] (TS) which became our language of choice.
-This provides type safety in all aspects of our code and requires the team to be proficient in only a single language, making it simple share and reuse code as a small team.
+This provides type safety in all aspects of our code and requires the team to be proficient in only a single language, making it simpler to share and reuse code as a small team.
 Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime.
 
 ## Vue
 
-Vue.js is a JavaScript framework for building reactive single-page applications (SPA). Vue uses composition with reusable, reactive components. The reactive data-binding system handles updating the DOM whenever the underlying data, making it easier to build the application.
-Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering. This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
+Vue.js is a JavaScript framework for building reactive single-page applications (SPA).
+Vue uses composition with reusable, reactive components.
+The reactive data-binding system handles updating the DOM whenever the underlying data changes, making development much simpler.
+Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering.
+This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
 
-The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server. The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
+Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the application.
+
+The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
+The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
 
 ## Nuxt
 
-Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: file-based routing, api routes, and server-side rendering (SSR).
-
-Nuxt.js is a server-side rendering framework built on Vue.js and this framework was used in this project for many reasons.
-It provided automatic rendering of components on the server-side which helped to improve the performance of the system.
-Nuxt also provided a powerful and flexible routing system allowing for the organisation of components and pages.
+Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
 
 Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently.
-Additionally, Nuxt came with a set of pre-configured build tools such as CSS pre-processors which we used in our project to implement SASS, making it easier to write and maintain styles for the application.
 
 All these libraries assisted in meeting the requirements in many different aspects.
 We were able to easily produce a responsive design[^req-13] and make elements reactive to provide up to date and accurate information, for example the kanban board[^req-06], just to name a few of the requirements hit due to these libraries.
@@ -79,19 +80,19 @@ We were able to easily produce a responsive design[^req-13] and make elements re
 
 As per the specification, a MySQL database has been used to store and interact with data needed for usage of the system.
 We decided to streamline this by using Prisma, an ORM (Object Relational Mapper) to manage and interact with the database.
+**as discussed in...** <!--TODO - find where they said this was OK-->
 
 First off, we needed to create a database design.
 This was done in a team meeting where we outlined the tables needed, primary keys for each and then any additional tables that were needed to follow data normalization.
 During this meeting we produced schema.md[^schema], a markdown file which contains the plan for the database.
-This was mostly followed in the final production of the database, with the addition of other tables which we needed to implement the design.
+This was mostly followed in the final production of the database, with the addition of some other tables needed after clarification of requirements (such as the roles-based permission system).
 
 Now that the initial draft of the database design was complete, we needed to produce the tables and implement data.
-Prisma offers a Schema Definition Language (SDL) which is a high level language which defines a simple way to specify the type of database (in this case MySQL) and the tables it includes.
-Use of this table provides a clear view of the tables, and the opportunity to use Prisma Studio, a GUI for the database.
-This document is schema.prisma[^prisma-schema], which defines all the tables, their contents and data types and additional fields, for example the user id must be unique.
+Prisma offers a Schema Definition Language (SDL) which is a high level language which defines a simple way to define the structure of the database.
+The database is defined in schema.prisma[^prisma-schema], which defines all the tables, their contents and data types and additional fields, for example the user id must be unique.
 
-The use of prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript compared to SQL, which removes the risk of SQL injection attacks on the website.
-In addition, TypeScript allowed us to write queries much more efficiently, which assisted in the development and testing of the system.
+The use of prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript instead of SQL, which provides type-safety and increases security by removing the risk of SQL injection attacks on the website.
+This allowed the more efficient creation of database calls.
 
 Testing was also a task that prisma aided.
 Normally to test the website and the database calls, we would need to run the VM (Virtual Machine) on the GCP (Google Cloud Platform).
@@ -101,7 +102,7 @@ Efficiency was greatly improved due to this feature as we were able to design, b
 
 For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11]. Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
 
-See the image below for the database design:
+See the image below for the database ERD (Entity Relationship Diagram):
 
 ![Database design](../../prisma/ERD.png)\
 
@@ -113,11 +114,11 @@ See the image below for the database design:
       Why is it designed in the way that it is (e.g., colour scheme, layout, navigation etc.)?
       How does it meet the requirements?  -->
 
-The GUI (graphical user interface) was designed to meet the clients at Make-It-All requirements.
-In this light, the system follows a yellow, grey and black colour scheme.
+The GUI (graphical user interface) was designed to meet the clients.
+In this light, the system prominently features the Make-It-All Brand colours.
 Furthermore, many interface design decisions have been made after conversations on the online forums.
 For example, the Kanban style of displaying tasks was a requirement set out by the client which influenced the way that the UI (user interface) was designed.
-The UI incorporates modern HCI (Human Computer Interaction) and is designed with usability in mind.
+The UI is designed with usability and accessibility in mind, with tools such as Google's Lighthouse auditing system used to ensure accessibility and reference of A11y^[<https://www.a11yproject.com/>] to ensure compatibility with assistive technologies as much as possible.
 
 Here are the guiding principles which were kept in consideration when completing the design of the system:
 
@@ -167,7 +168,7 @@ See table 1 for details.
 <!-- Talk about Github Kanban board (potentially add a screenshot of it?).
 How did it make us more productive? How did it help us prioritise our work?-->
 
-To implement the system, we first had to use reductionism to break the design down into much smaller tasks.
+To implement the system, we first broke the design down into much smaller tasks.
 We then needed a method to keep track of the implementation of these tasks.
 If only we could find a good piece of productivity management software!
 
@@ -175,7 +176,6 @@ Jokes aside, in order to implement the system in the most efficient manner, we u
 Therefore, we could plan the order of the tasks which would be completed and the priority of each task.
 The Kanban board also allowed us to assign each task to a team member and track the progression of each task.
 This form of productivity management allowed us to build the software in a systematic manner and ensured that we didn’t forget any tasks.
-Finally, and most importantly, the Kanban board allowed us to focus on the continuous delivery of the system.
 
 ## Communication
 
@@ -213,23 +213,42 @@ This would only prove feasible if the code has been documented well.
 
 <!--might write something about comments here as documentation-->
 
-Documentation has also been used for the project as a whole. Throughout the project, we have ensured to document the requirements precisely. Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements]. We also documented the whole project through GitHub. GitHub gave us version control for our system’s development. Each change which was made to the project was pushed to the repository as a commit. Each commit had a commit message, making it easy to go back and see where each individual change was made.
+Documentation has also been used for the project as a whole.
+Throughout the project, we have ensured to document the requirements precisely.
+Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements].
+We also documented the whole project through GitHub.
+GitHub gave us version control for our system’s development.
+Each change which was made to the project was pushed to the repository as a commit.
+Each commit had a commit message, making it easy to go back and see where each individual change was made.
 
 ## Debugging
 
-The version control mentioned above made debugging much simpler. Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component. Usually, the bug lay within one of the recent commits. Debugging is a useful tool which we utilised thoroughly throughout the development of our system. It’s important to note that some bugs will always remain. There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
+The version control mentioned above made debugging much simpler.
+Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component.
+Usually, the bug lay within one of the recent commits.
+Debugging is a useful tool which we utilised thoroughly throughout the development of our system.
+It’s important to note that some bugs will always remain.
+There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
 
-Throughout development, we adopted a static software inspection approach to debugging. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement debugging at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
+Throughout development, we adopted a static software inspection approach to debugging.
+A static software inspection is essentially where developers look at code and try to find bugs in it.
+This was extremely beneficial to the project as it allowed us to implement debugging at all stages of the development/design and added very little time/monetary cost.
+By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
 
 <!--realised static inspection is a debugging method and not a testing method-->
 
 ## Testing
 
-Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
+Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied.
+Our throw-away prototype helped us to test the software.
+By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
 
-During development we also tested all functionality when it was first added to the system. Before any code was committed, it was tested for functionality and bugs to ensure the development was sucessful and efficient. In case any bugs were commited, these would be discovered through static inspection and practial testing once major functionaility was introduced.
+During development we also tested all functionality when it was first added to the system.
+Before any code was committed, it was tested for functionality and bugs to ensure the development was sucessful and efficient.
+In case any bugs were commited, these would be discovered through static inspection and practial testing once major functionaility was introduced.
 
-For example, once the project page was produced, it was inspected and then practially tested against the requirements[^req-08]. Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
+For example, once the project page was produced, it was inspected and then practially tested against the requirements[^req-08].
+Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
 
 [^gh-issues]: Our GitHub issue tracking: <https://github.com/orgs/lborocs/projects/1/>
 [^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#1-log-in--registration-requirements>
