@@ -143,7 +143,7 @@ On top of the Github usage, we held weekly meetings to discuss progress, and add
 
 In addition to the meetings, we created a WhatsApp group chat for quick communication. This proved to be very useful, as we were able to discuss issues and ask for any help where needed. Efficiency was the key takeaway from this group chat, as minor issues could be solved without the need for a meeting which meant the weekly meetings were kept on topic and not spent discussing small bugs and errors.
 
-## Bespoke vs COTS
+## Prototyping
 
 <!-- we were requested to develop the software so im not sure we even need to talk about bespoke as they are asking for bespoke software. Still kept the last paragraph as it discuesses the use of a throwaway prototype-->
 
@@ -155,9 +155,18 @@ Bespoke development is where software is developed completely from scratch and a
 The bespoke development process is developed by first gathering requirements. Next, the software must be designed and implemented. Penultimately, the software must be validated. This is the process whereby the developers ensure that the software meets the needs of the stakeholders. Finally, the software goes into the evolution stage of the software process. This is where the software is updated as the world changes. We have not made it to the evolution stage yet.
 -->
 
-Throughout our bespoke development process, we’ve used the throw-away prototype development methodology. The throwaway prototype model was used to meet the needs of the client. The client wanted a static deliverable half way through development of the system. The throw-away prototype model is by far the best way to give the client a deliverable which had a very similar design to the end system.
+<!-- Throughout our bespoke development process, we’ve used the throw-away prototype development methodology. The throwaway prototype model was used to meet the needs of the client. The client wanted a static deliverable half way through development of the system. The throw-away prototype model is by far the best way to give the client a deliverable which had a very similar design to the end system. -->
 
-The only changes made to the design and functionality of the system were based on feedback of the prototype from the client. This has the disadvantage that the client cannot actually begin to use the prototype as it is static (hard-coded with no real database). However, in this case, this was not an issue for the client. After the client had seen the prototype and given feedback, the prototype was thrown away. Development of the final system was then started with the feedback of the client to aid the final systems design and functionality.
+Before the development process of the system, a throw-away prototype was created to explore the requirements and interface ideas for the client.
+This was beneficial for managing the client's expectations and ensuring that their needs and wants were clear before investing time
+
+The only changes made to the design and proposed functionality of the system were based on feedback of the prototype from the client.
+
+<!-- This has the disadvantage that the client cannot actually begin to use the prototype as it is static (hard-coded with no real database).
+However, in this case, this was not an issue for the client. -->
+
+After the client had seen the prototype and given feedback, the prototype was referenced throughout the development process as a part of the interface design.
+Development of the final system was then started with the feedback of the client to aid the final systems design and functionality.
 
 ## Documentation
 
