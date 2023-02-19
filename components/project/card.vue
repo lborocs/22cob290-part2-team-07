@@ -23,9 +23,9 @@ defineProps<{
 .card-project {
 	@extend %card;
 	width: 100%;
-	max-width: 38ch;
+	max-width: 37ch;
 	margin: 0.5rem;
-	min-height: 38ch;
+	min-height: 37ch;
 
 	&-text {
 		font-size: 1.75rem;

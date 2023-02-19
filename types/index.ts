@@ -62,6 +62,14 @@ declare global {
 		roles: RoleName[]
 	}
 
+	// User with roles and rank
+	type UserRR = User & {
+		roles: {
+			name: string
+			rank: number
+		}[]
+	}
+
 	type PostR = Post & {
 		topic: Topic & {
 			overrideRoles: POverrideRoleTopic[]

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Subtask } from ".prisma/client"
+import { Subtask, User } from ".prisma/client"
 import { workerHours } from "@/types/task"
 import {
 	has,
@@ -14,6 +14,8 @@ definePageMeta({
 
 const route = useRoute()
 const { data: project } = await useFetch(`/api/project/${route.params.id}`)
+const { data: users } = await useFetch("/api/users")
+
 if (!project.value) {
 	navigateTo("/project/error")
 }
@@ -27,6 +29,8 @@ const { data: currentUser } = useCurrentUser()
 const selectedUserViewMode = ref(1)
 
 const modalDeleteProject = useModal()
+
+const modalTeamLeader = useModal()
 
 // get members of project based on tasks they are assigned to
 const projectMembers = $computed(() => {
@@ -138,6 +142,15 @@ async function deleteProject() {
 	})
 	return navigateTo("/dashboard")
 }
+
+async function updateLeader(projectLeader: UserRR) {
+	await $fetch(`/api/project/${route.params.id}`, {
+		method: "PUT",
+		body: { leader: projectLeader },
+	})
+
+	project.value!.leader = projectLeader
+}
 </script>
 
 <template>
@@ -154,6 +167,17 @@ async function deleteProject() {
 					)
 				"
 				>Permissions</ButtonNuxt
+			>
+			<Button
+				icon="material-symbols:edit-outline-rounded"
+				v-if="
+					has(
+						permissions(permissionsUser(currentUser!.roles)),
+						Permission.Project_Delete,
+					)
+				"
+				@click="modalTeamLeader.show()"
+				>Change team leader</Button
 			>
 			<Button
 				icon="material-symbols:delete-outline-rounded"
@@ -228,6 +252,11 @@ async function deleteProject() {
 		:control="modalDeleteProject"
 		name="Project"
 		@delete="deleteProject()"
+	/>
+	<changeTeamLeader
+		:control="modalTeamLeader"
+		:members="users ?? []"
+		@edit="updateLeader"
 	/>
 </template>
 
