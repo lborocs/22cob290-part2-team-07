@@ -1,11 +1,40 @@
 <script setup lang="ts">
-import { User } from ".prisma/client"
+import { Subtask, Task, User } from ".prisma/client"
 import { rolesTitle } from "@/types/user"
 
-defineProps<{
+const props = defineProps<{
 	user: UserR
 	assigned?: number
+	tasks?: (Task & { subtasks: Subtask[] })[]
 }>()
+
+const computedHours = $computed(() => {
+	if (!props.tasks) return props.assigned ?? 0
+	return props.tasks.reduce((acc, val) => {
+		if (val.subtasks.length === 0) return acc + val.workerHours
+		return acc + val.subtasks.reduce((acc, val) => acc + val.workerHours, 0)
+	}, 0)
+})
+const hoursColour = $computed(() => {
+	if (!props.tasks) return "var(--colour-green)"
+	const today = new Date()
+	const lastDeadline = props.tasks
+		.map(task => new Date(task.deadline!))
+		.sort((a, b) => b.getTime() - a.getTime())[0]
+
+	// difference in weeks
+	const diff = Math.ceil(
+		Math.abs(today.getTime() - lastDeadline.getTime()) /
+			(1000 * 60 * 60 * 24 * 7),
+	)
+
+	const maxHoursPerWeek = 37.5
+	console.log({ diff }, { "total:": maxHoursPerWeek * diff })
+	if (computedHours > maxHoursPerWeek * diff) return "var(--colour-red)"
+	else if (computedHours > maxHoursPerWeek * diff * 0.8)
+		return "var(--colour-amber)"
+	else return "var(--colour-green)"
+})
 </script>
 
 <template>
@@ -16,7 +45,12 @@ defineProps<{
 			<p class="dimmed card-margins">{{ rolesTitle(user.roles) }}</p>
 			<p class="card-margins">
 				Assigned hours
-				<span class="detail-highlight"> {{ assigned ? assigned : "0" }} </span>
+				<span
+					class="detail-highlight"
+					:style="{ color: 'white', '--colour-card-highlight': hoursColour }"
+				>
+					{{ computedHours }}
+				</span>
 			</p>
 		</div>
 	</ClientOnly>

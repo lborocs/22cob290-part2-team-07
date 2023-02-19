@@ -130,6 +130,7 @@
 				:key="member.user.uid"
 				:user="member.user"
 				:assigned="member.hours"
+				:tasks="member.user.assigned"
 			/>
 		</div>
 		<ProjectChart v-else :userHours="graphHours" />
