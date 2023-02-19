@@ -33,7 +33,9 @@ winget or apt or whatever also have it iirc
 comments
 github projects and issues
 link everthing to requirements where appropriate
-expand the implementation as its 70% of the report marks
+design and implementation are 70% of the marks
+10% for referencing
+20% for organisation and presentation
 -->
 
 # Introduction
@@ -84,6 +86,8 @@ Testing was also a task that prisma aided. Normally to test the website and the 
 
 See the image below for the database design:
 
+![Database design](/prisma\ERD.svg)
+
 <!--can include and image of the database design from the initial draft, not sure where it is however-->
 
 ## GUI (Graphical user interface) design
@@ -114,7 +118,7 @@ During our presentation to the clients, we received feedback on how our prototyp
 | Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
 | Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
 | Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes (Partially)      |
-| Project              | Should be able to change the team leader of a project                                                                        | XXX                  |
+| Project              | Should be able to change the team leader of a project                                                                        | Yes                  |
 | Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
 | Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
 | Project              | Could have functionality to show more information about an employee when their icon is hovered over                          | Yes                  |
