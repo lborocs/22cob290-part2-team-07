@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Server",
+			"type": "npm",
+			"script": "build",
+			"detail": "Build Nuxt Distrobution Server",
+			"group": "build",
+			"icon": {
+				"id": "rocket",
+			}
+		},
+		{
+			"label": "Make Report",
+			"type": "shell",
+			"command": "pandoc",
+			"args": [
+				"report.md",
+				"-o",
+				"report.pdf"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/design/Report/"
+			},
+			"detail": "Generate PDF Report",
+			"group": "build",
+			"icon": {
+				"id": "file-pdf"
+			}
+		}
+	]
+}

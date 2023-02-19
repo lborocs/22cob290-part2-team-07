@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { rolesTitle, profilePicture, emailDomain } from "~~/types/user"
-import { UserRank } from "~~/types"
 import { ref } from "vue"
 import { User } from ".prisma/client"
 import { useRoute } from "vue-router"
 
 const { params } = useRoute()
 const userEmail = params.id
-console.log(userEmail)
 const { data: user } = await useFetch(`/api/user/${userEmail}`)
-
-console.log(user)
 const username = user.value!.name
 
 // the roles part of each user is apprently an object. How do I find out what roles any given user has?

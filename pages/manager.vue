@@ -260,7 +260,6 @@ async function createClient() {
 	if (!clientName.value || !clientRep.value || !clientEmail.value) return
 
 	alert(clientName.value)
-	console.log(clientName.value)
 	const res = await $fetch("/api/client", {
 		method: "POST",
 		body: JSON.stringify({
@@ -303,7 +302,6 @@ async function createProject() {
 			deadline: projectDeadline.value,
 		}),
 	})
-	console.log(res)
 	modalCreateProject.hide()
 	getVisibleProjects()
 }

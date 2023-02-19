@@ -29,7 +29,6 @@ const hoursColour = $computed(() => {
 	)
 
 	const maxHoursPerWeek = 37.5
-	console.log({ diff }, { "total:": maxHoursPerWeek * diff })
 	if (computedHours > maxHoursPerWeek * diff) return "var(--colour-red)"
 	else if (computedHours > maxHoursPerWeek * diff * 0.8)
 		return "var(--colour-amber)"

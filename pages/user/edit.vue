@@ -25,7 +25,6 @@ async function createInvite() {
 	const email = document.getElementById("inv--email")
 	const check = document.getElementsByClassName("inv__link")[0]
 	if (email.value == "") {
-		console.log("called")
 		check.innerHTML = "Please enter a valid email"
 	} else {
 		const result = await useLazyFetch("/api/invite", {

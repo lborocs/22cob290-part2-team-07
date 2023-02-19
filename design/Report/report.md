@@ -31,7 +31,7 @@ winget or apt or whatever also have it iirc
 ~~weekly meetings~~
 ~~WhatsApp communcation usage~~
 comments
-github projects and issues
+~~github projects and issues~~
 link everthing to requirements where appropriate
 design and implementation are 70% of the marks
 10% for referencing
@@ -62,27 +62,20 @@ On top of MySQL, we used Prisma to help make development faster and more intuiti
 # System Design
 
 Our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) consists of: [Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework; [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications; and [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
-Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] which became our language of choice.
+Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] (TS) which became our language of choice.
 This provides type safety in all aspects of our code and requires the team to be proficient in only a single language, making it simple share and reuse code as a small team.
 Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime.
 
-## Nuxt/Vue and component selection
+## Vue
 
-<!-- More detail about the inner workings of next and vue and how they have both been used in this particular system.
-Also need to talk about the different Vue components, justifying why the system has been split into the current components.-->
+Vue.js is a JavaScript framework for building reactive single-page applications (SPA). Vue uses composition with reusable, reactive components. The reactive data-binding system handles updating the DOM whenever the underlying data, making it easier to build the application.
+Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering. This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
 
-The project was developed with a Vue js framework for building user interfaces.
-Vue is a component-based architecture allowing for reusable components that are reactive and dynamic.
-It uses a reactive data-binding system, which allows for automatic updates whenever the underlying data changes, making it easier to manage complex, dynamic applications.
+The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server. The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
 
-This was particularly useful for this project as it started out as a small-scale prototype application with little use for data handling and performance optimization and progressed into a full-stack application, where management and manipulation of data was vital.
-We created various components that were independent or reliant on other components in order to create blocks of functionality on each page of the system.
-Vue allowed for greater reusability of code/components as, for example, each block of functionality was placed on a project card component where the absence of Vue would have forced the duplication of code.
-The project page, for example, is an amalgamation of a project card component, a progress spinner component, and a user icon component, among others used to create the finalised page.
-Structuring the system in this way allowed for a much faster system for many reasons.
+## Nuxt
 
-Vue js uses a virtual DOM to update and render components efficiently, making it faster than direct DOM manipulation and also allowing for lazy-loading where components are only loaded when needed, thus reducing initial load times.
-Not only did this benefit performance but also allowed us as a development team to work on components/pages independently and produce functionality much faster whilst being able to swap out and implement components where necessary.
+Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: file-based routing, api routes, and server-side rendering (SSR).
 
 Nuxt.js is a server-side rendering framework built on Vue.js and this framework was used in this project for many reasons.
 It provided automatic rendering of components on the server-side which helped to improve the performance of the system.
@@ -121,11 +114,9 @@ This document is schema.prisma[^prisma-schema], which defines all the tables, th
 The use of prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript compared to SQL, which removes the risk of SQL injection attacks on the website.
 In addition, TypeScript allowed us to write queries much more efficiently, which assisted in the development and testing of the system.
 
-Testing was also a task that prisma aided.
-Normally to test the website and the database calls, we would need to run the VM (Virtual Machine) on the GCP (Google Cloud Platform).
-This is time consuming and every change we do requires the server to be updated accordingly.
-Prisma allowed us to generate a small client database which meant we were able to test database calls within our own computers.
-Efficiency was greatly improved due to this feature as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
+Testing was also a task that prisma aided. Normally to test the website and the database calls, we would need to run the VM (Virtual Machine) on the GCP (Google Cloud Platform). This is time consuming and every change we do requires the server to be updated accordingly. Prisma allowed us to generate a small client database which meant we were able to test database calls within our own computers. Efficiency was greatly improved due to this feature as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
+
+For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11]. Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
 
 See the image below for the database design:
 
@@ -239,34 +230,23 @@ This would only prove feasible if the code has been documented well.
 
 <!--might write something about comments here as documentation-->
 
-Documentation has also been used for the project as a whole.
-Throughout the project, we have ensured to document the requirements precisely.
-Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement.
-We also documented the whole project through GitHub.
-GitHub gave us version control for our system’s development.
-Each change which was made to the project was pushed to the repository as a commit.
-Each commit had a commit message, making it easy to go back and see where each individual change was made.
+Documentation has also been used for the project as a whole. Throughout the project, we have ensured to document the requirements precisely. Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements]. We also documented the whole project through GitHub. GitHub gave us version control for our system’s development. Each change which was made to the project was pushed to the repository as a commit. Each commit had a commit message, making it easy to go back and see where each individual change was made.
 
 ## Debugging
 
-The version control mentioned above made debugging much simpler.
-Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component.
-Usually, the bug lay within one of the recent commits. Debugging is a useful tool which we utilised thoroughly throughout the development of our system.
-It’s important to note that some bugs will always remain.
-There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
+The version control mentioned above made debugging much simpler. Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component. Usually, the bug lay within one of the recent commits. Debugging is a useful tool which we utilised thoroughly throughout the development of our system. It’s important to note that some bugs will always remain. There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
+
+Throughout development, we adopted a static software inspection approach to debugging. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement debugging at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
+
+<!--realised static inspection is a debugging method and not a testing method-->
 
 ## Testing
 
-<!--is this needed? As we have not done any documented testing-->
+Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
 
-Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied.
-Our throw-away prototype helped us to test the software.
-By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
-Throughout development, we adopted a static software inspection approach to testing.
-A static software inspection is essentially where developers look at code and try to find bugs in it.
-This was extremely beneficial to the project as it allowed us to implement testing at all stages of the development/design and added very little time/monetary cost.
-By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
-These approaches to testing helped us meet the client’s requirements as best as possible.
+During development we also tested all functionality when it was first added to the system. Before any code was committed, it was tested for functionality and bugs to ensure the development was sucessful and efficient. In case any bugs were commited, these would be discovered through static inspection and practial testing once major functionaility was introduced.
+
+For example, once the project page was produced, it was inspected and then practially tested against the requirements[^req-08]. Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
 
 [^gh-issues]: Our GitHub issue tracking: <https://github.com/orgs/lborocs/projects/1/>
 [^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#1-log-in--registration-requirements>
@@ -284,3 +264,4 @@ These approaches to testing helped us meet the client’s requirements as best a
 [^req-13]: From Requirement 13 - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#13-system-requirements>
 [^schema]: Database Design file : <https://github.com/lborocs/22cob290-part2-team-07/blob/main/design/schema.md>
 [^prisma-schema]: Prisma Schema file: <https://github.com/lborocs/22cob290-part2-team-07/blob/main/prisma/schema.prisma>
+[^requirements]: Requirements document: <https://github.com/lborocs/22cob290-part2-team-07/blob/main/design/requirements.md>

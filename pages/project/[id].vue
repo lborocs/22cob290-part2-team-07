@@ -67,51 +67,23 @@ const memberHours = $computed(() => {
 	for (const task of tasks) {
 		for (const member of projectMembers) {
 			if (task.assignees.some(assignee => assignee.uid === member.uid)) {
-				hoursByMember[member.name] =
-					(hoursByMember[member.name] || 0) + workerHours(task)
+				const taskHours = workerHours(task)
+				if (task.subtasks.length > 0) {
+					const subtaskHours = task.subtasks
+						.filter(subtask => subtask.done)
+						.reduce((total, subtask) => total + subtask.workerHours, 0)
+					hoursByMember[member.name] =
+						(hoursByMember[member.name] || 0) + taskHours - subtaskHours
+				} else {
+					hoursByMember[member.name] =
+						(hoursByMember[member.name] || 0) + taskHours
+				}
 			}
 		}
 	}
 
 	return hoursByMember
 })
-
-function updateHours(uid: number, isFinished: boolean) {
-	let task: KanbanTask | undefined
-	let subtask: Subtask | undefined
-	let parentTask: KanbanTask | undefined
-
-	for (const t of project.value!.tasks) {
-		subtask = t.subtasks.find(subtask => subtask.uid === uid)
-		if (subtask) {
-			console.log("Subtask has been finished: ", subtask)
-			parentTask = t
-			break
-		}
-	}
-
-	if (!subtask) {
-		return
-	}
-
-	const taskHours = subtask.workerHours
-	console.log("Subtask worker hours: ", taskHours)
-	const assignedMembers = new Set(
-		parentTask!.assignees.map(member => member.name),
-	)
-
-	for (const memberName of Object.keys(memberHours)) {
-		if (assignedMembers.has(memberName)) {
-			if (isFinished) {
-				memberHours[memberName] -= taskHours
-				console.log(memberName, " hours: ", memberHours[memberName])
-			} else {
-				memberHours[memberName] += taskHours
-				console.log(memberName, " hours: ", memberHours[memberName])
-			}
-		}
-	}
-}
 
 async function deleteProject() {
 	await $fetch(`/api/project/${route.params.id}`, {
@@ -200,11 +172,7 @@ async function updateLeader(projectLeader: UserRR) {
 		</ProjectCard>
 	</section>
 
-	<TaskSwitcher
-		:tasks="project!.tasks"
-		:assignable-projects="[project]"
-		@renew="updateHours"
-	/>
+	<TaskSwitcher :tasks="project!.tasks" :assignable-projects="[project]" />
 
 	<section class="card">
 		<h2 class="sr-only">Project Members</h2>
