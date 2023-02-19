@@ -186,9 +186,7 @@ How did it make us more productive? How did it help us prioritise our work?-->
 
 To implement the system, we first had to use reductionism to break the design down into much smaller tasks.
 We then needed a method to keep track of the implementation of these tasks.
-If only we could find a good piece of productivity management software!
-
-Jokes aside, in order to implement the system in the most efficient manner, we used a Kanban board of our own on GitHub.
+In order to implement the system in the most efficient manner, we used a Kanban board of our own on GitHub.
 Therefore, we could plan the order of the tasks which would be completed and the priority of each task.
 The Kanban board also allowed us to assign each task to a team member and track the progression of each task.
 This form of productivity management allowed us to build the software in a systematic manner and ensured that we didn’t forget any tasks.
@@ -230,23 +228,42 @@ This would only prove feasible if the code has been documented well.
 
 <!--might write something about comments here as documentation-->
 
-Documentation has also been used for the project as a whole. Throughout the project, we have ensured to document the requirements precisely. Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements]. We also documented the whole project through GitHub. GitHub gave us version control for our system’s development. Each change which was made to the project was pushed to the repository as a commit. Each commit had a commit message, making it easy to go back and see where each individual change was made.
+Documentation has also been used for the project as a whole.
+Throughout the project, we have ensured to document the requirements precisely.
+Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements].
+We also documented the whole project through GitHub.
+GitHub gave us version control for our system’s development.
+Each change which was made to the project was pushed to the repository as a commit.
+Each commit had a commit message, making it easy to go back and see where each individual change was made.
 
 ## Debugging
 
-The version control mentioned above made debugging much simpler. Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component. Usually, the bug lay within one of the recent commits. Debugging is a useful tool which we utilised thoroughly throughout the development of our system. It’s important to note that some bugs will always remain. There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
+The version control mentioned above made debugging much simpler.
+Anytime a bug was found with a particular component, the commit history could be used to see the recent changes made to said component.
+Usually, the bug lay within one of the recent commits.
+Debugging is a useful tool which we utilised thoroughly throughout the development of our system.
+It’s important to note that some bugs will always remain.
+There comes a point in any project where it is no longer feasible nor cost effective to keep finding and fixing bugs.
 
-Throughout development, we adopted a static software inspection approach to debugging. A static software inspection is essentially where developers look at code and try to find bugs in it. This was extremely beneficial to the project as it allowed us to implement debugging at all stages of the development/design and added very little time/monetary cost. By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
+Throughout development, we adopted a static software inspection approach to debugging.
+A static software inspection is essentially where developers look at code and try to find bugs in it.
+This was extremely beneficial to the project as it allowed us to implement debugging at all stages of the development/design and added very little time/monetary cost.
+By using static software inspection, we avoided many bugs which ultimately saved us (and the client) time.
 
 <!--realised static inspection is a debugging method and not a testing method-->
 
 ## Testing
 
-Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied. Our throw-away prototype helped us to test the software. By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
+Throughout the implementation of the system, testing was used to ensure that the requirements of the client had been satisfied.
+Our throw-away prototype helped us to test the software.
+By presenting a prototype to the client, the client could find errors in the software which we (as developers) perhaps hadn’t noticed.
 
-During development we also tested all functionality when it was first added to the system. Before any code was committed, it was tested for functionality and bugs to ensure the development was sucessful and efficient. In case any bugs were commited, these would be discovered through static inspection and practial testing once major functionaility was introduced.
+During development we also tested all functionality when it was first added to the system.
+Before any code was committed, it was tested for functionality and bugs to ensure the development was sucessful and efficient.
+In case any bugs were commited, these would be discovered through static inspection and practial testing once major functionaility was introduced.
 
-For example, once the project page was produced, it was inspected and then practially tested against the requirements[^req-08]. Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
+For example, once the project page was produced, it was inspected and then practially tested against the requirements[^req-08].
+Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
 
 [^gh-issues]: Our GitHub issue tracking: <https://github.com/orgs/lborocs/projects/1/>
 [^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/c22f46646d2b36164cfe99995cd2b95a588e43dd/design/requirements.md#1-log-in--registration-requirements>
