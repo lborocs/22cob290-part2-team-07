@@ -119,9 +119,12 @@ This document is schema.prisma[^prisma-schema], which defines all the tables, th
 The use of prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript compared to SQL, which removes the risk of SQL injection attacks on the website.
 In addition, TypeScript allowed us to write queries much more efficiently, which assisted in the development and testing of the system.
 
-Testing was also a task that prisma aided. Normally to test the website and the database calls, we would need to run the VM (Virtual Machine) on the GCP (Google Cloud Platform). This is time consuming and every change we do requires the server to be updated accordingly. Prisma allowed us to generate a small client database which meant we were able to test database calls within our own computers. Efficiency was greatly improved due to this feature as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
+Testing was also a task that prisma aided. Normally to test the website and the database calls, we would need to run the VM (Virtual Machine) on the GCP (Google Cloud Platform). This is time consuming and every change we do requires the server to be updated accordingly.
+Prisma allowed us to generate a small client database which meant we were able to test database calls within our own computers.
+Efficiency was greatly improved due to this feature as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
 
-For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11]. Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
+For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11].
+Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
 
 See the image below for the database design:
 
@@ -211,7 +214,7 @@ Efficiency was the key takeaway from this, as minor issues could be solved witho
 ## Prototyping
 
 Before the development process of the system, a throw-away prototype was created to explore the requirements and interface ideas for the client.
-This was beneficial for managing the client's expectations and ensuring that their needs and wants were clear before investing time
+This was beneficial for managing the client's expectations and ensuring that their needs and wants were clear before investing time.
 
 The only changes made to the design and proposed functionality of the system were based on feedback of the prototype from the client.
 
