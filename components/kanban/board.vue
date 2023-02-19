@@ -8,7 +8,7 @@ const { tasks } = defineProps<{
 
 const emit = defineEmits<{
 	(name: "details", id: number): void
-	(name: "finish", taskId: number, isFinished: boolean): void
+	(name: "renew", taskId: number, isFinished: boolean): void
 }>()
 
 const STATUSES = [TaskStatus.Todo, TaskStatus.InProgress, TaskStatus.Done]
@@ -35,10 +35,10 @@ async function onDrop(event: DragEvent, status: TaskStatus) {
 function onDropEmit(id: number, status: number, ogStatus: number) {
 	if (status === 2 && ogStatus !== 2) {
 		console.log("finished")
-		emit("finish", id, true)
+		emit("renew", id, true)
 	} else if (status !== 2 && ogStatus === 2) {
 		console.log("un-finished")
-		emit("finish", id, false)
+		emit("renew", id, false)
 	}
 }
 
