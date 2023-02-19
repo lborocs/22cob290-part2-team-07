@@ -47,14 +47,17 @@ const projectMembers = $computed(() => {
 
 const workDaysRemaining = $computed(() => {
 	const deadline = new Date(project.value!.deadline)
-	const currentDate = new Date()
-	const timeDiff = deadline.getTime() - currentDate.getTime()
-	const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24)) // round up to include current day
-	const weekendDaysRemaining =
-		Math.floor((daysRemaining + currentDate.getDay()) / 7) * 2
-	const remainingWeekday = daysRemaining - weekendDaysRemaining
+	let currentDate = new Date()
+	let daysRemaining = 0
+	while (currentDate <= deadline) {
+		// Skips Sunday and Saturday
+		if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+			daysRemaining++
+		}
+		currentDate.setDate(currentDate.getDate() + 1)
+	}
 
-	return remainingWeekday
+	return daysRemaining
 })
 
 const memberHours = $computed(() => {
