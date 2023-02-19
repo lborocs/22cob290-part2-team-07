@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Subtask, User } from ".prisma/client"
+import { Subtask } from ".prisma/client"
 import { workerHours } from "@/types/task"
 import {
 	has,

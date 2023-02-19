@@ -11,7 +11,6 @@ defineEmits<{
 	(name: "edit", leader: UserRR): void
 }>()
 
-const modalChangeLeaderForm = ref<HTMLFormElement>()
 const chosenLeader = ref<UserRR[]>()
 </script>
 
