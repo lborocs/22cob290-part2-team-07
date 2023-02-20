@@ -232,8 +232,13 @@ const employeeHoursView = ref(1)
 const modalCreateProject = useModal()
 const modalCreateClient = useModal()
 
+const { data: currentUser } = await useCurrentUser()
 async function getVisibleProjects() {
-	const res = await $fetch("/api/projects")
+	const res = await $fetch("/api/projects", {
+		query: {
+			u: currentUser.value!.uid,
+		},
+	})
 	visibleProjects.value.length = 0
 	for (let uid of res.map((p: Project) => p.uid)) {
 		visibleProjects.value.push(uid)

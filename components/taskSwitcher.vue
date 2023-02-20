@@ -563,8 +563,21 @@ async function onSubtaskCheckChange(event: Event, uid: number) {
 }
 
 async function getAssignableProjects() {
-	const res = await $fetch("/api/projects")
-	assignableProjects.value = res
+	const res = await $fetch("/api/projects", {
+		query: {
+			u: currentUser.value?.uid ?? undefined,
+		},
+	})
+	assignableProjects.value = res.filter(project =>
+		has(
+			permissions(
+				permissionsUser(currentUser.value!.roles),
+				project.overrideRoles,
+				project.overrideUsers,
+			),
+			Permission.Task_Create,
+		),
+	)
 }
 
 /**
