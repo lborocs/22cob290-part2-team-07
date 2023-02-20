@@ -13,7 +13,7 @@ numbersections: false
 documentclass: report
 papersize: A4
 fontsize: 11pt
-geometry: margin=2cm
+geometry: margin=1.5cm
 ---
 
 <!--
@@ -44,7 +44,7 @@ design and implementation are 70% of the marks
 Our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) consists of: [Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework; [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications; and [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
 Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] (TS) which became our language of choice.
 This provides type safety in all aspects of our code and requires the team to be proficient in only a single language, making it simpler to share and reuse code as a small team.
-Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime.
+Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime. We were able to easily produce a responsive design[^req-13] and make elements reactive to provide up to date and accurate information, for example: the kanban board[^req-06], which was possible due to the aforementioned libraries.
 
 ## Vue
 
@@ -59,16 +59,7 @@ Additionally, Vue works well with several build tools such as CSS pre-processors
 The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
 The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
 
-## Nuxt
-
-Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
-
-Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently.
-
-All these libraries assisted in meeting the requirements in many different aspects.
-We were able to easily produce a responsive design[^req-13] and make elements reactive to provide up to date and accurate information, for example the kanban board[^req-06], just to name a few of the requirements hit due to these libraries.
-
-## Prisma and database design
+## Prisma
 
 <!-- Talk about Prisma in more detail.
   How did we use Prisma in our system?
@@ -79,9 +70,38 @@ We were able to easily produce a responsive design[^req-13] and make elements re
    How does the database design allow us to meet the requirements?
    A graphic for the database design might be nice.-->
 
-As per the specification, a MySQL database has been used to store and interact with data needed for usage of the system.
-We decided to streamline this by using Prisma, an ORM (Object Relational Mapper) to manage and interact with the database.
-**as discussed in...** <!--TODO - find where they said this was OK-->
+Prisma is a database ORM built around type-safety, auto-complete, and simplified relational modals. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses the schema to generate the tables in the (MySQL) database as well a build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for what defines a User, on the client, server, and database, removing any need to transform the data between these areas of the solution.
+
+Furthermore, Prisma provides type-safe methods to query and manipulate the underlying MySQL database through TS functions, as opposed to using traditional SQL queries. This prevents issues such as SQL injection as well as making it quick to write complex queries as it is handled internally.
+
+<!-- TODO: Database agnostic > easy testing, local sqlite.db -->
+
+## Nuxt
+
+Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
+
+<!-- TODO: API ROUTE -->
+
+Navtively providing REST api routes made it simple to integrate
+
+It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benifits mentioned before.
+
+<!-- TODO: FILE ROUTING -->
+
+Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently.
+
+## Implementations
+
+<!-- TODO: This! -->
+- Passwords
+- Permissions
+- Markdown Converter
+- CDN
+- Charts n Graphs
+
+## Database Design
+
+<!-- TODO: DB DESIGN -->
 
 First off, we needed to create a database design.
 This was done in a team meeting where we outlined the tables needed, primary keys for each and then any additional tables that were needed to follow data normalization.
@@ -104,11 +124,11 @@ Efficiency was greatly improved due to this feature as we were able to design, b
 For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11].
 Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
 
+<!--can include and image of the database design from the initial draft, not sure where it is however-->
+
 See the image below for the database ERD (Entity Relationship Diagram):
 
-![Database design](../../prisma/ERD.png)\
-
-<!--can include and image of the database design from the initial draft, not sure where it is however-->
+![Database design](../../prisma/ERD.png)
 
 ## GUI (Graphical user interface) design
 
@@ -249,6 +269,8 @@ In case any bugs were committed, these would be discovered through static inspec
 
 For example, once the project page was produced, it was inspected and then practically tested against the requirements[^req-08].
 Then any issues were mentioned in the group chat or Github issue page and the commit was identified and the bug was fixed.
+
+<!-- IMPORTANT: Footnotes -->
 
 [^gh-issues]: Our GitHub issue tracking: <https://github.com/orgs/lborocs/projects/1/>
 [^req-01]: From Requirement 01: - see: <https://github.com/lborocs/22cob290-part2-team-07/blob/main/design/requirements.md#1-log-in--registration-requirements>
