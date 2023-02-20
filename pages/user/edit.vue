@@ -65,7 +65,6 @@ function setLight() {
 </script>
 
 <template>
-	<p>The Edit Profile Page</p>
 	<Moodal
 		v-show="passModalActive"
 		@close=";(passModalActive = !passModalActive), promoteScroll()"
