@@ -117,30 +117,11 @@ These assets can then be used in posts, using the markdown syntax for embedding 
 
 <!-- TODO: DB DESIGN -->
 
-The first step for creating a database for our system was agreeing on its design.
-This was done in a team meeting where the tables, primary keys, and any additional tables (that were needed to follow data normalization) were outlined.
-During this meeting schema.md[^schema] was produced, which is a markdown file containing the plan for the database.
-The schema was closely followed up to the final production of the database, with only the addition of a few other tables necessary after some additional clarification of requirements (roles-based permission system).
+The database (see below for an entity relationship diagram) has been designed to reduce data redundancy by using the 3rd normal form.
+We came up with our initial design during a team meeting producing a simple schema[^schema].
+Since the initial draft, the design has received modifications, for example: the introduction of the role-based permissions system.
 
-The next step after the initial draft creation of the database design was producing the tables and implementing the data.
-Prisma offers a Schema Definition Language (SDL) which is a high-level language that defines a simple way to define the structure of the database.
-The database is defined in schema.prisma[^prisma-schema], which defines all the tables, their contents, data types and any additional restrictions (such as the user id being unique).
-
-The use of Prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript instead of SQL. This provided type-safety and increased security by removing the risk of SQL injection attacks on the website.
-It also allowed a more efficient use and creation of database calls.
-
-Testing was also a task that Prisma aided.
-Normally, testing the website and the database calls would require running the VM (Virtual Machine) on the GCP (Google Cloud Platform).
-However, this is time-consuming and every change to the source code requires it be re-deployed to the server.
-Prisma allowed us to generate a small client database, making it possible for team members to test database calls on their own machines.
-Thus, efficiency was greatly improved as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
-
-For example, the knowledge management system uses a large amount of database calls to collect all the necessary information[^req-11].
-Prisma not only streamlined development but also testing, as it allowed quick client-side database calls to test the array of features such as the post searching function.
-
-<!--can include and image of the database design from the initial draft, not sure where it is however-->
-
-See the image below for the database ERD (Entity Relationship Diagram):
+Since we had already decided to use [Prisma](#prisma), our database was, first and foremost, designed around the relationships between the models and how we would need to access the data. We also respected the need that each element in the database required a unique identifier, such that routes (pages) of the website would never change, using static links to enable sharing these links to other users.
 
 ![Database design](../../prisma/ERD.png)
 
