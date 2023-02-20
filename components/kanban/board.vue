@@ -26,7 +26,13 @@ async function onDrop(event: DragEvent, status: TaskStatus) {
 	task.status = status
 	await $fetch(`/api/task/${task.uid}`, {
 		method: "POST",
-		body: { task: task },
+		body: {
+			task: {
+				uid: task.uid,
+				assignees: task.assignees,
+				status: task.status,
+			},
+		},
 	})
 }
 
