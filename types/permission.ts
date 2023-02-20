@@ -215,10 +215,10 @@ export const permissionList = [
 	Permission.Permission_Override,
 	Permission.Manager_Dashboard,
 	Permission.Topic_Create,
-	Permission.Topic_Delete,
+	// Permission.Topic_Delete,
 	Permission.Post_Read,
 	Permission.Post_Create,
-	Permission.Post_Delete,
+	// Permission.Post_Delete,
 	Permission.Post_Edit,
 	Permission.Project_Create,
 	Permission.Project_Delete,
@@ -226,8 +226,8 @@ export const permissionList = [
 	// Permission.Client_Delete,
 	Permission.Task_Create,
 	Permission.Task_Delete,
-	Permission.Task_Assign,
-	Permission.Task_Status,
+	// Permission.Task_Assign,
+	// Permission.Task_Status,
 ]
 
 export function permissionInfo(permission: Permission) {
