@@ -1,6 +1,4 @@
 import prisma from "@/prisma"
-import { Task } from "@prisma/client"
-import { workerHours } from "~~/types/task"
 
 export default defineEventHandler(async event => {
 	const query = getQuery(event)
@@ -12,8 +10,8 @@ export default defineEventHandler(async event => {
 
 		const deadlineDate = new Date(details.deadline?.toString() || "")
 
-		console.log("project id", details.projectId)
-		console.log("type", typeof details.projectId)
+		// console.log("project id", details.projectId)
+		// console.log("type", typeof details.projectId)
 
 		const task = await prisma.task.create({
 			data: {
