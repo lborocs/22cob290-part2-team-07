@@ -63,6 +63,9 @@ body {
 		justify-content: space-between;
 		flex-grow: 1;
 	}
+	&.jc-centre {
+		justify-content: center;
+	}
 }
 
 .flex-col {
