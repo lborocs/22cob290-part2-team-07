@@ -13,7 +13,7 @@ Requirements are taken from the client specification letter unless stated otherw
 - [x] 1 The system **must** allow existing users to invite new users to register to the system using their work email.
 - [x] 2 A member of staff **must** be able to register only one account in the system.
 - [x] 3 The email address used for registering **must** be using the `@make-it-all.co.uk` domain.
-- [ ] 4 The password used for registering **must** be at least 12 characters long and contain a combination of at least one uppercase letter, one lowercase letter, a number, and a special character (!@#$%^&\*).
+- [x] 4 The password used for registering **must** be at least 12 characters long and contain a combination of at least one uppercase letter, one lowercase letter, a number, and a special character (!@#$%^&\*).
 - [ ] 5 A confirmation email **could** be sent out to the email address used for registration to check for a valid email.
 
 ## 3. User requirements
@@ -23,19 +23,17 @@ Requirements are taken from the client specification letter unless stated otherw
 - [x] 3 A user **must** be able to be assigned to a project.
 - [x] 4 A user **must** be able to work on any number of projects.
 - [x] 5 A user **must** be able to create a private task for their private to-do list.
-<!-- 6. A user **should** be able to be part of multiple teams. -->
+
 
 ## 4. Team leader requirements
 
-(A little funny here, as 'teams' don't really exist)
-
-- [ ] 1 A team **must** have a team leader.
+- [x] 1 A team **must** have a team leader.
 - [x] 2 The system **must** allow any user to be a team leader.
 - [x] 3 The system **must** allow a user to be a team leader for multiple projects.
-- [ ] 4 A team leader **must** be able to manage the members of their team (add, remove).
-- [ ] 5 A team leader **must** be able to assign tasks to users in their team.
-- [ ] 6 A team leader **must** be able to create tasks for a project they supervise.
-- [ ] 7 A team leader **must** be able to track task progress of a project.
+- [x] 4 A team leader **must** be able to manage the members of their team (add, remove).
+- [x] 5 A team leader **must** be able to assign tasks to users in their team.
+- [x] 6 A team leader **must** be able to create tasks for a project they supervise.
+- [x] 7 A team leader **must** be able to track task progress of a project.
 
 ## 5. Project Manager requirements
 
@@ -43,7 +41,7 @@ Requirements are taken from the client specification letter unless stated otherw
 - [x] 2 A project manager **must** be able to add tasks to any current project.
 - [x] 3 A project manager **must** be able to assign users to project tasks.
 - [x] 4 A project manager **must** be able to create a new project.
-- [ ] 5 A project manager **must** be able to assign users to a team. _(Is this different to a project?)_
+- [x] 5 A project manager **must** be able to assign users to a team.
 
 ## 6. Productivity Management requirements
 
@@ -59,12 +57,12 @@ Requirements are taken from the client specification letter unless stated otherw
 - [x] 3 A task **must** have a date for a deadline.
 - [x] 4 A task **must** have an estimated number of worker-hours needed to complete the task.
 - [x] 5 A task **should** have the option of being divided into smaller sub-tasks. A sub-task is a task, that the parent tasks depends on.
-- [ ] 6 If a task has sub-tasks, then its worker-hours **should** be calculated as a sum of the worker-hours of the smaller tasks. _(I don't know?)_
+- [x] 6 If a task has sub-tasks, then its worker-hours **should** be calculated as a sum of the worker-hours of the smaller tasks.
 - [x] 7 A task **must** be able to display the current state it is in. (To-Do, In Progress, Complete).
 - [x] 8 A task with subtasks **should** display the percentage of sub-tasks that are completed. _(superceded by client's new progress calculation based on worker hours)_
 - [x] 9 A task **should** be able to be categorized as either a Project-specific (select which Project) or private task (not related to any project).
-- [x] 1. The system **should** allow a Project Manager/Team leader to modify and re-assign a Task.
-- [ ] 1. The system **could** allow a Sub-Task to be divided into multiple Sub-Tasks **(cancelled)**.
+- [x] 10. The system **should** allow a Project Manager/Team leader to modify and re-assign a Task.
+- [ ] 11. The system **could** allow a Sub-Task to be divided into multiple Sub-Tasks **(cancelled)**.
 
 ## 8. Project requirements
 
@@ -80,15 +78,15 @@ Requirements are taken from the client specification letter unless stated otherw
 
 ## 9. Project Manager
 
-- [ ] 1 The project manager **should** be able to access and manage any Project details from their dashboard.
-- [ ] 2 The system **should** allow a project manager to manage teams and users that are assigned to any Project.
+- [x] 1 The project manager **should** be able to access and manage any Project details from their dashboard.
+- [x] 2 The system **should** allow a project manager to manage teams and users that are assigned to any Project.
 
 ## 10. Manager dashboard requirements
 
-- [ ] 1 The manager dashboard **should** allow a team leader or project manager be able to see how many tasks and total worker-hours a user currently has assigned.
-- [ ] 2 The manager dashboard **should** display a warning to a Project Manager/Team Leader if a user's assigned effort load exceeds 37.5 worker hours per week.
+- [x] 1 The manager dashboard **should** allow a team leader or project manager be able to see how many tasks and total worker-hours a user currently has assigned.
+- [x] 2 The manager dashboard **should** display a warning to a Project Manager/Team Leader if a user's assigned effort load exceeds 37.5 worker hours per week.
 - [x] 3 The Project tasks **could** be able to be filtered based on Project or team member assigned to it.
-- [ ] 4 A Project **should** display whether it is sufficiently resourced. This is determined based on the sum of worker-hours required by its tasks, the number of workers assigned (and their daily work capacity) and the Project's deadline.
+- [x] 4 A Project **should** display whether it is sufficiently resourced. This is determined based on the sum of worker-hours required by its tasks, the number of workers assigned (and their daily work capacity) and the Project's deadline.
 - [ ] 5 The manager dashboard **could** display a warning to a Project Manager/Team Leader if the project is expected to fall behind the deadline, based on worker hours.
 - [ ] 6 A manager/team leader **could** be warned that a employee needs training if they are behind a deadline or having trouble working on a specific task.
 
@@ -97,7 +95,7 @@ Requirements are taken from the client specification letter unless stated otherw
 - [x] 1 The system **must** allow a user to create a new post.
 - [x] 2 The knowledge management subsystem **must** have a search functionality where a User can search Posts by specific Topics.
 - [x] 3 Posts **must** be viewable by all users by default.
-- [ ] 4 The system **could** allow to change the permissions of accessing specific Posts only by an employee with certain permissions.
+- [x] 4 The system **could** allow to change the permissions of accessing specific Posts only by an employee with certain permissions.
 - [x] 5 Posts **must** only be able to be edited by a Manager or the User who has created it.
 - [x] 6 The subsystem **could** contain a FAQ page.
 - [x] 7 The subsystem **should** offer users a way to contact author of post for specific questions.
@@ -115,4 +113,4 @@ Requirements are taken from the client specification letter unless stated otherw
 - [x] 2 The system **must** be able to be accessed 24 hours a day.
 - [x] 3 A user **should** be directed to the employee dashboard after logging in.
 - [ ] 4 The system **could** be accessed via a dedicated web address.
-- [ ] 5 The system **must** follow the GDPR regulations.
+- [x] 5 The system **must** follow the GDPR regulations.
