@@ -44,24 +44,22 @@ design and implementation are 70% of the marks
 # System Design
 
 Our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) consists of:
-[Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework, [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications and, [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
+[Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework; [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications and; [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
 Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] (TS), which is our language of choice.
 By utilizing TS, we can ensure type safety in all aspects of our code and make it simpler to share and reuse code as a small team as everyone only has to be proficient in a single language.
 Finally, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime.
 
-We were able to easily produce a responsive system[^req-13] and make its elements reactive to provide dynamic, up to date and accurate information. An example of such element is the kanban board[^req-06], its functionality possible due to the aforementioned libraries.
-
-The next few paragraphs will dicuss our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) in more detail.
+We were able to easily produce a responsive system[^req-13] and make its elements reactive to provide dynamic, up to date and accurate information. The functionality of the kanban board[^req-06], for example, was possible due to the aforementioned libraries.
 
 ## Vue
 
 Vue.js is a JavaScript framework for building reactive single-page applications (SPA).
-It uses composition with reusable and reactive components.
+It uses composition with reactive, reusable components.
 The reactive data-binding system handles updating the DOM whenever the underlying data changes, making development much simpler.
 Single File Components (SFCs) are self contained units of the HTML, TS, and CSS which handle both the logic and the rendering.
-This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and also allowed for reusability across the whole system, saving time and streamlining development.
+This gave us an intuitive way of diving up tasks between the team, as everyone could work on individual components and also allowed for reusability across the whole system, saving time and streamlining development.
 
-Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the created components.
+Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the created components across the application.
 
 The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
 The downside of this is a long initial load-time as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
@@ -85,20 +83,16 @@ It uses SSR to initially send the client a fully rendered page, eliminating the 
    How does the database design allow us to meet the requirements?
    A graphic for the database design might be nice.-->
 
-Prisma is a database ORM built around type-safety, auto-complete, and simplified relational modals. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses this schema to then generate tables in the MySQL database and build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for what defines a User, client, server, or database - thus removing any need to transform the data between these areas of the solution.
+Prisma is a database ORM built around type-safety, auto-complete, and simplified relational models. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses this schema to then generate tables in the MySQL database as well as build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for our types across the: client, server, and database - thus removing any need to transform the data between these areas of the solution.
 
 Furthermore, Prisma provides type-safe methods to query and manipulate the underlying MySQL database through TS functions, as opposed to using traditional SQL queries. This prevents issues such as SQL injection as well as making it quick to write complex queries as it is handled internally. Another major benefit of prisma, is how the schema file is database agnostic. This means that for development and testing we could use small and simple SQLite databases on our local machines, make changes without worrying about the integrity of the server using MySQL.
 
 ## Specific Implementations
 
-The next paragraphs will provide an overview of a few specific areas in the system.
-
-<!-- TODO: This! -->
-
 ### Passwords
 
-Passwords are stored securely in the database and used for allowing users access to the system.
-They are hashed before storage using the SHA256 algorithm implemented in javascript, based on <https://github.com/geraintluff/sha256>.
+Passwords are stored securely in the database and used when users access to the system.
+They are hashed before storage using the SHA256 algorithm implemented in javascript, based on <https://github.com/geraintluff/sha256> from the public domain.
 
 ### Permissions
 
@@ -110,13 +104,12 @@ If necessary, specific permissions, such as deleting tasks or managing a project
 
 Based on our communication with client representatives, posts can be written and edited in markdown for users who choose to use it.
 Instead of spending time implementing a markdown to HTML converter to display the post, we used the library showdown.js [^showdown] to convert the markdown stored in the database to HTML on the server side.
-When viewing a post, the markdown is converted to HTML on the server side, then sent to and displayed in the browser.
+When viewing a post, the markdown is converted to HTML on the server side and then sent to and displayed in the browser.
 
 ### CDN
 
-As per feedback point 12 (see Table 1), uploading images is a required functionality for the knowledge management subsystem.
-Based on this requirement, we've implement functionality that allows images to be uploaded to the system, given a unique file name and stored in a CDN folder on the server.
-These images can then be used in posts, using the markdown syntax for images, and rendered by the server when a post is viewed.
+As per feedback point 12 (see Table 1), we've implement functionality that allows images, documents, videos, etc to be uploaded to the system, given a unique file name and stored in a CDN folder on the server.
+These assets can then be used in posts, using the markdown syntax for embedding files, and rendered by the server when a post is viewed. Furthermore, links to these assets can be used outside of the knowledge management system, if need be.
 
 <!-- ### Charts n Graphs -->
 
