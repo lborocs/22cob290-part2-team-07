@@ -200,7 +200,7 @@ Our requirements document also gave us a clear focus for our development – wit
 Throughout the development process the team was in constant communication with each-other: via weekly meetings, a centralised group chat and GitHub Issues[^gh-issues].
 
 During the weekly meetings, progress was discussed and any issues that came up throughout the week's development were addressed.
-These meetings also included the initial discussions of what libraries we were going to use including the use of TypeScript and SASS, database design and other decisions we needed to make before development.
+These meetings also included the initial discussions of what libraries we were going to use including the use of TypeScript and SCSS, database design and other decisions we needed to make before development.
 Group tasks were also undertaken for creating and configuring the server on GCP, as well as the task allocation for the next week.
 
 Online communication, including a group chat, proved to be very useful, as issues were quickly discussed and support provided, if necessary.
