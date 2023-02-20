@@ -108,7 +108,7 @@ As well as this, specific permissions, such as deleting tasks or managing a proj
 ### Markdown Converter
 
 A discussed in the online forums, posts can be written and edited in markdown for users who choose to use it.
-Instead of spending time implementing a markdown to HTML converter to display the post, we used the library showdown.js [^showdown] to convert the markdown to HTML on the server side.
+Instead of spending time implementing a markdown to HTML converter to display the post, we used the library showdown.js [^showdown] to convert the markdown stored in the database to HTML on the server side.
 When viewing a post, the markdown is converted to HTML on the server side, and then sent to and displayed in the browser.
 
 ### CDN
