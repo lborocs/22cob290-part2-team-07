@@ -30,10 +30,10 @@ winget or apt or whatever also have it iirc
 
 <!--Todo
 ~~weekly meetings~~
-~~WhatsApp communcation usage~~
+~~WhatsApp communication usage~~
 comments
 ~~github projects and issues~~
-link everthing to requirements where appropriate
+link everything to requirements where appropriate
 design and implementation are 70% of the marks
 10% for referencing
 20% for organisation and presentation
@@ -51,13 +51,13 @@ Finally, being a TypeScript solution, the server uses [Node.js](https://nodejs.o
 Vue.js is a JavaScript framework for building reactive single-page applications (SPA).
 Vue uses composition with reusable, reactive components.
 The reactive data-binding system handles updating the DOM whenever the underlying data changes, making development much simpler.
-Single File Components (SFCs) are self containted units of the HTML, TS, and CSS which handle both the logic and the rendering.
+Single File Components (SFCs) are self contained units of the HTML, TS, and CSS which handle both the logic and the rendering.
 This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
 
 Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the application.
 
 The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
-The downside of this is a long initial loadtime as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
+The downside of this is a long initial load-time as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
 
 ## Prisma
 
@@ -82,9 +82,9 @@ Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerf
 
 <!-- TODO: API ROUTE -->
 
-Navtively providing REST api routes made it simple to integrate
+Natively providing REST api routes made it simple to integrate
 
-It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benifits mentioned before.
+It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benefits mentioned before.
 
 <!-- TODO: FILE ROUTING -->
 
@@ -93,6 +93,7 @@ Initially, the biggest help provided by Nuxt in our project was the provision of
 ## Implementations
 
 <!-- TODO: This! -->
+
 - Passwords
 - Permissions
 - Markdown Converter
@@ -121,7 +122,7 @@ This is time consuming and every change we do requires the server to be updated 
 Prisma allowed us to generate a small client database which meant we were able to test database calls within our own computers.
 Efficiency was greatly improved due to this feature as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
 
-For example, the knowledge management system uses a large amount of database calls to collect all the nessesary information[^req-11].
+For example, the knowledge management system uses a large amount of database calls to collect all the necessary information[^req-11].
 Prisma not only streamlined development but also the testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
 
 <!--can include and image of the database design from the initial draft, not sure where it is however-->
@@ -220,7 +221,7 @@ Development of the final system was then started with the feedback of the client
 
 ## Documentation
 
-<!-- Breifly talk about the need for documentation for maintance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements? Talk about lighthouse (link with GUI section - testing usability)?-->
+<!-- Briefly talk about the need for documentation for maintenance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements? Talk about lighthouse (link with GUI section - testing usability)?-->
 
 Documentation is extremely important.
 Effective documentation of the code will make the system easier to maintain and update as it makes the code human-readable.
