@@ -80,7 +80,7 @@ It uses SSR to initially send the client a fully rendered page, eliminating the 
    How does the database design allow us to meet the requirements?
    A graphic for the database design might be nice.-->
 
-Prisma is a database ORM built around type-safety, auto-complete, and simplified relational models. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses the schema to generate the tables in the (MySQL) database as well a build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for what defines a User, on the client, server, and database, removing any need to transform the data between these areas of the solution.
+Prisma is a database ORM built around type-safety, auto-complete, and simplified relational models. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses the schema to generate the tables in the (MySQL) database as well build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for what defines a User, on the client, server, and database, removing any need to transform the data between these areas of the solution.
 
 Furthermore, Prisma provides type-safe methods to query and manipulate the underlying MySQL database through TS functions, as opposed to using traditional SQL queries. This prevents issues such as SQL injection as well as making it quick to write complex queries as it is handled internally. Another major benefit of prisma, is how the schema file is database agnostic. This means that for development and testing we could use small and simple SQLite databases on our local machines, make changes without worrying about the integrity of the true server using MySQL.
 
@@ -152,7 +152,7 @@ See the image below for the database ERD (Entity Relationship Diagram):
       Why is it designed in the way that it is (e.g., colour scheme, layout, navigation etc.)?
       How does it meet the requirements?  -->
 
-The GUI (graphical user interface) was designed to meet the clients.
+The GUI (graphical user interface) was designed to meet the clients requirements.
 In this light, the system prominently features the Make-It-All Brand colours.
 Furthermore, many interface design decisions have been made after conversations on the online forums.
 For example, the Kanban style of displaying tasks was a requirement set out by the client which influenced the way that the UI (user interface) was designed.
