@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { Icon } from "@iconify/vue"
-import { logout } from "@/types/user"
+import { logout, profilePicture } from "@/types/user"
 import {
 	has,
 	Permission,
@@ -43,7 +43,15 @@ function clearFocus() {
 	<div class="page-wrapper">
 		<header>
 			<h1>{{ pageName }}</h1>
-			<UserIcon v-if="user !== null" v-bind="user" :size="50" />
+			<NuxtLink to="/user/edit">
+				<img
+					style="border-radius: 100vmax"
+					:src="profilePicture(user!.name)"
+					:alt="`Profile Picture of ${user!.name}`"
+					:width="50"
+					:height="50"
+				/>
+			</NuxtLink>
 		</header>
 
 		<aside class="nav-wrapper">
@@ -67,7 +75,9 @@ function clearFocus() {
 							@navigate="clearFocus"
 						/>
 					</li>
-					<li v-if="has(permissions(permissionsUser(user!.roles)), Permission.Manager_Dashboard)">
+					<li
+						v-if="has(permissions(permissionsUser(user!.roles)), Permission.Manager_Dashboard)"
+					>
 						<NavButton
 							location="/manager"
 							name="Manager"
@@ -222,7 +232,8 @@ main {
 	.mobile-nav-toggle {
 		display: block;
 		position: fixed;
-		right: 0;
+		right: 4rem;
+		top: 0.5rem;
 		background: var(--colour-background-1);
 		color: var(--colour-accent);
 		border: none;

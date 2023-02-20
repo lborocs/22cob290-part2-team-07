@@ -5,7 +5,16 @@ export default defineEventHandler(async event => {
 		where: { uid: +(event.context.params!.id as unknown as number) },
 		include: {
 			subtasks: true,
-			assignees: true,
+			assignees: {
+				include: {
+					roles: {
+						select: {
+							name: true,
+							rank: true,
+						},
+					},
+				},
+			},
 			project: true,
 		},
 	})

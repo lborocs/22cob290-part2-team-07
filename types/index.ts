@@ -20,7 +20,7 @@ declare global {
 
 	type KanbanTask = Task & {
 		project?: Project | null
-		assignees: User[]
+		assignees: UserR[]
 		subtasks: Subtask[]
 	}
 

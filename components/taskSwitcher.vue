@@ -427,7 +427,7 @@ const subtaskName = ref<HTMLInputElement>()
 const subtaskHours = ref<HTMLInputElement>()
 
 // selected users for the current task
-const taskEditAssignees = ref<User[]>([])
+const taskEditAssignees = ref<UserR[]>([])
 
 const newTaskFormCompleted = ref<boolean>(false)
 
@@ -543,7 +543,6 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
-		// emit("update", newTask.uid, false, false)
 	}
 }
 

@@ -197,6 +197,7 @@ definePageMeta({
 })
 
 const visibleProjects = ref<number[]>([])
+const { data: currentUser } = await useCurrentUser()
 getVisibleProjects()
 
 const { data: userRs } = await useFetch("/api/users")
@@ -232,7 +233,6 @@ const employeeHoursView = ref(1)
 const modalCreateProject = useModal()
 const modalCreateClient = useModal()
 
-const { data: currentUser } = await useCurrentUser()
 async function getVisibleProjects() {
 	const res = await $fetch("/api/projects", {
 		query: {

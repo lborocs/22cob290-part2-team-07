@@ -13,7 +13,9 @@ numbersections: false
 documentclass: report
 papersize: A4
 fontsize: 11pt
-geometry: margin=1.5cm
+geometry: margin=1.25cm
+header-includes: |
+  \usepackage{sectsty}
 ---
 
 <!--
@@ -78,15 +80,9 @@ Furthermore, Prisma provides type-safe methods to query and manipulate the under
 
 Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
 
-<!-- TODO: API ROUTE -->
-
-Natively providing REST api routes made it simple to integrate
+Natively providing REST api routes made it simple to integrate accessing the database from Prisma. Each route is mearley a function in Nuxt, and the return value is automatically serialised with JSON. As such, select statements from Prisma can be returned directly without any transformation.
 
 It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benefits mentioned before.
-
-<!-- TODO: FILE ROUTING -->
-
-Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently.
 
 ## Specific Implementations
 
@@ -117,7 +113,9 @@ As per feedback point 12, images are required to be a part of the knowledge mana
 Images can be uploaded to the system, given a unique file name and stored in a CDN folder on the server.
 These images can then be used in posts, using the markdown syntax for images, and rendered by the server when a post is viewed.
 
-### Charts n Graphs
+<!-- ### Charts n Graphs -->
+
+
 
 ## Database Design
 
@@ -185,23 +183,23 @@ See table 1 for details.
 
 (Table 1)
 
-| Number | System page          | Feedback                                                                                                                     | Implemented (Yes/No) |
-| ------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| 1      | Dashboard            | Needs to be clear where each task has originated from                                                                        | Yes                  |
-| 2      | Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
-| 3      | Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
-| 4      | Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
-| 5      | Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes                  |
-| 6      | Project              | Should be able to change the team leader of a project                                                                        | Yes                  |
-| 7      | Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
-| 8      | Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
-| 9      | Project              | Could have functionality to show more information about an employee when their icon is hovered over                          | Yes                  |
-| 10     | Knowledge management | FAQ page is needed                                                                                                           | Yes                  |
-| 11     | Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics and who can create posts within a topic | Yes                  |
-| 12     | Knowledge management | Functionality to upload images to posts is needed                                                                            | Yes                  |
-| 13     | Knowledge management | Could search for posts by user                                                                                               | Yes                  |
-| 14     | Not page specific    | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page                 | Yes                  |
-| 15     | Not page specific    | The navigation bar could show text on hover                                                                                  | Yes                  |
+| #   | System page          | Feedback                                                                                                                     | Implemented (Yes/No) |
+| --- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| 1   | Dashboard            | Needs to be clear where each task has originated from                                                                        | Yes                  |
+| 2   | Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
+| 3   | Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
+| 4   | Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
+| 5   | Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes                  |
+| 6   | Project              | Should be able to change the team leader of a project                                                                        | Yes                  |
+| 7   | Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
+| 8   | Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
+| 9   | Project              | Could have functionality to show more information about an employee when their icon is hovered over                          | Yes                  |
+| 10  | Knowledge management | FAQ page is needed                                                                                                           | Yes                  |
+| 11  | Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics and who can create posts within a topic | Yes                  |
+| 12  | Knowledge management | Functionality to upload images to posts is needed                                                                            | Yes                  |
+| 13  | Knowledge management | Could search for posts by user                                                                                               | Yes                  |
+| 14  | Not page specific    | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page                 | Yes                  |
+| 15  | Not page specific    | The navigation bar could show text on hover                                                                                  | Yes                  |
 
 # System Implementation
 
@@ -216,6 +214,10 @@ In order to implement the system in the most efficient manner, we used a Kanban 
 Therefore, we could plan the order of the tasks which would be completed and the priority of each task.
 The Kanban board also allowed us to assign each task to a team member and track the progression of each task.
 This form of productivity management allowed us to build the software in a systematic manner and ensured that we didn’t forget any tasks.
+
+<!-- FIXME: HMMM??? Should you live -->
+
+Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements].
 
 ## Communication
 
@@ -237,29 +239,6 @@ The only changes made to the design and proposed functionality of the system wer
 
 After the client had seen the prototype and given feedback, the prototype was referenced throughout the development process as a part of the interface design.
 Development of the final system was then started with the feedback of the client to aid the final systems design and functionality.
-
-## Documentation
-
-<!-- Briefly talk about the need for documentation for maintenance and future development. Describe the process of debugging. Go into more detail with the testing section. Can also mention that some bugs may remain due to the time limit/ economic reasons (if it was the real world). How did these tools allow us to meet the requirements? Talk about lighthouse (link with GUI section - testing usability)?-->
-
-Documentation is extremely important.
-Effective documentation of the code will make the system easier to maintain and update as it makes the code human-readable.
-It allows other developers, in the future, to read and understand the current code, which allows them to fix bugs and add more functionality.
-Even if the developers employed to maintain/update the code in the future are the same developers who wrote the code, they may have forgotten how the code works.
-Therefore, good documentation is always important.
-
-The client has given multiple indications throughout communications that they will likely wish to add more functionality to the system further down the line.
-This would only prove feasible if the code has been documented well.
-
-<!--might write something about comments here as documentation-->
-
-Documentation has also been used for the project as a whole.
-Throughout the project, we have ensured to document the requirements precisely.
-Our requirements document gave us a clear focus for our development – with “must”, “should” and “could” requirements allowing us to rank the importance of each requirement[^requirements].
-We also documented the whole project through GitHub.
-GitHub gave us version control for our system’s development.
-Each change which was made to the project was pushed to the repository as a commit.
-Each commit had a commit message, making it easy to go back and see where each individual change was made.
 
 ## Debugging
 
