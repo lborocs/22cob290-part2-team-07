@@ -46,7 +46,7 @@ design and implementation are 70% of the marks
 Our [solution stack](https://en.wikipedia.org/wiki/Solution_stack) consists of:
 [Vue.js](https://vuejs.org/)^[<https://vuejs.org/>], a client-side reactivity framework; [Nuxt.js](https://nuxt.com/)^[<https://nuxt.com/>], a Vue framework for universal applications and; [Prisma](https://www.prisma.io/)^[<https://www.prisma.io/>], a database ORM.
 Every component of this stack supports [TypeScript](https://www.typescriptlang.org/)^[<https://www.typescriptlang.org/>] (TS), which is our language of choice.
-By utilizing TS, we can ensure type safety in all aspects of our code and make it simpler to share and reuse code as a small team as everyone only has to be proficient in a single language.
+By utilising TS, we can ensure type safety in all aspects of our code and make it simpler to share and reuse code as a small team as everyone only has to be proficient in a single language.
 Finally, the server uses [Node.js](https://nodejs.org/)^[<https://nodejs.org/>] for the JavaScript runtime.
 
 We were able to easily produce a responsive system[^req-13] and make its elements reactive to provide dynamic, up to date and accurate information. The functionality of the kanban board[^req-06], for example, was possible due to the aforementioned libraries.
@@ -57,9 +57,9 @@ Vue.js is a JavaScript framework for building reactive single-page applications 
 It uses composition with reactive, reusable components.
 The reactive data-binding system handles updating the DOM whenever the underlying data changes, making development much simpler.
 Single File Components (SFCs) are self-contained units of the HTML, TS, and CSS which handle both the logic and the rendering.
-This gave us an intuitive way of diving up tasks between the team, as everyone could work on individual components and also allowed for reusability across the whole system, saving time and streamlining development.
+This gave us an intuitive way of dividing up tasks between the team, as everyone could work on individual components and also allowed for reusability across the whole system, saving time and streamlining development.
 
-Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the created components across the application.
+Additionally, Vue works well with several build tools such as CSS preprocessors, enabling us to easily use SCSS, making it easier to write and maintain styles for the created components across the application.
 
 The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
 The downside of this is a long initial load-time as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
@@ -68,7 +68,7 @@ The downside of this is a long initial load-time as the client downloads and exe
 
 Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
 
-Natively providing REST api routes made it simple to integrate accessing the database from [Prisma](#prisma). Each route is a function in Nuxt, and the return value is automatically serialised with JSON. As such, select statements from [Prisma](#prisma) can be returned directly without any transformation.
+Natively providing REST api routes made it simple to integrate accessing the database from [Prisma](#prisma). Each route is a function in Nuxt, and the return value is automatically serialised as JSON. As such, select statements from [Prisma](#prisma) can be returned directly without any transformation.
 
 It uses SSR to initially send the client a fully rendered page, eliminating the drawbacks of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and responsive, becoming an SPA which keeps the benefits mentioned before.
 
@@ -91,7 +91,7 @@ Furthermore, Prisma provides type-safe methods to query and manipulate the under
 
 ### Passwords
 
-Passwords are stored securely in the database and used when users access to the system.
+Passwords are stored securely in the database and used when users access the system.
 They are hashed before storage using the SHA256 algorithm implemented in javascript, based on <https://github.com/geraintluff/sha256> from the public domain.
 
 ### Permissions
@@ -108,7 +108,7 @@ When viewing a post, the markdown is converted to HTML on the server side and th
 
 ### CDN
 
-As per feedback point 12 (see Table 1), we've implement functionality that allows images, documents, videos, etc to be uploaded to the system, given a unique file name and stored in a CDN folder on the server.
+As per feedback point 12 (see Table 1), we've implemented functionality that allows images, documents, videos, etc to be uploaded to the system, given a unique file name and stored in a CDN folder on the server.
 These assets can then be used in posts, using the markdown syntax for embedding files, and rendered by the server when a post is viewed. Furthermore, links to these assets can be used outside of the knowledge management system, if need be.
 
 <!-- ### Charts n Graphs -->
@@ -221,7 +221,7 @@ Development of the final system was done with the client feedback in mind to sup
 Version control usage, which was mentioned in the paragraphs above, made debugging much simpler.
 Anytime a bug was found, the commit history would have been used to find it within the recent changes.
 Debugging is a useful tool which we utilised thoroughly throughout the development of our system.
-However, it’s important to note that some bugs will always remain, and based on given deadlines and resource limitations, may not be cost-effective to fix them immediately (unless they are of critical importance).
+However, it’s important to note that some bugs will always remain, and based on given deadlines and resource limitations, it may not be cost-effective to fix them immediately (unless they are of critical importance).
 
 Throughout development, the team adopted a static software inspection approach to debugging, which represents a method where a developer looks at the code and try to find the issue with it.
 Using this debugging method was extremely beneficial to the project as it allowed the team to remove any issues that appeared during the development process. Similarly, this method added little resource cost and allowed us to avoid multiple issues with the system in the long run.
