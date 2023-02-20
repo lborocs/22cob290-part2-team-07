@@ -56,7 +56,7 @@ We were able to easily produce a responsive system[^req-13] and make its element
 Vue.js is a JavaScript framework for building reactive single-page applications (SPA).
 It uses composition with reactive, reusable components.
 The reactive data-binding system handles updating the DOM whenever the underlying data changes, making development much simpler.
-Single File Components (SFCs) are self contained units of the HTML, TS, and CSS which handle both the logic and the rendering.
+Single File Components (SFCs) are self-contained units of the HTML, TS, and CSS which handle both the logic and the rendering.
 This gave us an intuitive way of diving up tasks between the team, as everyone could work on individual components and also allowed for reusability across the whole system, saving time and streamlining development.
 
 Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the created components across the application.
@@ -70,7 +70,7 @@ Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerf
 
 Natively providing REST api routes made it simple to integrate accessing the database from [Prisma](#prisma). Each route is a function in Nuxt, and the return value is automatically serialised with JSON. As such, select statements from [Prisma](#prisma) can be returned directly without any transformation.
 
-It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benefits mentioned before.
+It uses SSR to initially send the client a fully rendered page, eliminating the drawbacks of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and responsive, becoming an SPA which keeps the benefits mentioned before.
 
 ## Prisma
 
@@ -85,7 +85,7 @@ It uses SSR to initially send the client a fully rendered page, eliminating the 
 
 Prisma is a database ORM built around type-safety, auto-complete, and simplified relational models. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses this schema to then generate tables in the MySQL database as well as build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for our types across the: client, server, and database - thus removing any need to transform the data between these areas of the solution.
 
-Furthermore, Prisma provides type-safe methods to query and manipulate the underlying MySQL database through TS functions, as opposed to using traditional SQL queries. This prevents issues such as SQL injection as well as making it quick to write complex queries as it is handled internally. Another major benefit of prisma, is how the schema file is database agnostic. This means that for development and testing we could use small and simple SQLite databases on our local machines, make changes without worrying about the integrity of the server using MySQL.
+Furthermore, Prisma provides type-safe methods to query and manipulate the underlying MySQL database through TS functions, as opposed to using traditional SQL queries. This prevents issues such as SQL injection as well as making it quick to write complex queries as it is handled internally. Another major benefit of Prisma, is how the schema file is database agnostic. This means that for development and testing, we could use small and simple SQLite databases on our local machines, make changes without worrying about the integrity of the server using MySQL.
 
 ## Specific Implementations
 
@@ -123,20 +123,20 @@ During this meeting schema.md[^schema] was produced, which is a markdown file co
 The schema was closely followed up to the final production of the database, with only the addition of a few other tables necessary after some additional clarification of requirements (roles-based permission system).
 
 The next step after the initial draft creation of the database design was producing the tables and implementing the data.
-Prisma offers a Schema Definition Language (SDL) which is a high level language that defines a simple way to define the structure of the database.
+Prisma offers a Schema Definition Language (SDL) which is a high-level language that defines a simple way to define the structure of the database.
 The database is defined in schema.prisma[^prisma-schema], which defines all the tables, their contents, data types and any additional restrictions (such as the user id being unique).
 
-The use of prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript instead of SQL. This provided type-safety and increased security by removing the risk of SQL injection attacks on the website.
+The use of Prisma also integrated well with the use of TypeScript, as it allowed for database queries to be written out in TypeScript instead of SQL. This provided type-safety and increased security by removing the risk of SQL injection attacks on the website.
 It also allowed a more efficient use and creation of database calls.
 
-Testing was also a task that prisma aided.
+Testing was also a task that Prisma aided.
 Normally, testing the website and the database calls would require running the VM (Virtual Machine) on the GCP (Google Cloud Platform).
-However, this is time consuming and every change to the source code requires it be re-deployed to the server.
+However, this is time-consuming and every change to the source code requires it be re-deployed to the server.
 Prisma allowed us to generate a small client database, making it possible for team members to test database calls on their own machines.
 Thus, efficiency was greatly improved as we were able to design, build and test all in one go, without unnecessary time spent uploading the changes to the VM.
 
 For example, the knowledge management system uses a large amount of database calls to collect all the necessary information[^req-11].
-Prisma not only streamlined development but also testing, as it allowed quick client side database calls to test the array of features such as the post searching function.
+Prisma not only streamlined development but also testing, as it allowed quick client-side database calls to test the array of features such as the post searching function.
 
 <!--can include and image of the database design from the initial draft, not sure where it is however-->
 
@@ -204,7 +204,7 @@ See the table below (Table 1) for feedback details and whether it was implemente
 <!-- Talk about Github Kanban board (potentially add a screenshot of it?).
 How did it make us more productive? How did it help us prioritise our work?-->
 
-To develop the system, it was necessary to break it down down into smaller tasks/components.
+To develop the system, it was necessary to break it down into smaller tasks/components.
 To keep track of the tasks' implementation and progress, we used a Kanban board that was created on our GitHub repository page. The Kanban board was divided into 4 categories ('To-do', 'In Progress', 'Needs Polish' and 'Done') and then populated with tasks and issues related to the development of the system.
 Therefore, we could plan the development of different components and their priority.
 The Kanban board also allowed us to assign each task to a team member and track the progression of each task.
@@ -223,7 +223,7 @@ These meetings also included the initial discussions of what libraries we were g
 Group tasks were also undertaken for creating and configuring the server on GCP, as well as the task allocation for the next week.
 
 Online communication, including a group chat, proved to be very useful, as issues were quickly discussed and support provided, if necessary.
-Efficiency was the key takeaway from our communicaiton, as minor issues could be solved without the need for a meeting, meaning the weekly meetings were kept on topic and not spent discussing unimportant or unecessary topics.
+Efficiency was the key takeaway from our communication, as minor issues could be solved without the need for a meeting, meaning the weekly meetings were kept on topic and not spent discussing unimportant or unnecessary topics.
 
 ## Prototyping
 
@@ -237,10 +237,10 @@ Development of the final system was done with the client feedback in mind to sup
 
 ## Debugging
 
-Version control usage, that was mention in the paragraphs above, made debugging much simpler.
+Version control usage, which was mentioned in the paragraphs above, made debugging much simpler.
 Anytime a bug was found, the commit history would have been used to find it within the recent changes.
 Debugging is a useful tool which we utilised thoroughly throughout the development of our system.
-However, it’s important to note that some bugs will always remain, and based on given deadlines and resource limitations, may not be cost effective to fix them immediately (unless they are of critical importance).
+However, it’s important to note that some bugs will always remain, and based on given deadlines and resource limitations, may not be cost-effective to fix them immediately (unless they are of critical importance).
 
 Throughout development, the team adopted a static software inspection approach to debugging, which represents a method where a developer looks at the code and try to find the issue with it.
 Using this debugging method was extremely beneficial to the project as it allowed the team to remove any issues that appeared during the development process. Similarly, this method added little resource cost and allowed us to avoid multiple issues with the system in the long run.
@@ -258,7 +258,7 @@ Next, before any code was committed, it was tested to ensure the development and
 In the case any errors were discovered down the line, they would have been identified using the commit history, static inspection and practical testing.
 Any existing issues were mentioned in the group chat or Github issues page, then identified in the source code and finally fixed.
 
-An example of how testing was accomplished is the project page. Once the page was developed and implemented, it was phyisically inspected and then practically tested against the client requirements[^req-08].
+An example of how testing was accomplished is the project page. Once the page was developed and implemented, it was physically inspected and then practically tested against the client requirements[^req-08].
 
 <!-- IMPORTANT: Footnotes -->
 
