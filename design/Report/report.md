@@ -54,12 +54,20 @@ Vue.js is a JavaScript framework for building reactive single-page applications 
 Vue uses composition with reusable, reactive components.
 The reactive data-binding system handles updating the DOM whenever the underlying data changes, making development much simpler.
 Single File Components (SFCs) are self contained units of the HTML, TS, and CSS which handle both the logic and the rendering.
-This gave us an intuitive way of diving up tasks between the team, as everyone could work on an individual components and then the functionality reused by another.
+This gave us an intuitive way of diving up tasks between the team, as everyone could work on individual components while the functionality is reused by another team member.
 
 Additionally, Vue works well with several build tools such as CSS pre-processors, enabling us to easily use SCSS, making it easier to write and maintain styles for the application.
 
 The nature of single-page applications provide fast transitions between pages as well as reducing the load on the server.
 The downside of this is a long initial load-time as the client downloads and executes all of the JavaScript to build the DOM. We solved this by introducing [Nuxt](#nuxt).
+
+## Nuxt
+
+Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
+
+Natively providing REST api routes made it simple to integrate accessing the database from [Prisma](#prisma). Each route is mearley a function in Nuxt, and the return value is automatically serialised with JSON. As such, select statements from [Prisma](#prisma) can be returned directly without any transformation.
+
+It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benefits mentioned before.
 
 ## Prisma
 
@@ -75,14 +83,6 @@ The downside of this is a long initial load-time as the client downloads and exe
 Prisma is a database ORM built around type-safety, auto-complete, and simplified relational modals. Prisma uses a custom scheme file[^prisma-schema] to define the tables and relationships. It uses the schema to generate the tables in the (MySQL) database as well a build a complete set of types in TS. These generated types are used across the program to validate inputs to functions and Vue components. Because the types come from the schema file, we have 1 source of truth for what defines a User, on the client, server, and database, removing any need to transform the data between these areas of the solution.
 
 Furthermore, Prisma provides type-safe methods to query and manipulate the underlying MySQL database through TS functions, as opposed to using traditional SQL queries. This prevents issues such as SQL injection as well as making it quick to write complex queries as it is handled internally. Another major benefit of prisma, is how the schema file is database agnostic. This means that for development and testing we could use small and simple SQLite databases on our local machines, make changes without worrying about the integrity of the true server using MySQL.
-
-## Nuxt
-
-Nuxt.js is a meta-framework built on top of [Vue](#vue) which introduces: powerful and flexible file-based routing, RESTful api routes, and server-side rendering (SSR) to improve performance.
-
-Natively providing REST api routes made it simple to integrate accessing the database from Prisma. Each route is mearley a function in Nuxt, and the return value is automatically serialised with JSON. As such, select statements from Prisma can be returned directly without any transformation.
-
-It uses SSR to initially send the client a fully rendered page, eliminating the draw backs of the traditional SPA. Once the client receives the page, Vue hydrates it, making it fully reactive and response, becoming an SPA which keeps the benefits mentioned before.
 
 ## Specific Implementations
 
@@ -114,8 +114,6 @@ Images can be uploaded to the system, given a unique file name and stored in a C
 These images can then be used in posts, using the markdown syntax for images, and rendered by the server when a post is viewed.
 
 <!-- ### Charts n Graphs -->
-
-
 
 ## Database Design
 
