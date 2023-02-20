@@ -1,6 +1,5 @@
 import prisma from "@/prisma"
 import { Task } from "@prisma/client"
-import { PrismaClientValidationError } from "@prisma/client/runtime/library"
 import { workerHours } from "~~/types/task"
 
 export default defineEventHandler(async event => {
@@ -36,7 +35,7 @@ export default defineEventHandler(async event => {
 
 		return { success: true, task: task }
 	} catch (e) {
-		if (e instanceof PrismaClientValidationError) {
+		if (e) {
 			console.error(
 				"PrismaClientValidationError - probably missing fields for task",
 				e,
