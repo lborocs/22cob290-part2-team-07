@@ -427,7 +427,7 @@ const subtaskName = ref<HTMLInputElement>()
 const subtaskHours = ref<HTMLInputElement>()
 
 // selected users for the current task
-const taskEditAssignees = ref<User[]>([])
+const taskEditAssignees = ref<UserR[]>([])
 
 const newTaskFormCompleted = ref<boolean>(false)
 
@@ -461,6 +461,8 @@ async function showDialog(index: number) {
 		await fetch(`/api/task/${task.uid}`)
 	).json()) as KanbanTask
 	taskEditAssignees.value = currentTask.value.assignees
+	console.log("Show dialog: ", currentTask.value.assignees)
+	console.log("Show dialog: ", taskEditAssignees.value)
 	modalTaskDetails.show()
 }
 
@@ -612,6 +614,8 @@ async function deleteTask() {
 }
 
 async function applyTaskEdits(event: Event) {
+	console.log("Apply edits: ", taskEditAssignees.value)
+	console.log("Apply edits: ", currentTask.value.assignees)
 	currentTask.value.assignees = taskEditAssignees.value
 	const res = await $fetch(`/api/task/${currentTask.value.uid}`, {
 		method: "POST",
