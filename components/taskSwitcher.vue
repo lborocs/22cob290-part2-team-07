@@ -461,8 +461,6 @@ async function showDialog(index: number) {
 		await fetch(`/api/task/${task.uid}`)
 	).json()) as KanbanTask
 	taskEditAssignees.value = currentTask.value.assignees
-	console.log("Show dialog: ", currentTask.value.assignees)
-	console.log("Show dialog: ", taskEditAssignees.value)
 	modalTaskDetails.show()
 }
 
@@ -545,7 +543,6 @@ async function addTask() {
 		const response = await fetch(`/api/task/${res.task?.uid}`)
 		const newTask = (await response.json()) as KanbanTask
 		p.tasks.push(newTask)
-		// emit("update", newTask.uid, false, false)
 	}
 }
 
@@ -614,8 +611,6 @@ async function deleteTask() {
 }
 
 async function applyTaskEdits(event: Event) {
-	console.log("Apply edits: ", taskEditAssignees.value)
-	console.log("Apply edits: ", currentTask.value.assignees)
 	currentTask.value.assignees = taskEditAssignees.value
 	const res = await $fetch(`/api/task/${currentTask.value.uid}`, {
 		method: "POST",
