@@ -4,7 +4,11 @@ definePageMeta({
 	name: "Dashboard",
 })
 const { data: currentUser } = await useCurrentUser()
-const { data: projects } = useFetch("/api/projects")
+const { data: projects } = useFetch("/api/projects", {
+	query: {
+		u: currentUser.value!.uid,
+	},
+})
 
 const { data: tasks } = await useFetch("/api/tasks", {
 	method: "GET",
