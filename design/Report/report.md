@@ -155,7 +155,7 @@ Here are the guiding principles which were kept in consideration when completing
      Mention that by implementing this feedback, the requirements will be better met.-->
 
 During our presentation to the client representatives, we received feedback on how our prototype could be improved to better meet the client requirements.
-In order to make a better system for the client, we have implemented the majority of the given feedback.
+In order to make a better system for the client, we have implemented the all of the given feedback.
 See the table below (Table 1) for feedback details and whether it was implemented.
 
 (Table 1)
