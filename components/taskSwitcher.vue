@@ -529,7 +529,7 @@ async function addTask() {
 			description: taskDescription.value?.value,
 			workerHours: hours,
 			deadline: taskDeadline.value?.value,
-			projectId: taskProject.value?.value as unknown as number,
+			projectId: taskProjectId.value as unknown as number,
 			assignees: assignees,
 		},
 	}

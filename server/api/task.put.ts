@@ -13,6 +13,9 @@ export default defineEventHandler(async event => {
 
 		const deadlineDate = new Date(details.deadline?.toString() || "")
 
+		console.log("project id", details.projectId)
+		console.log("type", typeof details.projectId)
+
 		const task = await prisma.task.create({
 			data: {
 				name: details.name,
