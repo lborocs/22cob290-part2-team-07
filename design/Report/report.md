@@ -139,7 +139,7 @@ The UI is also designed with usability and accessibility in mind, with tools suc
 
 Here are the guiding principles which were kept in consideration when completing the design of the system:
 
-- A colour scheme which is easy to read (a strong contrast in colour between the background colour and the text, a font which is readable and usage of colours which are readable for people with colour blindness).
+- A colour scheme which is easy to read: a strong contrast in colour between the background colour and the text, and a font which is readable and usage of colours which are readable for people with colour blindness.
   This helps make the system easier and faster to use.
 - A simple UI which isn’t overcrowded and is easy to follow.
   This helps the usability of the system as it means that no negative functionality is provided to the user (negative functionality is functionality which takes away from the user experience – putting the system further away from the user’s needs).
@@ -155,7 +155,7 @@ Here are the guiding principles which were kept in consideration when completing
      Mention that by implementing this feedback, the requirements will be better met.-->
 
 During our presentation to the client representatives, we received feedback on how our prototype could be improved to better meet the client requirements.
-In order to make a better system for the client, we have implemented the all of the given feedback.
+In order to make a better system for the client, we have implemented all of the given feedback.
 See the table below (Table 1) for feedback details and whether it was implemented.
 
 (Table 1)
