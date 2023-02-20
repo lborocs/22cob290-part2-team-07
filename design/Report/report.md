@@ -88,15 +88,36 @@ It uses SSR to initially send the client a fully rendered page, eliminating the 
 
 Initially, the biggest help provided by Nuxt in our project was the provision of a structured filing system which split up the system's pages, components and assets, among other things, which allowed us as a development team to find and manage the code much more efficiently.
 
-## Implementations
+## Specific Implementations
+
+An overview/highlight of a few specific areas of the system.
 
 <!-- TODO: This! -->
 
-- Passwords
-- Permissions
-- Markdown Converter
-- CDN
-- Charts n Graphs
+### Passwords
+
+Passwords are stored securely in the database and used for logging users in.
+They are hashed before storage using the SHA256 algorithm implemented in javascript, based on the public domain one from <https://github.com/geraintluff/sha256>.
+
+### Permissions
+
+Each user can have one or more of the roles 'user', 'manager' and 'admin'.
+Managers and administrators can access the permissions page, where specific abilities can be assigned to each role type, and users can be assigned to their roles.
+As well as this, specific permissions, such as deleting tasks or managing a project, can be assigned to individual users, which will override the permissions of their role (as per feedback point 11).
+
+### Markdown Converter
+
+A discussed in the online forums, posts can be written and edited in markdown for users who choose to use it.
+Instead of spending time implementing a markdown to HTML converter to display the post, we used the library showdown.js [^showdown] to convert the markdown to HTML on the server side.
+When viewing a post, the markdown is converted to HTML on the server side, and then sent to and displayed in the browser.
+
+### CDN
+
+As per feedback point 12, images are required to be a part of the knowledge management system.
+Images can be uploaded to the system, given a unique file name and stored in a CDN folder on the server.
+These images can then be used in posts, using the markdown syntax for images, and rendered by the server when a post is viewed.
+
+### Charts n Graphs
 
 ## Database Design
 
@@ -164,23 +185,23 @@ See table 1 for details.
 
 (Table 1)
 
-| System page          | Feedback                                                                                                                     | Implemented (Yes/No) |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| Dashboard            | Needs to be clear where each task has originated from                                                                        | Yes                  |
-| Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
-| Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
-| Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
-| Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes                  |
-| Project              | Should be able to change the team leader of a project                                                                        | Yes                  |
-| Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
-| Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
-| Project              | Could have functionality to show more information about an employee when their icon is hovered over                          | Yes                  |
-| Knowledge management | FAQ page is needed                                                                                                           | Yes                  |
-| Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics and who can create posts within a topic | Yes                  |
-| Knowledge management | Functionality to upload images to posts is needed                                                                            | Yes                  |
-| Knowledge management | Could search for posts by user                                                                                               | Yes                  |
-| Not page specific    | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page                 | Yes                  |
-| Not page specific    | The navigation bar could show text on hover                                                                                  | Yes                  |
+| Number | System page          | Feedback                                                                                                                     | Implemented (Yes/No) |
+| ------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| 1      | Dashboard            | Needs to be clear where each task has originated from                                                                        | Yes                  |
+| 2      | Dashboard            | Team leaders and managers should be part of one or more teams                                                                | Yes                  |
+| 3      | Dashboard            | Could have functionality to swap between Kanban view and task view                                                           | Yes                  |
+| 4      | Project              | Calculation of progress should be based on worker-hours of tasks                                                             | Yes                  |
+| 5      | Project              | The days remaining until the project deadline should exclude holidays and weekends                                           | Yes                  |
+| 6      | Project              | Should be able to change the team leader of a project                                                                        | Yes                  |
+| 7      | Project              | Could make use of graphs (e.g., bar chart) to show the allocation of hours, amongst employees, on a project                  | Yes                  |
+| 8      | Project              | Each task in the tasks section of the page could have an icon(s) to see who is allocated the task                            | Yes                  |
+| 9      | Project              | Could have functionality to show more information about an employee when their icon is hovered over                          | Yes                  |
+| 10     | Knowledge management | FAQ page is needed                                                                                                           | Yes                  |
+| 11     | Knowledge management | Managers should be able to decide on a person-to-person basis; who can create topics and who can create posts within a topic | Yes                  |
+| 12     | Knowledge management | Functionality to upload images to posts is needed                                                                            | Yes                  |
+| 13     | Knowledge management | Could search for posts by user                                                                                               | Yes                  |
+| 14     | Not page specific    | Shouldn’t highlight the navigation button to “view my profile” page when you are viewing someone else’s page                 | Yes                  |
+| 15     | Not page specific    | The navigation bar could show text on hover                                                                                  | Yes                  |
 
 # System Implementation
 
