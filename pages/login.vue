@@ -30,15 +30,17 @@ async function submit() {
 	<form class="form" ref="form" @submit.prevent="submit">
 		<label id="title">Member Login</label>
 		<label for="Email">Email:</label>
-		<input
-			type="text"
-			id="Email"
-			name="email"
-			placeholder="Example"
-			required
-			autocomplete="username"
-		/>
-		<label id="emailPosition">{{ emailDomain }}</label>
+		<div class="flex-row jc-centre">
+			<input
+				type="text"
+				id="Email"
+				name="email"
+				placeholder="Example"
+				required
+				autocomplete="username"
+			/>
+			<label id="emailPosition">{{ emailDomain }}</label>
+		</div>
 		<label for="Password">Password:</label>
 		<input
 			type="password"
@@ -90,6 +92,9 @@ async function submit() {
 .form label {
 	font-size: 1.25rem;
 }
+#emailPosition {
+	font-size: 1rem;
+}
 .form #title {
 	font-size: 2rem;
 	text-align: center;
@@ -99,10 +104,10 @@ async function submit() {
 	width: 40%;
 	align-self: flex-start;
 }
-.form #emailPosition {
+/* .form #emailPosition {
 	align-self: flex-end;
 	transform: translate(1rem, -2.5rem);
-}
+} */
 
 #dialogues {
 	position: absolute;

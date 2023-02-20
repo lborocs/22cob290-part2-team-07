@@ -31,20 +31,24 @@ async function submit() {
 </script>
 
 <template>
-	<div v-if="!email">Sorry you don't exist</div>
+	<div v-if="!email">
+		This invite link is invalid. Talk to your administrator.
+	</div>
 	<form @submit.prevent="submit" class="form" ref="form" v-else>
 		<label id="title">Member Registration</label>
 		<label for="Email">Email:</label>
-		<input
-			type="text"
-			id="Email"
-			placeholder="Example"
-			:value="email"
-			autocomplete="username"
-			required
-			disabled
-		/>
-		<label id="emailPosition">{{ emailDomain }}</label>
+		<div class="flex-row jc-centre">
+			<input
+				type="text"
+				id="Email"
+				placeholder="Example"
+				:value="email"
+				autocomplete="username"
+				required
+				disabled
+			/>
+			<label id="emailPosition">{{ emailDomain }}</label>
+		</div>
 		<label for="Password">Password:</label>
 		<input
 			type="password"
@@ -92,7 +96,9 @@ async function submit() {
 	box-shadow: 0px 4px 4px var(--colour-text);
 	border-radius: 2rem;
 }
-
+#emailPosition {
+	font-size: 1rem;
+}
 .form input {
 	background: var(--colour-highlight);
 	border: 0.1rem solid var(--colour-accent);
@@ -113,9 +119,5 @@ async function submit() {
 .form #Email {
 	width: 40%;
 	align-self: flex-start;
-}
-.form #emailPosition {
-	align-self: flex-end;
-	transform: translate(-1rem, -2.5rem);
 }
 </style>
